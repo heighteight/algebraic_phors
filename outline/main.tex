@@ -1,0 +1,328 @@
+%\documentclass[sigplan,nonacm,screen,review, anonymous]{acmart}
+\documentclass[conference]{IEEEtran}
+
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+%Template version as of 6/27/2024
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts, amsthm}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{stmaryrd}
+\usepackage{hyperref}
+\usepackage{MnSymbol}
+
+
+\usepackage{adjustbox}
+\usepackage{bussproofs}\EnableBpAbbreviations
+\usepackage{subcaption}
+\usepackage{listings}
+
+
+\usepackage{tikz}
+\usetikzlibrary{cd, angles, shapes}
+\tikzcdset{scale cd/.style={every label/.append style={scale=#1},
+    cells={nodes={scale=#1}}}}
+    
+
+\input{macros}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+
+
+
+\title{On Higher-Order Probabilistic Verification: Generating Functions via Linear Logic}
+
+
+\author{\IEEEauthorblockN{Anonymous Authors}}
+%
+%
+%\author{\IEEEauthorblockN{1\textsuperscript{st} Davide Barbarossa}
+%\IEEEauthorblockA{\textit{University of Bath} }\\
+%Bath, UK \\
+%db2437@bath.ac.uk
+%\and
+%\IEEEauthorblockN{2\textsuperscript{nd} Paolo Pistone}
+%\IEEEauthorblockA{\textit{Universit\'e Claude Bernard Lyon 1} }\\
+%Lyon, France \\
+%paolo.pistone@ens-lyon.fr}
+
+
+\maketitle
+
+\begin{abstract}
+
+
+\end{abstract}
+
+
+\begin{IEEEkeywords}
+
+\end{IEEEkeywords}
+
+
+
+
+
+
+
+\section{Introduction}
+
+\subsection{Probabilistic Verification}
+
+\begin{itemize}
+\item some well-known facts about deterministic HORS $\to$ decidability, model-checking
+
+\item probabilistic case $\to$ decidability of AST fails already at order 2
+
+\item the difficulty lies in computing or estimating the probability of termination, as this requires to \emph{count} over infinitely many reductions, even though these may exhibit a somehow finitary pattern
+
+\item Known results: decidability for \emph{affine} and \emph{order 1} PHORS, but undecidability already at order 2
+\end{itemize}
+
+
+\subsection{Generating Functions}
+
+\begin{itemize}
+
+\item probability of termination corresponds to a counting problem: for given $n$, how many terminating reductions with $n$ unfoldings?
+Calling $a_n$ this number, then $P(M\Downarrow)=\sum_n a_n\frac{1}{2^n}$.
+
+\item manipulating power series $\to$ theory of generating functions
+
+\item well-studied for counting problems: for a language $L$, let $L_n=\sharp\{\text{words $w\in L$ of length }n\}$, then
+\begin{itemize}
+\item for $L$ regular, $L_n$ is C-finite (i.e.~satisfies a linear recurrence equation, like Fibonacci numbers $F_{n+2}=F_{n+1}+F_n$)
+\item for $L$ context-free, $L_n$ is algebraic (i.e.~the function $L(x)=\sum_n a_nL^n$ is zero of a polynomial $p(x,L(x))=0$);
+\item for $L$ indexed grammar (equivalent to order 2) $L_n$ may be not algebraic.
+\end{itemize}
+
+
+\item remark that if the termination series $a(x)=P(M\Downarrow)=\sum_n a_nx^n$ is algebraic (i.e.~$p(x,a(x))=0$), then AST is decidable via the first-order theory of the reals. 
+
+\item Yet, all this is restricted to grammars and first-order languages, and HORS theory shows that climbing up to higher-orders makes the complexity of the underlying problems increase.
+\end{itemize}
+
+\subsection{Generating functions for PHORS, via Linear Logic}
+\begin{itemize}
+
+\item\textbf{Take home sentence:} 
+the main goal of this work is to show that the theory of generating functions can be applied to the study of the termination problem for higher-order probabilistic programs. 
+Using a well-known semantics from linear logic, the weighted relational model, we show that each PHORS can be associated with a formal power series whose coefficients are defined by a countable system of polynomial equations. 
+
+
+
+
+
+
+
+
+%\item it is a folklore fact that weighted Rel interprets higher-order terms as formal power series over a continuous semi-ring.
+
+\item example: 
+$$\lambda f.\mathrm{fix}(\lambda x.fx\oplus \mathrm{True}):(\mathtt{unit}\multimap \mathtt{unit})\To \mathtt{unit}$$
+has all reduction traces $\lambda f.f^n\mathrm{True}$ (each with probability $\frac{1}{2^n}$), and 
+ yields the generating function $G(f)=\sum_n \frac{1}{2^n}f^n$ with closed form $G(f)=\frac{1}{1-\frac{f}{2}}$.
+ 
+ 
+
+\item while such power series are not computable in general, we use the theory of generating functions to capture \emph{decidable} fragments of this semantics. 
+
+
+
+\item Notably, we capture a class of PHORS (of arbitrary order) whose termination is expressed by an algebraic power series, and for which the AST problem is thus decidable. This class comprises and extends previously studied classes of decidable PHORS, like order 1 and affine PHORS.
+
+\end{itemize}
+
+
+\subsection{Capturing Finitary and Algebraic Power Series}
+\begin{itemize}
+
+\item fundamental idea: when studying the relational interpretation of a probabilistic program, we can look at it as a formal power series, whose coefficients can be seen as \emph{countably many} unknowns. These are infinite since one has to consider trajectories that may use inputs an arbitrary number of times (as in the example above)
+
+%\item fixpoints corresponds then to imposing a system of \emph{polynomial equations} over such unknowns; yet, solving a system of infinitely many polynomial equations is far beyond what can be hoped!
+
+\item yet, what it we impose a \emph{bound} on the number of uses that the program can do of each of its inputs?
+This is a well-known approach that uses \emph{(affine) graded types} $!_nA\multimap B$, meaning ``produce $B$ using an input $A$ at most $n$ times'' 
+
+\item under such constraints, the number of unknowns to find becomes \emph{finite} (although possibly very large). In a similar way, when computing the semantics of $\mathrm{fix}M:A$, where $A$ is finitely graded but $M:A\To A$ may use its input $A$ unboundedly, we show that we obtain a system of \emph{finitely} many polynomial equations, whose solution set forms then an \emph{algebraic variety}.
+
+\item Using standard algebraic reasoning, the interpretation of this fixpoint is thus shown to be a power series $F$ that is solution of a \emph{unique} polynomial equation $p(x,F(x))=0$, yielding the decidability of AST. 
+
+
+\end{itemize}
+
+\subsection{Contributions}
+\begin{itemize}
+
+\item Using the weighted relational semantics, we associate each PHORS with a formal power series whose coefficients are defined by a countable system of polynomial equations. 
+
+\item We introduce a first type system with finite grades and fixpoints, and show that the PHORS typable in this system are interpreted by power series that are algebraic over $\mathbb Q$ (yielding the decidability of the corresponding AST problem). While this system types possibly non-linear PHORS of arbitrary order, it types \emph{all} order1 and affine PHORS.
+
+\item We then introduce an extension of the first type system, which allows us to capture even algebraic PHORS which may use their inputs an \emph{unbounded} number of times (e.g.~the order 2 random walk $Lfx=x\oplus Lf(Lf x)$). This extension relies on the possibility of \emph{re-parameterizing} the weighted relational model from the semi-ring of positive reals to a suitable semi-ring of formal power series.
+
+
+
+\end{itemize}
+
+
+
+\section{PHORS}
+
+
+Introduce the syntax of PHORS, their correspondence with $\lambda Y$, and discuss a few examples. Relate them with context-free and indexed grammars.
+
+
+
+{\color{red}
+Here we should choose an example of PHORS that we use all along the paper for discussion. 
+An obvious choice would be the order 1 and order 2 random walks:
+$$
+Fx=x\oplus F(Fx)
+$$
+$$
+Lfx=x\oplus Lf(Lfx)
+$$
+}
+
+\section{From PHORS to Generating Functions, via Linear Logic}
+
+
+{\color{red}
+Here we should tell an informal story about how we pass from a PHORS to its generating functions, why finite grades yield an algebraic variety, and how this lifts to infinite grades. We should use the order 1 and order 2 random walk as running examples.
+
+
+
+}
+%
+%
+%\begin{itemize}
+%
+%
+%\item in the relational semantics every type $A$ is associated with a countable set $\model{A}$, that we can see as a set of \emph{variables}, and a probabilistic program $M:A\to B$ is translated into a $\model{B}$-indexed family of formal power series in the variables $\model{A}$. For instance, $\model{\mathsf{unit}}$ is a singleton and $\model{\mathsf{bool}}$ is made of two variables $\{x_0,x_1\}$ (intuitively, the probability of yielding False and the probability of yielding True), and a program 
+%$M:\mathsf{bool}  \to \mathsf{unit}$ yields then a formal power series $s(x_0,x_1)=\sum_{n_0,n_1}a_{n_0n_1}x_0^{n_0}x_1^{n_1}$ in two variables, where the coefficient $a_{n_0n_1}$ indicates the probability that $M$ converges to $\star:\mathsf{unit}$ using $n_0+n_1$ times its input, with the latter yielding False $n_0$ times and True $n_1$ times.
+%
+%
+%
+%
+% is translated into a formal power series $\sum_n a_n x^n$ where, intuitively, the coefficient $a_n$ indicates the probability that $M$ reduces using its input $n$ times. As the power series is uniquely determined by the coefficients $a_n$, the semantics of $M$ is given by \emph{countably many} unknowns $a_n$.
+%
+%\item More generally, given a PHORS with variables $F_1,\dots, F_n$, every non-terminal symbol $F_i$ yields a power series $\sum_j (F_i)_j x^j$ (here the $j$s are not just natural numbers, but finite multisets), and is thus uniquely determined by the countably many unknowns $(F_i)_j$;
+%
+%\item the PHORS equation $F_ix_1\dots x_n= t_L\oplus t_R$ defines $F_i$ in terms of all the $F_1,\dots, F_n$, in fact determining a system of countably many \emph{polynomial equations} in countably many variables (the $(F_i)_j$ in terms of all the $(F_{i'})_j$)
+%
+%\item while such systems cannot be solved in general (too many variables!), what if we could ensure that \emph{only finitely many} of the variables $(F_i)_\mu$ are non-zero, for any non-terminal? This would yield a \emph{finite} system of polynomial equations in finitely many variables.
+%
+%
+%
+%\item We can ensure this finiteness condition by ensuring \emph{bounds} on the number of uses of each input, that is, by replacing each function type $A\to B$ by a suitable \emph{finitely graded} one $!_nA\multimap B$: e.g.~a program $M:!_n
+%\mathtt{unit}\to \mathtt{unit}$ corresponds to a formal \emph{polynomial} $p(x)=a_0+a_1x+\dots+a_nx^n$, since $M$ cannot use $x$ more than $n$ times.
+%
+%
+%\item As the relational interpretation of a finitary PHORS is a finite system of polynomial equations, standard algebraic methods yield then a \emph{unique} polynomial equation $p(x,F_i(x))=0$ for each non-terminal: the solutions for the variables $F_i$ form an \emph{algebraic variety}.
+%
+%
+%\end{itemize}
+
+
+\section{Parametric Weighted Relational Semantics}
+
+
+
+{\color{red}
+
+- formal power series over a commutative semiring. 
+
+- recalls on polynomial equations and algebraic power series
+
+- Proposition 1: $n$ polynomial equations over $n$ variables yield an algebraic fps 
+
+- weighted relational model given in terms of formal power series (as we do with Davide)
+
+- graded linear comonad $!_n$ ($n\in \mathbb N\cup\{\infty\}$)
+
+- Proposition 2: fixpoint over finite set is an algebraic fps (by Proposition 1)
+
+
+
+
+}
+
+
+
+\section{Type System with Finite Grades}
+
+
+
+{\color{red}
+
+- rules of the type system
+
+- interpretation in the model
+
+- Theorem1: typable terms yields fps with finitely many non-zero coefficients, each coefficient is algebraic over $\mathbb Q$ 
+
+- Theorem2: typable terms yields an algebraic power series
+
+- Theorem3: AST is decidable (describe first-order formula for AST)
+
+- Example1: order1 random walk, 
+
+- Example2: $0^n1^n0^n$: order 2 non context-free but algebraic (both linear and non-linear)
+
+- Example3: non-algebraic $0^n 1^{2^n}$ is not typable
+
+}
+
+
+
+\section{Adding Infinite Grades}
+
+{\color{red}
+
+- discuss order 2 random walk: algebraic equations with power series coefficients correspond to admitting variables with infinite grade, but in a controlled way
+
+- parametric polynomial equations and their solution
+
+- Proposition 2. $n$ parametric polynomial equations in $n$ fps variables yield an algebraic fps
+
+- extended type system
+
+- Theorems 1/2/3 for the new type system, via Proposition 2
+
+}
+
+
+
+
+
+
+
+
+\section{Conclusion}
+
+{\color{red}
+
+
+Here some perspectives, suggesting that our result is just the first and most obvious one.
+
+Extensions, e.g.~holonomic power series and restriction, e.g.~rational ones
+
+Asymptotic estimations: a huge literature, can we use them to provide probability estimations?
+
+Extracting properties of programs from the corresponding generating functions: factorization, recurrence properties, differential equations
+
+
+}
+
+
+
+\end{document}
+\endinput
+

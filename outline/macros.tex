@@ -1,0 +1,198 @@
+\newtheorem{example}{Example}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{problem}{Problem}[section]
+\newtheorem{notation}{Notation}[section]
+
+\newtheorem{remark}{Remark}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{conjecture}{Conjecture}[section]
+
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{falselemma}{False lemma}[section]
+
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{result}{Result}
+\newenvironment{varitemize}
+{
+	\begin{list}{\labelitemi}
+		{\setlength{\itemsep}{0pt}
+			\setlength{\topsep}{0pt}
+			\setlength{\parsep}{0pt}
+			\setlength{\partopsep}{0pt}
+			\setlength{\leftmargin}{15pt}
+			\setlength{\rightmargin}{0pt}
+			\setlength{\itemindent}{0pt}
+			\setlength{\labelsep}{5pt}
+			\setlength{\labelwidth}{10pt}
+	}}
+	{
+	\end{list} 
+}
+
+
+\newcounter{numberone}
+
+
+\newenvironment{varenumerate}
+{
+	\begin{list}{\arabic{numberone}.}
+		{
+			\usecounter{numberone}
+			\setlength{\itemsep}{0pt}
+			\setlength{\topsep}{0pt}
+			\setlength{\parsep}{0pt}
+			\setlength{\partopsep}{0pt}
+			\setlength{\leftmargin}{15pt}
+			\setlength{\rightmargin}{0pt}
+			\setlength{\itemindent}{0pt}
+			\setlength{\labelsep}{5pt}
+			\setlength{\labelwidth}{15pt}
+	}}
+	{
+	\end{list} 
+}
+
+
+
+
+\newcommand{\NINF}{\BB N^\infty}
+
+\newcommand{\RS}{\BB R_{\geq 0}^\infty}
+\newcommand{\TS}{\BB{T}}
+\newcommand{\BS}{\{0,1\}}
+
+
+\newcommand{\db}{{\mathsf{db}}}
+\newcommand{\RR}{{\mathsf{RR}}}
+\newcommand{\PL}{d_{\mathsf{PL}}}
+\newcommand{\LEFT}{\Big\langle}
+\newcommand{\RIGHT}{\Big\rangle}
+\newcommand{\BAR}{\Big\vert}
+
+
+\newcommand{\NNP}{NP^{\mathrm n}}
+\newcommand{\VNP}{NP^{\mathrm v}}
+\newcommand{\VN}{\mathbf{VN}}
+\newcommand{\trop}{\mathsf t^!}
+
+\newcommand{\COIN}[1]{\mathrm{coin}\ {#1}}
+
+\newcommand{\TIT}{\B{P}_{\mathrm{trop}}}
+\newcommand{\IT}{\B{P}}
+
+
+\newcommand{\pPCF}{$\mathrm{PCF}\langle \vec X\rangle$}
+\newcommand{\pPCFn}{$\mathrm{PCF}\langle X_1,\dots, X_n\rangle$}
+
+
+\newcommand{\choice}[1]{\oplus_{#1}}
+\newcommand{\Bool}{\mathrm{Bool}}
+\newcommand{\True}{\mathrm{True}}
+\newcommand{\False}{\mathrm{False}}
+\newcommand{\YY}{\mathrm{Y}}
+\newcommand{\FIN}{\mathbf{F}}
+\newcommand{\NAT}{\mathbf{N}}
+\newcommand{\SUCC}[1]{\mathsf{succ}\ #1}
+\newcommand{\PRED}[1]{\mathsf{pred}\ #1}
+\newcommand{\ZZERO}{{\mathsf 0}}
+\newcommand{\ZERO}{\mathsf 0}
+\newcommand{\ONE}{\mathsf 1}
+\newcommand{\TWO}{{\mathsf 2}}
+\newcommand{\ITE}[3]{\mathsf{ifz}(#1,#2,#3)}
+%{\mathrm{if}\  #1 \ \mathrm{then } \ #2 \ \mathrm{else} \ #3}
+\newcommand{\RED}[1]{\stackrel{#1}{\twoheadrightarrow}}
+\newcommand{\CASE}[2]{\mathrm{case}_{#1} \ \mathrm{of } \ #2 }
+
+
+\newcommand{\oracle}[2]{\{ #1 \mapsto #2\} }
+\newcommand{\ORed}{\longrightarrow_{\mathsf e} }
+\newcommand{\BRed}{\longrightarrow_{\beta} }
+\newcommand{\WBRed}{\longrightarrow_{\mathsf{wh}\beta} }
+\newcommand{\HRed}{\longrightarrow_{\mathsf{h}\beta} }
+
+\newcommand{\PRed}{\longrightarrow_{\mathsf p} }
+\newcommand{\ToTRed}{\longrightarrow_{\beta\mathsf{e}} }
+\newcommand{\Norm}{\mathsf{Norm} }
+\newcommand{\Red}{\mathsf{Red} }
+\newcommand{\modd}[1]{\llbracket#1\rrbracket }
+
+\newcommand{\FF}[1]{\mathfrak{#1}}
+
+
+%math styles
+
+\newcommand{\too}{\twoheadrightarrow}
+\newcommand{\set}[1]{\{ #1 \}}
+
+\newcommand{\fmset}[1]{!{#1}}
+\newcommand{\fps}[2]{{#1}\{\!\!\{#2\}\!\!\}}
+\newcommand{\fpp}[2]{{#1}\{#2\}}
+
+\newcommand{\flc}[2]{{#1}\{#2\}}
+
+\newcommand{\B}[1]{\mathbf{#1}}
+
+\newcommand{\Pto}{\rightarrowtail}
+\newcommand{\Pfrom}{\leftarrowtail}
+\newcommand{\perm}{\longrightarrow_{\mathsf p}}
+\newcommand{\PN}[1]{\mathsf{Perm}(#1)}
+\newcommand{\FN}{\mathrm{FN}}
+\newcommand{\SELECT}{\mathrm{merge}\ }
+
+\newcommand{\DIST}[1]{\mathcal D(#1)}
+\newcommand{\SDIST}[1]{\mathcal D_{\leq}(#1)}
+
+\newcommand{\PROB}{\mathbf{P}}
+\newcommand{\BOX}{\mathbf C}
+\newcommand{\bone}{\mathcal b}
+\newcommand{\btwo}{\mathcal c}
+\newcommand{\bvar}{\mathcal x}
+\newcommand{\bthree}{\mathcal d}
+\newcommand{\bfour}{\mathcal e}
+\newcommand{\model}[1]{\modd{#1}}
+
+\newcommand{\an}[1]{{#1}\textbf{An}}
+\newcommand{\rel}[1]{{#1}\textbf{Rel}}
+
+\newcommand{\lto}{\multimap}
+\newcommand{\lam}{\lambda}
+\newcommand{\law}{\mathbb{L}}
+
+
+\newcommand{\TT}[1]{\mathtt{#1}}
+\newcommand{\D}[1]{\mathscr{#1}}
+
+\newcommand{\C}[1]{\mathcal{#1}}
+\newcommand{\BB}[1]{\mathbb{#1}}
+\newcommand{\U}[1]{\underline{#1}}
+\newcommand{\OV}[1]{\overline{#1}}
+\newcommand{\F}[1]{\mathfrak{#1}}
+\newcommand{\tr}{\trianglelefteq}
+\newcommand{\To}{\Rightarrow}
+\newcommand{\STo}{\stackrel{\sim}{\To}}
+\newcommand{\cc}[1]{{\color{cyan}#1}}
+\newcommand{\mm}[1]{{\color{magenta}#1}}
+\newcommand{\rr}[1]{{\color{red}#1}}
+
+\newcommand{\N}{\BB N}
+\newcommand{\R}{\BB R}
+
+
+\providecommand{\dotdiv}{% Don't redefine it if available
+  \mathbin{% We want a binary operation
+    \vphantom{+}% The same height as a plus or minus
+    \text{% Change size in sub/superscripts
+      \mathsurround=0pt % To be on the safe side
+      \ooalign{% Superimpose the two symbols
+        \noalign{\kern-.35ex}% but the dot is raised a bit
+        \hidewidth$\smash{\cdot}$\hidewidth\cr % Dot
+        \noalign{\kern.35ex}% Backup for vertical alignment
+        $-$\cr % Minus
+      }%
+    }%
+  }%
+}
+
+
+% TODO
+\newcommand{\TODO}[1]{{\color{magenta}\bfseries{#1}}}
