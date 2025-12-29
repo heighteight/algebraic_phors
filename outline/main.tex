@@ -14,12 +14,15 @@
 \usepackage{stmaryrd}
 \usepackage{hyperref}
 \usepackage{MnSymbol}
+\usepackage{mathrsfs}  
+
 
 
 \usepackage{adjustbox}
 \usepackage{bussproofs}\EnableBpAbbreviations
 \usepackage{subcaption}
 \usepackage{listings}
+\usepackage[scr=boondoxo,scrscaled=1.05]{mathalfa}
 
 
 \usepackage{tikz}
@@ -138,32 +141,29 @@ has all reduction traces $\lambda f.f^n\mathrm{True}$ (each with probability $\f
 
 \item Notably, we capture a class of PHORS (of arbitrary order) whose termination is expressed by an algebraic power series, and for which the AST problem is thus decidable. This class comprises and extends previously studied classes of decidable PHORS, like order 1 and affine PHORS.
 
-\end{itemize}
 
+\item two key ingredients:
+	\begin{enumerate}
+	\item \emph{the (weighted) relational semantics}, a well-known model of linear logic and lambda-calculus associating proofs/terms with formal power series valued over a continuous semi-ring. 
 
-\subsection{Capturing Finitary and Algebraic Power Series}
-\begin{itemize}
+	\item \emph{graded linear comonads:} while linearity (or, better, affinity) had already been recognized as a key factor to ensure decidability of probabilistic termination, our approach naturally extends to finitary exponentials, as expressed by linear types of the form $!_n A \multimap B$, intuitively expressing functions from $A$ to $B$ using their inputs \emph{at most} $n$ times.
+	
+	
+	\end{enumerate}
 
-\item fundamental idea: when studying the relational interpretation of a probabilistic program, we can look at it as a formal power series, whose coefficients can be seen as \emph{countably many} unknowns. These are infinite since one has to consider trajectories that may use inputs an arbitrary number of times (as in the example above)
-
-%\item fixpoints corresponds then to imposing a system of \emph{polynomial equations} over such unknowns; yet, solving a system of infinitely many polynomial equations is far beyond what can be hoped!
-
-\item yet, what it we impose a \emph{bound} on the number of uses that the program can do of each of its inputs?
-This is a well-known approach that uses \emph{(affine) graded types} $!_nA\multimap B$, meaning ``produce $B$ using an input $A$ at most $n$ times'' 
-
-\item under such constraints, the number of unknowns to find becomes \emph{finite} (although possibly very large). In a similar way, when computing the semantics of $\mathrm{fix}M:A$, where $A$ is finitely graded but $M:A\To A$ may use its input $A$ unboundedly, we show that we obtain a system of \emph{finitely} many polynomial equations, whose solution set forms then an \emph{algebraic variety}.
-
-\item Using standard algebraic reasoning, the interpretation of this fixpoint is thus shown to be a power series $F$ that is solution of a \emph{unique} polynomial equation $p(x,F(x))=0$, yielding the decidability of AST. 
 
 
 \end{itemize}
+
 
 \subsection{Contributions}
 \begin{itemize}
 
-\item Using the weighted relational semantics, we associate each PHORS with a formal power series whose coefficients are defined by a countable system of polynomial equations. 
+\item Via the weighted relational semantics, we associate each PHORS with a formal power series whose coefficients are defined by a countable system of polynomial equations. 
 
-\item We introduce a first type system with finite grades and fixpoints, and show that the PHORS typable in this system are interpreted by power series that are algebraic over $\mathbb Q$ (yielding the decidability of the corresponding AST problem). While this system types possibly non-linear PHORS of arbitrary order, it types \emph{all} order1 and affine PHORS.
+\item We introduce a first type system with \emph{finitary} grades and fixpoints, and show that the PHORS typable in this system are interpreted by power series that are algebraic over $\mathbb Q$ (yielding the decidability of the corresponding AST problem).
+Via well-known linearization techniques, each such typable PHORS can be shown \emph{equivalent} to an affine PHORS in the sense of [Ong], yet the latter may have size more than exponential with respect to the former.
+% While this system types possibly non-linear PHORS of arbitrary order, it types \emph{all} order1 and affine PHORS.
 
 \item We then introduce an extension of the first type system, which allows us to capture even algebraic PHORS which may use their inputs an \emph{unbounded} number of times (e.g.~the order 2 random walk $Lfx=x\oplus Lf(Lf x)$). This extension relies on the possibility of \emph{re-parameterizing} the weighted relational model from the semi-ring of positive reals to a suitable semi-ring of formal power series.
 
@@ -171,7 +171,173 @@ This is a well-known approach that uses \emph{(affine) graded types} $!_nA\multi
 
 \end{itemize}
 
+\section{From PHORS to Generating Functions, via Linear Logic}
 
+
+In this section we provide an overview on how we may extract a formal power series from a higher-order recursive scheme, and of how we can ensure this to be algebraic via graded types.
+
+The weighted relational semantics arises from linear logic, and is indeed based on a \emph{precise count} of the number of times that a program may use each of its inputs during any of its reductions. 
+For example, the interpretation of a order 2 program $M:(o\to o)\to (o\to o)$ yields a formal power series which is roughly of the form
+$$
+ \model{M}(y,x)=\sum_{n=0}^{\infty}a_n y^n x
+$$ 
+where the real coefficient $a_n$ indicates the probability that 
+$M$ terminates through a reduction that uses its functional input $y$ exactly $n$ times.
+For instance, the program 
+$$M=\mathrm{Fix}(\lambda hyx. x\oplus hy(yx))$$
+which generates the probabilistic tree 
+$$x\oplus (yx\oplus (y^2x\oplus (y^3x\oplus \dots$$ 
+yields the power series 
+$$ \model{M}(y,x)=\sum_{n=0}^\infty \frac{1}{2^{n+1}}y^n x=\frac{x}{2-y},$$
+since the probability of terminating using $y$ exactly $n$ times is $\frac{1}{2^{n+1}}$.
+
+Observe that we are silently assuming, for simplicity, that order 1 programs $P:o\to o$ are always \emph{linear}, that is, they may use their input precisely once. This implies that any such program is interpreted by a unique coefficient (the probability of $P$ terminating using its input once), and that the variable $x$ above may only occur with exponent 1. While this is a simplification, we will see that it is not a strong one, since, as we will see in Section ??,  in the language of PHORS order 1 programs are always \emph{affine}, that is, they may use their input variables \emph{at most} once.
+
+
+
+
+%
+%\begin{align*}
+%Hfx&= H(B\circ f)x \oplus_{p_1} (f\circ f)(Bx)\\ 
+%Bx&= x\oplus_{p_2} \Omega\\
+%S&= HB e
+%\end{align*}
+%
+%
+%Language associated:
+%$$
+%\{ 
+%a^{n}b^{2n}\mid n\in \mathbb{N}, n\geq 1
+%\}
+%$$
+%
+%\begin{align*}
+%Hfgx&= H(A\circ f)(B\circ g)x \oplus_{p_1} (f\circ g\circ f)x\\ 
+%Ax&= x\oplus_{p_2} \Omega\\
+%Bx&= x\oplus_{p_3} \Omega\\
+%S&= HAB e
+%\end{align*}
+%
+%Language associated:
+%$
+%\{ 
+%c^{n+1}a^{n}b^{n}a^n\mid n\in \mathbb{N}\}
+%$
+
+Consider now a program defined by the following equational system:
+\begin{align}\label{eq:phors1}
+Hyx&=( H(A\circ y)x \oplus_{a}
+H(B\circ y)x )\oplus_{a}y(yx)\\
+Ax&= x\oplus_{b} \Omega\\
+Bx&=x\oplus_{c} \Omega\\
+S&=HIe
+\end{align}
+
+This is indeed an example of PHORS: the upper case letters are called \emph{non-terminal} symbols, the execution of the program starts from the order 0 non-terminal $S$ by applying instances of the equations, read from left to right, as well as probabilistic choices, until the unit constant $e$ is, eventually, produced. 
+Notice that $I$ and $\Omega$ stand, respectively, for the identity and diverging terms, and that $a,b,c,d$ stand for rational biases for the probabilistic choice operators.
+
+
+We can canonically associate an infinite tree with the program above by considering binary function symbols $a,b,c$ with each choice operator. The word language consisting of all the finite branches of this tree is then 
+$$
+\mathcal L_M=\{ a^{2|w|+2}ww\mid w\in \{b,c\}^*\}.
+$$
+Notice that this language is not context-free, as it contains an arbitrary word repeated twice.
+
+ 
+Now, in the relational interpretation, each order 2 non-terminal symbol $N$ yields a sequence of coefficients $N_n$, and each order 1 non-terminal $N$ a unique real, we can translate the equations \eqref{eq:phors1} into a system of equations over such coefficients. On the one hand we immediately get $A\cdot x= bx$ and $ B\cdot x=cx$, that is, $A=b, B=c$; for the $H_n$ we can solve using $\model{H}(y,x)=\sum_n H_n y^n x$, which yields
+\begin{align*}
+H_2y^2 x&= 
+\delta
+H_2y^2x
++ (1-a)y^2x,\\
+H_ny^n x&= 0 \qquad (n\neq 2),
+\end{align*}
+where $\delta=(a^2b^2+a(1-a)c^2)$.
+In other words, $H_n=0$ for all $n\neq 2$, while $z=H_2$ 
+%is a root of the polynomial $\mathscr p\in \BB R[x,y][z]$
+%$$
+%\mathscr p(x,y)(z)=\delta xy^2 \cdot z+ (1-a)xy^2,
+%$$
+%which 
+can be easily computed $H_2=\frac{a-1}{a^2b^2+a(1-a)c^2-1}$. 
+Notice that this implies that a reduction of $H$, \emph{independently of the number of its unfoldings}, will always end up using its functional input precisely twice.
+
+Now, observe that from the equations above it follows 
+$$
+\model{H}(y,x)= \delta\cdot \model{H}(y,x)+(1-a)y^2x
+$$
+that is, the power series $\model{H}(y,x)$ is a root of the polynomial 
+$\mathscr p\in \BB R[x,y][z]$ given by 
+$\mathscr p(x,y)(z)=(\delta-1)\cdot z+ (1-a)y^2x$, so it is algebraic.
+
+
+This example illustrates one fact that is general and one that only works in a restricted set of cases. The general fact is that, for \emph{any} PHORS, the relational interpretation produces a set of polynomial equations defining the real coefficients interpreting each non-terminal symbol; however, this system will in general be \emph{infinite}: already at order 2, as we saw, we obtain sequences of coefficients $(a_n)_{n\in \mathbb N}$, each with its own equation. 
+We can thus generally translate a PHORS into a system of polynomial equations over \emph{countably many} unknowns.
+
+In the example, though, we realized that, out of all the coefficients $H_n$, only $H_2$ may be different from zero. More generally, whenever we realize that, out of the countably many unknowns of the (relational interpretation of the) program, only \emph{finitely many} are non-zero, we obtain a finite system of polynomial equations, which implies that each such coefficient is an algebraic real number, and that, globally, the power series interpreting each non-terminal are themselves algebraic. 
+
+
+How can we enforce, then, a program to translate into finitely many coefficients? The solution comes, again, from linear logic: as we saw, each coefficient represents reductions using the inputs a fixed number of times; what if we may provide a \emph{finite bound} on the number of uses that a program may make of each of its inputs?
+
+A first natural idea is to restrict ourselves to linear, or even affine, programs. This is indeed the approach taken in \cite{}. However, as the example above suggests, one may well allows programs to use their inputs more than once, even a very large number of times, as soon as we can provide a fixed bound for this number (as the final number of coefficients will rely - even though exponentially, see ??? - on it). 
+Indeed, a standard and well-studied way to impose finite bounds is via \emph{(affine) graded exponentials} \cite{} $!_nA$, where a program of type $M:\ !_nA\multimap B$ is forced to use its input \emph{at most} $n$ times. Interestingly, as we will see, this restriction continues to hold in presence of fixpoints: if $A$ is a finitely graded higher-order type and $M: A\to A$ is a program which may use its input $A$ \emph{unrestrictedly}, then its fixpoint $\mathrm{Fix}M:A$ is still ``finitary'': its interpretation still has a number of unknowns, which can be traced as the points of some algebraic variety, as we'll see.
+
+
+For example, the non-terminal $H$ in our example could be typed as 
+$H:\ !_2(!_1o\multimap o)\multimap (!_1o\multimap o)$, since, as we saw, any reduction of $H$ uses its functional argument twice.
+
+
+
+At the same time, observe that, while our example is non-linear, it can well be \emph{linearized}: we can design some affine PHORS that generates the same infinite tree, for example:
+\begin{align*}\label{eq:phors2}
+Ly_1y_2x&=( L(A\circ y_1)(A\circ y_2)x \oplus_{a}
+L(B\circ y_1)(B\circ y_2)x )\oplus_{a}y_1(y_2x)\\
+Ax&= x\oplus_{b} \Omega\\
+Bx&=x\oplus_{c} \Omega\\
+S&=HIIe
+\end{align*}
+Notice that the unique functional variable $y$, that was used twice, is now replaced by \emph{two} functional variables $y_1,y_2$, used once.
+Linearization is a well-known procedure in linear logic which, intuitively, corresponds to unfolding a (finite) exponential $!_nA$ as an $n$-fold tensor $A\otimes\dots \otimes A$. 
+As a consequence, the word languages that are obtained via PHORS typed via graded exponential coincides with those obtained via the affine PHORS of \cite{}. 
+However, notice that the linearized PHORS may well have a number of variables that is exponential with respect to those of the original, non-linear one. 
+
+
+%
+%\begin{align*}
+%Hfx&= (p_1H(p_3fx)+p_2H(p_4fx) + (1-p_1-p_2)f^2x\\
+%&= (p_1p_3+p_1p_4)Hfx+(1-p_1-p_2)f^2x
+%\end{align*}
+%
+%So $y=H(f,x)$ is solution of the polynomial equation $\mathscr p(f,x,y)=0$, where
+%$$
+%\mathscr p(f,x,y)= (p_1p_3+p_1p_4-1)y+(1-p_1-p_2)f^2x.
+%$$
+%
+%The solution sequence $(H_n)_{n\in\mathbb N}$ is the following: 
+%\begin{align*}
+%H_n&=0 \quad (n\neq 2)
+%\\
+%H_2&=\sum_{k=0}^\infty\sum_{k=m+n}(p_1p_3)^m(p_2p_4)^n\\
+%&= \sum_{m,n}(p_1p_3)^m(p_2p_4)^n\\
+% &=\sum_{m=0}^\infty(p_1p_3)^m\cdot \sum_{n=0}^\infty(p_2p_4)^n\\
+% &=\frac{1}{1-p_1p_3}\cdot \frac{1}{1-p_2p_4}
+%\end{align*}
+%which yields the probability of termination $\sum_nH_n=\frac{1}{1-p_1p_3}\cdot \frac{1}{1-p_2p_4}$.
+%\begin{itemize}
+%
+%\item fundamental idea: when studying the relational interpretation of a probabilistic program, we can look at it as a formal power series, whose coefficients can be seen as \emph{countably many} unknowns. These are infinite since one has to consider trajectories that may use inputs an arbitrary number of times (as in the example above)
+%
+%%\item fixpoints corresponds then to imposing a system of \emph{polynomial equations} over such unknowns; yet, solving a system of infinitely many polynomial equations is far beyond what can be hoped!
+%
+%\item yet, what it we impose a \emph{bound} on the number of uses that the program can do of each of its inputs?
+%This is a well-known approach that uses \emph{(affine) graded types} $!_nA\multimap B$, meaning ``produce $B$ using an input $A$ at most $n$ times'' 
+%
+%\item under such constraints, the number of unknowns to find becomes \emph{finite} (although possibly very large). In a similar way, when computing the semantics of $\mathrm{fix}M:A$, where $A$ is finitely graded but $M:A\To A$ may use its input $A$ unboundedly, we show that we obtain a system of \emph{finitely} many polynomial equations, whose solution set forms then an \emph{algebraic variety}.
+%
+%\item Using standard algebraic reasoning, the interpretation of this fixpoint is thus shown to be a power series $F$ that is solution of a \emph{unique} polynomial equation $p(x,F(x))=0$, yielding the decidability of AST. 
+%
+%
+%\end{itemize}
 
 \section{PHORS}
 
@@ -191,17 +357,17 @@ Lfx=x\oplus Lf(Lfx)
 $$
 }
 
-\section{From PHORS to Generating Functions, via Linear Logic}
-
-
-{\color{red}
-Here we should tell an informal story about how we pass from a PHORS to its generating functions, why finite grades yield an algebraic variety, and how this lifts to infinite grades. We should use the order 1 and order 2 random walk as running examples.
-
-
-
-}
+%\section{From PHORS to Generating Functions, via Linear Logic}
 %
 %
+%{\color{red}
+%Here we should tell an informal story about how we pass from a PHORS to its generating functions, why finite grades yield an algebraic variety, and how this lifts to infinite grades. We should use the order 1 and order 2 random walk as running examples.
+%
+%
+%
+%}
+%%
+%%
 %\begin{itemize}
 %
 %
@@ -229,7 +395,7 @@ Here we should tell an informal story about how we pass from a PHORS to its gene
 %
 %
 %\end{itemize}
-
+%
 
 \section{Parametric Weighted Relational Semantics}
 
