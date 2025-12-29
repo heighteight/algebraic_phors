@@ -244,7 +244,8 @@ $$
 Notice that this language is not context-free, as it contains an arbitrary word repeated twice.
 
  
-Now, in the relational interpretation, each order 2 non-terminal symbol $N$ yields a sequence of coefficients $N_n$, and each order 1 non-terminal $N$ a unique real, we can translate the equations \eqref{eq:phors1} into a system of equations over such coefficients. On the one hand we immediately get $A\cdot x= bx$ and $ B\cdot x=cx$, that is, $A=b, B=c$; for the $H_n$ we can solve using $\model{H}(y,x)=\sum_n H_n y^n x$, which yields
+Now, in the relational interpretation, each order 2 non-terminal symbol $N$ yields a power series $\model{N}(y,x)$, and thus a sequence of coefficients $N_n$, and each order 1 non-terminal $N$ yields a unique real coefficient. 
+The equations \eqref{eq:phors1} translate then naturally into a system of \emph{polynomial} equations over such coefficients. On the one hand, we immediately get $A\cdot x= bx$ and $ B\cdot x=cx$, that is, $A=b, B=c$; for the $H_n$ we can solve using $\model{H}(y,x)=\sum_n H_n y^n x$, which yields
 \begin{align*}
 H_2y^2 x&= 
 \delta
