@@ -176,6 +176,8 @@ Via well-known linearization techniques, each such typable PHORS can be shown \e
 
 In this section we provide an overview on how we may extract a formal power series from a higher-order recursive scheme, and of how we can ensure this to be algebraic via graded types.
 
+\subsection{Algebraic Power Series from Finitary PHORS}
+
 The weighted relational semantics arises from linear logic, and is indeed based on a \emph{precise count} of the number of times that a program may use each of its inputs during any of its reductions. 
 For example, the interpretation of a order 2 program $M:(o\to o)\to (o\to o)$ yields a formal power series which is roughly of the form
 $$
@@ -237,7 +239,7 @@ This is indeed an example of PHORS: the upper case letters are called \emph{non-
 Notice that $I$ and $\Omega$ stand, respectively, for the identity and diverging terms, and that $a,b,c,d$ stand for rational biases for the probabilistic choice operators.
 
 
-We can canonically associate an infinite tree with the program above by considering binary function symbols $a,b,c$ with each choice operator. The word language consisting of all the finite branches of this tree is then 
+We can canonically associate an infinite tree with the program above by considering binary function symbols $a,b,c$ with each choice operator. The word language (defined as in \cite{}) consisting of all the finite branches of this tree is then 
 $$
 \mathcal L_M=\{ a^{2|w|+2}ww\mid w\in \{b,c\}^*\}.
 $$
@@ -248,12 +250,12 @@ Now, in the relational interpretation, each order 2 non-terminal symbol $N$ yiel
 The equations \eqref{eq:phors1} translate then naturally into a system of \emph{polynomial} equations over such coefficients. On the one hand, we immediately get $A\cdot x= bx$ and $ B\cdot x=cx$, that is, $A=b, B=c$; for the $H_n$ we can solve using $\model{H}(y,x)=\sum_n H_n y^n x$, which yields
 \begin{align*}
 H_2y^2 x&= 
-\delta
+\alpha
 H_2y^2x
-+ (1-a)y^2x,\\
++ \beta y^2x,\\
 H_ny^n x&= 0 \qquad (n\neq 2),
 \end{align*}
-where $\delta=(a^2b^2+a(1-a)c^2)$.
+where $\alpha=(a^2b^2+a(1-a)c^2)$ and $\beta=1-a$.
 In other words, $H_n=0$ for all $n\neq 2$, while $z=H_2$ 
 %is a root of the polynomial $\mathscr p\in \BB R[x,y][z]$
 %$$
@@ -265,11 +267,11 @@ Notice that this implies that a reduction of $H$, \emph{independently of the num
 
 Now, observe that from the equations above it follows 
 $$
-\model{H}(y,x)= \delta\cdot \model{H}(y,x)+(1-a)y^2x
+\model{H}(y,x)= \alpha\cdot \model{H}(y,x)+\beta y^2x
 $$
 that is, the power series $\model{H}(y,x)$ is a root of the polynomial 
 $\mathscr p\in \BB R[x,y][z]$ given by 
-$\mathscr p(x,y)(z)=(\delta-1)\cdot z+ (1-a)y^2x$, so it is algebraic.
+$\mathscr p(x,y)(z)=(\alpha-1)\cdot z+ \beta y^2x$, so it is algebraic.
 
 
 This example illustrates one fact that is general and one that only works in a restricted set of cases. The general fact is that, for \emph{any} PHORS, the relational interpretation produces a set of polynomial equations defining the real coefficients interpreting each non-terminal symbol; however, this system will in general be \emph{infinite}: already at order 2, as we saw, we obtain sequences of coefficients $(a_n)_{n\in \mathbb N}$, each with its own equation. 
@@ -301,6 +303,68 @@ Notice that the unique functional variable $y$, that was used twice, is now repl
 Linearization is a well-known procedure in linear logic which, intuitively, corresponds to unfolding a (finite) exponential $!_nA$ as an $n$-fold tensor $A\otimes\dots \otimes A$. 
 As a consequence, the word languages that are obtained via PHORS typed via graded exponential coincides with those obtained via the affine PHORS of \cite{}. 
 However, notice that the linearized PHORS may well have a number of variables that is exponential with respect to those of the original, non-linear one. 
+
+
+\subsection{Deciding AST and PAST for Finitary PHORS}
+
+We now show how \emph{almost sure termination} (AST) and \emph{positive almost sure termination} (PAST) can be decided for a PHORS typable via graded types.
+Let us recall that AST and PAST are, respectively, the problems to know whether a program terminates with probability 1, and whether its expected number of steps before termination is finite. 
+
+Given a PHORS typable via graded types, we have seen that, for each non-terminal symbol $N$, the associated power series $\model{N}$ contains finitely many non-zero terms $N_ky^k$. As all such (finitely many) coefficients are given in terms of the other ones via polynomial equations, the set of their possible values forms an algebraic variety.
+As a consequence, the interpretation of the source non-terminal $S:o$, which is obtained by combining other non-terminals as well as a unique constant $e:o$, can be expressed as a polynomial combination of the coefficients. 
+At this point, it is not difficult to design a formula in the decidable \emph{first order theory of the reals} \cite{} that expresses that such a polynomial combination of algebraic reals is equal to 1, and thus to decide AST.
+
+We can also obtain a first-order formula expressing PAST via the following two observations.
+In the relational semantics a choice $M\oplus_a N$ with bias $a$ is interpreted as a convex sum $a\model M+(1-a)\model N$; in order to count the number of reduction steps we can multiply each such convex sum by a fresh parameter $w$, yielding $w(a\model M+(1-a)\model N)$. 
+Logically, this corresponds to adding a fresh linear variable $w:o\multimap o$ and replacing each choice $M\oplus_a N$ by $w(M\oplus_a N)$. 
+Notice then that, with this new variable in the game, the type of the source non-terminal $S$
+is now $(o\multimap o)\multimap o$, that is, $S$ 
+ is now interpreted as a formal power series 
+$\model{S}(w)=\sum_{n=0}^\infty S_nw^n$, where $S_n$ is the probability of termination using the fresh parameter $w$ exactly $n$ times, that is, making exactly $n$ probabilistic choices. We will show in Section \ref{} that the power series $\model{S}(w)$ remains algebraic even after this \emph{parameterization} via $w$.
+
+As a paradigmatic example, consider the order-1 PHORS
+\begin{align*}
+Fx&= F(Fx)\oplus_{\frac{1}{2}} x & S&=Fe,
+\end{align*}
+corresponding to a simple random walk. Parameterizing $ F(Fx)\oplus_{\frac{1}{2}} x$ as $w( F(Fx)\oplus_{\frac{1}{2}} x)$ yields the algebraic power series $C(w)$ given by 
+$$
+C(w)= \frac{wC^2(w)+w}{2},
+$$
+whose solution gives precisely the generating function of the \emph{Catalan numbers}
+$C(w)=\sum_{n=0}^\infty C_nw^n = \frac{1-\sqrt{1-4w}}{2w}$ (it is indeed well-known that $C_n$ counts the number of $n$-step paths for the simple random walk)
+
+
+Now, observe that the expected number (+1) of steps (i.e.~of probabilistic choices) is precisely given by $\model{S}'(1)$, where $\model{S}'$ is the \emph{derivative} of $\model{S}$:
+$$
+\model{S}'(w)=\sum_{n=0}^\infty (n+1) S_{n}w^{n}.
+$$
+The derivative $a'(x)$ of an algebraic power series $a(x)$ is still an algebraic power series,
+and there is a well-known method to express $a'(x)$ as a polynomial in $a(x)$ with rational function coefficients \cite{}. All this allows us to express PAST (i.e.~$\model{S}'(1)<\infty$) via some first-order formula over the real numbers, and thus to decide it.
+
+
+
+
+\subsection{Towards Non-Finitary PHORS via Parameterization}
+
+As we saw, a PHORS typable via graded types may use its functional inputs only a finite number of times, independently of the number of its unfoldings. 
+On the other hand, in Section ?? we explore a \emph{parameterization method} that can be used to show the algebraicity also of PHORS that may use their functional inputs an \emph{arbitrary} number of times.
+
+Indeed, an instance of this method underlies our previous discussion of PAST, which relied on showing that the generating function $\model S(w)=\sum_{n=0}^\infty S_nw^n$ for the number of steps to termination of an algebraic PHORS is itself an algebraic power series, in which the variable $w$ may appear arbitrarily many times.
+
+The same idea can then be used to show the algebraicity also for PHORS which are not finitary. For instance, the following order-2 PHORS
+\begin{align*}
+Lyx&=Ly(Lyx)\oplus_a y(yx),\\
+Bx&= x\oplus\Omega,\\
+S&= LBe,
+\end{align*}
+can be seen as a functional and non-linear variant of the simple random walk, in which the function variable $y$ may be used an arbitrary even number of times. 
+
+What makes this example, as well as the previous ones, work, is the remark that the non-terminal $L$ uses the functional variable $y$ as a parameter, that is, we are never asked to compute values of $L$ over, say, $y^2$ or $2y+1$. 
+Formally, this can be captured by looking at this PHORS as an algebraic formal power series 
+with coefficients taken themselves from a semiring of formal power series. In the relational semantics, this corresponds to lifting the underlying continuous semiring of weights from the (extended) positive reals $\BB R_{\geq 0}^\infty$ to the semiring of formal power series
+$\fps{\BB R_{\geq 0}^\infty}{y}$ in the variable $y$, as explained for instance in \cite{}.
+At the same time, we show that all such cases can be captured by extending our graded type system with a new rule that allows to introduce \emph{infinite} grades $!_\infty A$ in a controlled way. 
+
 
 
 %
