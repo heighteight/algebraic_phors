@@ -1,0 +1,142 @@
+
+\subsection{Probabilistic Verification}
+
+
+Probabilistic programming provides a well-established family of methods and tools to specify probabilistic models as well as to perform statistical inference tasks using high-level, compositional, languages. For instance, languages like \emph{Church} or \emph{Anglican} enable the design of generative Bayesian models through finite lists of higher-order and recursive specifications. This provides the user with a user-friendly and high-level environment for stochastic reasoning, allowing them at the same time to implement general purpose inference methods via uniform and re-usable code, without having to adapt them to each model by hand.
+
+A key advantage of this approach to probabilistic modeling is the possibility of exploiting the theoretical background of programming language theory to design verification and model-checking methods for such languages in a way which is both compositional and grounded on solid mathematical foundations.
+In the deterministic setting, a vast literature has explored the model-checking of \emph{higher-order recursive schemes} (HORS) \cite{}, a specification language equivalent to the simply-typed $\lambda$-calculus enriched with a fixpoint operator, building over the paradigmatic result from \cite{} of the decidability, over such programs, of all properties expressible in monadic second order logic (MSO), including termination. 
+
+More recently, Dal Lago et al.~\cite{} have introduced \emph{probabilistic higher-order recursive schemes} (PHORS), a probabilistic variant of HORS, which can be seen as the abstract underlying syntax of languages like Church or Anglican. As it could be expected, similar decidability properties do \emph{not} hold, in full generality, for PHORS, since verifying natural probabilistic counterparts of standard deterministic properties
+is in general a much more difficult task.
+For example, in a probabilistic setting, a natural property to demand is \emph{almost sure termination} (AST), that is, termination with probability 1. Now, while termination is the quintessential semi-decidable property for a Turing-complete language (and is even decidable for HORS),  AST is a $\Pi^0_2$-complete in Turing-complete probabilistic languages \cite{}, and its decidability fails already for PHORS already at order 2. 
+
+For these reasons, the recent literature has focused on capturing sub-classes of PHORS for which AST and, possibly, the related \emph{positive almost sure termination} (PAST) - i.e.~the finiteness of the \emph{expected} number of steps to termination - could be shown decidable, and thus possibly amenable to verification and model-checking techniques.
+Notably, while \cite{} established the decidability of AST for order-1 PHORS, Li et al.~\cite{}, using ideas from linear logic, established the decidability of both AST and PAST for the \emph{affine} PHORS, i.e.~the recursive programs which are demanded to use each of their inputs \emph{at most} once during their reductions.
+
+
+%\begin{itemize}
+%\item some well-known facts about deterministic HORS $\to$ decidability, model-checking
+%
+%\item probabilistic case $\to$ decidability of AST fails already at order 2
+%
+%\item the difficulty lies in computing or estimating the probability of termination, as this requires to \emph{count} over infinitely many reductions, even though these may exhibit a somehow finitary pattern
+%
+%\item Known results: decidability for \emph{affine} and \emph{order 1} PHORS, but undecidability already at order 2
+%\end{itemize}
+
+
+\subsection{Counting Sequences and Generating Functions}
+
+A fundamental reason underlying the difficulty of estimating the actual probability of termination of higher-order programs is that this requires to \emph{count} probabilities over a typically infinite set of reductions, even though such reductions might all follow a somehow finitary pattern.
+
+In combinatorics, these kind of situations are typical of \emph{counting sequences}, that is, of sequences $(a_n)_{n\in \BB N}$ that represent the cardinality $a_n$ of a certain class of entities which can be constructed out of $n$ basic elements (e.g.~the famous \emph{Catalan numbers} $C_n=\frac{1}{n+1}\binom{2n}{n}$, counting the labeled binary trees with $n$ nodes). 
+
+A standard and powerful approach to study counting sequences $(a_n)_{n\in \BB N}$ is by investigating the analytic properties of the corresponding \emph{generating functions} $F(x)=\sum_{n=0}^\infty a_n x^n$, formal power series defining analytic functions over some open subset of the complex numbers.  
+
+Notably, this approach has been widely applied in formal language theory. The sequence 
+$(L_n)_{n\in \BB N}$ associated with a language $L\subseteq \{0,1\}^*$ counts the number of words in $L$ with $n$ letters. For example, when the language $L$ is regular, its counting sequence is defined by linear recurrence equations (like e.g.~the Fibonacci numbers $f_{n+2}=f_n+f_{n+1}$), and the corresponding generating function $\widehat L(x)=\sum_{n=0}^{\infty}L_nx^n$ is thus \emph{rational}, i.e.~a fraction $\frac{\mathscr{p}(x)}{\mathscr{q}(x)}$ of two polynomials.
+
+Moreover, when $L$ is generated by some context-free grammar, the generating function $\widehat L(x)$ is \emph{algebraic}, that is, is the solution $y=L$ of some polynomial equation of the form $\mathscr p(x,y(x))=0$ (while this property fails for \emph{indexed grammars}, a class of grammars lying in the middle between the context-free and the context-sensitive ones, and equivalent to the order-2 HORS \cite{}).
+
+%Knowing that the generating function of some language is rational or algebraic allows one to deduce several interesting properties about the language, like asymptotic estimations for the growth of their counting sequences or disproving 
+%
+%to providing, in some cases, closed forms for the corresponding generating functions, and thus exact methods for 
+
+
+Counting sequences and their generating functions have been applied also for the study of some probabilistic programming languages, e.g.~\cite{}. Indeed, given some probabilistic program $M$ of ground type, one can consider the sequence $(t_n)_{n\in \mathbb N}$ counting the number of distinct reductions of $M$ to termination making $n$ reduction steps; under the simplifying assumption that $M$ makes an unbiased probabilistic choice at each reduction step, considering the generating function $F(x)=\sum_{n=0}^{\infty}\frac{t_n}{2^n}x^n$, the value $F(1)$ precisely captures the probability of termination of $M$.
+Knowing whether $F(x)$ is rational or algebraic can then lead to methods to compute the value $F(1)$ explicitly, or in any case to obtain relevant information about it.
+
+
+%
+%\begin{itemize}
+%
+%\item probability of termination corresponds to a counting problem: for given $n$, how many terminating reductions with $n$ unfoldings?
+%Calling $a_n$ this number, then $P(M\Downarrow)=\sum_n a_n\frac{1}{2^n}$.
+%
+%\item manipulating power series $\to$ theory of generating functions
+%
+%\item well-studied for counting problems: for a language $L$, let $L_n=\sharp\{\text{words $w\in L$ of length }n\}$, then
+%\begin{itemize}
+%\item for $L$ regular, $L_n$ is C-finite (i.e.~satisfies a linear recurrence equation, like Fibonacci numbers $F_{n+2}=F_{n+1}+F_n$)
+%\item for $L$ context-free, $L_n$ is algebraic (i.e.~the function $L(x)=\sum_n a_nL^n$ is zero of a polynomial $p(x,L(x))=0$);
+%\item for $L$ indexed grammar (equivalent to order 2) $L_n$ may be not algebraic.
+%\end{itemize}
+%
+%
+%\item remark that if the termination series $a(x)=P(M\Downarrow)=\sum_n a_nx^n$ is algebraic (i.e.~$p(x,a(x))=0$), then AST is decidable via the first-order theory of the reals. 
+%
+%\item Yet, all this is restricted to grammars and first-order languages, and HORS theory shows that climbing up to higher-orders makes the complexity of the underlying problems increase.
+%\end{itemize}
+
+\subsection{Generating functions for PHORS, via Linear Logic}
+
+While combinatorial approaches to probabilistic termination in the literature are focused on first-order languages, the main goal of this work is to show that the theory of generating functions can be applied to study the termination problem for probabilistic higher-order recursive programs.
+
+
+Notably, leveraging a well-studied denotational semantics coming from linear logic, the \emph{weighted relational semantics} \cite{}, we show that any PHORS can be associated with a formal power series whose coefficients are defined by a countable system of polynomial equations. We then explore different type disciplines capturing classes of PHORS whose corresponding power series are algebraic, and we deduce from this the decidability of their associated AST and PAST problems.
+
+While our approach provides a new method, grounded on algebraic combinatorics, to re-establish the decidability of order-1 and affine PHORS, it also encompasses programs which are \emph{both} non-linear programs and of arbitrary order.
+
+Beyond the relational semantics, that, following \cite{}, we formulate in terms of formal power series, a second important ingredient that comes from linear logic is the theory of \emph{graded linear comonads:} while linearity (or, better, affinity) had already been recognized as a key factor to ensure decidability of probabilistic termination, our approach naturally leads to consider finitary exponentials, as expressed by linear types of the form $!_n A \multimap B$, intuitively expressing functions from $A$ to $B$ using their inputs \emph{at most} $n$ times.
+
+
+%
+%\begin{itemize}
+%
+%\item\textbf{Take home sentence:} 
+%the main goal of this work is to show that the theory of generating functions can be applied to the study of the termination problem for higher-order probabilistic programs. 
+%Using a well-known semantics from linear logic, the weighted relational model, we show that each PHORS can be associated with a formal power series whose coefficients are defined by a countable system of polynomial equations. 
+%
+%
+%
+%
+%
+%
+%
+%
+%%\item it is a folklore fact that weighted Rel interprets higher-order terms as formal power series over a continuous semi-ring.
+%
+%\item example: 
+%$$\lambda f.\mathrm{fix}(\lambda x.fx\oplus \mathrm{True}):(\mathtt{unit}\multimap \mathtt{unit})\To \mathtt{unit}$$
+%has all reduction traces $\lambda f.f^n\mathrm{True}$ (each with probability $\frac{1}{2^n}$), and 
+% yields the generating function $G(f)=\sum_n \frac{1}{2^n}f^n$ with closed form $G(f)=\frac{1}{1-\frac{f}{2}}$.
+% 
+% 
+%
+%\item while such power series are not computable in general, we use the theory of generating functions to capture \emph{decidable} fragments of this semantics. 
+%
+%
+%
+%\item Notably, we capture a class of PHORS (of arbitrary order) whose termination is expressed by an algebraic power series, and for which the AST problem is thus decidable. This class comprises and extends previously studied classes of decidable PHORS, like order 1 and affine PHORS.
+%
+%
+%\item two key ingredients:
+%	\begin{enumerate}
+%	\item \emph{the (weighted) relational semantics}, a well-known model of linear logic and lambda-calculus associating proofs/terms with formal power series valued over a continuous semi-ring. 
+%
+%	\item \emph{graded linear comonads:} while linearity (or, better, affinity) had already been recognized as a key factor to ensure decidability of probabilistic termination, our approach naturally extends to finitary exponentials, as expressed by linear types of the form $!_n A \multimap B$, intuitively expressing functions from $A$ to $B$ using their inputs \emph{at most} $n$ times.
+%	
+%	
+%	\end{enumerate}
+%
+%
+%
+%\end{itemize}
+%
+
+\subsection{Contributions}
+Our contributions can be resumed as follows:
+\begin{varitemize}
+
+\item First, we show that the weighted relational semantics naturally associates each PHORS with a generating function whose coefficients are implicitly defined by a countable system of polynomial equations. 
+
+\item We then introduce a first type system with \emph{finite} grades and fixpoints (indeed a non-linear extension of the type system of Li et al.~\cite{}), and show that the PHORS typable in this system are interpreted by power series that are algebraic over $\mathbb Q$ (yielding the decidability of the corresponding AST and PAST problems).
+%Via well-known linearization techniques, each such typable PHORS can be shown \emph{equivalent} to an affine PHORS in the sense of [Ong], yet the latter may have size more than exponential with respect to the former.
+%% While this system types possibly non-linear PHORS of arbitrary order, it types \emph{all} order1 and affine PHORS.
+
+\item We then explore an extension of the first type system which enables the introduction of \emph{infinite} grades in a controlled way, 
+ allowing us to capture even algebraic PHORS which may use their inputs an \emph{unbounded} number of times. This extension relies on a \emph{parameterization} method for the weighted relational semantics which we think may lead to further results in the future. 
+
+
+\end{varitemize}
