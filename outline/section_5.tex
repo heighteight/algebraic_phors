@@ -1,3 +1,82 @@
+% !TEX root = main.tex
+
+
+In this section we introduce a first type system $\mathbf{G}_{\mathrm{fin}}$ that captures a class of PHORS whose corresponding generating function (defined via its relational interpretation) is algebraic. We will show that both the AST and PAST problems are decidable for the PHORS typable in this system.
+
+$\mathbf{G}_{\mathrm{fin}}$ is an extension of the affine system of (Ong \& co) with \emph{finitely graded} exponentials $!_nA$ ($n\in \mathbb N$), allowing for a program to use a given input \emph{no more} than some fixed number of times. In the next section we will show how to extend this system with \emph{infinite} exponentials $!_\infty A$, enabling programs to use their inputs even an \emph{unbounded} number of times.
+
+\subsection{The system $\mathbf{G}_{\mathrm{fin}}$}
+
+
+The types of $\mathbf{G}_{\mathrm{fin}}$ are defined by the grammar below:
+\begin{align*}
+\varphi,\psi&:= \mathsf 1\mid \varphi\&\psi\mid\  \xi\multimap \varphi\\
+\xi&:=!_k \varphi \qquad (k\in\mathbb N).
+\end{align*}
+We define an order relation $\varphi\sqsubseteq \psi$ between types by induction by
+\begin{align*}
+\infer{\1\sqsubseteq\1}{} \quad
+ \infer{\varphi\&\psi\sqsubseteq\varphi'\&\psi'}{\varphi\sqsubseteq \varphi', \psi\sqsubseteq\psi'}
+\quad \infer{\xi\multimap\varphi\sqsubseteq\xi'\multimap\varphi'}{\xi\sqsubseteq \xi', \varphi\sqsubseteq\varphi'}
+\quad
+\infer{!_k\varphi\sqsubseteq !_h\psi}{k\leq h \quad\varphi\sqsubseteq\psi}
+\end{align*}
+
+The system will use two kinds of contexts: 
+\begin{varitemize}
+\item non-linear contexts, noted $\Gamma,\Gamma'$, will be used for non-terminal symbols; there are finite sets of type bindings of the form $L:\varphi$; intuitively, we put no restrictions on the number of times a non-terminal is used;
+
+
+\item graded contexts, noted $\Delta,\Delta'$ will be used for the arguments to be passed to the non-terminales; they are finite sets of type bindings of the form $x:_k \varphi$; Intuitively, the binding $x :_k \varphi$ means that we can use $x$ with type $\varphi$ \emph{at most} $k$ times.
+\end{varitemize}
+
+We define by induction the operations $\Delta+\Delta',k\Delta$ on graded contexts as follows:
+\begin{align*}
+\Delta +\emptyset &= \Delta, \\
+(\Delta,x:_{k}\varphi) + (\Delta',x:_{h}\varphi) &= (\Delta+\Delta'),x:_{k+h}\varphi;\\
+%\Delta \vee\emptyset &= \Delta, \\
+%(\Delta,x:_{k}\varphi) \vee (\Delta',x:_{h}\varphi) &= (\Delta+\Delta'),x:_{\max\{k,h\}}\varphi;\\
+k\emptyset&=\emptyset,\\
+k(\Delta,x:_{h}\varphi)  &= k\Delta,x:_{kh}\varphi,
+\end{align*}
+where, as in (Gaboardi etc.) we are assuming that $\Delta$ and $\Delta'$ agree on each variable (i.e.~they contain the same type bindings but may disagree on the corresponding coefficients). 
+
+A type judgement is an expression of either form $\Gamma;\Delta\vdash M:\tau$ (where $\tau$ indicates either a type $\varphi$ or a graded type $\xi$) or
+$\emptyset;\emptyset\vdash^{\mathrm{fix}} M:\varphi$. The second form of type judgements are called \emph{PHORS-typings}. Notice that in a PHORS-typing we require the context to be empty.
+The typing rules are illustrated in Fig.~\ref{fig:typerules}. To these rules is added the following fixpoint rule
+$$
+		\infer[ Y]{\emptyset;\emptyset \vdash^{\mathrm{fix}}  Y t : \psi }{\emptyset; \emptyset \vdash t : \varphi \to \psi \quad \psi \sqsubseteq \varphi  }
+$$
+which allows to introduce a PHORS-typings.
+
+\begin{figure*}
+\begin{align*}
+	\begin{array}{ccc}
+		\infer[ax1]{\Gamma; \Delta\vdash x:\varphi }{x:_p\varphi\in \Delta,\quad 1 \leq p} &\qquad &
+		\infer[ax2]{\Gamma; \Delta \vdash L:\varphi }{ L:\varphi  \in \Gamma}\\[5pt]
+		\infer[!]{\Gamma;k\Delta \vdash t: !_k \varphi}{\Gamma;\Delta \vdash t: \varphi \quad k\in \mathbb N} & \qquad &
+		 \infer[\oplus]{\Gamma, \Delta \vdash t \oplus t' : \1 }{\Gamma; \Delta \vdash t:\1 \quad \Gamma; \Delta \vdash t':\1} \\[5pt]
+		\infer[\lambda]{\Gamma; \Delta \vdash \lambda x. t : !_k \varphi \multimap \psi }{\Gamma; \Delta, x:_k \varphi \vdash t : \psi}
+		& \qquad &
+		\infer[@]{\Gamma; \Delta + \Delta' \vdash tu : \psi}
+		{\Gamma; \Delta \vdash t :\xi \multimap \tau \qquad \Gamma; \Delta' \vdash u :\xi }\\[5pt]
+		\infer[\langle \rangle]{\Gamma; \Delta \vdash \langle t_1, t_2 \rangle : \varphi_1 \& \varphi_2}{\Gamma; \Delta \vdash t_i : \varphi_i \; i=1,2}& \qquad &
+		\infer[\pi_i]{\Gamma; \Delta \vdash \pi_i t: \varphi_i}{\Gamma; \Delta \vdash t: \varphi_1 \& \varphi_2}
+%		\\[5pt]
+%		\infer[\lambda \infty]{\Gamma; \Delta \vdash t: \tau \to \sigma}{\Gamma, L: \tau; \Delta \vdash t: \sigma} 
+	\end{array}
+\end{align*}
+\caption{Typing rules of $\mathbf{G}_{\mathrm{fin}}$.}
+\label{fig:typerules}
+\end{figure*}
+
+
+\subsection{Decidability of AST and PAST}
+
+
+
+
+
 {\color{red}
 
 - rules of the type system
