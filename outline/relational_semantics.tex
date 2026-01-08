@@ -1,7 +1,7 @@
-In this paragraph, first we introduce the weighted relational semantics of linear logic over a continous semiring $\Rsemiring$, in a slightly different flavour than the one used in (cite Laird, Manzonetto): rather than using $\Rsemiring$-valued matrices, we will use formal power series over $\Rsemiring$, as in (cite Paolo and Davide's work about tropical lambda calculus). Secondly, we will recall the notion of algebraic power series and then we will prove a proposition about the algebraic characterization of the fixpoint of an operator over power series.\\
-First, we recall some notions about formal power series; for more details about them and their applications to combinatorics we refer to (cite the concrete tetrahedron). Given a finite set $\Sigma$, 
+In this paragraph, first we introduce the weighted relational semantics of linear logic over a continous semiring $\Rsemiring$, in a slightly different flavour than the one used in (cite Laird, Manzonetto): rather than using $\Rsemiring$-valued matrices, we will use formal power series over $\Rsemiring$, as in (cite Paolo and Davide's work about tropical lambda calculus). Secondly, we will recall the notion of algebraic power series: this is a concept widely used in algebra and combinatorics (cite Flajolet, Kauers, Eisenbud), but in the context of ring or fields. Its treatment in seminrings is less standard, but we will not have to worry too much about this, as we will work with a semirings $\Rsemiring$ (usually $\Rinf$) that has a subsemiring embe\\
+First, we recall some notions about formal power series; for more details about them and their applications to combinatorics we refer to (cite the concrete tetrahedron). Given a set $\Sigma$, 
 let us call $!\Sigma$ the set of finite multisets over it, i.e functions $\mu: \Sigma \to \NAT$ with finite support. If $\Rsemiring$ is a semiring , we call $\fps{\Rsemiring}{\Sigma}$ the set of functions $!X \to \Rsemiring$. More concretely, if
- we introduce for each $s \in \Sigma$ a variable $x_s$ (we will denote by $x_\Sigma$ the set of all this variables), then a multiset $\mu \in !\Sigma$ can be seen as the monomial $x_\Sigma^\mu \bydef \Pi_{s \in \Sigma}x_s^{\mu(s)}$; then a formal power series can be expressed as a formal sum:
+ we introduce for each $s \in \Sigma$ a variable $x_s$ (we will denote by $x_\Sigma$ the set of all this variables), then a finite multiset $\mu \in !\Sigma$ can be seen as the monomial $x_\Sigma^\mu \bydef \Pi_{s \in \Sigma}x_s^{\mu(s)}$; then a formal power series can be expressed as a formal sum:
  $$\sum_{\mu \in !\Sigma} r_\mu x_\Sigma^{\mu}  $$; we will also write $s(x_\Sigma)$ to underline which variables appear in $s$.\\
  In $\fps{\Rsemiring}{\Sigma}$ we can define two operations: sum, performed componentwise: $\sum_{\mu \in !\Sigma} r_\mu x_\Sigma^{\mu} + \sum_{\mu \in !\Sigma} s_\mu x_\Sigma^{\mu} \bydef \sum_{\mu \in !\Sigma} (r_\mu + s_\mu)  x_\Sigma^{\mu}$ and the Cauchy product: $$\sum_{\mu \in !\Sigma} r_\mu x_\Sigma^{\mu} \cdot \sum_{\mu \in !\Sigma} s_\mu x_\Sigma^{\mu} \bydef \sum_{\kappa \in !\Sigma} (\sum_{\mu + \nu = \kappa} r_\mu s_\nu))  x_\Sigma^{\kappa}$$
  With this operations, $\fps{\Rsemiring}{\Sigma}$ is a semiring ; if we take on it the pointwise (partial order), it becomes a continuous semiring. Continuity is essential when we want to define the \textit{composition} of formal power series. Take a power series $r \in \fps{\Rsemiring}{\Sigma}$ and let $s_\Sigma$ be a $\Sigma$-indexed family of power series over the set $\Sigma'$, $s_\sigma = \sum_{\nu \in !\Sigma'}s_{\sigma, \nu} y^\nu$. Then, we can define the power series $r(s_\Sigma) \in \fps{\Rsemiring}{\Sigma'}$ by the formula:
@@ -9,7 +9,11 @@ let us call $!\Sigma$ the set of finite multisets over it, i.e functions $\mu: \
   &r(s_\Sigma) =\\ &\sum_{\kappa \in ! \Sigma'} y_\Sigma^\kappa \left( \sum_{[\sigma_1^{m_1} \dots \sigma_j^{m_j}] \in !\Sigma} r_{{[\sigma_1^{m_1} \dots \sigma_j^{m_j}] }} \sum_{\nu_1 + \dots + \nu_{m_1 + \dots + m_j}= \kappa} \prod_{i=1}^{m_1 + \dots + m_j} s_{\sigma_i, \nu_i } \right)
   \end{align*}
   Observe that the if there is at least an $s_\sigma$ such that $s_{\sigma, []} \neq 0$, the sum over $!\Sigma$ will be infinite; still, being in a continuous semiring, we can define its value to be the sup of the partial sums. If the power series $s_\Sigma$ are all constants (i.e. $s_{\sigma, \mu}=0 \: \forall \mu \neq []$), we will say that $r(s_\Sigma) \in \fps{\Rsemiring}{\emptyset}= \Rsemiring$ is the value of $r$ at the point $(s_{\sigma, []})_{\sigma \in \Sigma}$.\\
-  For a finite set $\Sigma$ and a natural number $k$, let $!_nX$ be the family of multisets $\mu$ of maximal multeplicity $k$ (i.e $\max_{s \in \Sigma} \mu(i)\leq k)$. This is clearly a finite subset of $!\Sigma$, corresponding to monomials over $x_\Sigma$ having degree at most $n$ in each variable. If a power series $p: !\Sigma \to \Rsemiring$ is such that $ \exists k \in \NAT \: \supp p \subseteq !_k \Sigma$, we say that $p$ is a polynomial. In this case, $p$ can be seen as a finite sum:
+  For a finite set $\Sigma$ and a natural number $k$, let $!_nX$ be the family of multisets $\mu$ of maximal multeplicity $k$ (i.e $\max_{s \in \Sigma} \mu(i)\leq k)$. This is clearly a subset of $!\Sigma$, corresponding to monomials over $x_\Sigma$ having degree at most $n$ in each variable. If a power series $p: !\Sigma \to \Rsemiring$ is such that $ \exists k \in \N \mid \supp p \subseteq !_k \Sigma$, we say that $p$ is a \textit{generalized} polynomial, if moreover $\supp p$ is finite we say that it is a [classical] polynomial. All classical polynomials are generalized polynomials, but the converse is not true unless $\Sigma$ is finite. When we say 'polynomial' without any specification, we always mean a classical polynomial.
+  \begin{example}
+  	$\sum_{n} (1/2)^n x^x$ belongs to $\fps{\Rinf}{x}$ and it is neither a generalized or a classical polynomial, while  $\sum_{n \geq 1} (1/2)^n x_1 \dots x_n \in \fps{\Rinf}{x_\N}$ is a generalized polynomial but not a polynomial, and  $\sum_{1 \leq n \leq 50} (1/2)^n x_1 \dots x_n \in \fps{\Rinf}{x_\N}$ is a polynomial.
+  \end{example}
+   In this case, $p$ can be seen as a finite sum:
   $$p= \sum_{n_1 \dots n_{|\Sigma|} = 0}^k p_{n_1 \dots n_{|\Sigma|}} x_{\sigma_1}^{n_1} \dots x_{\sigma_{|\Sigma|}}^{n_{|\Sigma|}}$$
   Polynomial form a sub- semiring of $\fps{\Rsemiring}{\Sigma}$, that we will denote as $\fps{\Rsemiring}{\Sigma}$. It is obviously not continuous, as the supremum of a collection of polynomials can be an infinite power series. Composition of polynomials do not involve infinite sums: the coefficients of the composition $r(s_\Sigma)$ are indeed polynomials in the coefficients of $r$ and $s_\Sigma$
   \begin{lemma}
@@ -18,18 +22,86 @@ let us call $!\Sigma$ the set of finite multisets over it, i.e functions $\mu: \
   	$$p_{\mu}((r_\kappa)_{\kappa \in !_k\Sigma}, (s_{\sigma_1, \kappa})_{\kappa \in !_{k_1}\Sigma}  \dots (s_{\sigma_n, \kappa})_{\kappa \in !_{k_n}\Sigma}) $$
   \end{lemma}
   Let us say something on what happens if we do not start with a continuous semiring $\Rsemiring$, but rather with a ring $R$. In this case, almost all of the constructions we made will still work: we will be able to define the set $\fps{R}{\Sigma}$ of formal power series over $R$, which will be a ring and its subring  $\fps{R}{\Sigma}$ of polynomials over $R$. Still, the composition of formal power series will not be defined in general, as it involves an infinite sum, while the composition of polynomial will work without problems.\\
-  As we saw, power series are infinitary objects and their manipulation can then involve the concept of limit, making it generally uncomputable. Moreover, the continuous semiring we will generally use in the context of probabilistic semantics will be $\Rinf$ and the semiring of formal power series over $\Rinf$: hence, the computation with the coefficients of power series themselves could be infinitary. To our rescue, we will use a way to give a finitary specification of power series: this will be the concept of algebraicity. First, we recall it in the context of rings:
+  As we saw, power series are infinitary objects and their manipulation can then involve the concept of limit, making it generally uncomputable. Moreover, the continuous semiring we will generally use in the context of probabilistic semantics will be $\Rinf$ and the semiring of formal power series over $\Rinf$: hence, the computation with the coefficients of power series themselves could be infinitary. To our rescue, we will use a way to give a finitary specification of power series: this will be the concept of algebraicity. First, we recall it in the context of rings, which is the one most customary in combinatorics; we will then remark how the situation differs on a semiring :
   \begin{definition}
-  	Let $R$ be a ring and let $R'$ be a sub ring of it.
-  	With a little abuse of notation, we say that a formal power series $s \in \fps{R}{\Sigma}$ is \textbf{algebraic} over $R'$ if there exists a polynomial $p(w, x_\Sigma) \in \fpp{R'}{\Sigma \cup w}$ such that $p(r, x_\Sigma)=0$.
+  	Let $R$ be a ring  and let $R'$ be a sub ring of it.
+  	We say that a family $(s_1, \dots s_n)$ of formal power series $s_i \in \fps{R}{\Sigma}$ is an \textbf{algebraic family} over $R'$ if there exist polynomials $p(w_1, \dots w_n, x_\Sigma) \in \fpp{R'}{w_1, \dots w_n, \Sigma}$ such that:
+  	\begin{equation*}
+  	\begin{cases}
+  		p_1(s_1, \dots s_n, x_\Sigma)=0\\
+  		\dots\\
+  		p_n(s_1, \dots s_n, x_\Sigma)=0\\
+  	\end{cases}
+  	\end{equation*}
+  	 If for an $s \in \fps{R}{\Sigma}$, $(s)$ is an algebraic family (i.e there exists a polynomial $p(w_1, x_\Sigma) \in \fpp{R'}{w \cup \Sigma}$ such that $p(s, x_\Sigma)=0$, we say that $s$ is algebraic.
   \end{definition}
   \begin{example}
   	\begin{itemize}
   		\item Let $s \in \fps{\R}{x}$ be $\sum_{n \geq 0}x^n$. Then if we take the polynomial $p(w,x) = w(1-x)-1$, we get $p(s, x)=0$. Hence, $s$ is algebraic over $\Q$. Indeed, $s$ is the multiplicative inverse $(1-x)^{-1}$ of $(1-x)$ in $\fps{\R}{x}$. In general, every $\Q$ rational power series (i.e every power series of the form $r_1(x_\Sigma)r_2(x_\Sigma)^{-1}$ for $r_1, r_2 \in \fps{\Q}{\Sigma}$) is algebraic over $\Q$ 
-  		\item Let $s= \sum_{n \geq 0} \frac{1}{n+1} \binom{2n}{n} x^{n} \in \fps{\R}{x}$. One can verify that this is the Taylor expansion around $0$ of the (analytic) function $\frac{1-\sqrt{1-4z}}{2z}$. From this, it is easy to see that, taking $p(w, x)= zw^2 - w + 1$, that $p(s, x)=0$. Observe that computing $s(1) = sum_{n \geq 0} \frac{1}{n+1} \binom{2n}{n}$ as a limit is hard, but, using the equation $p(s(x), x)=0$, we can easily deduce that $s(1)$ is the (only) positive root of $w^2-w+1$. 
+  		\item Let $s= \sum_{n \geq 0} \frac{1}{n+1} \binom{2n}{n} x^{n} \in \fps{\R}{x}$. One can verify that this is the Taylor expansion around $0$ of the (analytic) function $\frac{1-\sqrt{1-4z}}{2z}$. From this, it is easy to see that, taking $p(w, x)= zw^2 - w + 1$, that $p(s, x)=0$. Observe that computing $s(1) = \sum_{n \geq 0} \frac{1}{n+1} \binom{2n}{n}$ as a limit is hard, but, using the equation $p(s(x), x)=0$, we can easily deduce that $s(1)$ is the (only) positive root of $w^2-w+1$. 
   		\end{itemize}
   \end{example}	
-  Now, we recall the link between formal power series and the weigthed relational model of linear logic. In (cite Laird, Manzonetto), given a continous semiring a category $\Qrel$ 
-  \begin{proposition}
-  	Let $p_{!\Sigma}$ be a finitely supported family of polynomials in $\fpp{R}{!\Sigma}$ (i.e there exists $n$ s.t $p_\mu =0$ if $\mu \not \in !_n \Sigma$). Then, $fix p_{!\Sigma}$ is a polynomial.
-  \end{proposition}	
+  We will now show that being for a power series $s$ over a ring which is an integrity domain being algebraic and being part of an algebraic familiy are the same:
+  \begin{lemma}
+  	(Here, it is necessary for R to be an UFD)
+  	If $p, q \in \fpp{R'}{w_1,x_\Sigma}$, there exists a polynomial $Res_{w_1}(p,q) \in \fpp{R'}{x_\Sigma}$ such that if $(\bar w, \bar x_\Sigma)$  is a common root of $p,q$ in any extension $R \supseteq R'$, then $Res(\bar x_\Sigma)=0$.
+  \end{lemma}
+  \begin{lemma}
+  	If $(s_1, \dots s_n)$ are an $R'$ algebraic family of power series, then each $s_i$ is an algebraic power series
+  \end{lemma}
+  \begin{proof}
+  	Taking the resultant  $Res_i$ of $p_1$ with every $p_i \: i \geq 2$, we obtain a system of $n-1$ equations in the variables $w_2, \dots w_n, x_\Sigma$. Iterating this procedure $n-1$ times, we are left with a single equations in the variables $w_n, x_\Sigma$
+  \end{proof}
+  \begin{remark}
+  \end{remark}
+  The theory of algebraic power series should be stated in a slightly different way in the context of semirings: if $a \in \fps{\Rsemiring}{\Sigma}, a > 0$, then for each $k$ $a^k > 0$, hence it is not possible that $p(a, x_\Sigma)=0$ for some $p \in \fpp{\Rsemiring}{\Sigma}$. One could give the following definitions:
+   \begin{definition}
+  	Let $\Rsemiring$ be a semiring and let $\Rsemiring'$ be a subsemiring of it. Then
+  	  	e say that a family $(s_1, \dots s_n)$ of formal power series $s_i \in \fps{\Rsemiring}{\Sigma}$ is an \textbf{algebraic family} over $\Rsemiring'$ if there exist polynomials $p(w_1, \dots w_n, x_\Sigma), q(w_1, \dots w_n, x_\Sigma)  \in \fpp{p(w_1, \dots w_n, x_\Sigma)'}{w_1, \dots w_n, \Sigma}$ such that:
+  	\begin{equation*}
+  		\begin{cases}
+  			q_1(s_1, \dots s_n, x_\Sigma) = p_1(s_1, \dots s_n, x_\Sigma)\\
+  			\dots\\
+  			q_n(s_1, \dots s_n, x_\Sigma) = p_n(s_1, \dots s_n, x_\Sigma)\\
+  		\end{cases}
+  	\end{equation*}
+  	If $q_i = w_i$ for each $i$ we say that $(s_1, \dots s_n)$ is a \textbf{fixpoint algebraic family} over $\Rsemiring'$ with parameters $x_\Sigma$ and that:
+  		\begin{equation}
+  		\label{fixpointsystem}
+  		\begin{cases}
+  			w_1 = p_1(s_1, \dots s_n, x_\Sigma)\\
+  			\dots\\
+  			w_n = p_n(s_1, \dots s_n, x_\Sigma)\\
+  		\end{cases}
+  	\end{equation}
+  		is a  \textbf{fixpoint algebraic system over} $\Rsemiring'$ with parameters $x_\Sigma$. 
+\end{definition}
+	The theory of systems like \ref{fixpointsystem} has been extensively studied (cite Kuich, Schlund) in the context of formal language theory: in particular, it can be shown that they admit a minimal solution, that can be obtained by iterating the polynomials $p_1 \dots p_n$. We will not go into the details, because in the following we will be in general be interested into $\Rinf$ power series algebraic over $\Q_{\geq 0}$: in this case, the polynomial equations $w_i= p_i, \: p \in \fpp{\Qpos}{\Sigma}$ can be rewritten as $p'_i \bydef p_i- w_i = 0, \: p \in \fpp{\Qpos}{\Sigma}$. Rather than speaking of the minimal solution of \ref{fixpointsystem} as a system with coefficients in $\Qpos$, we will be able to speak about the minimal non negative solution of the system $(p'_i=0)_{1 \leq i \leq n}$ with coefficients over $\mathbb{Q}$.\\
+  Now, we recall the link between formal power series and the weighted relational model of linear logic. In (cite Laird, Manzonetto), given a continous semiring a category $\Qrel$ is defined, whose objects are sets and morphisms $\Qrel(X, Y)$ are $\Rsemiring$-valued matrices indexed by $X \times Y$. In the category $\Qrelkeisli$, the coKleisli category of $\Qrel$ with respect to the $!$ comonad, morphisms $\Qrelkeisli (X, Y)$ are $\Rsemiring$-valued matrices indexed by $!X \times Y$; as remarked in (cite Paolo and Davide), a matrix $(t_{\mu, y})_{\mu \in !X, y \in Y}$ can be seen as a $Y$-indexed family of power series $(\sum t_{\mu, y} x_X^\mu)_{y \in Y}$. By this identification, we can from now one see $\Qrelkeisli$ as a category whose objects are set and whose morphisms $\Qrelkeisli (X, Y)$ are  $Y$-indexed family $s_Y$ of power series over $x_X$.\\
+  Observe that if $Y$ is an exponential object $!Y_1 \times Y_2$, then the arrow $Eval \circ f \times id_{Y_2}: X \times Y_2 \to Y_1$ is represented by the family of series $(\sum_{\kappa \in !Y_1} (\sum t_{\mu, (\kappa, y_2)} x_X^\mu) x_{Y_1}^\kappa)_{y_2 \in Y_2}$\\
+  We will now discuss how fixpoints in $\Qrelkeisli$ are related to fixpoint algebraic systems. Suppose we have a morphism $f \in \Qrelkeisli(X \times Y, X)$. Now, we can define as follows its fixpoint $\fix f \in \Qrelkeisli(Y, X)$. Take the succession:$f_0 \bydef  0 \times id_Y \in \Qrelkeisli(1 \times Y ,X \times Y), \: f_{n+1} \bydef f \circ (f_n \times id_Y) \circ \langle id_\1, \Delta_Y \rangle  \in \Qrelkeisli(1 \times Y, X)$ and finally $\fix f \bydef \sup_n f_n \in \Qrelkeisli(1 \times Y \simeq Y, X)$.
+   In terms of power series, $f$ will be represented by an $X$-indexed family $(s_x(x_X, x_Y))_{x \in X}$. Then we can define its iterates and the fixpoint as follows, for $x \in X$:
+   \begin{align*}
+   	& r_x^{(0)}(x_Y) = 0 \in \fps{\Rsemiring}{Y}\\
+   	& r^{(n+1)}_x(x_Y) =  s_x(r_\Sigma(x_Y), x_Y)\\
+   	& (\fix s_X)_x(x_Y) = \sup_n r^{(n)}_x(x_Y)
+   \end{align*} 
+	From this, it is clear that the power series $r_\Sigma= \fix f$ are the minimal solution of the infinite family of equations: $(r_x = s_x(r_x, x_Y))_{x \in X}$. We are interested to the case in which the fixpoint $r_\Sigma$ ha finite support, so that family can be reduced to a fixpoint algebraic system: asking just that the $s_x$ are polynomials is not enough , as there would be anyway infinitely many equations. 
+	\begin{definition}
+		If $X' \subset X$, we define $I(s_X, X')$ to be the set:
+		$$\{s_\sigma : s_\sigma(0) \neq 0 \lor s_\sigma \in \fpp{\Rsemiring}{X'} \sqcup Y \} $$
+		Take an $X$-indexed family  of polynomials $(s_x(x_X, x_Y))_{x \in X}$. If there exist an $X' \subseteq X$ such that $I(s_X, X')$ is finite and $I(s_X, X') \subseteq X'$, we say $(s_x(x_X, x_Y))_{x \in X}$ is a finitary family.
+	\end{definition}
+	\begin{proposition}
+		 Let $\Rsemiring'$ be a subsemiring of $\Rsemiring$.  
+		 If $(s_x(x_X, x_Y))_{x \in X}$ is a finitary family of $\Rsemiring'$ polynomials, then $\fix s_X$ has finite support and it is the minimal solution of a fixpoint algebraic family over $\Rsemiring'$ .  
+   \end{proposition}
+   \begin{proof}(Sketch)
+   		For each $X'$ such that $I(s_\Sigma, X') \subseteq X'$ , the support of $\fix s_X$ is contained in $I(s_\Sigma, X')$. Now, let $A \bydef I(s_\Sigma, X')$. Take the system of equations: $(r_a = s_a(r_a, x_Y))_{a \in A}$ and let $\bar r_A$ be one of its solution. Then, define $(t_x)_{x \in X}$ to be $r_x$ if $x \in A$ and $0$ otherwise. For each $x \not \in A$, $s_x$ does not contain any constant neither any variable $x_A, x_Y$: hence it satisfies $s_x(t_X, x_Y)=0$.
+   \end{proof}
+   Now assume that $X$ is an exponential objects, so that $\fix s_X$ can be interpreted as a function $X_1 \to X_2$, i.e as a family of power series $\sum_{\kappa \in !X} r_{\kappa, x_2} x_{X_1}^\kappa \in \fpp{\Rsemiring}{X_1}$.
+   	\begin{corollary}
+   	In the setting of the previous proposition, if $X$ is an exponential object $X_1 \to X_2$ and 
+   	$\Rsemiring' = \mathbb{Q}^+$, $\Rsemiring = \Rinf$, we have that for all $x_2 \in X_2$, the power series $\sum_{\kappa \in !X} r_{\kappa, x_2} x_{X_1}^\kappa \in \fpp{\R}{X_1}$ is algebraic over $\R$ with parameters $x_Y$.
+   \end{corollary}
+ 

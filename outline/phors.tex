@@ -34,6 +34,15 @@ It is known that PAST implies AST. On the other side, in (cite Ugo, Charles, Kob
 	\end{align*}
 	cannot be simulated by any order 1 PHORS.
 \end{remark}
-\begin{remark}
- The recursive formalism of HORS can be expressed in the $\lambda Y$ calculus (i.e the STLC to which for each type $T$ a fixpoint combinator $Y_G: (T \to T) \to T$) is added). More precisely, there is an equivalence between $HORS$ and $\lambda Y$ terms of ground type. 
- \end{remark}
+ The recursive formalism of (P)HORS can be expressed in the $\lambda Y$ calculus (i.e the STLC to which for each type $T$ a fixpoint combinator $Y_G: (T \to T) \to T$) is added). In particular, given a PHORS:
+ \begin{equation*}
+ 	\label{phors010}
+ 	\left\{
+ 	\begin{aligned}
+ 		&L_1 f_{1,1} \dots  f_{1,k_1} = t_1\\
+ 		&\dots \\
+ 		&L_1 f_{n,1} \dots  f_{n,k_n} = t_n\\
+ 	\end{aligned}
+ 	\right.
+ \end{equation*}
+ we associate to it the $\lambda Y$ term $\fix  \lambda.\langle L_1 \dots  L_n \rangle . \langle \bar t_1 \dots \bar t_n \rangle$, where $\bar t_i \bydef \lambda f_{i,1} \dots \lambda f_{i, n_i}. t$.
