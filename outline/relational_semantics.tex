@@ -1,5 +1,7 @@
 % !TEX root = main.tex
-In this section, we first recall the well-studied relational semantics of linear logic weighted over a continous semiring $\Rsemiring$, although in a slightly different flavor than the one used in (cite Laird, Manzonetto): rather than using $\Rsemiring$-valued matrices, we will use formal power series over $\Rsemiring$, as in (cite Paolo and Davide's work about tropical lambda calculus). Then, we focus on algebraic power series: this is a concept widely used in algebra and combinatorics (cite Flajolet, Kauers, Eisenbud), in the context of rings or fields. Its treatment in semi-rings is less standard, but extensively studied in the context of formal language theory (cite Kuich, Schlund). We will show that, through the relational semantics, such ideas apply naturally to the semantics of probabilistic $\lambda$-calculi.
+In this section, we recall the well-studied relational semantics of linear logic weighted over a continuous semiring $\Rsemiring$, although in a slightly different flavor than the one used in (cite Laird, Manzonetto): rather than using $\Rsemiring$-valued matrices, we will use formal power series over $\Rsemiring$, as in (cite Paolo and Davide's work about tropical lambda calculus). We will notably illustrate how this semantics yields an interpretation of PHORS, via $\lambda_{\oplus} Y$, as formal power series.
+
+% Then, we focus on algebraic power series: this is a concept widely used in algebra and combinatorics (cite Flajolet, Kauers, Eisenbud), in the context of rings or fields. Its treatment in semi-rings is less standard, but extensively studied in the context of formal language theory (cite Kuich, Schlund). We will show that, through the relational semantics, such ideas apply naturally to the semantics of probabilistic $\lambda$-calculi.
 
 
 
@@ -218,6 +220,9 @@ the scalar $\model{\pi_2M}^{\Rinf}=(\mathsf{fix}\  s_{\N +1})_\star=1$ interpret
   
   
   \section{Algebraic Power Series}
+  
+   Then, we focus on algebraic power series: this is a concept widely used in algebra and combinatorics (cite Flajolet, Kauers, Eisenbud), in the context of rings or fields. Its treatment in semi-rings is less standard, but extensively studied in the context of formal language theory (cite Kuich, Schlund). We will show that, through the relational semantics, such ideas apply naturally to the semantics of probabilistic $\lambda$-calculi.
+
     We will now discuss how fixpoints in $\Qrelkleisli{\Rsemiring}$ are related to fixpoint algebraic systems. Suppose we have a morphism $f \in \Qrelkleisli{\Rsemiring}(X \times Y, X)$. Now, we can define as follows its fixpoint $\fix f \in \Qrelkleisli{\Rsemiring}(Y, X)$. Take the succession:$f_0 \bydef  0 \times id_Y \in \Qrelkleisli{\Rsemiring}(1 \times Y ,X \times Y), \: f_{n+1} \bydef f \circ (f_n \times id_Y) \circ \langle id_\1, \Delta_Y \rangle  \in \Qrelkleisli{\Rsemiring}(1 \times Y, X)$ and finally $\fix f \bydef \sup_n f_n \in \Qrelkleisli{\Rsemiring}(1 \times Y \simeq Y, X)$.
 	We are interested to the case in which the fixpoint $r_\Sigma$ ha finite support, so that family can be reduced to a fixpoint algebraic system: asking just that the $s_x$ are polynomials is not enough , as there would be anyway infinitely many equations. 
 
