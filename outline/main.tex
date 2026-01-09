@@ -1,20 +1,41 @@
 %\documentclass[sigplan,nonacm,screen,review, anonymous]{acmart}
-\documentclass[conference]{IEEEtran}
+\documentclass[sigconf,anonymous]{acmart}
 
-\IEEEoverridecommandlockouts
+\AtBeginDocument{%
+  \providecommand\BibTeX{{%
+    Bib\TeX}}}
+
 % The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
 %Template version as of 6/27/2024
 
-\usepackage{cite}
-\usepackage{amsmath,amssymb,amsfonts, amsthm}
+%\usepackage[nameinlink]{cleveref}
+%\usepackage{enumitem}[shortlabels]
+%\makeatletter
+%\AtEndPreamble{%
+%  \theoremstyle{acmdefinition}
+%  \@ifundefined{rem}{%
+%    \newtheorem{rem}[theorem]{Remark}
+%  }{}%
+%  \crefname{enumi}{}{}
+%  \Crefname{enumi}{}{}
+%  \crefname{lemma}{Lemma}{Lemmas}
+%  \Crefname{lemma}{Lemma}{Lemmas}
+%  \crefname{definition}{Definition}{Definitions}
+%  \Crefname{definition}{Definition}{Definitions}
+%}
+%\makeatother
+
+
+%\usepackage{cite}
+%\usepackage{amsmath,amssymb,amsfonts, amsthm}
 \usepackage{algorithmic}
 \usepackage{graphicx}
 \usepackage{textcomp}
 \usepackage{xcolor}
 \usepackage{stmaryrd}
 \usepackage{hyperref}
-\usepackage{MnSymbol}
-\usepackage{mathrsfs}  
+%\usepackage{MnSymbol}
+%\usepackage{mathrsfs}  
 
 
 
@@ -25,7 +46,7 @@
 \usepackage{bussproofs}\EnableBpAbbreviations
 \usepackage{subcaption}
 \usepackage{listings}
-\usepackage[scr=boondoxo,scrscaled=1.05]{mathalfa}
+%\usepackage[scr=boondoxo,scrscaled=1.05]{mathalfa}
 
 
 \usepackage{tikz}
@@ -35,10 +56,11 @@
     
 
 \input{macros}
-
-\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
-    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
+
+
+%\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+%    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
 
 
@@ -46,7 +68,7 @@
 \title{On Higher-Order Program Verification through Generating Functions and Linear Logic}
 
 
-\author{\IEEEauthorblockN{Anonymous Authors}}
+\author{{Anonymous Authors}}
 %
 %
 %\author{\IEEEauthorblockN{1\textsuperscript{st} Davide Barbarossa}
@@ -60,17 +82,17 @@
 %paolo.pistone@ens-lyon.fr}
 
 
-\maketitle
 
 \begin{abstract}
 
 
 \end{abstract}
 
+\keywords{Quantum computation, lambda-calculus, compilation, geometry of interaction}
 
-\begin{IEEEkeywords}
+\maketitle
 
-\end{IEEEkeywords}
+
 
 
 
