@@ -135,7 +135,7 @@ Hence, one can interpret $\lambda_{\oplus} Y$ (or even probabilistic PCF) in all
 \begin{proposition}[cite Pagani and co]
 For any $\lambda_{\oplus} Y$ closed term $M:\1$, 
 \begin{equation}\label{eq:prob1}
-\model{M}^{\Rinf}=\mathbf P(M\Downarrow)=\sum_{R:M\to^* e}w(R).
+\model{M}^{\Rinf}=\mathbb P(M\downarrow)=\sum_{R:M\to^* e}w(R).
 \end{equation}
 \end{proposition}
 \begin{remark}
@@ -170,15 +170,8 @@ This result translates the fact that in a reduction of $M$ to normal form, a gro
 %
 %\end{example}
 
-\begin{example}
-Consider the order-1 PHORS defined by
-\begin{align*}
-Fx&= F(Fx)\oplus_{\frac{1}{2}} x,\\
-S&= Fe.
-\end{align*}
-Its encoding in $\Lambda Y$ is given by $M=Y \lambda\langle F,S\rangle. M':(\1\to \1)\times \1$, where 
-$M'=
-\langle \lambda  x.F(Fx)\oplus_{\frac{1}{2}} x, Fe\rangle$. 
+\begin{example}\label{ex:phors2}
+Consider the PHORS from Examples \ref{ex:phors0} and \ref{ex:phors1}.
 %
 % Its interpretation $\model{M}^{\Rinf}\in 
 % \Qrelkleisli{\Rinf}(1, \N+1)\equiv

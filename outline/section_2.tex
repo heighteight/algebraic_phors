@@ -53,13 +53,15 @@ PHORS are always \emph{affine}, that is, they may use their input variables \emp
 %$
 
 Consider now a program defined by the following equations:
-\begin{align}\label{eq:phors1}
+\begin{equation}\label{eq:phors1}
+\begin{aligned}
 Hyx&=( H(A\circ y)x \oplus_{a}
 H(B\circ y)x )\oplus_{a}y(yx)\\
 Ax&= x\oplus_{b} \Omega\\
 Bx&=x\oplus_{c} \Omega\\
 S&=HIe
-\end{align}
+\end{aligned}
+\end{equation}
 
 This is indeed an example of PHORS: the upper case letters are called \emph{non-terminal} symbols, the execution of the program starts from the order 0 non-terminal $S$ by applying instances of the equations, read from left to right, as well as probabilistic choices, until the unit constant $e$ is, eventually, produced. 
 Notice that $I$ and $\Omega$ stand, respectively, for the identity and diverging terms, and that $a,b,c,d$ stand for rational biases for the probabilistic choice operators.
