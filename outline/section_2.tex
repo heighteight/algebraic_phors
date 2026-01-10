@@ -162,9 +162,9 @@ whose solution gives precisely the generating function of the {Catalan numbers}
 $C(w)=\sum_{n=0}^\infty C_nw^n = \frac{1-\sqrt{1-4w}}{2w}$ (it is indeed well-known that $C_n$ counts the number of $n$-step paths for the simple random walk)
 
 
-Now, observe that the expected number (+1) of steps (i.e.~of probabilistic choices) is precisely given by $\model{S}'(1)$, where $\model{S}'$ is the \emph{derivative} of $\model{S}$:
+Now, observe that the expected number of steps (i.e.~of probabilistic choices) is precisely given by $\model{S}'(1)$, where $\model{S}'$ is the \emph{derivative} of $\model{S}$:
 $$
-\model{S}'(w)=\sum_{n=0}^\infty (n+1) S_{n}w^{n}.
+\model{S}'(w)=\sum_{n=1}^\infty n\cdot S_{n}w^{n-1}.
 $$
 The derivative $a'(x)$ of an algebraic power series $a(x)$ is still an algebraic power series,
 and there is a well-known method to express $a'(x)$ as a polynomial in $a(x)$ with rational function coefficients \cite{}. All this allows us to express PAST (i.e.~$\model{S}'(1)<\infty$) via some first-order formula over the real numbers, and thus to decide it.

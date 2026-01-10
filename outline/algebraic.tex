@@ -1,0 +1,156 @@
+% !TEX root = main.tex
+
+  
+  As we saw, power series are infinitary objects and their manipulation can involve the concept of limit, making it generally uncomputable. In this section, we explore a way to provide somehow \emph{finitary} specifications for power series through the concept of algebraicity. 
+  Algebraic power series are widely used in algebra and combinatorics (cite Flajolet, Kauers, Eisenbud), in the context of rings or fields. Its treatment in semi-rings is less standard, but extensively studied in the context of formal language theory (cite Kuich, Schlund).
+    We will show that, through the relational semantics, such ideas apply naturally to the semantics of probabilistic $\lambda$-calculi.
+
+\subsection{Fixpoint Algebraic Systems}
+  
+In the previous section we have seen that a PHORS, seen through $\lambda_{\oplus} Y$ as a fixpoint, can be associated with formal power series defined as minimal solutions of an equational system. Computing such power series directly can be very hard in general; in particular, as we saw, these capture properties like AST or PAST which are undecidable in general. However, when the equational system defining them is algebraic, that is, expressed in terms of polynomials, it becomes possible to extract information, or even compute, such power series indirectly. 
+
+As a famous example, consider the fps $s(x)= \sum_{n \geq 0} \frac{1}{n+1} \binom{2n}{n} x^{n} \in \fps{\R}{x}$. One can verify that this is the Taylor expansion around $0$ of the (analytic) function $\frac{1-\sqrt{1-4z}}{2z}$. From this, it is easy to see, taking $p(w, x)= zw^2 - w + 1$, that $p(s, x)=0$. Observe that computing $s(1) = \sum_{n \geq 0} \frac{1}{n+1} \binom{2n}{n}$ as a limit is hard, but, using the equation $p(s(x), x)=0$, we can easily deduce that $s(1)$ is the (only) positive root of $w^2-w+1$. 
+
+\begin{example}\label{ex:phors4}
+Equation \eqref{eq:alg2} from Example \ref{ex:phors3} can be rewritten as $p(a_1(z),z)=0$, where $p(w,z)=\frac{z}{2}w^2-w+\frac{z}{2}$, which gives the solution $a_1(z)=\frac{1-\sqrt{1-z^2}}{z}$.
+Using the previous fps $s(x)$ we deduce, with $w=\left(\frac{z}{2}\right)^2$, 
+\[
+a_1(z)=\frac{1-\sqrt{1-4w}}{2w}w=s(w)w=\sum_{i=0}^{\infty}\frac{C_i}{2^{2i+1}}z^{2i+1}.
+\]
+The interpretation of this is that, for any $i\in \N$, there are $C_i$ terminating reductions that make $2i+1$ probabilistic choices. On the other hand, there is no terminating path of even length, as there is no random walk going from 1 to 0 in an even number of steps.
+\end{example}
+  
+%  
+%  the continuous semiring we will generally use in the context of probabilistic semantics will be $\Rinf$ and the semiring of formal power series over $\Rinf$: hence, the computation with the coefficients of power series themselves could be infinitary. 
+  
+   
+   
+   
+%
+%    We will now discuss how fixpoints in $\Qrelkleisli{\Rsemiring}$ are related to fixpoint algebraic systems. Suppose we have a morphism $f \in \Qrelkleisli{\Rsemiring}(X \times Y, X)$. Now, we can define as follows its fixpoint $\fix f \in \Qrelkleisli{\Rsemiring}(Y, X)$. Take the succession:$f_0 \bydef  0 \times id_Y \in \Qrelkleisli{\Rsemiring}(1 \times Y ,X \times Y), \: f_{n+1} \bydef f \circ (f_n \times id_Y) \circ \langle id_\1, \Delta_Y \rangle  \in \Qrelkleisli{\Rsemiring}(1 \times Y, X)$ and finally $\fix f \bydef \sup_n f_n \in \Qrelkleisli{\Rsemiring}(1 \times Y \simeq Y, X)$.
+%	We are interested to the case in which the fixpoint $r_\Sigma$ ha finite support, so that family can be reduced to a fixpoint algebraic system: asking just that the $s_x$ are polynomials is not enough , as there would be anyway infinitely many equations. 
+%
+%  
+%  As we saw, power series are infinitary objects and their manipulation can then involve the concept of limit, making it generally uncomputable. Moreover, the continuous semiring we will generally use in the context of probabilistic semantics will be $\Rinf$ and the semiring of formal power series over $\Rinf$: hence, the computation with the coefficients of power series themselves could be infinitary. To our rescue, we will use a way to give a finitary specification of power series: this will be the concept of algebraicity. 
+  
+  Before considering algebraic power series on a (continuous) semiring, let us first recall the case of rings, which is the one most customary in combinatorics
+  \begin{definition}
+  	Let $R$ be a ring  and let $R'\leq R$ a sub ring.
+  	A family $(s_1, \dots s_n)$ of formal power series $s_i \in \fps{R}{\Sigma}$ is an \textbf{algebraic family} over $R'$ if there exist polynomials $p_i \in \fpp{R'}{w_1, \dots w_n, \Sigma}$ such that:
+  	\begin{equation*}
+  	\begin{cases}
+  		p_1(s_1, \dots s_n, x_\Sigma)=0\\
+  		\dots\\
+  		p_n(s_1, \dots s_n, x_\Sigma)=0\\
+  	\end{cases}
+  	\end{equation*}
+  	 If for an $s \in \fps{R}{\Sigma}$, $(s)$ is an algebraic family (i.e there exists a polynomial $p(w_1, x_\Sigma) \in \fpp{R'}{w \cup \Sigma}$ such that $p(s, x_\Sigma)=0$, we say that $s$ is algebraic.
+  \end{definition}
+  
+
+  \begin{example}
+%  	\begin{itemize}
+%  		\item 
+		Let $s \in \fps{\R}{x}$ be $\sum_{n \geq 0}x^n$. Then if we take the polynomial $p(w,x) = w(1-x)-1$, we get $p(s, x)=0$. Hence, $s$ is algebraic over $\Q$. Indeed, $s$ is the multiplicative inverse $(1-x)^{-1}$ of $(1-x)$ in $\fps{\R}{x}$. In general, every $\Q$ rational power series (i.e every power series of the form $r_1(x_\Sigma)r_2(x_\Sigma)^{-1}$ for $r_1, r_2 \in \fps{\Q}{\Sigma}$) is algebraic over $\Q$ 
+%  		\item Let $s= \sum_{n \geq 0} \frac{1}{n+1} \binom{2n}{n} x^{n} \in \fps{\R}{x}$. One can verify that this is the Taylor expansion around $0$ of the (analytic) function $\frac{1-\sqrt{1-4z}}{2z}$. From this, it is easy to see that, taking $p(w, x)= zw^2 - w + 1$, that $p(s, x)=0$. Observe that computing $s(1) = \sum_{n \geq 0} \frac{1}{n+1} \binom{2n}{n}$ as a limit is hard, but, using the equation $p(s(x), x)=0$, we can easily deduce that $s(1)$ is the (only) positive root of $w^2-w+1$. 
+%  		\end{itemize}
+  \end{example}	
+  We will now show that, for a power series $s$ over a ring which is an integrity domain, being algebraic and being part of an algebraic family are the same:
+  \begin{lemma}
+  	(Here, it is necessary for R to be an UFD)
+  	If $p, q \in \fpp{R'}{w_1,x_\Sigma}$, there exists a polynomial $Res_{w_1}(p,q) \in \fpp{R'}{x_\Sigma}$ such that if $(\bar w, \bar x_\Sigma)$  is a common root of $p,q$ in any extension $R \supseteq R'$, then $Res(\bar x_\Sigma)=0$.
+  \end{lemma}
+  \begin{lemma}
+  	If $(s_1, \dots s_n)$ are an $R'$ algebraic family of power series, then each $s_i$ is an algebraic power series
+  \end{lemma}
+  \begin{proof}
+  	Taking the resultant  $Res_i$ of $p_1$ with every $p_i \: i \geq 2$, we obtain a system of $n-1$ equations in the variables $w_2, \dots w_n, x_\Sigma$. Iterating this procedure $n-1$ times, we are left with a single equations in the variables $w_n, x_\Sigma$
+  \end{proof}
+
+  The theory of algebraic power series should be stated in a slightly different way in the context of semirings: if $a \in \fps{\Rsemiring}{\Sigma}, a > 0$, then for each $k$ $a^k > 0$, hence it is not possible that $p(a, x_\Sigma)=0$ for some $p \in \fpp{\Rsemiring}{\Sigma}$. One could give the following definitions:
+   \begin{definition}
+  	Let $\Rsemiring$ be a semiring and let $\Rsemiring'\leq \Rsemiring$ be a subsemiring. A family $(s_1, \dots s_n)$ of formal power series $s_i \in \fps{\Rsemiring}{\Sigma}$ is an \textbf{algebraic family} over $\Rsemiring'$ if there exist polynomials $p_i, q_i  \in \fpp{\Rsemiring'}{w_1, \dots w_n, \Sigma}$ such that:
+  	\begin{equation*}
+  		\begin{cases}
+  			q_1(s_1, \dots s_n, x_\Sigma) = p_1(s_1, \dots s_n, x_\Sigma)\\
+  			\dots\\
+  			q_n(s_1, \dots s_n, x_\Sigma) = p_n(s_1, \dots s_n, x_\Sigma)\\
+  		\end{cases}
+  	\end{equation*}
+  	If $q_i = w_i$ for each $i$ we say that $(s_1, \dots s_n)$ is a \textbf{fixpoint algebraic family} over $\Rsemiring'$ with parameters $x_\Sigma$ and that:
+  		\begin{equation}
+  		\label{fixpointsystem}
+  		\begin{cases}
+  			w_1 = p_1(s_1, \dots s_n, x_\Sigma)\\
+  			\dots\\
+  			w_n = p_n(s_1, \dots s_n, x_\Sigma)\\
+  		\end{cases}
+  	\end{equation}
+  		is a  \textbf{fixpoint algebraic system} (in short \textbf{fas), over} $\Rsemiring'$ with parameters $x_\Sigma$. 
+\end{definition}
+	The theory of systems like \eqref{fixpointsystem} has been extensively studied (cite Kuich, Schlund) in the context of formal language theory: in particular, it can be shown that they admit a minimal solution, that can be obtained by iterating the polynomials $p_1 \dots p_n$. We will not go into the details, because in the following we will be in general be interested into $\Rinf$ power series algebraic over $\Q_{\geq 0}$: in this case, the polynomial equations $w_i= p_i, \: p \in \fpp{\Qpos}{\Sigma}$ can be rewritten as $p'_i \bydef p_i- w_i = 0, \: p \in \fpp{\Qpos}{\Sigma}$. Rather than speaking of the minimal solution of \eqref{fixpointsystem} as a system with coefficients in $\Qpos$, we will be able to speak about the minimal non-negative solution of the system $(p'_i=0)_{1 \leq i \leq n}$ with coefficients over $\mathbb{Q}$.\\
+%  Now, we recall the link between formal power series and the weighted relational model of linear logic. In (cite Laird, Manzonetto), given a continous semiring a category $\Qrel$ is defined, whose objects are sets and morphisms $\Qrel(X, Y)$ are $\Rsemiring$-valued matrices indexed by $X \times Y$. In the category $\Qrelkleisli{\Rsemiring}$, the coKleisli category of $\Qrel$ with respect to the $!$ comonad, morphisms $\Qrelkleisli{\Rsemiring} (X, Y)$ are $\Rsemiring$-valued matrices indexed by $!X \times Y$; as remarked in (cite Paolo and Davide), a matrix $(t_{\mu, y})_{\mu \in !X, y \in Y}$ can be seen as a $Y$-indexed family of power series $(\sum t_{\mu, y} x_X^\mu)_{y \in Y}$. By this identification, we can from now one see $\Qrelkleisli{\Rsemiring}$ as a category whose objects are set and whose morphisms $\Qrelkleisli{\Rsemiring} (X, Y)$ are  $Y$-indexed family $s_Y$ of power series over $x_X$.\\
+%  Observe that if $Y$ is an exponential object $!Y_1 \times Y_2$, then the arrow $Eval \circ f \times id_{Y_2}: X \times Y_2 \to Y_1$ is represented by the family of series $(\sum_{\kappa \in !Y_1} (\sum t_{\mu, (\kappa, y_2)} x_X^\mu) x_{Y_1}^\kappa)_{y_2 \in Y_2}$\\
+%  We will now discuss how fixpoints in $\Qrelkleisli{\Rsemiring}$ are related to fixpoint algebraic systems. Suppose we have a morphism $f \in \Qrelkleisli{\Rsemiring}(X \times Y, X)$. Now, we can define as follows its fixpoint $\fix f \in \Qrelkleisli{\Rsemiring}(Y, X)$. Take the succession:$f_0 \bydef  0 \times id_Y \in \Qrelkleisli{\Rsemiring}(1 \times Y ,X \times Y), \: f_{n+1} \bydef f \circ (f_n \times id_Y) \circ \langle id_\1, \Delta_Y \rangle  \in \Qrelkleisli{\Rsemiring}(1 \times Y, X)$ and finally $\fix f \bydef \sup_n f_n \in \Qrelkleisli{\Rsemiring}(1 \times Y \simeq Y, X)$.
+%   In terms of power series, $f$ will be represented by an $X$-indexed family $(s_x(x_X, x_Y))_{x \in X}$. Then we can define its iterates and the fixpoint as follows, for $x \in X$:
+%   \begin{align*}
+%   	& r_x^{(0)}(x_Y) = 0 \in \fps{\Rsemiring}{Y}\\
+%   	& r^{(n+1)}_x(x_Y) =  s_x(r_\Sigma(x_Y), x_Y)\\
+%   	& (\fix s_X)_x(x_Y) = \sup_n r^{(n)}_x(x_Y)
+%   \end{align*} 
+%	From this, it is clear that the power series $r_\Sigma= \fix f$ are the minimal solution of the infinite family of equations: $(r_x = s_x(r_x, x_Y))_{x \in X}$. 
+
+
+\subsection{From PHORS to Fas}
+
+
+	We are interested in the case in which the fixpoint equations that define (the interpretation of) a PHORS in $\Qrelkleisli{\Rsemiring}$ are a fas, thus yielding as solution an algebraic power series.
+	
+For this, let us first look at how fixpoints in $\Qrelkleisli{\Rsemiring}$ are related to fixpoint algebraic systems. 
+Suppose we have a morphism $f \in \Qrelkleisli{\Rsemiring}(X \times Y, X)$.
+	We have seen that the power series $r_X= \fix f$ are the minimal solution of the infinite family of equations: $(r_x = s_x(r_x, x_Y))_{x \in X}$ (cf.~Equation \eqref{eq:fixpointeq}).  
+To reduce this family to a fas it is enough to require $r_\Sigma$ to have finite support:
+	\begin{definition}[finitary fps]
+		Let $s_X\in \fps{\Rsemiring}{X+Y}^X$ be a family of fps.
+		$s_X$ is called \emph{finitary} if there exists $X'\subset X$ such that the following set:
+		\[
+		I(s_X,X')=
+		\{\sigma\in X \mid
+		 s_\sigma(0) \neq 0 \lor s_\sigma \in \fpp{\Rsemiring}{X' + Y} \} \]
+		 is finite and contained in $X'$.
+%		 
+%%		(Take an $X$-indexed family  of polynomials $(s_x(x_X, x_Y))_{x \in X}$. If there exist an $X' \subseteq X$ such that
+%A family $s_X\in \fps{\Rsemiring}{X+Y}^X$ is said \emph{finitary} if there exists $X'\subset X$ such that $I(s_X, X')$ is finite and $I(s_X, X') \subseteq X'$.
+%%		 $(s_x(x_X, x_Y))_{x \in X}$ is a finitary family.
+	\end{definition}
+	
+If $s_X$ is finitary, then it means that one can find a restricted set of variables $X'\subset X$ such that all iterates $r^{n}_x$ (cf.~Eq.~\eqref{eq:fixpointeq}) must be polynomials in $X'+Y$, so that $\fix s_X=\sup_n r^{n}_X$ is a power series in $X'+Y$. 
+Moreover, the finiteness of the set $I(s_X,X')$ leads to:
+
+	\begin{proposition}
+		 Let $\Rsemiring'\leq\Rsemiring$.  
+		 If $s_X\in \fps{\Rsemiring'}{X+Y}^X$ is a finitary family, then $\fix s_X$ has finite support and it is the minimal solution of a fixpoint algebraic family over $\Rsemiring'$ .  
+   \end{proposition}
+   \begin{proof}(Sketch)
+   		For each $X'$ such that $I(s_\Sigma, X') \subseteq X'$ , the support of $\fix s_X$ is contained in $I(s_\Sigma, X')$. Now, let $A \bydef I(s_\Sigma, X')$. Take the (finite) system of equations: $(r_a = s_a(r_a, x_Y))_{a \in A}$ and let $\bar r_A$ be one of its solution. Then, define $(t_x)_{x \in X}$ to be $r_x$ if $x \in A$ and $0$ otherwise. For each $x \not \in A$, $s_x$ does not contain any constant neither any variable $x_A, x_Y$: hence it satisfies $s_x(t_X, x_Y)=0$.
+   \end{proof}
+       Notice that, for the previous argument to work, simply asking that the $s_x$ be polynomials is not enough, as there would be anyway infinitely many equations. 
+
+   
+  \begin{example}[DA SISTEMARE]
+  Let $X=\N+1$, $Y=0$ and $t_X\in \fps{\Rinf}{X+Y}$ be the fps from Example \ref{ex:phors2}. 
+  Letting $X'=\{1\}\subset X$, we have
+  $I(t_X,X')=X'$, so the family is finitary. In other words, the fixpoint $a=\fix t_X$ can be computed by considering only the equation $a_1=t_1(a_1)$ (i.e.~\eqref{eq:alg1}).
+We deduce that $a_1\in \Rinf$ is algebraic over $\mathbb Q^+$.
+A similar argument, applied to Example \ref{ex:phors3}, shows that the solution $a_1(z)\in \fps{\Rinf}{z}$ is algebraic over $\fps{\mathbb Q^+}{z}$.
+    
+  \end{example} 
+   
+   Now assume that $X=\ !X_1\times X_2$ is an exponential object, so that $\fix s_X$ can be interpreted as a function $X_1 \to X_2$, i.e as a family of power series $\sum_{\kappa \in !X} r_{\kappa, x_2} x_{X_1}^\kappa \in \fpp{\Rsemiring}{X_1}$.
+   	\begin{corollary}
+   	In the setting of the previous proposition, if $X=\ !X_1\times X_2$ and 
+   	$\Rsemiring' = \mathbb{Q}^+$, $\Rsemiring = \Rinf$, we have that for all $x_2 \in X_2$, the power series $\sum_{\kappa \in !X} r_{\kappa, x_2} x_{X_1}^\kappa \in \fps{\Rinf}{X_1}$ is algebraic over $\mathbb Q^+$ with parameters $x_Y$.
+   \end{corollary}
+   
+
+ 

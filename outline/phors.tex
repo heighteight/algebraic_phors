@@ -43,10 +43,10 @@ define the term
 \[
 M_{\gphors}:= Y \ \lambda \langle L_1,\dots, L_n\rangle. \langle \bar t_1 \dots \bar t_n \rangle,
 \]
-where $\bar t_i \bydef \lambda x_{i,1} \dots \lambda f_{x, n_i}. t_i$. Letting  
+where $\bar t_i \bydef \lambda x_{i,1} \dots \lambda x_{x, n_i}. t_i$. Letting  
 $\Gamma_{\mathcal T}$ be the set of assignments $f:T_f$ associating each terminal $f\in \mathcal T$ with its type, we can then associate each non-terminal $L_i:T$ with a term 
 $M_{L_i}:=\pi_iM_{\gphors}$ so that $
-\Gamma_{\mathcal T}\vdash_{\lambda Y} M_{L_i}:T$ (where $\Gamma_{\mathcal T}$ is the set of assignments $f:T_f$ associating each terminal $f\in \mathcal T$ with its type).
+\Gamma_{\mathcal T}\vdash_{\lambda Y} M_{L_i}:T$.
 
 
 
@@ -119,7 +119,7 @@ and typing rule
 \]
 The \emph{call-by-value reduction $\redbigp{}$} of the $\lambda_{\oplus} Y$-calculus is the closure of the reductions above as well as 
  $\beta$-reduction $(\lambda x.M)N\redbigp{\epsilon,1} M[N/x]$ and $Y$-reduction $YM\redbigp{\epsilon,1}M(YM)$ under the rule
- $M\redbigp{} N \ \Rightarrow \ MP \redbigp{} NP$. The address and weight of a reduction can be defined as for the PHORS. 
+ $M\redbigp{\sigma, p} N \ \Rightarrow \ MP \redbigp{\sigma, p} NP$. The address and weight of a reduction can be defined as for the PHORS. 
   
  
 The translation of a PHORS $\gphors$ into a term $M_{\gphors}$ of the $\lambda_{\oplus} Y$-calculus works exactly as in the case of HORS. In particular, the reductions $R:S\redbigp{\sigma, p}n$ to normal form are in one-to-one correspondences with probabilistic call-by-value reductions $R:M_S\redbigp{\sigma, p}n$ to normal form in $\lambda_{\oplus} Y$, with same addresses and weights.
