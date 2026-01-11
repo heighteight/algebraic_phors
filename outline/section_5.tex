@@ -42,7 +42,7 @@ k(\Delta,x:_{h}\varphi)  &= k\Delta,x:_{kh}\varphi,
 \end{align*}
 where, as in (Gaboardi etc.) we are assuming that $\Delta$ and $\Delta'$ agree on each variable (i.e.~they contain the same type bindings but may disagree on the corresponding coefficients). 
 
-A type judgement is an expression of either form $\Gamma;\Delta\vdash t:\tau$ (where $\tau$ indicates either a type $\varphi$ or a graded type $\xi$) or
+A type judgement is an expression of either of the form $\Gamma;\Delta\vdash t:\varphi$ or
 $\emptyset;\emptyset\vdash^{\mathrm{fix}} t:\varphi$. The second form of type judgements are called \emph{PHORS-typings}. Notice that in a PHORS-typing we require the context to be empty.
 The typing rules are illustrated in Fig.~\ref{fig:typerules}. While most rules are standard graded variants of the rules of the simply typed $\lambda$-calculus (see Gaboardi, Mazza etc.), fixpoints are introduced by a
  \emph{finitary fixpoint rule} $Y_{\mathrm{fin}}$, which produces a PHORS-typings. As we'll see, this rule ensures that the finiteness condition of Definition \ref{def:finitary} holds for the corresponding fps.
