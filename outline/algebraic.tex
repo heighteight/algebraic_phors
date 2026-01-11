@@ -117,6 +117,7 @@ To reduce this family to a fas it is enough to require $r_\Sigma$ to have finite
 		I(s_X,X')=
 		\{\sigma\in X \mid
 		 s_\sigma(0) \neq 0 \lor 
+		 \fpp{\Rsemiring}{X+Y}\ni
 		 (s_\sigma)\vert_{X'+Y}\neq 0\}
 %		 s_\sigma \in \fpp{\Rsemiring}{X' + Y} \}
 		  \]
@@ -127,7 +128,8 @@ To reduce this family to a fas it is enough to require $r_\Sigma$ to have finite
 %%		 $(s_x(x_X, x_Y))_{x \in X}$ is a finitary family.
 	\end{definition}
 	
-If $s_X$ is finitary, then one can find a finite sub-family $s_{A}$, for some $A=I(\sigma_X,X')\subset X$ such that, for all $a\in A$, the iterates $r^n_a$ (cf.~Eq.~\eqref{eq:fixpointeq}) are constructed using only polynomials from $s_A$. The fixpoint $\fix s_X=\sup_n r^{n}_X$ will be a solution of a fas generated from this family:
+The set $I(s_X,X')$ contains the fps from $s_X$ that either have a non-zero constant part or whose restriction to $X'$ is a non-zero polynomial. 	
+If $s_X$ is finitary, letting $A=I(\sigma_X,X')\subset X$, this ensures that, for all $a\in A$, the iterates $r^n_a$ (cf.~Eq.~\eqref{eq:fixpointeq}) are constructed by composing finitely many polynomials. The fixpoint $\fix s_X=\sup_n r^{n}_X$ will then be a solution of a fas generated from such polynomials:
 
 	\begin{proposition}\label{prop:fintoalg}
 		 Let $\Rsemiring'\leq\Rsemiring$.  
