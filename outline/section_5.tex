@@ -1,14 +1,15 @@
 % !TEX root = main.tex
 
 
-In this section we introduce a first type system $\mathbf{G}_{\mathrm{fin}}$ that captures a class of PHORS whose corresponding generating function (defined via its relational interpretation) is algebraic. We will show that both the AST and PAST problems are decidable for the PHORS typable in this system.
+In this section we introduce a first type system $\Gfin$ that captures a class of PHORS whose corresponding generating functions are algebraic. We will show that both the AST and PAST problems are decidable for the PHORS typable in this system.
 
-$\mathbf{G}_{\mathrm{fin}}$ is an extension of the affine system of (Ong \& co) with \emph{finitely graded} exponentials $!_nA$ ($n\in \mathbb N$), allowing for a program to use a given input \emph{no more} than some fixed number of times. In the next section we will show how to extend this system with \emph{infinite} exponentials $!_\infty A$, enabling programs to use their inputs even an \emph{unbounded} number of times.
+$\Gfin$ is an extension of the affine system of (Ong \& co) with \emph{finitely graded} exponentials $!_kA$ ($k\in \mathbb N$), allowing for a program to use a given input \emph{no more} than some fixed number of times.
+ In the next section we will show how to extend this system with \emph{infinite} exponentials $!_\infty A$, enabling programs to use their inputs even an \emph{unbounded} number of times.
 
-\subsection{The system $\mathbf{G}_{\mathrm{fin}}$}
+\subsection{The system $\Gfin$}
 
 
-The types of $\mathbf{G}_{\mathrm{fin}}$ are defined by the grammar below:
+The types of $\Gfin$ are defined by the grammar below:
 \begin{align*}
 \varphi,\psi&:= \mathsf 1\mid \varphi\&\psi\mid\  \xi\multimap \varphi\\
 \xi&:=!_k \varphi \qquad (k\in\mathbb N).
@@ -24,7 +25,7 @@ We define an order relation $\varphi\sqsubseteq \psi$ between types by induction
 
 The system will use two kinds of contexts: 
 \begin{varitemize}
-\item non-linear contexts, noted $\Gamma,\Gamma'$, will be used for non-terminal symbols; there are finite sets of type bindings of the form $L:\varphi$; intuitively, we put no restrictions on the number of times a non-terminal is used;
+\item non-linear contexts, noted $\nonterm,\nonterm'$ will be used for non-terminal symbols; there are finite sets of type bindings of the form $L:\varphi$; intuitively, we put no restrictions on the number of times a non-terminal is used;
 
 
 \item graded contexts, noted $\Delta,\Delta'$ will be used for the arguments to be passed to the non-terminales; they are finite sets of type bindings of the form $x:_k \varphi$; Intuitively, the binding $x :_k \varphi$ means that we can use $x$ with type $\varphi$ \emph{at most} $k$ times.
@@ -41,34 +42,157 @@ k(\Delta,x:_{h}\varphi)  &= k\Delta,x:_{kh}\varphi,
 \end{align*}
 where, as in (Gaboardi etc.) we are assuming that $\Delta$ and $\Delta'$ agree on each variable (i.e.~they contain the same type bindings but may disagree on the corresponding coefficients). 
 
-A type judgement is an expression of either form $\Gamma;\Delta\vdash M:\tau$ (where $\tau$ indicates either a type $\varphi$ or a graded type $\xi$) or
-$\emptyset;\emptyset\vdash^{\mathrm{fix}} M:\varphi$. The second form of type judgements are called \emph{PHORS-typings}. Notice that in a PHORS-typing we require the context to be empty.
-The typing rules are illustrated in Fig.~\ref{fig:typerules}. To these rules is added the following fixpoint rule
-$$
-		\infer[ Y]{\emptyset;\emptyset \vdash^{\mathrm{fix}}  Y t : \psi }{\emptyset; \emptyset \vdash t : \varphi \to \psi \quad \psi \sqsubseteq \varphi  }
-$$
-which allows to introduce a PHORS-typings.
+A type judgement is an expression of either form $\Gamma;\Delta\vdash t:\tau$ (where $\tau$ indicates either a type $\varphi$ or a graded type $\xi$) or
+$\emptyset;\emptyset\vdash^{\mathrm{fix}} t:\varphi$. The second form of type judgements are called \emph{PHORS-typings}. Notice that in a PHORS-typing we require the context to be empty.
+The typing rules are illustrated in Fig.~\ref{fig:typerules}. While most rules are standard graded variants of the rules of the simply typed $\lambda$-calculus (see Gaboardi, Mazza etc.), fixpoints are introduced by a
+ \emph{finitary fixpoint rule} $Y_{\mathrm{fin}}$, which produces a PHORS-typings. As we'll see, this rule ensures that the finiteness condition of Definition \ref{def:finitary} holds for the corresponding fps.
+Notice that the graded context in $Y_{\mathrm{fin}}$ is required to be empty.
 
-\begin{figure*}
+
+
+
+\begin{figure}
+\fbox{
+\begin{minipage}{.43\textwidth}
+\resizebox{.99\textwidth}{!}{
+\begin{minipage}{1.1\textwidth}
 \begin{align*}
 	\begin{array}{ccc}
-		\infer[ax1]{\Gamma; \Delta\vdash x:\varphi }{x:_p\varphi\in \Delta,\quad 1 \leq p} &\qquad &
-		\infer[ax2]{\Gamma; \Delta \vdash L:\varphi }{ L:\varphi  \in \Gamma}\\[5pt]
-		\infer[!]{\Gamma;k\Delta \vdash t: !_k \varphi}{\Gamma;\Delta \vdash t: \varphi \quad k\in \mathbb N} & \qquad &
-		 \infer[\oplus]{\Gamma, \Delta \vdash t \oplus t' : \1 }{\Gamma; \Delta \vdash t:\1 \quad \Gamma; \Delta \vdash t':\1} \\[5pt]
-		\infer[\lambda]{\Gamma; \Delta \vdash \lambda x. t : !_k \varphi \multimap \psi }{\Gamma; \Delta, x:_k \varphi \vdash t : \psi}
-		& \qquad &
-		\infer[@]{\Gamma; \Delta + \Delta' \vdash tu : \psi}
-		{\Gamma; \Delta \vdash t :\xi \multimap \tau \qquad \Gamma; \Delta' \vdash u :\xi }\\[5pt]
-		\infer[\langle \rangle]{\Gamma; \Delta \vdash \langle t_1, t_2 \rangle : \varphi_1 \& \varphi_2}{\Gamma; \Delta \vdash t_i : \varphi_i \; i=1,2}& \qquad &
-		\infer[\pi_i]{\Gamma; \Delta \vdash \pi_i t: \varphi_i}{\Gamma; \Delta \vdash t: \varphi_1 \& \varphi_2}
+		\infer[ax1]{\nonterm\mid \Delta\vdash x:\varphi }{x:_p\varphi\in \Delta,\quad 1 \leq p} & &
+		\infer[ax2]{\nonterm\mid\Delta \vdash L:\varphi }{ L:\varphi  \in \nonterm}\\[7pt]
+%		\infer[!]{\Gamma;k\Delta \vdash t: !_k \varphi}{\Gamma;\Delta \vdash t: \varphi \quad k\in \mathbb N}
+%		 & \qquad &
+%		 \infer[\oplus]{\Gamma, \Delta \vdash t \oplus t' : \1 }{\Gamma; \Delta \vdash t:\1 \quad \Gamma; \Delta \vdash t':\1} \\[5pt]
+%		 
+		\infer[\lambda]{\nonterm\mid \Delta \vdash \lambda x. t : !_k \varphi \multimap \psi }{\nonterm \mid \Delta, x:_k \varphi \vdash t : \psi}
+		&  &
+		\infer[@]{\nonterm\mid \Delta + k\Delta' \vdash tu : \psi}
+		{\nonterm\mid\Delta \vdash t :!_k\varphi \multimap \tau \qquad \nonterm\mid \Delta' \vdash u :\varphi }\\[9pt]
+		\infer[\langle \rangle]{\nonterm\mid \Delta \vdash \langle t_1, t_2 \rangle : \varphi_1 \& \varphi_2}{\nonterm\mid \Delta \vdash t_i : \varphi_i \; i=1,2}&  &
+		\infer[\pi_i]{\nonterm\mid \Delta \vdash \pi_i t: \varphi_i}{\nonterm\mid \Delta \vdash t: \varphi_1 \& \varphi_2}
 %		\\[5pt]
 %		\infer[\lambda \infty]{\Gamma; \Delta \vdash t: \tau \to \sigma}{\Gamma, L: \tau; \Delta \vdash t: \sigma} 
 	\end{array}
-\end{align*}
-\caption{Typing rules of $\mathbf{G}_{\mathrm{fin}}$.}
+	\end{align*}
+	\begin{align*}
+		 \infer[\oplus]{\nonterm\mid \Delta \vdash t \oplus t' : \1 }{\nonterm\mid \Delta \vdash t:\1 \quad \nonterm\mid \Delta \vdash t':\1} 
+	\end{align*}
+		\begin{align*}
+			\infer[ Y_{\mathrm{fin}}]{\nonterm\mid\emptyset \vdash^{\mathrm{fix}}  Y \lambda \langle L_1,\dots, L_n\rangle.t:\psi }{\nonterm,\langle L_1,\dots, L_n\rangle:\varphi\mid \emptyset \vdash t :  \psi \quad \psi \sqsubseteq \varphi  }
+	\end{align*}
+	\end{minipage}
+	}
+\end{minipage}
+}
+\caption{Typing rules of $\Gfin$.}
 \label{fig:typerules}
-\end{figure*}
+\end{figure}
+
+
+\begin{example}
+Catalan PHORS
+\end{example}
+
+\begin{example}
+Non-linear PHORS from Section 2
+\end{example}
+
+\begin{example}
+Non-algebraic PHORS
+\end{example}
+
+%
+% there exists a derivation  the following is easily proved by induction:
+%\begin{proposition}[$\Gfin$ refines $\PLY$]
+%For every derivation $\pi:\nonterm\mid\Delta \vdash_{\Gfin}t:\varphi$, given $\nonterm\mid\Delta\tri \Gamma$ and $\varphi\tri T$, there exists a derivation $\pi^*:\Gamma\vdash_{\lambda_{\oplus} }t:T$.
+%\end{proposition}
+
+
+\subsection{Extracting Fas from $\Gfin$}
+
+To define the relational interpretation of $\Gfin$ we could exploit the well-known fact that the family of functors $(!_k)_{k\in \N}:\Qrel{\Rsemiring}\to\Qrel{\Rsemiring}$ (recall that $!_kX$ is the subset of $!X$ formed by the multisets of cardinality at most $k$) defines a \emph{graded linear exponential comonad} (cite Katsumata etc.), and provides then a sound interpretation of the graded rules of $\Gfin$. 
+
+%More precisely, define $\model{\1}=\1$, $\model{\varphi\&\psi}=\model{\varphi}\times\model{\psi}$ and $\model{!_k\varphi}=!_k\model{\varphi}$. Observe that all sets $\model{\varphi}$ are finite.
+%Then, for any derivation $\nonterm\mid\Delta\vdash t:\varphi$, where $\nonterm=\{L_1:\varphi_1,\dots, L_n:\varphi_n\}$
+%and $\Delta=\{x_1:_{k_1}\psi_1,\dots, x_m:_{k_m}\psi_m\}$, we obtain a morphism
+%\[
+%\model{\nonterm\mid\Delta\vdash t:\varphi}^{\Rsemiring}\in
+%\Qrel{\Rsemiring}\left(
+%\sum_i !\model{\varphi_i}+ \sum_j !_{k_j}\model{\psi_j}, \model{\varphi}
+%\right)
+%\]
+
+However, we wish to look at $\Gfin$ as a tool to extract information about the power series arising from (a subset of) the PHORS, i.e.~of the terms typable in $\lambda_{\oplus}Y$. 
+For this, observe first that the rules (and indeed the derivations) of $\Gfin$ can be seen as \emph{quantitative refinements} of those of $\PLY$. First, every type $\varphi$ is (uniquely) a \emph{refinement} of some simple type $T$: the refinement relation $\varphi\tri T$ is defined by:
+\[
+\infer{\1\tri\1}{}\qquad
+\infer{\varphi\&\psi\tri T\& U }{\varphi\tri T & \psi\tri U}\qquad
+\infer{!_k\varphi\multimap\psi\tri T\to U }{\varphi\tri T & \psi\tri U}
+\]
+Notice that $\varphi\sqsubseteq \psi$ implies $\varphi\tri T\Leftrightarrow \psi\tri T$. 
+Next, for every derivation $\pi:\nonterm\mid\Delta \vdash_{\Gfin}t:\varphi$, 
+by replacing each $\psi$ by $U$, where $\psi\tri U$, we obtain, by induction, a $\PLY$-derivation $\Gamma\vdash_{\lambda_{\oplus} }t:T$, where $\nonterm\mid\Delta\tri \Gamma$ and $\varphi\tri T$. 
+We will say that $\pi$ \emph{refines} $\pi^\tri$ (noted $\pi\tri\pi^{\tri}$).
+
+
+Now, for a term $t:\varphi$ typable in $\Gfin$, where $\varphi\tri T$, we will define its interpretation $\model{t:\varphi\tri T}^{\Rsemiring}$ as a suitably define \emph{restriction} of the interpretation $\model{t:T}^{\Rsemiring}$ of the corresponding $\lambda_{\oplus}Y$-derivation.
+%
+%Recall that the interpretation $\model{\Gamma\vdash t:T}^{\Rsemiring}$ of a $\PLY$-derivation in $\Qrelkleisli{\Rsemiring}$ is defined by induction on the rules, associating the axiom rule $\Gamma, x:T\vdash x:T$ with the projection $\Qrelkleisli{\Rsemiring}(\model{\Gamma}+\model{T},\model{T})$, the rule introduction $\oplus$ with weighted sums, and all other rules with the corresponding operation on $\Qrelkleisli{\Rsemiring}$ given by cartesian closure.
+
+More precisely, given a $\Gfin$-derivation $\pi:\nonterm\mid\Delta\vdash t:\varphi$, given $\nonterm\tri\Gamma_{\nonterm}, \Delta\tri\Gamma_{\Delta}$ and $\varphi\tri T$, we define 
+\[
+\model{t:\varphi\tri T}^{\Rsemiring}\in\Qrelkleisli{\Rsemiring}(\model{\Gamma_{\nonterm}}+\model{\Gamma_{\Delta}},\model{T})
+\]  
+ by induction as follows:
+\begin{varitemize}
+
+\item if $\pi$ is an instance of $ax1$ or $ax2$, 
+$\model{t:\varphi\tri T}^{\Rsemiring}:=\left(
+\model{t:T}^{\Rsemiring}\right)\Big\vert_{\model{\nonterm}+\model{\Delta}}^{\model{\varphi}}
+$;
+
+\item all other rules are interpreted as the corresponding ones in $\lambda_{\oplus}Y$.
+
+\end{varitemize}
+
+
+The following result ensures that the interpretation of a $\Gfin$-derivation coincides with the restriction of the corresponding $\lambda_{\oplus}Y$-derivation to its finite domain and codomain:
+
+
+
+\begin{proposition}\label{prop:finiok}
+Given $\nonterm\mid\Delta\vdash t:\varphi$, with $\varphi\tri T$,  
+\[
+\model{t:\varphi\triangleleft T}^{\Rsemiring}=\left(\model{t:T}^{\Rsemiring}\right)\Big\vert^{\model{\varphi}}_{\model{\nonterm}+\model{\Delta}}.
+\]
+\end{proposition}
+As the type $\1$ is the only refinement of itself, the finitary interpretations $\model{t:\1\tri 1}^{\Rsemiring}$ correctly capture $\mathbb P(t\downarrow)$ and $\mathbb E(t\downarrow)$.
+
+\begin{corollary}
+For all derivation $\emptyset\mid\emptyset\vdash t:\1$, $\model{t:\1\triangleleft\1}^{\Rinf}=\mathbb P(t\downarrow)$ and $\left(\model{t:\1\triangleleft\1}^{\fps{\Rinf}{z}}\right)'(1)=\mathbb E(t\downarrow)$.
+\end{corollary}
+
+
+At this point, observe that a consequence of Proposition \ref{prop:finiok} and of the finiteness of the types of $\Gfin$ is that the fps $\model{t:\varphi\tri T}^{\Rsemiring}$ must have a finite support. This ensures that the rule $Y_{\mathrm{fin}}$ always produces a fas:
+
+
+
+
+\begin{proposition}
+For all derivations of $\langle L_1,\dots, L_n\rangle:\varphi\mid\emptyset\vdash t:\psi$, with $\psi\sqsubseteq \varphi\tri T$, the fps
+$\model{M:\psi\tri T}^{\Rsemiring}\in \fps{\Rsemiring}{\model{T}+\model{\Gamma}}^{\model{T}}$ is finitary.
+\end{proposition}
+
+Thanks to Proposition \ref{prop:fintoalg}, we obtain then:
+\begin{theorem}[typable PHORS are algebraic]
+For all PHORS $\gphors$ typable in $\Gfin$, $\model{t_S:\1\triangleleft\1}^{\Rinf}\in \Rinf$ is $\mathbb Q^{+}$-algebraic and 
+ $\model{t_S:\1\triangleleft\1}^{\fps{\Rinf}{z}}\in \fps{\Rinf}{z}$ is $\fps{\mathbb Q^{+}}{z}$-algebraic.
+
+
+
+\end{theorem}
+
+
 
 
 \subsection{Decidability of AST and PAST}

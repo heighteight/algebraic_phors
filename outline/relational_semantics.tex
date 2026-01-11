@@ -1,5 +1,5 @@
 % !TEX root = main.tex
-In this section, we recall the well-studied relational semantics of linear logic weighted over a continuous semiring $\Rsemiring$, although in a slightly different flavor than the one used in (cite Laird, Manzonetto): rather than using $\Rsemiring$-valued matrices, we will use formal power series over $\Rsemiring$, as in (cite Paolo and Davide's work about tropical lambda calculus). We will notably illustrate how this semantics yields an interpretation of PHORS, via $\lambda_{\oplus} Y$, as formal power series.
+In this section, we recall the well-studied relational semantics of linear logic weighted over a continuous semiring $\Rsemiring$, although in a slightly different flavor than the one used in (cite Laird, Manzonetto): rather than using $\Rsemiring$-valued matrices, we will use formal power series over $\Rsemiring$, as in (cite Paolo and Davide's work about tropical lambda calculus). We will notably illustrate how this semantics yields an interpretation of PHORS, via $\PLY$, as formal power series.
 
 % Then, we focus on algebraic power series: this is a concept widely used in algebra and combinatorics (cite Flajolet, Kauers, Eisenbud), in the context of rings or fields. Its treatment in semi-rings is less standard, but extensively studied in the context of formal language theory (cite Kuich, Schlund). We will show that, through the relational semantics, such ideas apply naturally to the semantics of probabilistic $\lambda$-calculi.
 
@@ -184,10 +184,10 @@ In (Barbarossa, Pistone) they also consider the interpretation of
 %taking instead $\Qsemiring=\fps{\Rsemiring}{x,\overline x}$, it is even possible to interpret 
 %\emph{parametric} choices $M\oplus_x N$, i.e.~choices according to some unknown bias $x$, by rewriting it as $x\cdot M+\overline{x}\cdot N$ (see Barbarossa and Pistone).
 
-One can interpret $\lambda_{\oplus} Y$ (or even probabilistic PCF) in all $\Qrelkleisli{\Rsemiring}$ with $\Rsemiring$ of the form $\fps{\Rinf}{\Sigma}$. When $\Rsemiring=\Rinf$, the interpretation precisely captures the call-by-value probabilistic execution of closed terms, as stated below: 
+One can interpret $\PLY$ (or even probabilistic PCF) in all $\Qrelkleisli{\Rsemiring}$ with $\Rsemiring$ of the form $\fps{\Rinf}{\Sigma}$. When $\Rsemiring=\Rinf$, the interpretation precisely captures the call-by-value probabilistic execution of closed terms, as stated below: 
 %the interpretation $\model{M}^{\Rinf}$ of a term $M:\1$ of ground type consists in a real number, since $\model{M}^{\Rinf}\in\Qrelkleisli{\Rsemiring}(0,\1)\equiv\fps{\Rsemiring}{0}\equiv\Rsemiring$, which coincides with the probability of termination of $M$, computed as the sum of the weights $w(R)\in \Rinf$ of all call-by-name probabilistic reductions $R:M{\to^*}e$:
 \begin{proposition}[cite Pagani and co]\label{prop:proba}
-For any $\lambda_{\oplus} Y$ closed term $M:\1$, 
+For any $\PLY$ closed term $M:\1$, 
 \begin{align}
 \model{M}^{\Rinf}&=\mathbb P(M\downarrow),
 %=\sum_{R:M\to^* e}w(R),
@@ -199,7 +199,7 @@ where $\mathbb P(M\downarrow_i)=\sum_{R:M\to^i e}w(R)$ is the probability that $
 While \eqref{eq:prob1} indicates that the interpretation in $\Rinf$ precisely captures the probability of termination, \eqref{eq:prob2} provides a \emph{finer} result: by marking with the variable $z$ each probabilistic reduction step, the interpretation of $\fps{\Rinf}{z}$ is a formal power series in $z$ whose coefficients count the probability of terminating in exactly $i$ steps. This leads to the following result, stating that the \emph{derivative} of this power series captures the expected number of steps to termination:
 
 \begin{corollary}\label{cor:expected}
-For any $\lambda_{\oplus} Y$ closed term $M:\1$, 
+For any $\PLY$ closed term $M:\1$, 
 \begin{equation}\label{eq:expected1}
 \left(\model{M}^{\fps{\Rinf}{z}}\right)'(1)=\sum_{i=1}^{\infty} i\cdot \mathbb P(M\downarrow_i)=\mathbb E(M\downarrow).
 \end{equation}
@@ -221,9 +221,9 @@ For any $\lambda_{\oplus} Y$ closed term $M:\1$,
 %\end{remark}
 
 
-A useful property is that all closed \emph{first-order} terms of $\Lambda_{\oplus} Y$ are \emph{affine}, as stated below:
+A useful property is that all closed \emph{first-order} terms of $\PLY$ are \emph{affine}, as stated below:
 \begin{proposition}\label{prop:affine}
-For all first-order terms $x_1:\1,\dots, x_n:\1\vdash_{\Lambda_{\oplus} Y}M:\1$, 
+For all first-order terms $x_1:\1,\dots, x_n:\1\vdash_{\PLY}M:\1$, 
 $\model{M}^{\Rinf}(x_1,\dots, x_n)\in \fps{\Rinf}{x_1,\dots,x_n}$ is affine: there exists scalars $w_0,w_1,\dots, w_n\in\mathbb R_{\geq 0}$ such that
 \[
 \model{M}^{\Rsemiring}(x_1,\dots, x_n)
@@ -244,7 +244,7 @@ This result translates the fact that in a reduction of $M$ to normal form, a gro
 %\end{example}
 
 \begin{example}\label{ex:phors2}
-Consider the PHORS from Example \ref{ex:phors0} and the corresponding $\lambda_{\oplus} Y$-term $M_{\gphors}$ (cf.~Example \ref{ex:phors1}).
+Consider the PHORS from Example \ref{ex:phors0} and the corresponding $\PLY$-term $M_{\gphors}$ (cf.~Example \ref{ex:phors1}).
 %
 % Its interpretation $\model{M}^{\Rinf}\in 
 % \Qrelkleisli{\Rinf}(1, \N+1)\equiv

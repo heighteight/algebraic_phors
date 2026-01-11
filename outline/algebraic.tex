@@ -7,7 +7,7 @@
 
 \subsection{Fixpoint Algebraic Systems}
   
-In the previous section we have seen that a PHORS, seen through $\lambda_{\oplus} Y$ as a fixpoint, can be associated with formal power series defined as minimal solutions of an equational system. Computing such power series directly can be very hard in general; in particular, as we saw, these capture properties like AST or PAST which are undecidable in general. However, when the equational system defining them is algebraic, that is, expressed in terms of polynomials, it becomes possible to extract information, or even compute, such power series indirectly. 
+In the previous section we have seen that a PHORS, seen through $\PLY$ as a fixpoint, can be associated with formal power series defined as minimal solutions of an equational system. Computing such power series directly can be very hard in general; in particular, as we saw, these capture properties like AST or PAST which are undecidable in general. However, when the equational system defining them is algebraic, that is, expressed in terms of polynomials, it becomes possible to extract information, or even compute, such power series indirectly. 
 
 As a famous example, consider the fps $s(x)= \sum_{n \geq 0} \frac{1}{n+1} \binom{2n}{n} x^{n} \in \fps{\R}{x}$. One can verify that this is the Taylor expansion around $0$ of the (analytic) function $\frac{1-\sqrt{1-4z}}{2z}$. From this, it is easy to see, taking $p(w, x)= zw^2 - w + 1$, that $p(s, x)=0$. Observe that computing $s(1) = \sum_{n \geq 0} \frac{1}{n+1} \binom{2n}{n}$ as a limit is hard, but, using the equation $p(s(x), x)=0$, we can easily deduce that $s(1)$ is the (only) positive root of $w^2-w+1$. 
 
@@ -110,7 +110,7 @@ For this, let us first look at how fixpoints in $\Qrelkleisli{\Rsemiring}$ are r
 Suppose we have a morphism $f \in \Qrelkleisli{\Rsemiring}(X \times Y, X)$.
 	We have seen that the power series $r_X= \fix f$ are the minimal solution of the infinite family of equations: $(r_x = s_x(r_x, x_Y))_{x \in X}$ (cf.~Equation \eqref{eq:fixpointeq}).  
 To reduce this family to a fas it is enough to require $r_\Sigma$ to have finite support:
-	\begin{definition}[finitary fps]
+	\begin{definition}[finitary fps]\label{def:finitary}
 		Let $s_X\in \fps{\Rsemiring}{X+Y}^X$ be a family of fps.
 		$s_X$ is called \emph{finitary} if there exists $X'\subset X$ such that the following set:
 		\[
@@ -129,7 +129,7 @@ To reduce this family to a fas it is enough to require $r_\Sigma$ to have finite
 	
 If $s_X$ is finitary, then one can find a finite sub-family $s_{A}$, for some $A=I(\sigma_X,X')\subset X$ such that, for all $a\in A$, the iterates $r^n_a$ (cf.~Eq.~\eqref{eq:fixpointeq}) are constructed using only polynomials from $s_A$. The fixpoint $\fix s_X=\sup_n r^{n}_X$ will be a solution of a fas generated from this family:
 
-	\begin{proposition}
+	\begin{proposition}\label{prop:fintoalg}
 		 Let $\Rsemiring'\leq\Rsemiring$.  
 		 If $s_X\in \fps{\Rsemiring'}{X+Y}^X$ is a finitary family, then $\fix s_X$ has finite support and it is the minimal solution of a fixpoint algebraic family over $\Rsemiring'$ .  
    \end{proposition}
