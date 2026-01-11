@@ -14,6 +14,8 @@ let us call $!\Sigma$ the set of finite multisets over it, i.e functions $\mu: \
  $$s=\sum_{\mu \in !\Sigma} s_\mu x_\Sigma^{\mu}.$$ 
  We will sometimes write $s(x_\Sigma)$ to underline which variables appear in $s$.
  For each $s\in \fps{\Rsemiring}{\Sigma}$, its \emph{support} $\supp~s\subseteq \ !\Sigma$ is the set of multisets $\mu$ such that $s_{\mu}\neq 0$. 
+ Given $\Sigma'\subset \Sigma$ and $s\in \fps{\Rsemiring}{\Sigma}$, let
+ $s\vert_{\Sigma'}\in \fps{\Rsemiring}{\Sigma}$ be the composition of $s$ with the injection $!\Sigma'\hookrightarrow!\Sigma$. 
 
  
  In $\fps{\Rsemiring}{\Sigma}$ we can define two operations: sum, performed componentwise: $\sum_{\mu \in !\Sigma} r_\mu x_\Sigma^{\mu} + \sum_{\mu \in !\Sigma} s_\mu x_\Sigma^{\mu} \bydef \sum_{\mu \in !\Sigma} (r_\mu + s_\mu)  x_\Sigma^{\mu}$ and the Cauchy product: 
@@ -47,7 +49,9 @@ Since $\Qsemiring:=\fps{\Rsemiring}{\Sigma}$ is a continuous semiring, for any s
   \subsection{The Weighted Relational Semantics}
   
     Now, we recall the link between formal power series and the weighted relational model of linear logic. In (cite Laird, Manzonetto), given a continous semiring $\Rsemiring$, a category $\Qrel{\Rsemiring}$ is defined, whose objects are sets, and morphisms $\Qrel{\Rsemiring}(X, Y)$ are $\Rsemiring$-valued matrices indexed by $X \times Y$. 
-The coKleisli category $\Qrelkleisli{\Rsemiring}$, with respect to the $!$ comonad, has morphisms $\Qrelkleisli{\Rsemiring} (X, Y)$ given by $\Rsemiring$-valued matrices indexed by $!X \times Y$; since a matrix $(t_{\mu, y})_{\mu \in !X, y \in Y}$ can be seen as a $Y$-indexed family of power series $(\sum t_{\mu, y} x_X^\mu)_{y \in Y}$, the morphisms of $\Qrelkleisli{\Rsemiring}$ can be identified with (families of) formal power series, i.e.~$\Qrelkleisli{\Rsemiring}(X,Y)\equiv\fps{\Rsemiring}{X}^Y$.
+$\Qrel{\Rsemiring}$ is symmetric monoidal closed and is thus a model of the \emph{linear} $\lambda$-calculus, in which both the tensor product and the linear function type are interpreted as $\model{A\otimes B}=\model{A\multimap B}=\model{A}\times\model{B}$.    
+    
+To obtain a model of the full $\lambda$-calculus, one considers the coKleisli category $\Qrelkleisli{\Rsemiring}$, with respect to the $!$ comonad: its morphisms $\Qrelkleisli{\Rsemiring} (X, Y)$ are given by $\Rsemiring$-valued matrices indexed by $!X \times Y$; since a matrix $(t_{\mu, y})_{\mu \in !X, y \in Y}$ can be seen as a $Y$-indexed family of power series $(\sum t_{\mu, y} x_X^\mu)_{y \in Y}$, the morphisms of $\Qrelkleisli{\Rsemiring}$ can be identified with (families of) formal power series, i.e.~$\Qrelkleisli{\Rsemiring}(X,Y)\equiv\fps{\Rsemiring}{X}^Y$.
     Indeed, composition in $\Qrelkleisli{\Rsemiring}$ is given by (pointwise) composition of the underlying power series, with identities $\mathrm{id}_X\in  \fps{\Rsemiring}{X}^X$ given by
     $(\mathrm{id}_X)_i(x_X)=x_i$.
 %    
@@ -58,9 +62,10 @@ $\Qrelkleisli{\Rsemiring}$ is cartesian closed, with cartesian products given by
 This generalizes the correspondence between a fps $\sum_{\mu\in !X} s_{\mu}x^\mu$ and its family of coefficients $(s_\mu)_{\mu\in \ !X}$.
 %The interpretation of a program $M:A\to B$ is a $\Rsemiring$-matrix $\model{M}^{\Rsemiring}\in\Rsemiring^{!A\times B}=\fps{\Rsemiring}{0}^{!A\times B}$ whose entries $ (\model{M}^{\Rsemiring})_{\mu,b}$ represent ways of yielding $b$ by using each input $a\in A$ exactly $\mu(a)$ times. 
 
+
 \begin{example}\label{ex:churchtwo}
 Consider the program $M=\lambda x.y(yx)$, where $y:(\1\to\1)\vdash M:\1\to\1$: letting $\model{\1}=1=\{\star\}$, and 
-observing that $!\1\times \1\equiv \N$, 
+observing that $\model{\1\to\1}=!\1\times \1\equiv \N$, 
 we have that $M$ is interpreted by a $\N$-indexed family of power series
 $(s_i(y_{\N}))_{i\in\N}\in \Qrelkleisli{\Rsemiring}(\N,\N)=\fps{\Rsemiring}{\N}^{\N}$.
 %, corresponding to the fps $\sum_{i=0}^{\infty}s(y_{\N})_i x^i$. 
@@ -94,6 +99,36 @@ Notice that the evaluation $y:(\1\to\1),x:\1\vdash Mx:\1$ is precisely interpret
 %\]
 %In other words, the fps $s(y_{\N})_{i}$ is the coefficient of the map $\1\to \1$ corresponding to 
 \end{example}
+
+%
+%\begin{example}\label{ex:churchtwobis}
+%Consider again the program $M=\lambda x.y(yx)$, but  
+%%
+%% where $y:(\1\to\1)\vdash M:\1\to\1$.
+%%Letting $\model{\1}=1=\{\star\}$, and 
+%%observing that $\model{\1\to\1}=!1\times 1\equiv \N$, 
+%%we have that $M$ is interpreted by a $\N$-indexed family of power series
+%%$(s_i(y_{\N}))_{i\in\N}\in \Qrelkleisli{\Rsemiring}(\N,\N)=\fps{\Rsemiring}{\N}^{\N}$.
+%%To make calculations easier
+%let us assume now that $y$ is given the linear type $y:\1\multimap \1$, so $M$ has type $M:\1\multimap \1$ too.
+%Since $\model{\1\multimap \1}=\model{\1}\times\model{\1}=1\times 1\equiv 1$, $M$ is now interpreted by a fps $s(y)\in \Qrelkleisli{\Rsemiring}(1,1)=\fps{\Rsemiring}{y}$; reasoning as in the case above, think of $y$, interpreting a linear function $\1\multimap \1$, as encoding the linear map $a(x)=yx$; the term $M$ translates then into $a(a(x))=y^2x$, 
+%which gives $s(y)=y^2$ (observe that $s(y)$ coincides with the linear fps $s_1(y_{\N})=y_1^2$ of the family from the previous example). 
+%% 
+%%
+%%%, corresponding to the fps $\sum_{i=0}^{\infty}s(y_{\N})_i x^i$. 
+%%Now, think of the variables $y_{\N}$, which interpret the function $y:\1\to\1$, as encoding the fps $a(x)=\sum_n y_n x^n\in\Qrelkleisli{\fps{\Rsemiring}{\N}}(\1,\1)\equiv  \fps{(\fps{\Rsemiring}{\N})}{1}$;
+%%the term $M$ should translate then into the composition 
+%%\[
+%%a(a(x))=\sum_n y_n\left(\sum_m y_mx^m\right)^n=
+%%\sum_{i=0}^{\infty}
+%%\left(
+%%\sum_{{\tiny\begin{matrix}(n,m_1,\dots, m_n),\\ m_1+\dots+m_n=i\end{matrix}}}y_ny_{m_1}\dots y_{m_n}\right) x^i,
+%%\] 
+%%which gives $s_i(y_{\N})= \sum_{{\tiny\begin{matrix}(n,m_1,\dots, m_n),\\ m_1+\dots+m_n=i\end{matrix}}}y_ny_{m_1}\dots y_{m_n}$.
+%%Notice that the evaluation $y:(\1\to\1),x:\1\vdash Mx:\1$ is precisely interpreted by $a(a(x))\in \Qrelkleisli{\Rsemiring}(\N+1,1)=\fps{\Rsemiring}{\N+1}\equiv\fps{(\fps{\Rsemiring}{\N})}{1}$.
+%%
+%\end{example}
+
 
 %The example above shows that the usual evaluation map $\Qrelkleisli{\Rsemiring}(Z,!X\times Y)\Rightarrow \Qrelkleisli{\Rsemiring}(Z+X, Y)$, i.e.~
 %$\fps{\Rsemiring}{Z}^{!X\times Y}\To\fps{\Rsemiring}{Z+X}^Y$, corresponds to passing from the $!X\times Y$-indexed family of power series 
@@ -217,9 +252,9 @@ Consider the PHORS from Example \ref{ex:phors0} and the corresponding $\lambda_{
 The interpretation in $\Qrelkleisli{\Rinf}$ 
 %$\model{\lambda \langle F,S\rangle.M'}^{\Rinf}$ 
  of $\lambda \langle F,S\rangle.M':((\1\to \1)\times 1)\to (\1\to \1)\times 1$ is a $(\N+1)$-indexed family of power series
-$t_i(y_{\N},x)\in \fps{\Rinf}{\N +1}$, given, for $i\in \N$, and recalling $s_i(y_{\N})$ from Example \ref{ex:churchtwo}, by
+$t_i(y_{\N+1})\in \fps{\Rinf}{\N +1}$, given, for $i\in \N$, and recalling $s_i(y_{\N})$ from Example \ref{ex:churchtwo}, by
 \[
-t_i(y_{\N},x)=
+t_i(y_{\N+1})=
 \begin{cases}
 \frac{1}{2}s_1(y_{\N})+\frac{1}{2}=\frac{1}{2}(
 y_1^2+1)
@@ -230,11 +265,11 @@ y_1^2+1)
 \end{cases}
 \]
  
-Computing $\model{M_{\gphors}}^{\Rinf}= \mathsf{fix}\  t_{\N +1}$ means finding a minimal solution $(a_i)_{i\in \N+1}\in(\Rinf)^{\N+1}$ of the fixpoint equations $a_{i}=t_i(a_{\N}, a_{1})$, and thus in particular, a minimal solution $a_1\in \Rinf$ of
+Computing $\model{M_{\gphors}}^{\Rinf}= \mathsf{fix}\  t_{\N +1}$ means finding a minimal solution $(a_i)_{i\in \N+1}\in(\Rinf)^{\N+1}$ of the fixpoint equations $a_{i}=t_i(a_{\N+1})$, and thus in particular, a minimal solution $a_1\in \Rinf$ of
 \begin{equation}\label{eq:alg1}
 a_1=\frac{1}{2}( a_1^2+1).
 \end{equation}
-It is not difficult to check that the unique solution here is $a_1(y_{\N},x)=1$, which yields
+It is not difficult to check that the unique solution here is $a_1(y_{\N+1})=1$, which yields
 $\model{M_{\gphors}}^{\Rinf}_1=\model{M_{\gphors}}^{\Rinf}_\star=1$ and 
 $\model{M_{\gphors}}^{\Rinf}_{i+1}=0$, i.e.~that $\mathbb P(S\downarrow)=1$, i.e.~AST holds, and moreover  
 $\mathbb P(Fx\to^* x)=1$.
