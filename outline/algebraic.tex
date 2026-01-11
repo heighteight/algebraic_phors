@@ -116,7 +116,10 @@ To reduce this family to a fas it is enough to require $r_\Sigma$ to have finite
 		\[
 		I(s_X,X')=
 		\{\sigma\in X \mid
-		 s_\sigma(0) \neq 0 \lor s_\sigma \in \fpp{\Rsemiring}{X' + Y} \} \]
+		 s_\sigma(0) \neq 0 \lor 
+		 (s_\sigma)\vert_{X'+Y}\neq 0\}
+%		 s_\sigma \in \fpp{\Rsemiring}{X' + Y} \}
+		  \]
 		 is finite and contained in $X'$.
 %		 
 %%		(Take an $X$-indexed family  of polynomials $(s_x(x_X, x_Y))_{x \in X}$. If there exist an $X' \subseteq X$ such that
@@ -124,25 +127,29 @@ To reduce this family to a fas it is enough to require $r_\Sigma$ to have finite
 %%		 $(s_x(x_X, x_Y))_{x \in X}$ is a finitary family.
 	\end{definition}
 	
-If $s_X$ is finitary, then it means that one can find a restricted set of variables $X'\subset X$ such that all iterates $r^{n}_x$ (cf.~Eq.~\eqref{eq:fixpointeq}) must be polynomials in $X'+Y$, so that $\fix s_X=\sup_n r^{n}_X$ is a power series in $X'+Y$. 
-Moreover, the finiteness of the set $I(s_X,X')$ leads to:
+If $s_X$ is finitary, then one can find a finite sub-family $s_{A}$, for some $A=I(\sigma_X,X')\subset X$ such that, for all $a\in A$, the iterates $r^n_a$ (cf.~Eq.~\eqref{eq:fixpointeq}) are constructed using only polynomials from $s_A$. The fixpoint $\fix s_X=\sup_n r^{n}_X$ will be a solution of a fas generated from this family:
 
 	\begin{proposition}
 		 Let $\Rsemiring'\leq\Rsemiring$.  
 		 If $s_X\in \fps{\Rsemiring'}{X+Y}^X$ is a finitary family, then $\fix s_X$ has finite support and it is the minimal solution of a fixpoint algebraic family over $\Rsemiring'$ .  
    \end{proposition}
    \begin{proof}(Sketch)
-   		For each $X'$ such that $I(s_\Sigma, X') \subseteq X'$ , the support of $\fix s_X$ is contained in $I(s_\Sigma, X')$. Now, let $A \bydef I(s_\Sigma, X')$. Take the (finite) system of equations: $(r_a = s_a(r_a, x_Y))_{a \in A}$ and let $\bar r_A$ be one of its solution. Then, define $(t_x)_{x \in X}$ to be $r_x$ if $x \in A$ and $0$ otherwise. For each $x \not \in A$, $s_x$ does not contain any constant neither any variable $x_A, x_Y$: hence it satisfies $s_x(t_X, x_Y)=0$.
+   		For each $X'$ such that $I(s_\Sigma, X') \subseteq X'$ , the support of $\fix s_X$ is contained in $I(s_\Sigma, X')$. Now, let $A \bydef I(s_\Sigma, X')$. Take the (finite) system of equations: $(r_a = s^*_a(r_a, x_Y))_{a \in A}$, where $s^*_a=(s_a)\vert_{A+Y}$, and let $\bar r_A$ be one of its solutions. Then, define $(t_x)_{x \in X}$ to be $\bar r_x$ if $x \in A$ and $0$ otherwise. 
+Then for all $x\in X$, $s_x(t_x,x_Y)=0$: if $x\in A$, since $t_X=\bar r_{A}+0_{X-A}$, we have
+$s_x(t_x,x_Y)=s^*_x(\bar r_x,x_Y)=0$; if $x \not \in A$, then $(s_x)\vert_{A+Y}=0$, which again implies
+%		
+%		$s_x$ does not contain any constant neither any variable $x_A, x_Y$: hence it satisfies 
+		$s_x(t_X, x_Y)=0$.
    \end{proof}
        Notice that, for the previous argument to work, simply asking that the $s_x$ be polynomials is not enough, as there would be anyway infinitely many equations. 
 
    
-  \begin{example}[DA SISTEMARE]
-  Let $X=\N+1$, $Y=0$ and $t_X\in \fps{\Rinf}{X+Y}$ be the fps from Example \ref{ex:phors2}. 
-  Letting $X'=\{1\}\subset X$, we have
-  $I(t_X,X')=X'$, so the family is finitary. In other words, the fixpoint $a=\fix t_X$ can be computed by considering only the equation $a_1=t_1(a_1)$ (i.e.~\eqref{eq:alg1}).
-We deduce that $a_1\in \Rinf$ is algebraic over $\mathbb Q^+$.
-A similar argument, applied to Example \ref{ex:phors3}, shows that the solution $a_1(z)\in \fps{\Rinf}{z}$ is algebraic over $\fps{\mathbb Q^+}{z}$.
+  \begin{example}
+    Let $X=\N+1$, $Y=0$ and $t_X\in \fps{\Rinf}{X+Y}$ be the fps from Example \ref{ex:phors2}. 
+  Letting $X'=\{1,\star\}\subset X$, we have
+  $I(t_X,X')=X'$, so the family is finitary. In other words, the fixpoint $a=\fix t_X$ can be computed by considering only the equations $a_1=t_1(a_1)$ (i.e.~\eqref{eq:alg1}) and $a_{\star}=a_1$.
+We deduce that $a_\star\in \Rinf$ is algebraic over $\mathbb Q^+$.
+A similar argument, applied to Example \ref{ex:phors3}, shows that the solution $a_\star(z)\in \fps{\Rinf}{z}$ is algebraic over $\fps{\mathbb Q^+}{z}$.
     
   \end{example} 
    
