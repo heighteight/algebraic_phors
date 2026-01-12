@@ -55,6 +55,14 @@ The interpretation of this is that, for any $i\in \N$, there are $C_i$ terminati
 %  		\item Let $s= \sum_{n \geq 0} \frac{1}{n+1} \binom{2n}{n} x^{n} \in \fps{\R}{x}$. One can verify that this is the Taylor expansion around $0$ of the (analytic) function $\frac{1-\sqrt{1-4z}}{2z}$. From this, it is easy to see that, taking $p(w, x)= zw^2 - w + 1$, that $p(s, x)=0$. Observe that computing $s(1) = \sum_{n \geq 0} \frac{1}{n+1} \binom{2n}{n}$ as a limit is hard, but, using the equation $p(s(x), x)=0$, we can easily deduce that $s(1)$ is the (only) positive root of $w^2-w+1$. 
 %  		\end{itemize}
   \end{example}	
+  \begin{remark}\label{rem:hadamard}
+  The non-zero coefficients of an algebraic power series cannot be ``too far'': if $a(x)=\sum_na_n x^{p_n}$ is algebraic, then $\lim_n p_n/n<\infty$: 
+  algebraic power series can always be analytically extended over all but finitely many points of the unitary circle; by contrast, by Fabry's gap theorem, if $\lim_n p_n/n$ diverges, then $a$ has the whole unitary circle as a natural border.
+  For instance, none of the series $\sum_n x^{n^2},\sum_n x^{n^3}, \sum_n x^{2^n}$ is algebraic.
+  
+    
+  \end{remark}
+  
   We will now show that, for a power series $s$ over a ring which is an integrity domain, being algebraic and being part of an algebraic family are the same:
   \begin{lemma}
   	(Here, it is necessary for R to be an UFD)
