@@ -16,6 +16,7 @@ We use types defined by the grammar below:
 %\xi&:=\ !_k \varphi
  \qquad (k\in\mathbb N).
 \end{align*}
+We let $\tau$ be an abbreviation for the affine function type $!_1o\multimap o$. 
 We define an order relation $\varphi\sqsubseteq \psi$ between types by induction by
 \begin{align*}
 \infer{\1^n\sqsubseteq\1^n}{}
@@ -106,19 +107,69 @@ Every PAHORS is a $\Gfin$.
 
 As the PHORS from Examples \ref{ex:phors1}-\ref{ex:phors3} is affine, it is also a $\Gfin$.
 
-\begin{example}
-Non-linear PHORS from Section 2
+\begin{example}\label{ex:nonlin}
+Let $\gphors$ be the $\Gfin$ from \eqref{eq:phors1} in Section 2, 
+While $A,B$ are affine, since $\nonterm(A)=\nonterm(B)=\tau$, 
+we have $\nonterm(H)=\ !_2\tau \multimap \tau$, since $Hyx$ may use the functional variable $y$ at most two times. $\gphors$ is thus not a PAHORS.
+
+
+
 \end{example}
 
-\begin{example}
-Non-algebraic PHORS
-\end{example}
+
 
 %
 % there exists a derivation  the following is easily proved by induction:
 %\begin{proposition}[$\Gfin$ refines $\PLY$]
 %For every derivation $\pi:\nonterm\mid\Delta \vdash_{\Gfin}t:\varphi$, given $\nonterm\mid\Delta\tri \Gamma$ and $\varphi\tri T$, there exists a derivation $\pi^*:\Gamma\vdash_{\lambda_{\oplus} }t:T$.
 %\end{proposition}
+
+
+While $\Gfin\supsetneq PAHORS$, the set of corresponding branch languages do indeed coincide: this means that for any $\Gfin$ it is possible to find a PAHORS defining the same branch language.
+
+Define the \emph{size} of a $\gphors$ as the sum of the sizes of its terms, i.e.~$\|\gphors\|=|t_1|+\dots+ |t_n|$. Moreover, let $\partial\gphors$ be the maximum grade occurring in $\gphors$.
+
+\begin{theorem}[Affinization of $\Gfin$]
+For every $\Gfin$ $\gphors=(\nonterm, \C R, S)$ there exists a PAHORS $\AFF\gphors=(\nonterm, \C R',S)$, with same non-terminals, size $\|\AFF\gphors\|\leq \partial\gphors{\|\gphors\|}$ and such that $\C L(\gphors)=\C L(\AFF\gphors)$.
+
+\end{theorem}
+\begin{proof}[Proof sketch]
+Define $\AFF{\varphi}$ as $
+\AFF{(o^n)}=o^n$ and 
+$\AFF{(!_k\varphi\multimap \psi)}={\AFF{\varphi}\multimap\dots\multimap\AFF{\varphi}}\multimap\AFF\psi$, with $\AFF{\varphi}$ repeated $k$ times. 
+Then, by induction, any derivation of $\nonterm\mid \Delta\vdash t:\varphi$ yields a derivation of $\AFF{\nonterm}\mid\Delta'\vdash t:\AFF \varphi$ in the affine system of (Ong et al.), where $|\Delta'|\leq \partial\gphors|\Delta|$: an order-$n$ $\Gfin$ yields then an order-$n$ PAHORS in which every equation $Lx_1\dots x_n$ translates into a new equation $Lz_1^1\dots z_{n}^{k_n}$, where, if $\nonterm(L)=!_{k_1}\varphi_1\multimap\dots \multimap !_{k_i}\varphi_i\multimap\dots\multimap o^n$, the variable $x_i$ is replaced by $k_i$ variables $z_i^1,\dots, z_{i}^{k_i}$.
+\end{proof}
+
+
+\begin{example}
+The affinization of the $\Gfin$ from Example \ref{ex:nonlin} yields the PAHORS below:
+\begin{align*}\label{eq:phors2}
+Ly_1y_2x&=( L(A\circ y_1)(A\circ y_2)x \oplus_{a}
+L(B\circ y_1)(B\circ y_2)x )\oplus_{a}y_1(y_2x)\\
+Ax&= x\oplus_{b} \Omega\\
+Bx&=x\oplus_{c} \Omega\\
+S&=HIIe
+\end{align*}
+Notice that the unique functional variable $y$, that was used twice, is now replaced by \emph{two} functional variables $y_1,y_2$, used once.
+\end{example}
+
+In a $\Gfin$, the degree $\partial \gphors$ can well be exponential in $\|\gphors\|$, so that $\AFF\gphors$ has size exponential in $\|\gphors\|$:
+
+\begin{example}
+Consider the order-2 $\Gfin$ $\gphors$ given by:
+\begin{align*}
+F_1fx&= f(fx)\\
+F_2f x&= F_1(f\circ f) x \oplus_{p} x\\
+%F_2f x&= F_3(f\circ f) x \oplus_{p} x\\
+&\vdots\\
+F_{n}fx&= F_{n-1}(f\circ f)x\oplus_{p}x\\
+S&=F_n \ \mathrm{id} \  e
+\end{align*}
+For all $i=1,\dots,n$, $\nonterm(F_i)=\ !_{2^{i}}\tau\multimap\tau$, whence
+$\|\AFF{\gphors}\| \leq \partial\gphors\|\gphors\|=
+\C O(2^{\|\gphors\|}\|\gphors\|)$.
+\end{example}
+
 
 
 \subsection{Extracting Fas from $\Gfin$}
@@ -145,8 +196,10 @@ Next, for every derivation $\pi:\nonterm\mid\Delta \vdash_{\Gfin}t:\varphi$,
 by replacing each $\psi$ by $U$, where $\psi\tri U$, we obtain, by induction, a simply typed derivation $\Gamma\vdash_{\lambda_{\oplus} }t:T$, where $\nonterm\mid\Delta\tri \Gamma$ and $\varphi\tri T$. 
 %We will say that $\pi$ \emph{refines} $\pi^\tri$ (noted $\pi\tri\pi^{\tri}$).
 
+Define, for every type $\varphi$, $\model{\varphi}$ as $\model{o^n}=1$ and $\model{!_k\varphi\multimap \psi}=!_k\model{\varphi}\times\model{\psi}$. Notice that $\varphi\tri T$ implies $\model{\varphi}\subseteq\model{T}$.
 
-Now, for a term $t:\varphi$ typable in $\Gfin$, where $\varphi\tri T$, we will define its interpretation $\model{t:\varphi\tri T}^{\Rsemiring}$ as a suitable \emph{finite restriction} of the interpretation $\model{t:T}^{\Rsemiring}$ of the corresponding simply typed derivation.
+
+Now, for a term $t:\varphi$ typable in $\Gfin$, where $\varphi\tri T$, we will define its interpretation $\model{t:\varphi\tri T}^{\Rsemiring}$, intuitively, as the \emph{restriction} of the interpretation $\model{t:T}^{\Rsemiring}$ to $\model{\varphi}$.
 %
 %Recall that the interpretation $\model{\Gamma\vdash t:T}^{\Rsemiring}$ of a $\PLY$-derivation in $\Qrelkleisli{\Rsemiring}$ is defined by induction on the rules, associating the axiom rule $\Gamma, x:T\vdash x:T$ with the projection $\Qrelkleisli{\Rsemiring}(\model{\Gamma}+\model{T},\model{T})$, the rule introduction $\oplus$ with weighted sums, and all other rules with the corresponding operation on $\Qrelkleisli{\Rsemiring}$ given by cartesian closure.
 More precisely, given a $\Gfin$-derivation $\pi:\nonterm\mid\Delta\vdash t:\varphi$, given $\nonterm\tri\Gamma_{\nonterm}, \Delta\tri\Gamma_{\Delta}$ and $\varphi\tri T$, we define 
@@ -161,7 +214,7 @@ $\model{t:\varphi\tri T}^{\Rsemiring}:=\left(
 \model{t:T}^{\Rsemiring}\right)\Big\vert_{\model{\nonterm}+\model{\Delta}}^{\model{\varphi}}
 $, where, given a $X$-family of fps $s_X\in \fps{\Rsemiring}{Y}^X$, $X'\subset X$ and $Y'\subset Y$, $(s_X)\vert_{Y'}^{X'}=(s_{X'})\vert_{Y'}\in \fps{\Rsemiring}{Y'}^{X'}$ is the $X'$-family of restrictions of $s_{X'}$ to the variables in $Y'$;
 
-\item all other rules are interpreted as the corresponding ones in $\lambda_{\oplus}Y$.
+\item all other rules are interpreted as the corresponding simply-typed rules.
 
 \end{varitemize}
 
@@ -177,10 +230,10 @@ Given $\nonterm\mid\Delta\vdash t:\varphi$, with $\varphi\tri T$,
 \]
 \end{proposition}
 
-For every $\Gfin$ $\gphors=(\nonterm, \C R,S)$, we can define the interpretation of each non-terminal $L_i$ as 
-\[
+For every $\Gfin$ $\gphors=(\nonterm, \C R,S)$, we can define the interpretation of each non-terminal $L_i$ as we did for PHORS, i.e.~ 
+$
 \model{L_i}^{\Rsemiring}:=  \model{\pi_i(Yt_{\gphors})}=\pi_i\left(\fix \model{t_{\gphors}}\right)\in \Rsemiring^{\model{\nonterm(L_i)}}.
-\]  
+$ 
 
 The following is at this point an immediate consequence of the remark that the type $\1$ is the only refinement of itself:
 % the finitary interpretations $\model{t:\1\tri \1}^{\Rsemiring}$ correctly capture $\mathbb P(t\downarrow)$ and $\mathbb E(t\downarrow)$.
@@ -193,13 +246,7 @@ For every $\Gfin$ $\gphors=(\nonterm, \C R,S)$,
 \left(\model{S}^{\fps{\Rinf}{z}}\right)'(1)=\mathbb E(\gphors\downarrow).\]
 \end{corollary}
 
-\begin{remark}
-We could have also defined the interpretation of $\Gfin$ via the well-known fact that the family of functors $(!_k)_{k\in \N}:\Qrel{\Rsemiring}\to\Qrel{\Rsemiring}$ defines a \emph{graded linear exponential comonad} (cite Katsumata etc.), yielding a truly finite semantics in which $\model{!_k\varphi}=!_k\model{\varphi}$. 
-%
-%. This would interpret a type $\varphi$, with $\varphi\tri T$ as a suitable finite subset of $\model{T}$. In our semantics we still have $\model{\varphi\tri T}=\model{T}$, although 
-However, we chose to keep the infinitary semantics $\model{\varphi\tri T}=\model{T}$ as we wish to look at $\Gfin$ as a tool to extract information the power series arising from (a subset of the terms of) $\lambda_{\oplus}Y$. 
 
-\end{remark}
 
 
 At this point, observe that a consequence of Proposition \ref{prop:finiok} and of the finiteness of the types of $\Gfin$ is that the fps $\model{t:\varphi\tri T}^{\Rsemiring}$ must have a finite support. This leads to the follows:
@@ -215,15 +262,45 @@ $\model{t_{\gphors}}^{\Rsemiring}\in \fps{\Rsemiring}{\model{\nonterm}}^{\model{
 
 Thanks to Proposition \ref{prop:fintoalg}, we obtain then:
 \begin{theorem}[$\Gfin$ are algebraic]
-For all $\Gfin$ $\gphors=(\nonterm, \C R, S)$, $\model{S}^{\Rinf}\in \Rinf$ is $\mathbb Q^{+}$-algebraic and 
- $\model{S}^{\fps{\Rinf}{z}}\in \fps{\Rinf}{z}$ is $\fps{\mathbb Q^{+}}{z}$-algebraic.
+For all $\Gfin$ $\gphors=(\nonterm, \C R, S)$, $\mathbb P(\gphors\downarrow)$ is $\mathbb Q^{+}$-algebraic and 
+ $\sum_i\mathbb P(\gphors\downarrow_i)z^i$ is $\fps{\mathbb Q^{+}}{z}$-algebraic.
 
 
 
 \end{theorem}
 
 
+%\begin{example}
+%Consider again $\gphors$ from Example \ref{ex:nonlin}.
+%
+%
+%
+%
+%\end{example}
 
+\begin{example}[a non-algebraic PHORS]
+The PHORS $\gphors$ below:
+\begin{align*}
+Lyx &= L(y\circ y) x\oplus_{p} fx \\
+S&= L\ \mathrm{id}\  e
+\end{align*}
+is \emph{not} a $\Gfin$: if we try to type $t_L=L(y\circ y) x\oplus_{p} fx$ we obtain
+$L:\varphi \mid \emptyset\vdash \lambda y.\lambda x.t_L: \psi$, where $\psi=\ !_2\tau\multimap \tau\not\sqsubseteq \ !_1\tau\multimap\tau=\varphi$. 
+Indeed, the generating function $s^L(y_{\N},x)\in \fps{\Rsemiring}{\N+1}$ of $L$ satisfies 
+$s^L(y_\N,x)=\frac{1}{2}(
+y_1x+s^L( y^2_\N,x)
+)$, which yields the solution $s^L(y_\N,x)=\sum_i\frac{1}{2^{i+1}}y^{2^i}x$, that is not algebraic (cf. Remark~\ref{rem:hadamard}). 
+\end{example}
+
+
+\begin{remark}
+
+We could have also defined the interpretation of $\Gfin$ via the well-known fact that the family of functors $(!_k)_{k\in \N}:\Qrel{\Rsemiring}\to\Qrel{\Rsemiring}$ defines a \emph{graded linear exponential comonad} (cite Katsumata etc.), yielding a truly finite semantics in which $\model{!_k\varphi}=!_k\model{\varphi}$. 
+%
+%. This would interpret a type $\varphi$, with $\varphi\tri T$ as a suitable finite subset of $\model{T}$. In our semantics we still have $\model{\varphi\tri T}=\model{T}$, although 
+However, we chose to keep the infinitary semantics $\model{\varphi\tri T}=\model{T}$ as we wish to look at $\Gfin$ as a tool to extract information the power series arising from (a subset of the terms of) $\lambda_{\oplus}Y$. 
+
+\end{remark}
 
 \subsection{Decidability of AST and PAST}
 
