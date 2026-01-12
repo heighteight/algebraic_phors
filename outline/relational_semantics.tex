@@ -1,5 +1,5 @@
 % !TEX root = main.tex
-In this section, we recall the well-studied relational semantics of linear logic weighted over a continuous semiring $\Rsemiring$, although in a slightly different flavor than the one used in (cite Laird, Manzonetto): rather than using $\Rsemiring$-valued matrices, we will use formal power series over $\Rsemiring$, as in (cite Paolo and Davide's work about tropical lambda calculus). We will notably illustrate how this semantics yields an interpretation of PHORS, via $\PLY$, as formal power series.
+In this section, we recall the well-studied relational semantics of linear logic weighted over a continuous semiring $\Rsemiring$, although in a slightly different flavor than the one used in (cite Laird, Manzonetto): rather than using $\Rsemiring$-valued matrices, we will use formal power series over $\Rsemiring$, as in (cite Paolo and Davide's work about tropical lambda calculus). We will notably illustrate how this semantics yields an interpretation of PHORS as formal power series.
 
 % Then, we focus on algebraic power series: this is a concept widely used in algebra and combinatorics (cite Flajolet, Kauers, Eisenbud), in the context of rings or fields. Its treatment in semi-rings is less standard, but extensively studied in the context of formal language theory (cite Kuich, Schlund). We will show that, through the relational semantics, such ideas apply naturally to the semantics of probabilistic $\lambda$-calculi.
 
@@ -64,9 +64,9 @@ This generalizes the correspondence between a fps $\sum_{\mu\in !X} s_{\mu}x^\mu
 
 
 \begin{example}\label{ex:churchtwo}
-Consider the program $M=\lambda x.y(yx)$, where $y:(\1\to\1)\vdash M:\1\to\1$: letting $\model{\1}=1=\{\star\}$, and 
+Consider the program $t=\lambda x.y(yx)$, where $y:(\1\to\1)\vdash t:\1\to\1$: letting $\model{\1}=1=\{\star\}$, and 
 observing that $\model{\1\to\1}=!\1\times \1\equiv \N$, 
-we have that $M$ is interpreted by a $\N$-indexed family of power series
+we have that $t$ is interpreted by a $\N$-indexed family of power series
 $(s_i(y_{\N}))_{i\in\N}\in \Qrelkleisli{\Rsemiring}(\N,\N)=\fps{\Rsemiring}{\N}^{\N}$.
 %, corresponding to the fps $\sum_{i=0}^{\infty}s(y_{\N})_i x^i$. 
 Now, think of the variables $y_{\N}$, which interpret the function $y:\1\to\1$, as encoding the fps $a(x)=\sum_n y_n x^n\in\Qrelkleisli{\fps{\Rsemiring}{\N}}(\1,\1)\equiv  \fps{(\fps{\Rsemiring}{\N})}{1}$;
@@ -84,7 +84,7 @@ which gives $s_i(y_{\N})= \sum_{{\tiny\begin{matrix}(n,m_1,\dots, m_n),\\ m_1+\d
 %&=
 % \sum_{{\tiny\begin{matrix}(n,m_1,\dots, m_n),\\ m_1+\dots+m_n=i\end{matrix}}}y_ny_{m_1}\dots y_{m_n}x^i=t(y_{\N})_ix^i.
 %\end{align*}
-Notice that the evaluation $y:(\1\to\1),x:\1\vdash Mx:\1$ is precisely interpreted by $a(a(x))\in \Qrelkleisli{\Rsemiring}(\N+1,1)=\fps{\Rsemiring}{\N+1}\equiv\fps{(\fps{\Rsemiring}{\N})}{1}$.
+Notice that the evaluation $y:(\1\to\1),x:\1\vdash tx:\1$ is precisely interpreted by $a(a(x))\in \Qrelkleisli{\Rsemiring}(\N+1,1)=\fps{\Rsemiring}{\N+1}\equiv\fps{(\fps{\Rsemiring}{\N})}{1}$.
 
 %In other words, since $\fps{\Rsemiring}{\N+1}\equiv\fps{\fps{\Rsemiring}{\N}}{\1}$, 
 %we can look at $s(y_{\N},x)$ as a power series in $x$ whose $i$-th coefficient is the fps $t(y_{\N})_i=  \sum_{{\tiny\begin{matrix}(n,m_1,\dots, m_n),\\ m_1+\dots+m_n=i\end{matrix}}}y_ny_{m_1}\dots y_{m_n}\in \fps{\Rsemiring}{y_{\N}}$.
@@ -187,21 +187,21 @@ In (Barbarossa, Pistone) they also consider the interpretation of
 One can interpret $\PLY$ (or even probabilistic PCF) in all $\Qrelkleisli{\Rsemiring}$ with $\Rsemiring$ of the form $\fps{\Rinf}{\Sigma}$. When $\Rsemiring=\Rinf$, the interpretation precisely captures the call-by-value probabilistic execution of closed terms, as stated below: 
 %the interpretation $\model{M}^{\Rinf}$ of a term $M:\1$ of ground type consists in a real number, since $\model{M}^{\Rinf}\in\Qrelkleisli{\Rsemiring}(0,\1)\equiv\fps{\Rsemiring}{0}\equiv\Rsemiring$, which coincides with the probability of termination of $M$, computed as the sum of the weights $w(R)\in \Rinf$ of all call-by-name probabilistic reductions $R:M{\to^*}e$:
 \begin{proposition}[cite Pagani and co]\label{prop:proba}
-For any $\PLY$ closed term $M:\1$, 
+For any $\PLY$ closed term $t:\1$, 
 \begin{align}
-\model{M}^{\Rinf}&=\mathbb P(M\downarrow),
+\model{t}^{\Rinf}&=\mathbb P(t\downarrow),
 %=\sum_{R:M\to^* e}w(R),
 \label{eq:prob1} \\
-\model{M}^{\fps{\Rinf}{z}}(z)&=\sum_{i=0}^{\infty}\mathbb P(M\downarrow_i)z^i,\label{eq:prob2}
+\model{t}^{\fps{\Rinf}{z}}(z)&=\sum_{i=0}^{\infty}\mathbb P(t\downarrow_i)z^i,\label{eq:prob2}
 \end{align}
-where $\mathbb P(M\downarrow_i)=\sum_{R:M\to^i e}w(R)$ is the probability that $M$ terminates after exactly $i$ probabilistic steps.
+where $\mathbb P(t\downarrow_i)=\sum_{R:t\to^i e}w(R)$ is the probability that $M$ terminates after exactly $i$ probabilistic steps.
 \end{proposition}
 While \eqref{eq:prob1} indicates that the interpretation in $\Rinf$ precisely captures the probability of termination, \eqref{eq:prob2} provides a \emph{finer} result: by marking with the variable $z$ each probabilistic reduction step, the interpretation of $\fps{\Rinf}{z}$ is a formal power series in $z$ whose coefficients count the probability of terminating in exactly $i$ steps. This leads to the following result, stating that the \emph{derivative} of this power series captures the expected number of steps to termination:
 
 \begin{corollary}\label{cor:expected}
-For any $\PLY$ closed term $M:\1$, 
+For any $\PLY$ closed term $t:\1$, 
 \begin{equation}\label{eq:expected1}
-\left(\model{M}^{\fps{\Rinf}{z}}\right)'(1)=\sum_{i=1}^{\infty} i\cdot \mathbb P(M\downarrow_i)=\mathbb E(M\downarrow).
+\left(\model{t}^{\fps{\Rinf}{z}}\right)'(1)=\sum_{i=1}^{\infty} i\cdot \mathbb P(t\downarrow_i)=\mathbb E(t\downarrow).
 \end{equation}
 
 \end{corollary}
@@ -223,14 +223,14 @@ For any $\PLY$ closed term $M:\1$,
 
 A useful property is that all closed \emph{first-order} terms of $\PLY$ are \emph{affine}, as stated below:
 \begin{proposition}\label{prop:affine}
-For all first-order terms $x_1:\1,\dots, x_n:\1\vdash_{\PLY}M:\1$, 
-$\model{M}^{\Rinf}(x_1,\dots, x_n)\in \fps{\Rinf}{x_1,\dots,x_n}$ is affine: there exists scalars $w_0,w_1,\dots, w_n\in\mathbb R_{\geq 0}$ such that
+For all first-order terms $x_1:\1,\dots, x_n:\1\vdash_{\PLY}t:\1$, 
+$\model{t}^{\Rinf}(x_1,\dots, x_n)\in \fps{\Rinf}{x_1,\dots,x_n}$ is affine: there exists scalars $w_0,w_1,\dots, w_n\in\mathbb R_{\geq 0}$ such that
 \[
-\model{M}^{\Rsemiring}(x_1,\dots, x_n)
+\model{t}^{\Rsemiring}(x_1,\dots, x_n)
 =w_0+w_1x_1+\dots+w_nx_n,
 \]
-where $w_0=\mathbf P[M\to^* e]$ and
-$w_{i+1}=\mathbf P[M\to^* x_{i+1}]$.
+where $w_0=\mathbb P[t\to^* e]$ and
+$w_{i+1}=\mathbb P[t\to^* x_{i+1}]$.
  \end{proposition}
  
 This result translates the fact that in a reduction of $M$ to normal form, a ground variable $x:\1$ can occur in head position \emph{at most once}: indeed, as soon as $x$ occurs in head position, we must have $M\to^* x$, that is, the reduction has terminated.
@@ -244,34 +244,38 @@ This result translates the fact that in a reduction of $M$ to normal form, a gro
 %\end{example}
 
 \begin{example}\label{ex:phors2}
-Consider the PHORS from Example \ref{ex:phors0} and the corresponding $\PLY$-term $M_{\gphors}$ (cf.~Example \ref{ex:phors1}).
+Consider the PHORS from Example \ref{ex:phors0}, with $t_F=F(Fx)\oplus_{\frac{1}{2}}x$ and $t_S=Fe$.
+% and the corresponding $\PLY$-term $M_{\gphors}$ (cf.~Example \ref{ex:phors1}).
 %
 % Its interpretation $\model{M}^{\Rinf}\in 
 % \Qrelkleisli{\Rinf}(1, \N+1)\equiv
 % (\Rinf)^{\N +1}\equiv (\Rinf)^{\N}\times \Rinf$ (using $\model{\1\to \1}=\ !1\times 1\equiv\N$) is given by a pair $(f,s)$, where $f:\N \to \Rinf$ and $s\in \Rinf$.%
 The interpretation in $\Qrelkleisli{\Rinf}$ 
 %$\model{\lambda \langle F,S\rangle.M'}^{\Rinf}$ 
- of $\lambda \langle F,S\rangle.M':((\1\to \1)\times 1)\to (\1\to \1)\times 1$ is a $(\N+1)$-indexed family of power series
-$t_i(y_{\N+1})\in \fps{\Rinf}{\N +1}$, given, for $i\in \N$, and recalling $s_i(y_{\N})$ from Example \ref{ex:churchtwo}, by
+ of $\lambda \langle F,S\rangle. t_F:((\1\to \1)\times 1)\to (\1\to \1)$ is a $\N$-indexed family of fps 
+$s^F_i(y_{\N+1})\in \fps{\Rinf}{\N +1}$, given, for $i\in \N$, and recalling $s_i(y_{\N})$ from Example \ref{ex:churchtwo}, by
 \[
-t_i(y_{\N+1})=
+s^F_i(y_{\N+1})=
 \begin{cases}
 \frac{1}{2}s_1(y_{\N})+\frac{1}{2}=\frac{1}{2}(
 y_1^2+1)
 & \text{ if }i=1,\\
 \frac{1}{2}s_i(y_{\N})
-&\text{ if }i\in\N, i\neq 1,\\
-\sum_{n}y_n&\text{ if }i=\star.
+&\text{ if }i\in\N, i\neq 1,
+%\\
+%\sum_{n}y_n&\text{ if }i=\star.
 \end{cases}
 \]
+The interpretation of $\lambda \langle F,S\rangle. t_S:((\1\to \1)\times 1)\to \1$ is a unique fps 
+$s^S(y_{\N +1})\in \fps{\Rinf}{\N +1}$ given by $s^S(y_{\N +1})=\sum_{i\in \N} y_i$. 
  
-Computing $\model{M_{\gphors}}^{\Rinf}= \mathsf{fix}\  t_{\N +1}$ means finding a minimal solution $(a_i)_{i\in \N+1}\in(\Rinf)^{\N+1}$ of the fixpoint equations $a_{i}=t_i(a_{\N+1})$, and thus in particular, a minimal solution $a_1\in \Rinf$ of
+Computing $\model{t_{\gphors}}^{\Rinf}= \mathsf{fix}\  \langle s^F,s^S \rangle$ means finding a minimal solution $(a_i)_{i\in \N+1}\in(\Rinf)^{\N+1}$ of the fixpoint equations $a_{i}=s^F_i(a_{\N+1})$ ($i\in\N$) and $a_{\star}=s^S(a_{\N +1})$, and thus in particular, a minimal solution $a_1\in \Rinf$ of
 \begin{equation}\label{eq:alg1}
-a_1=\frac{1}{2}( a_1^2+1).
+a_1=\frac{a_1^2+1}{2}.
 \end{equation}
 It is not difficult to check that the unique solution here is $a_1(y_{\N+1})=1$, which yields
-$\model{M_{\gphors}}^{\Rinf}_1=\model{M_{\gphors}}^{\Rinf}_\star=1$ and 
-$\model{M_{\gphors}}^{\Rinf}_{i+1}=0$, i.e.~that $\mathbb P(S\downarrow)=1$, i.e.~AST holds, and moreover  
+$\model{t_{\gphors}}^{\Rinf}_1=\model{t_{\gphors}}^{\Rinf}_\star=1$ and 
+$\model{t_{\gphors}}^{\Rinf}_{i+1}=0$, i.e.~that $\mathbb P(S\downarrow)=1$, i.e.~AST holds, and moreover  
 $\mathbb P(Fx\to^* x)=1$.
 % ( terminates with probability $1$, and that $\Fx$.
 % is then given by the fixpoint of the family $t_{\N+1}$, i.e.~by the minimal solution $\mathsf{fix}\  s_{\N +1}$ of the family of equations
@@ -297,7 +301,7 @@ Consider now the interpretation of the same PHORS in $\Qrelkleisli{\fps{\Rinf}{z
 By a similar argument we are led to find a minimal solution $a_1(z)\in \fps{\Rinf}{z}$
 of the fixpoint equation
 \begin{equation}\label{eq:alg2}
-a_1(z)=\frac{1}{2}(za_1^2(z)+z).
+a_1(z)=\frac{za_1^2(z)+z}{2}.
 \end{equation}
 We will see in the next section that this solution is given by the series
 $a_1(z)=\sum_{i=0}^{\infty}\frac{C_i}{2^{2i+1}} z^{2i+1}$, where $C_i$ is the $i$-th Catalan number. 
