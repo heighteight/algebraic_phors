@@ -65,7 +65,7 @@
 
 
 
-\title{On Higher-Order Program Verification through Generating Functions and Linear Logic}
+\title{Higher-Order Program Verification through Generating Functions and the Weighted Relational Model}
 
 
 \author{{Anonymous Authors}}
@@ -85,10 +85,18 @@
 
 \begin{abstract}
 
+The problem of determining whether a probabilistic program terminates almost surely (i.e.~with probability one) is undecidable, and actually $\Pi^0_2$-complete. 
+For this reason, a growing literature has explored classes of programs for which this and related problems can be shown decidable.
+In this work we consider the termination problem for the language of Probabilistic Higher-Order Recursion Schemes (PHORS). 
+Using the weighted relational semantics of linear logic, we translate this problem into the study 
+of suitable generating functions associated with higher-order programs. 
+By leveraging this interpretation, we establish the decidability of almost sure termination for a class of programs that extends the affine PHORS of (Ong and co.) via a type discipline with bounded exponentials.
+To achieve this, we show that the generating functions for such programs are always algebraic, that is, solutions of polynomial equations, yielding an effective method to compute their values.
+
 
 \end{abstract}
 
-\keywords{Quantum computation, lambda-calculus, compilation, geometry of interaction}
+\keywords{Probabilistic $\lambda$-calculus, linear logic, weighted relational model, algebraic power series}
 
 \maketitle
 
