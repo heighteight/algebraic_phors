@@ -44,7 +44,7 @@ The interpretation of this is that, for any $i\in \N$, there are $C_i$ terminati
   		p_n(s_1, \dots s_n, x_\Sigma)=0\\
   	\end{cases}
   	\end{equation*}
-  	 If for an $s \in \fps{R}{\Sigma}$, $(s)$ is an algebraic family (i.e there exists a polynomial $p(w_1, x_\Sigma) \in \fpp{R'}{w \cup \Sigma}$ such that $p(s, x_\Sigma)=0$, we say that $s$ is algebraic.
+  	 If for an $s \in \fps{R}{\Sigma}$, $(s)$ is an algebraic family (i.e there exists a polynomial $p(w_1, x_\Sigma) \in \fpp{R'}{w \cup \Sigma}$ such that $p(s, x_\Sigma)=0$, we say that $s$ is algebraic; we also say that $p$ is an annihilating polynomial of $w_1$.
   \end{definition}
   
 
@@ -57,25 +57,29 @@ The interpretation of this is that, for any $i\in \N$, there are $C_i$ terminati
   \end{example}	
   \begin{remark}\label{rem:hadamard}
   The non-zero coefficients of an algebraic power series cannot be ``too far'': if $a(x)=\sum_na_n x^{p_n}$ is algebraic, then $\lim_n p_n/n<\infty$: 
-  algebraic power series can always be analytically extended over all but finitely many points of the unitary circle; by contrast, by Fabry's gap theorem, if $\lim_n p_n/n$ diverges, then $a$ has the whole unitary circle as a natural border.
+  algebraic power series can always be analytically extended over all but finitely many points of the unitary circle; by contrast, by Fabry's gap theorem, if $\lim_n p_n/n$ diverges, then $a$ has the whole circle of convergence  as a natural boundary.
   For instance, none of the series $\sum_n x^{n^2},\sum_n x^{n^3}, \sum_n x^{2^n}$ is algebraic.
   
     
   \end{remark}
+  \begin{remark}
+  	\label{derivative-rational}
+  	If $s\in \fpp{\R}{x}$ has annihilating $p(w, x_\Sigma)$ is one of its annihilating polynomials, then one can compute effectively a rational power series $r(x,y)$ such tha the following holds for the derivative $s'(x)$: of $s$: 
+  	$$s'(x) = r(x, s(x))  $$
+  \end{remark}
   
-  We will now show that, for a power series $s$ over a ring which is an integrity domain, being algebraic and being part of an algebraic family are the same:
-  \begin{lemma}
-  	(Here, it is necessary for R to be an UFD)
-  	If $p, q \in \fpp{R'}{w_1,x_\Sigma}$, there exists a polynomial $Res_{w_1}(p,q) \in \fpp{R'}{x_\Sigma}$ such that if $(\bar w, \bar x_\Sigma)$  is a common root of $p,q$ in any extension $R \supseteq R'$, then $Res(\bar x_\Sigma)=0$.
-  \end{lemma}
-  \begin{lemma}
+  We will now show that, for a power series $s$ over a ring which is an unique factorization domain (for example, a field $K$ or any ring of polynomials or formal power series over a field), being algebraic and being part of an algebraic family are the same:
+%  \begin{lemma}
+%  	If $p, q \in \fpp{R'}{w_1,x_\Sigma}$ are coprime, there exists a non zero polynomial $Res_{w_1}(p,q) \in \fpp{R'}{x_\Sigma}$ such that for each $(\bar w, \bar x_\Sigma)$ that is a common root of $p,q$ in an extension $R \supseteq R'$, then $Res(\bar x_\Sigma)=0$.
+%  \end{lemma}
+  \begin{lemma}[Elimination of $n$ variables in $n$ equations]
+  	\label{lemma-elimination}
   	If $(s_1, \dots s_n)$ are an $R'$ algebraic family of power series, then each $s_i$ is an algebraic power series
   \end{lemma}
   \begin{proof}
-  	Taking the resultant  $Res_i$ of $p_1$ with every $p_i \: i \geq 2$, we obtain a system of $n-1$ equations in the variables $w_2, \dots w_n, x_\Sigma$. Iterating this procedure $n-1$ times, we are left with a single equations in the variables $w_n, x_\Sigma$
+  	This result, based on elimination theory, is proved constructively in (cite van der Waerden, 2, par. 82). In (cite Kuich), it is proved carefully that the annihilating polynomial of each $s_i$  can be computed effectively from the algebraic system.
   \end{proof}
-
-  The theory of algebraic power series should be stated in a slightly different way in the context of semirings: if $a \in \fps{\Rsemiring}{\Sigma}, a > 0$, then for each $k$ $a^k > 0$, hence it is not possible that $p(a, x_\Sigma)=0$ for some $p \in \fpp{\Rsemiring}{\Sigma}$. One could give the following definitions:
+  The theory of algebraic power series should be stated in a slightly different way in the context of semirings: if $a \in \fps{\Rsemiring}{\Sigma}, a > 0$, then for each $k$ $a^k > 0$, hence it is not possible that $p(a, x_\Sigma)=0$ for some $p \in \fpp{\Rsemiring}{\Sigma}$. One must give the following definitions:
    \begin{definition}
   	Let $\Rsemiring$ be a semiring and let $\Rsemiring'\leq \Rsemiring$ be a subsemiring. A family $(s_1, \dots s_n)$ of formal power series $s_i \in \fps{\Rsemiring}{\Sigma}$ is an \textbf{algebraic family} over $\Rsemiring'$ if there exist polynomials $p_i, q_i  \in \fpp{\Rsemiring'}{w_1, \dots w_n, \Sigma}$ such that:
   	\begin{equation*}

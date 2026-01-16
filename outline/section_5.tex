@@ -261,13 +261,20 @@ $\model{t_{\gphors}}^{\Rsemiring}\in \fps{\Rsemiring}{\model{\nonterm}}^{\model{
 \end{proposition}
 
 Thanks to Proposition \ref{prop:fintoalg}, we obtain then:
-\begin{theorem}[$\Gfin$ are algebraic]
-For all $\Gfin$ $\gphors=(\nonterm, \C R, S)$, $\mathbb P(\gphors\downarrow)$ is $\mathbb Q^{+}$-algebraic and 
- $\sum_i\mathbb P(\gphors\downarrow_i)z^i$ is $\fps{\mathbb Q^{+}}{z}$-algebraic.
-
-
-
+\begin{theorem}
+	\label{Gfin-algebraic-theorem}
+	For all $\Gfin$ $\gphors=(\nonterm, \C R, S)$, $(\model{L}^{\Rinf})_{L \in \nonterm}$ is a $\Q^{+}$ fixpoint algebraic family with no parameters and $(\model{L}^{{\Rinf}})_{L \in \nonterm}$ is a ${Q^{+}}$ fixpoint algebraic family with parameter $z$.
 \end{theorem}
+From this and lemma $\ref{lemma-elimination}$, we obtain:
+\begin{corollary}[$\Gfin$ are algebraic]
+	\label{Gfin-algebraic-corollary}
+	 For all $\Gfin$ $\gphors=(\nonterm, \C R, S)$,
+	\begin{enumerate}
+\item $\mathbb P(\gphors\downarrow)$ is a $\mathbb Q^{+}$ algebraic number and 
+ $\sum_i\mathbb P(\gphors\downarrow_i)z^i$ is a ${\mathbb Q^{+}}$-algebraic power series.
+\item for each $L \in \nonterm$, $\model{L_i f_1 \dots f_n : \1}^{\Rinf}$ is an algebraic power series.  
+\end{enumerate}
+\end{corollary}
 
 
 %\begin{example}
@@ -303,7 +310,13 @@ However, we chose to keep the infinitary semantics $\model{\varphi\tri T}=\model
 \end{remark}
 
 \subsection{Decidability of AST and PAST}
-
+The  proof of \ref{Gfin-algebraic-theorem} is constructive: it gives a way to build effectively a Fas $(\vec x = p_i(\vec x))_{1 \leq i \leq n}$ that has $(\model{L}^{\Rinf})_{L \in \nonterm}$ as its (minimal) solution by computing for each $L \in \nonterm$ the interpretation $\model{\mathcal{R}(L)}^{\Rinf}$, where $\mathcal{R}(L)$ is a fixpoint-free term. 
+Once we have the Fas, we can check if $\mathbb P(\gphors\downarrow) = \model{S}^{\Rinf}$ by using the first order Existential Theory of the Reals $\Etor$ (cite Etessami-Yannakakis, 09): first, we create a first order formula $\phi( \vec x)$ expressing the fact that $\vec x$ satisfies $\vec x = p_i(\vec x)$, then we can express the fact that $x_1=1$ by the formula $\exists \vec{x}(x_1=1 \land \phi(\vec x) \land \forall \vec y ((\vec y < \vec x) \implies \neg \phi(\vec y)  ))$\\
+As for PAST, remember in the first place that PAST implies AST. Then, given a $\gphors=(\nonterm, \C R, S) \in \Gfin$, we can in the first place test if it is AST: if it is not, then it not PAST. If it AST, notice that by \ref{Gfin-algebraic-corollary}, $\model{S}^{\fps{\Rinf}{z}}$ is an algebraic power series. Then, we can, as pointed out in remark \ref{derivative-rational}, find a rational function $r(z, y)$ such that ${\model{S}^{\fps{\Rinf}{z}}}' = r(z, \model{S}^{\fps{\Rinf}{z}}) $. But then $$E(\gphors\downarrow) = {\model{S}^{\fps{\Rinf}{z}'}}'(1)= r(1,1)$$ 
+We thus obtain:
+\begin{theorem}
+	AST and PAST are decidable for $\Gfin$.	
+\end{theorem}
 
 
 %
