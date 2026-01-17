@@ -44,7 +44,8 @@ $\varphi\sqsubseteq\varphi',\Psi\sqsubseteq\Psi'\Rightarrow !_k\varphi\multimap 
 
 The typing rules will use, beyond the non-linear and finitely graded contexts $\nonterm,\Delta$, a new context $\C P$ for parameters, containing bindings of the form $x:_\infty\varphi$. The rules are illustrated in Fig.~\ref{fig:typerulesinf}.
 The rules for finitary types are as in the previous section; the new rules are
-ax$_{\C P}$ and, notably, the infinitary abstraction and application rules $\lambda_\infty$ and $@_\infty$. In the rule $@_\infty$, $\nonterm::\nonterm'$ we must suppose that the contexts $\nonterm$ and $\nonterm'$ are \emph{disjoint}. This rule states that an infinitary function $t:!_\infty\varphi\multimap\Psi$ can only be applied to either a \emph{fresh} non-terminal or another parameter. This ensures that an unbounded variable is always used as a parameter.
+ax$_{\C P}$ and, notably, the infinitary abstraction and application rules $\lambda_\infty$ and $@_\infty$. In the rule $@_\infty$, $\nonterm::\nonterm'$ we must suppose that the contexts $\nonterm$ and $\nonterm'$ are \emph{disjoint}. This rule states that an infinitary function $t:!_\infty\varphi\multimap\Psi$ can only be applied to either a \emph{fresh} non-terminal or another parameter. 
+Recall that in a PHORS each non-terminal $L$ is equated with a corresponding term $t_L$: so, when we apply a function $t:!_\infty \varphi\to \Psi$ to the symbol $L$, we are actually applying $t$ to the corresponding term $t_L$. The validity of this rule relies indeed in the possibility of \emph{composing} algebraic power series.
 
 
 \begin{figure}
