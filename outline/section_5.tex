@@ -51,10 +51,9 @@ A type judgement is an expression of the form $\Gamma;\Delta\vdash t:\varphi$.
 %$\emptyset;\emptyset\vdash^{\mathrm{fix}} t:\varphi$. The second form of type judgements are called \emph{PHORS-typings}. Notice that in a PHORS-typing we require the context to be empty.
 The typing rules are illustrated in Fig.~\ref{fig:typerules}.
 \begin{definition}[$\Gfin$]
-A \emph{finitely graded PHORS} (noted $\Gfin$) is a triple $\gphors=(\nonterm, \C R, S)$, where $\nonterm$ is a finite set of typed non-terminals, $S\in\nonterm$ is the {start symbol} such that $\nonterm(S)=\1$, and $\C R$ is a function that associates each $L\in\nonterm$ with a derivation $\nonterm\mid\emptyset\vdash \lambda x_1.\dots. x_n.t:\varphi$ such that $\varphi\sqsubseteq \nonterm(L)$, $t$ contains no $\lambda$-abstraction and $\nonterm\mid x_1,\dots, x_k\vdash t:\1$. 
+A \emph{finitely graded PHORS} (noted $\Gfin$) is a triple $\gphors=(\nonterm, \C R, S)$, where $\nonterm$ is a finite set of typed non-terminals, $S\in\nonterm$ is the {start symbol} such that $\nonterm(S)=\1$, and $\C R$ is a function that associates each $L\in\nonterm$ with a derivation $\nonterm\mid\emptyset\vdash \lambda x_1.\dots. x_n.(t_L \oplus_p t_R):\varphi$ such that $\varphi\sqsubseteq \nonterm(L)$, $t$ contains no $\lambda$-abstraction and $\nonterm\mid x_1,\dots, x_k\vdash t_L \oplus t_R:\1$. 
 \end{definition} 
-
-Since affine implication is expressed by $!_1\varphi\multimap \psi$, it is immediate that all PAHORS are $\Gfin$:
+Since affine implication is expressed by $!_1\varphi\multimap \psi$ and every derivation $\nonterm\mid x_1,\dots, x_k\vdash t :\1$ can be changed into a derivation  $\nonterm\mid x_1,\dots, x_k\vdash t \oplus_1 e :\1$ without modifying the $\Qrelkleisli{\Rinf}$ interpretation of the term, it is immediate that all PAHORS are $\Gfin$:
 \begin{proposition}
 Every PAHORS is a $\Gfin$.
 \end{proposition}
@@ -260,12 +259,12 @@ $\model{t_{\gphors}}^{\Rsemiring}\in \fps{\Rsemiring}{\model{\nonterm}}^{\model{
 %$\model{M:\psi\tri T}^{\Rsemiring}\in \fps{\Rsemiring}{\model{T}+\model{\Gamma}}^{\model{T}}$ is finitary.
 \end{proposition}
 
-Thanks to Proposition \ref{prop:fintoalg}, we obtain then:
+Thanks to Proposition \ref{prop:fintoalg} and the observation that all coefficients of $\model{t_\gphors}^{\Rinf}$ are rational, we obtain then:
 \begin{theorem}
 	\label{Gfin-algebraic-theorem}
-	For all $\Gfin$ $\gphors=(\nonterm, \C R, S)$, $(\model{L}^{\Rinf})_{L \in \nonterm}$ is a $\Q^{+}$ fixpoint algebraic family with no parameters and $(\model{L}^{{\Rinf}})_{L \in \nonterm}$ is a ${Q^{+}}$ fixpoint algebraic family with parameter $z$.
+	For all $\Gfin$ $\gphors=(\nonterm, \C R, S)$, $(\model{L}^{\Rinf})_{L \in \nonterm}$ is a $\Q^{+}$ fixpoint algebraic family with no parameters and $(\model{L}^{\fps{\Rinf}{z}})_{L \in \nonterm}$ is a ${\Q^{+}}$ fixpoint algebraic family with parameter $z$
 \end{theorem}
-From this and lemma $\ref{lemma-elimination}$, we obtain:
+Now observe that the term $t_\gphors$ is in the form $\langle t_{1, L} \oplus_{p_n}  t_{1, R} \dots  t_{n, L} \oplus_{p_n} t_{n_R} \rangle$. We thus have that every fps $s(x_{\model{\nonterm},} z)$ belonging to $\model{t_\gphors}^{\fpp{\Rinf}{z}}$ is divisible by $z$. In particular $s(0_{\model{\nonterm}} 0)=0$ and for every variable $x \in x_{\model{\nonterm}}$ the monomial $x$ does not appear in $s$: hence, $\model{t_\gphors}^{\fpp{\Rinf}{z}}$ is a proper algebraic family. Then, by \ref{cor:propertoalg}, each $\model{L}^{\fps{\Rinf}{z}}$ is an algebraic power series:
 \begin{corollary}[$\Gfin$ are algebraic]
 	\label{Gfin-algebraic-corollary}
 	 For all $\Gfin$ $\gphors=(\nonterm, \C R, S)$,
@@ -275,7 +274,9 @@ From this and lemma $\ref{lemma-elimination}$, we obtain:
 \item for each $L \in \nonterm$, $\model{L_i f_1 \dots f_n : \1}^{\Rinf}$ is an algebraic power series.  
 \end{enumerate}
 \end{corollary}
-
+\begin{proof}
+	For (1), notice that $\model{S}^{\Rinf}=\model{S}^{\fps{\Rinf}{z}}$
+\end{proof}
 
 %\begin{example}
 %Consider again $\gphors$ from Example \ref{ex:nonlin}.

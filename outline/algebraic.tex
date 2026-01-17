@@ -67,40 +67,35 @@ The interpretation of this is that, for any $i\in \N$, there are $C_i$ terminati
   	If $s\in \fpp{\R}{x}$ has annihilating $p(w, x_\Sigma)$ is one of its annihilating polynomials, then one can compute effectively a rational power series $r(x,y)$ such tha the following holds for the derivative $s'(x)$: of $s$: 
   	$$s'(x) = r(x, s(x))  $$
   \end{remark}
-  
-  We will now show that, for a power series $s$ over a ring which is an unique factorization domain (for example, a field $K$ or any ring of polynomials or formal power series over a field), being algebraic and being part of an algebraic family are the same:
 %  \begin{lemma}
 %  	If $p, q \in \fpp{R'}{w_1,x_\Sigma}$ are coprime, there exists a non zero polynomial $Res_{w_1}(p,q) \in \fpp{R'}{x_\Sigma}$ such that for each $(\bar w, \bar x_\Sigma)$ that is a common root of $p,q$ in an extension $R \supseteq R'$, then $Res(\bar x_\Sigma)=0$.
 %  \end{lemma}
-  \begin{lemma}[Elimination of $n$ variables in $n$ equations]
-  	\label{lemma-elimination}
-  	If $(s_1, \dots s_n)$ are an $R'$ algebraic family of power series, then each $s_i$ is an algebraic power series
-  \end{lemma}
-  \begin{proof}
-  	This result, based on elimination theory, is proved constructively in (cite van der Waerden, 2, par. 82). In (cite Kuich), it is proved carefully that the annihilating polynomial of each $s_i$  can be computed effectively from the algebraic system.
-  \end{proof}
+
   The theory of algebraic power series should be stated in a slightly different way in the context of semirings: if $a \in \fps{\Rsemiring}{\Sigma}, a > 0$, then for each $k$ $a^k > 0$, hence it is not possible that $p(a, x_\Sigma)=0$ for some $p \in \fpp{\Rsemiring}{\Sigma}$. One must give the following definitions:
    \begin{definition}
-  	Let $\Rsemiring$ be a semiring and let $\Rsemiring'\leq \Rsemiring$ be a subsemiring. A family $(s_1, \dots s_n)$ of formal power series $s_i \in \fps{\Rsemiring}{\Sigma}$ is an \textbf{algebraic family} over $\Rsemiring'$ if there exist polynomials $p_i, q_i  \in \fpp{\Rsemiring'}{w_1, \dots w_n, \Sigma}$ such that:
-  	\begin{equation*}
-  		\begin{cases}
-  			q_1(s_1, \dots s_n, x_\Sigma) = p_1(s_1, \dots s_n, x_\Sigma)\\
-  			\dots\\
-  			q_n(s_1, \dots s_n, x_\Sigma) = p_n(s_1, \dots s_n, x_\Sigma)\\
-  		\end{cases}
-  	\end{equation*}
-  	If $q_i = w_i$ for each $i$ we say that $(s_1, \dots s_n)$ is a \textbf{fixpoint algebraic family} over $\Rsemiring'$ with parameters $x_\Sigma$ and that:
-  		\begin{equation}
-  		\label{fixpointsystem}
-  		\begin{cases}
-  			w_1 = p_1(s_1, \dots s_n, x_\Sigma)\\
-  			\dots\\
-  			w_n = p_n(s_1, \dots s_n, x_\Sigma)\\
-  		\end{cases}
-  	\end{equation}
-  		is a  \textbf{fixpoint algebraic system} (in short \textbf{fas), over} $\Rsemiring'$ with parameters $x_\Sigma$. 
+	Let $\Rsemiring$ be a semiring and let $\Rsemiring'\leq \Rsemiring$ be a subsemiring. A  $\Rsemiring'$-\textbf{fixpoint algebraic system} (in short $\Rsemiring'$-\textbf{fas}) with parameters $x_\Sigma$ is a system of $n$ equations:
+	 \begin{equation}
+		\label{fixpointsystem}
+		\begin{cases}
+			w_1 = p_1(w_1, \dots w_n, x_\Sigma)\\
+			\dots\\
+			w_n = w_n(s_1, \dots w_n, x_\Sigma)\\
+		\end{cases}
+		\end{equation}
+	A family $(s_1, \dots s_n)$ of formal power series $s_i \in \fps{\Rsemiring}{\Sigma}$ that is the minimal solution of a $\Rsemiring'$-fas is said a $\Rsemiring'$-\textbf{fixpoint algebraic family}\\
+	If the $p_i$ are such that $p_i(0,0)=0$ and for each $j$ the coefficient of the monomial $w_j$ in $p_i$ is $0$, we say that the system is \textbf{proper}.
 \end{definition}
-	The theory of systems like \eqref{fixpointsystem} has been extensively studied (cite Kuich, Schlund) in the context of formal language theory: in particular, it can be shown that they admit a minimal solution, that can be obtained by iterating the polynomials $p_1 \dots p_n$. We will not go into the details, because in the following we will be in general be interested into $\Rinf$ power series algebraic over $\Q_{\geq 0}$: in this case, the polynomial equations $w_i= p_i, \: p \in \fpp{\Qpos}{\Sigma}$ can be rewritten as $p'_i \bydef p_i- w_i = 0, \: p \in \fpp{\Qpos}{\Sigma}$. Rather than speaking of the minimal solution of \eqref{fixpointsystem} as a system with coefficients in $\Qpos$, we will be able to speak about the minimal non-negative solution of the system $(p'_i=0)_{1 \leq i \leq n}$ with coefficients over $\mathbb{Q}$.\\
+	The theory of systems like \eqref{fixpointsystem} has been extensively studied (cite Kuich, Schlund, Banderier-Drmota) in the context of combinatorics and formal language theory: in particular, it can be shown that they admit a (unique) minimal solution, that can be obtained by iterating the polynomials $p_1 \dots p_n$. In the following we will be in general be interested into $\Rinf$ power series algebraic over $\Q_{\geq 0}$: in this case, the polynomial equations $w_i= p_i, \: p \in \fpp{\Qpos}{\Sigma}$ can be rewritten as $p'_i \bydef p_i- w_i = 0, \: p \in \fpp{\Qpos}{\Sigma}$. Rather than speaking of the minimal solution of \eqref{fixpointsystem} as a system with coefficients in $\Qpos$, we will be able to speak about the minimal non-negative solution $(s_1, \dots s_n)$  of the system $(p'_i=0)_{1 \leq i \leq n}$ with coefficients over $\mathbb{Q}$.
+ 	\\We will prove now that, in this case, if the fas is proper even more is true: every $s_i$ part of a $\Q^+$-algebraic family is algebraic:
+ 	\begin{theorem}[Elimination of variables]
+ 		\label{th:elimination}
+ 		Let $F$ be a proper $\Q^+$-fas consisting of $n$ equations with parameters $x_\Sigma$ and let $(s_1, \dots s_n)$ be its minimal solution. From $F$ we can effectively compute irreducible polynomials $(q_i(w' , x_\Sigma))_{1 \leq i \leq n}$ such that:
+ 		$$q_i(s_i, x_\Sigma)=0 \quad 1 \leq i \leq n $$ 
+ 		that is, every $s_i$ is a $\Q$-algebraic power series.
+ 	\end{theorem}
+ 	\begin{proof}
+ 		The complete proof and the related elimination algorithm, based on classical methods from algebraic geometry(cite van Der Waerden, Introduction to ... ) can be found in Kuich and Salomaa's book (cite). Observe that elimination here is possible precisely because the fas $F$ is assumed to be proper.
+ 	\end{proof}
 %  Now, we recall the link between formal power series and the weighted relational model of linear logic. In (cite Laird, Manzonetto), given a continous semiring a category $\Qrel$ is defined, whose objects are sets and morphisms $\Qrel(X, Y)$ are $\Rsemiring$-valued matrices indexed by $X \times Y$. In the category $\Qrelkleisli{\Rsemiring}$, the coKleisli category of $\Qrel$ with respect to the $!$ comonad, morphisms $\Qrelkleisli{\Rsemiring} (X, Y)$ are $\Rsemiring$-valued matrices indexed by $!X \times Y$; as remarked in (cite Paolo and Davide), a matrix $(t_{\mu, y})_{\mu \in !X, y \in Y}$ can be seen as a $Y$-indexed family of power series $(\sum t_{\mu, y} x_X^\mu)_{y \in Y}$. By this identification, we can from now one see $\Qrelkleisli{\Rsemiring}$ as a category whose objects are set and whose morphisms $\Qrelkleisli{\Rsemiring} (X, Y)$ are  $Y$-indexed family $s_Y$ of power series over $x_X$.\\
 %  Observe that if $Y$ is an exponential object $!Y_1 \times Y_2$, then the arrow $Eval \circ f \times id_{Y_2}: X \times Y_2 \to Y_1$ is represented by the family of series $(\sum_{\kappa \in !Y_1} (\sum t_{\mu, (\kappa, y_2)} x_X^\mu) x_{Y_1}^\kappa)_{y_2 \in Y_2}$\\
 %  We will now discuss how fixpoints in $\Qrelkleisli{\Rsemiring}$ are related to fixpoint algebraic systems. Suppose we have a morphism $f \in \Qrelkleisli{\Rsemiring}(X \times Y, X)$. Now, we can define as follows its fixpoint $\fix f \in \Qrelkleisli{\Rsemiring}(Y, X)$. Take the succession:$f_0 \bydef  0 \times id_Y \in \Qrelkleisli{\Rsemiring}(1 \times Y ,X \times Y), \: f_{n+1} \bydef f \circ (f_n \times id_Y) \circ \langle id_\1, \Delta_Y \rangle  \in \Qrelkleisli{\Rsemiring}(1 \times Y, X)$ and finally $\fix f \bydef \sup_n f_n \in \Qrelkleisli{\Rsemiring}(1 \times Y \simeq Y, X)$.
@@ -132,7 +127,8 @@ To reduce this family to a fas it is enough to require $r_\Sigma$ to have finite
 		 (s_\sigma)\vert_{X'+Y}\neq 0\}
 %		 s_\sigma \in \fpp{\Rsemiring}{X' + Y} \}
 		  \]
-		 is finite and contained in $X'$, and moreover, for all $\sigma\in I(s_X,X')$, $(s_\sigma)\vert_{X'+Y}\in\fpp{\Rsemiring}{X'+Y}$ is a polynomial.
+		 is finite and contained in $X'$, and moreover, for all $\sigma\in I(s_X,X')$, $(s_\sigma)\vert_{X'+Y}\in\fpp{\Rsemiring}{X'+Y}$ is a polynomial.\\
+		 If, moreover, for each $\sigma \in I(s_X, X')$ and for each $y \in Y$, $s_\sigma(0)=0$ and the coefficient of $y$ in $s_\sigma$ is $0$, we say that $s_X$ is a finitary proper family. 
 %		 
 %%		(Take an $X$-indexed family  of polynomials $(s_x(x_X, x_Y))_{x \in X}$. If there exist an $X' \subseteq X$ such that
 %A family $s_X\in \fps{\Rsemiring}{X+Y}^X$ is said \emph{finitary} if there exists $X'\subset X$ such that $I(s_X, X')$ is finite and $I(s_X, X') \subseteq X'$.
@@ -164,8 +160,13 @@ $s_x(t_x,x_Y)=s^*_x(\bar r_x,x_Y)=0$; if $x \not \in A$, then $(s_x)\vert_{A+Y}=
 We deduce that $a_\star\in \Rinf$ is algebraic over $\mathbb Q^+$.
 A similar argument, applied to Example \ref{ex:phors3}, shows that the solution $a_\star(z)\in \fps{\Rinf}{z}$ is algebraic over $\fps{\mathbb Q^+}{z}$.
     
-  \end{example} 
-   
+  \end{example}
+  From the proof of $\ref{prop:fintoalg}$ and  \ref{th:elimination},
+  we also get:
+   \begin{corollary}
+   	\label{cor:propertoalg}
+   		If $s_X\in \fps{\Rsemiring'}{X+Y}^X$ is a \textit{proper} finitary family, then for each $x \in X$  $\fix s_X$ is an algebraic power series.  
+   \end{corollary}
    Now assume that $X=\ !X_1\times X_2$ is an exponential object, so that $\fix s_X$ can be interpreted as a function $X_1 \to X_2$, i.e as a family of power series $\sum_{\kappa \in !X} r_{\kappa, x_2} x_{X_1}^\kappa \in \fpp{\Rsemiring}{X_1}$.
    	\begin{corollary}
    	In the setting of the previous proposition, if $X=\ !X_1\times X_2$ and 
