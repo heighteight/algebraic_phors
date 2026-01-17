@@ -1,77 +1,244 @@
-The system  $\mathbf{G}_{\mathrm{fin}}$ only types PHORS of finitary graded types. For sure, the class of PHORS whose non-terminals are interpreted in Qrel by an algebraic power series is much wider than this. In this paragraph we will show how this technique and the correlated results about the decidability of AST/PAST can be extended to a system $\mathbf{G}_{\mathrm{\infty}}$ that allows infinitary types. To understand how this work, it is important to think about the following example.
-\begin{example}
-	Let us consider an order 2 non-terminal $L$ of simple type $(\1 \to \1) \to \1 \to \1$, defined by the equation $Lfk = fk \oplus Lf(Lfk)$. Its branch language will be the set of the trajectories of a random walk on $\N^+$ starting from 1 and ending in 0 (just like the order 1 PHORS $Fx=x+FFx$). The smallest (in the sense of $\sqsubseteq$) type that we can give to it is $!_\infty(!_1 \1 \multimap \1) \multimap !_1\1 \multimap \1$. If we call $f_0, f_1 $ (resp. $x$) the variables interpreting $f$ (resp. $k$) in Qrel, one can see that the interpretation of $L$ will then be a power series $\sum_{n \geq 0} L_n f_1^nk$: all other coefficients will be 0 as $L$ will always terminate by using at least once $f$ applied to $k$. Now we could see this infinite power series as a polynomial $p = \tilde{L}(f)k\in \fpp{\fps{\R}{f}}{k}$. This allows us to apply the ideas of paragraphs IV and V and write the equation for coefficients (which now are power series): $\tilde{L}(f) = f/2 + \tilde{L}^2(f)$ From this we see that $\tilde{L}(f)$ (and thus $\sum_{n \geq 0} L_n f_1^nk$) is algebraic.\\
-	To understand better what is happening here, observe that our $L$ can be seen as a parametric version of the order 1 random walk: we can think of considering the 'open' PHORS $Fx = f x \oplus F F x$ where $f$ is a variable of type $!_1 1 \multimap 1$; for each value we substitute to $f$, we then obtain a value for the non terminal $F$: we can then think of $F$ as depending over $f$, thus transforming $F: !_1 1 \to \1 $ into  $L: !_1 1 \to \1 $ 
-\end{example}
-The discussion of the last example gives us an outline of our strategy to treat infinitary PHORS: first, we need to introduce PHORS on an open parameter; secondly we need an introduction rule to transform a non-terminals $L_1: \tau$, whose definition dependins over a parameter of finite type $f: \phi$ into a non terminal $\lambda L(f): !_k$. 
-\subsection{Parametric PHORS}
-We now introduce the notion of a \emph{parametric finitely graded PHORS} (noted $\Gfin_{Par}$) 
-\begin{definition}
- A \emph{parametric finitely graded PHORS} is a triple $\gphors=(\nonterm, \C R, P, S)$, where $\nonterm$ is a finite set of typed non-terminals, $S\in\nonterm$ is the {start symbol} such that $\nonterm(S)=\1$, $P$ is a context $ f_1:_{k_1} \psi_1, \dots f_n:_{k_n}: \psi_n$ ($f_1, \dots f_n$ are called the paramters of the PHORS), and $\C R$ is a function that associates each $L\in\nonterm$ with a derivation $\nonterm\mid P : \psi_n \vdash \lambda x_1.\dots. x_n.t:\varphi$ such that $\varphi\sqsubseteq \nonterm(L)$, $t$ contains no $\lambda$-abstraction and $\nonterm\mid P , x_1,\dots, x_k\vdash t:\1$. 
-\end{definition}  
-In the case of a parametric PHORS, the interpretation of the $\lambda Y$ term $t_\gphors$ is a power series in $\fps{\Rsemiring}{\model{\nonterm} + \model{P}}^{\model{\nonterm}}$. All the reasonements of paragraph 6.2 continue to hold and we obtain an analogue of proposition 6.4:
-\begin{proposition}
-	For every $\Gfin_{Par}$ $\gphors=(\nonterm,\C, P R,S)$, the fps
-	$\model{t_{\gphors}}^{\Rsemiring}\in \fps{\Rsemiring}{\model{\nonterm}}^{\model{\nonterm} + \model{P}}$ is finitary.
-\end{proposition} 
-From this and  Proposition \ref{prop:fintoalg}, we obtain then:
-\begin{theorem}[$\Gfin_{Par}$ are algebraic]
-	For all $\Gfin$ $\gphors=(\nonterm, \C R, P, S)$, $\model{S}^{\Rinf}\in \Rinf$ is $\fps{\mathbb Q^{+}}{\model{P}}$-algebraic and 
-	$\model{S}^{\fps{\Rinf}{z}}\in \fps{\Rinf}{z}$ is $\fps{\mathbb Q^{+}}{\model{P}, z}$-algebraic.
-\end{theorem}
-\begin{example}
-	Take the $\gphors$ with non terminals $S: \1, F: !_1 \to 1$ and free parameter $f: !_1 \to \1$:
-	\begin{equation*}
-	\begin{cases}
-		S = F e\\
-		F k = f k \oplus F F k
-	\end{cases}
-	\end{equation*}
-	We see that the in this case $\model{f: !_1 \1 \to \1} = (f_0, f_1) \in (\Rinf)^2 $,   $\model{ fk : !_1 \1 \to \1} = f_1 k \in (\Rinf)^2 $ and  $\lambda \langle F,S\rangle. t_F:((\1\to \1)\times 1)\to (\1\to \1)$ is interpreted as the family of fps:
-	\[
-	s^F_i(y_{\N+1}, f_0, f_1)=
-	\begin{cases}
-		\frac{1}{2} (y_0 + y_0 y_1 + f_0)  
-		& \text{ if }i=1,
-		\\
-		\frac{1}{2}(
-		y_1^2+f_1)
-		& \text{ if }i=1,\\
-		\frac{1}{2}s_i(y_{\N})
-		&\text{ if }i\in\N, i\neq 0, 1
-		%\\
-		%\sum_{n}y_n&\text{ if }i=\star.
-	\end{cases}
-	\]
-	while $\model{\lambda \langle F,S\rangle. t_S:((\1\to \1)\times 1)\to \1}$ is a unique fps 
-	$s^S(y_{\N +1}  f_0, f_1)\in \fps{\Rinf}{\N +1, f_0, f_1}$ given by $s^S(y_{\N +1, f_0, f_1})=\sum_{i\in \N} y_i$. The minimum fixpoint solution is then $s_1(y_\N, f_0, f_1)= 1- \sqrt{1-f_1^2}$, $s_i= f_0/\sqrt{1- f^2_1}$
-\end{example}
-\subsection{Abstraction of a parameter}
-Given a parametric finitely graded PHORS $\gphors=(\nonterm, \C R, P, S)$, the interpretation of its non terminals $\model{L_i}^{\Rsemiring}$ is an algebraic power series in the variables $\model{P}$. It is then quite natural -at least semantically - to see $L_i$ as of type $!_\infty \psi_1 \multimap !_\infty \psi_ 2\dots !_\infty \psi_n \multimap \nonterm(L_i)$ This motivates the introduction of a new rule that allows this kind of transformation. First of all, given a type  $\phi$ and a context $\Delta= f_1:_{k_1} \psi_1, \dots f_1:_{k_n} \psi_n $ we define $I_\Delta(\phi)$ to be the type  $!_\infty \psi_1 \multimap !_\infty \psi_ 2\dots !_\infty \psi_n \multimap \nonterm(L_i) $. 
-Then we introduce a rule:
+% !TEX root = main.tex
+
+In this section we introduce the class $\Ginf$, which extended the $\Gfin$ by admitting possibly infinite grades $!_\infty$, i.e.~variables that may be used an \emph{unbounded} number of times, although in a controlled way. 
+
+ 
+ 
+\subsection{$\Ginf$: (In)finitely Graded PHORS}
+
+As we saw, when defining the generating function $a_\gphors(z)$ of a PHORS $\gphors$, the variable $z$, which counts the number of probabilistic choices, can be though of as the interpretation of a linear binary function $z:o\multimap o\multimap o$ corresponding to the choice operator $zxy=x\oplus y$. Notice, then, that while the type discipline of $\Gfin$ ensures that all variables are used in a bounded way, this does not happen for $z$: the power series $a_{\gphors}(z)$ counts reductions making an arbitrary number of choices. 
+
+The key insight to understand why the unboundedness of $z$ does not compromise  algebraicity is that the interpretation of the PHORS is made in $\Qrelkleisli{(\fps{\Rinf}{z})}$, i.e.~is given by family of power series with coefficients in $\fps{\Rinf}{z}$: in other words, the variable $z$ is treated as a \emph{formal parameter} all along the way.
+Our goal is then to capture all situations in which a variable is used as a parameter and, as a consequence, can be used unrestrictedly.
+
+
+\begin{example}\label{ex:phorsLfx}
+Consider the following PHORS $\gphors$:
+\begin{align*}
+Lfgx&= f(Lfg(Lfgx))\oplus_{a}gx\\
+Ax&=x\oplus_b \Omega\\
+Bx&=x\oplus_c \Omega\\
+S&=LAB e
+\end{align*}
+Define the parentheses symbols $($ and $)$ as, respectively, $ab$ and $ac$; then the branch language $\C L(\gphors)$ is formed by all words of the form $w)$, where $w$ is ``well-parenthesized'', like e.g.~$w=(()(()))$, $w=(()(())())$, i.e.~it essentially corresponds to the \emph{Dyck language}.
+Notice that $\gphors$ is not a $\Gfin$: the variables $f$ and $g$ may be used an arbitrary number of times, so the type $(o\to o)\to (o\to o)\to (o\to o)$ of $L$ can only be refined to
+$!_\infty(o\multimap o)\multimap !_\infty(o\multimap o)\multimap(o\multimap o)$.
+
+Hence, the interpretation of $L$ will be some power series $a_L(f,g,x)=\sum_{ij}L_{ij}f^ig^jx$.
+Nonetheless, such variables $f,g$ can be taken as parameters in the definition of $L$, which means that $a_L(f,g,x)$ can be rewritten as a power series $a_L(f,g)(x)$ with coefficients in $\fps{\Rinf}{f,g}$, captured (letting $a=\frac{1}{2}$) by the algebraic equation  
 \[
-\infer[\lambda_\infty]{\nonterm, L'_i: I_\Delta(\phi) \mid \infty \Delta \vdash \lambda f_1 \dots f_n  t(L_i /L'_i f_1, \dots f_n): I_\Delta(\phi') }{\nonterm, L_i: \phi \mid \emptyset \vdash t: \phi' \quad \phi' \sqsubseteq \phi }
-\]
-To understand better how it works, let us focus at first on the case of a single non terminal $L \bydef L_i$. Here, the fixpoint of the premise is a familiy of power series $l \in (\fpp{\Rsemiring}{\model{N},P})^{\model{L}}$ solving the system of equations (over $\fpp{\Rsemiring}{P})$):
-$$(l_i = \model{t}(l_{\model{L}}, x_{\model{P}}))_{i \in \model{L}}$$
-Since this is an equation between fps, we can write it componentwise: in particular, we can write $l_i$ as $\sum_{\mu \in !P}l_{i,\mu} x_P^\mu $. Then let  $\model{t}'(x_{\model L, ! P}, x_P) \bydef \model{t}(\sum_{\mu \in !P}x_{i,\mu} x_P^\mu, x_{\model{P}})$. Then, the coefficients $l_{i_\mu} \in \Rsemiring$ are solution to:
-$$(l_{i,\mu} = \model{t}'(l_{\model{L}, !\model{P}}, x_{\model{P}}))_{(i,\mu) \in \model{L} \times ! \model{P}}$$
-but this is exactly the interpretation of the fixpoint in the consequence. We then get that the fixpoint of the consequence is equal to the fixpoint of the premise (up to an abstraction).  Moreover we see that if the consequence is such that $I_\Delta(\phi') \sqsubseteq \phi$, the premise is such that $\phi' \sqsubseteq \phi$:it is then a paramteric finitely graded $PHORS$, hence $\model{L}^{\Rinf}$ is an algebraic function and so is $\model{L}^{\Rinf}$. 
-In the case of multiple non terminals, we can apply the previous reasonement to $Yt_{\gphors}$
-\subsection{Infinitary application}
-{\color{red}
+a_L(f,g)=\frac{f a_L(f,g)^2+g}{2}.
+\] 
+This equation is reminiscent of \eqref{eq:alg2} and can indeed be solved in a similar way, yielding $a_L(f,g,x)=\sum_{i=0}^{\infty}\frac{C_i}{2^{2i+1}}f^ig^{i+1}x$.
 
-- discuss order 2 random walk: algebraic equations with power series coefficients correspond to admitting variables with infinite grade, but in a controlled way
+\end{example}
 
-- parametric polynomial equations and their solution
 
-- Proposition 2. $n$ parametric polynomial equations in $n$ fps variables yield an algebraic fps
+We use two different kind of types:
+\begin{align*}
+\varphi,\psi&:= o^n\mid !_k\varphi\multimap \varphi\qquad (k\in \N)\\
+\Phi,\Psi&:=\varphi\mid !_\infty\varphi\multimap \Phi
+\end{align*}
+The types $\varphi,\psi$ are called \emph{finite} and are precisely those of $\Gfin$; the type $\Phi,\Psi$ are called \emph{infinite}. The order relation on infinite type $\Phi\sqsubseteq\Psi$ is inherited from the one for infinite types together with the new rule 
+$\varphi\sqsubseteq\varphi',\Psi\sqsubseteq\Psi'\Rightarrow !_k\varphi\multimap \Psi\sqsubseteq !_\infty\varphi'\multimap\Psi'$
 
-- extended type system
+The typing rules will use, beyond the non-linear and finitely graded contexts $\nonterm,\Delta$, a new context $\C P$ for parameters, containing bindings of the form $x:_\infty\varphi$. The rules are illustrated in Fig.~\ref{fig:typerulesinf}.
+The rules for finitary types are as in the previous section; the new rules are
+ax$_{\C P}$ and, notably, the infinitary abstraction and application rules $\lambda_\infty$ and $@_\infty$. In the rule $@_\infty$, $\nonterm::\nonterm'$ we must suppose that the contexts $\nonterm$ and $\nonterm'$ are \emph{disjoint}. This rule states that an infinitary function $t:!_\infty\varphi\multimap\Psi$ can only be applied to either a \emph{fresh} non-terminal or another parameter. This ensures that an unbounded variable is always used as a parameter.
 
-- Theorems 1/2/3 for the new type system, via Proposition 2
 
+\begin{figure}
+\fbox{
+\begin{minipage}{.43\textwidth}
+\resizebox{\linewidth}{!}{
+\begin{minipage}{\linewidth}
+\begin{align*}
+		\infer[ax_\Delta]{\nonterm\mid\C P\mid \Delta\vdash x:\varphi }{x:_p\varphi\in \Delta,\quad 1 \leq p} \qquad
+		\infer[ax_{\C P}]{\nonterm\mid\C P\mid\Delta \vdash w:\varphi }{ w:_\infty\varphi  \in \C P}
+		 \qquad
+		\infer[ax_\nonterm]{\nonterm\mid\C P\mid\Delta \vdash L:\Phi }{ L:\Phi  \in \nonterm}
+\end{align*}
+\begin{align*}
+		\infer[\lambda]{\nonterm\mid\C P\mid \Delta \vdash \lambda x. t : !_k \varphi \multimap \Psi }{\nonterm\mid\C P \mid \Delta, x:_k \varphi \vdash t : \Psi}
+		&  &
+		\infer[@]{\nonterm\mid\C P\mid \Delta + k\Delta' \vdash tu : \Psi}
+		{\nonterm\mid\C P\mid\Delta \vdash t :!_k\varphi \multimap \Psi \qquad \nonterm\mid\C P\mid \Delta' \vdash u :\varphi }
+\end{align*}
+\begin{align*}
+		\infer[\lambda_\infty]{\nonterm\mid\C P\mid \emptyset \vdash \lambda w. t : !_\infty \varphi \multimap \Psi }{\nonterm\mid\C P, w:_\infty \varphi \mid \emptyset \vdash t : \Psi}
+		&  &
+		\infer[@_\infty]{\nonterm\cup\nonterm'\mid\C P\mid \Delta \vdash tu : \Psi}
+		{\nonterm\mid\C P\mid\Delta\vdash t :!_\infty\varphi \multimap \Psi \qquad u:\varphi\in \nonterm'\cup\C P}
+\end{align*}
+\begin{align*}
+		\infer[\langle \rangle]{\nonterm\mid\C P\mid \Delta \vdash \langle t_1, \dots,t_n \rangle : \1^n}{\nonterm\mid\C P\mid \Delta \vdash t_i : \1 &  i=1,\dots, n}&  &
+		\infer[\pi_i]{\nonterm\mid\C P\mid \Delta \vdash \pi_i t: \1}{\nonterm\mid \Delta \vdash t: \1^n &  i=1,\dots, n}
+	\end{align*}
+	\begin{align*}
+		 \infer[\oplus]{\nonterm\mid\C P\mid \Delta \vdash t \oplus t' : \1 }{\nonterm\mid\C P\mid \Delta \vdash t:\1 \quad \nonterm\mid\C P\mid \Delta \vdash t':\1} 
+	\end{align*}
+%		\begin{align*}
+%			\infer[ Y_{\mathrm{fin}}]{\nonterm\mid\emptyset \vdash^{\mathrm{fix}}  Y \lambda \langle L_1,\dots, L_n\rangle.t:\psi }{\nonterm,\langle L_1,\dots, L_n\rangle:\varphi\mid \emptyset \vdash t :  \psi \quad \psi \sqsubseteq \varphi  }
+%	\end{align*}
+	\end{minipage}
+	}
+\end{minipage}
 }
+\caption{Typing rules of $\Gfin$.}
+\label{fig:typerulesinf}
+\end{figure}
 
+\begin{definition}[$\Ginf$]
+A \emph{parametric bounded PHORS} (noted $\Ginf$) is a tuple $\gphors=(\nonterm, \C P,\C R, S)$, where $\nonterm$ is a finite set of typed non-terminals, $S\in\nonterm$ is the {start symbol} such that $\nonterm(S)=\1$, and $\C R$ is a function that associates each $L\in\nonterm$ with a derivation $\nonterm\mid\C P\mid\emptyset\vdash \lambda x_1.\dots. x_n.t:\varphi$ such that $\varphi\sqsubseteq \nonterm(L)$, $t$ contains no $\lambda$-abstraction and $\nonterm\mid x_1,\dots, x_k\vdash t:\1$. 
+
+\end{definition} 
+
+Notice that a $\Ginf$ $\gphors$ may contain \emph{open} parameters $w:_\infty\varphi\in \C P$. 
+We call $ \gphors$ \emph{closed} when $\C P=\emptyset$. 
+Two PHORS can be composed through their open parameters:
+\begin{definition}[composition of $\Gfin$]
+Given two $\Ginf$ $\gphors_1=(\nonterm_1,\C P\cup\{w:_\infty\varphi),\C R_1,S_1)$ and
+$\gphors_2=(\nonterm_2,\C P,\C R_2,S_2)$, where $\nonterm_1\cap\nonterm_2=\emptyset$
+and $\nonterm_2(L)\sqsubseteq\varphi$, their \emph{composition through $L:\varphi$} is the $\Ginf$ $\gphors_1(\gphors_2)=(\nonterm_1\cup\nonterm_2, \C P, \C R_1[L/w]\cup\C R_2,S_1)$.
+\end{definition}
+
+
+The $\Ginf$ from Example \ref{ex:phorsLfx} can be transformed into an equivalent order-1 $\Gfin$ defined by replacing $L$ by an order-1 $L_{[A,B]}$ non-terminal with equation
+$L_{[A,B]}x=A(L_{[A,B]}(L_{[A,B]}x))\oplus_a Bx$. More generally, any closed $\Ginf$ can be turned into an equivalent $\Gfin$:
+
+{\color{red} MODIFICARE: $\|\gphors\|=|\nonterm|\times\max\{|t_L|\mid L\in\nonterm\}$}
+
+\begin{theorem}
+For any closed $\Ginf$ $\gphors$ there exists an equivalent $\Gfin$ $\gphors_{\mathrm{fin}}$
+with $\|\gphors_{\mathrm{fin}}\|\leq (|\nonterm| !)\|\gphors\|$.
+\end{theorem}
+\begin{proof}[Proof sketch]
+The idea is to replace each non-terminal $L$ with possibly infinitely graded inputs $w_1,\dots, w_n$ with as many non-terminals $L_{[A_1,\dots,A_n]}$ as all possible ways of \emph{filling in} such inputs with other non-terminals from $\Ginf$. 
+\end{proof}
+
+\begin{example}
+Let $\sigma$ be a generator of the permutation group $\mathfrak S(n)$. Take a $\Ginf$
+with equation $Lw_1\dots w_nx=w_1(Lw_{\sigma(1)}\dots w_{\sigma(n)})\oplus x$, where $L:(o\to o)^n\to(o\to o)$, as well as non-terminals $A_1,\dots, A_n$ and $S=LA_1\dots A_ne$. Intuitively, this PHORS computes all words of the form $w=a_1a_{\sigma(1)}\dots a_{\sigma^{|w|}(1)}$. Then the corresponding $\Gfin$ must contain, beyond $S$ and the $A_i$, $n!$ non-terminals $L_{[A_{\tau(1)},\dots, A_{\tau(n)}]}$, with $\tau\in \mathfrak S(n)$.
+\end{example}
+
+
+\subsection{Extracting Fas from $\Ginf$}
+
+The interpretation of $\Ginf$ in the relational model works as for the $\Gfin$.
+The refinement relation is extended via $\varphi\tri T, \Psi\tri U \Rightarrow !_\infty\varphi\multimap \Psi\tri T\to U$. 
+The interpretation is extended by $\model{!_\infty\varphi\multimap\Psi}:=!\model{\varphi}\times\model{\Psi}$.
+
+
+For any derivation of $\nonterm\mid\C P\mid\Delta\vdash t:\Phi$, 
+$\Rsemiring{\model{\C P}}$ will be the semiring of power series in the \emph{finitely many} variables $\vec w$ arising from the interpretation of the finite types in $\C P$. 
+Given $\nonterm\tri\Gamma_\nonterm, \Delta\tri\Gamma_\Delta$ and $\Phi\tri T$, we obtain the 
+\[
+\model{t:\Phi\tri T}^{\Rsemiring}\in \Qrelkleisli{(\fps{\Rsemiring}{\model{\C P}})}(\model{\Gamma_\nonterm}+\model{\Gamma_\Delta},{\model{\Phi}}).
+\]
+As before, $\model{t:\Phi\tri T}^{\Rsemiring}$ coincides with the restriction of the corresponding $\LY$-derivation $\model{t:T}^{\Rsemiring}$. More precisely, 
+we have 
+\[
+\alpha_{\C P,\model{\nonterm},\model{\Delta},\model{\Phi}}\circ \model{t:\Phi\tri T}^{\Rsemiring}=\left(\model{t:T}^{\Rsemiring}\right)\Big \vert^{\model{\Phi}}_{\model{\nonterm}+\model{\C P}+\model{\Delta}},
+\]
+where 
+$\alpha_{Z,X,Y,W}$ is the isomorphism
+$\fps{(\fps{\Rsemiring}{Z})}{X+Y}^W\equiv\fps{\Rsemiring}{X+Z+Y}^W$.
+As before, all this ensures that, for any closed $\Ginf$ $\gphors=(\nonterm, \emptyset,\C R, S)$, the generating function $a_\gphors(z):=\model{S:o\tri o}^{\fps{\Rinf}{z}}=\sum_{i=0}^{\infty}\mathbb P(\gphors\downarrow_i)z^i$ captures probabilistic termination. 
+
+Similarly to the previous section, although now in a parametric sense, we obtain
+\begin{proposition}
+For every $\Ginf$ $\gphors=(\nonterm, \C P, \C R,S)$, the fps $
+\model{t_\gphors}^{\Rsemiring}\in\fps{(\fps{\Rsemiring}{\model{\C P}})}{\model{\C N}}^{\model{\C N}}$ is finitary.
+\end{proposition}
+\begin{theorem}[$\Ginf$ are algebraic ]
+For all closed $\Ginf$ $\gphors=(\nonterm, \C P, \C R,S)$, the 
+$\mathbb P(\gphors\downarrow)$, $\mathbb E(\gphors\downarrow)$ are $\mathbb Q^+$-algebraic, $\sum_i\mathbb P(\gphors \downarrow_i)^i$ is $\fps{\mathbb Q^+}{z}$-algebraic.
+\end{theorem}
+
+Also in this case, we can deduce decidability of AST and PAST from algebraicity.
+\begin{corollary}
+For all closed $\Ginf$, the AST and PAST problems are decidable.
+\end{corollary}
+\begin{proof}[Proof sketch]
+
+
+\end{proof}
+%
+%
+%The system  $\mathbf{G}_{\mathrm{fin}}$ only types PHORS of finitary graded types. For sure, the class of PHORS whose non-terminals are interpreted in Qrel by an algebraic power series is much wider than this. In this paragraph we will show how this technique and the correlated results about the decidability of AST/PAST can be extended to a system $\mathbf{G}_{\mathrm{\infty}}$ that allows infinitary types. To understand how this work, it is important to think about the following example.
+%\begin{example}
+%	Let us consider an order 2 non-terminal $L$ of simple type $(\1 \to \1) \to \1 \to \1$, defined by the equation $Lfk = fk \oplus Lf(Lfk)$. Its branch language will be the set of the trajectories of a random walk on $\N^+$ starting from 1 and ending in 0 (just like the order 1 PHORS $Fx=x+FFx$). The smallest (in the sense of $\sqsubseteq$) type that we can give to it is $!_\infty(!_1 \1 \multimap \1) \multimap !_1\1 \multimap \1$. If we call $f_0, f_1 $ (resp. $x$) the variables interpreting $f$ (resp. $k$) in Qrel, one can see that the interpretation of $L$ will then be a power series $\sum_{n \geq 0} L_n f_1^nk$: all other coefficients will be 0 as $L$ will always terminate by using at least once $f$ applied to $k$. Now we could see this infinite power series as a polynomial $p = \tilde{L}(f)k\in \fpp{\fps{\R}{f}}{k}$. This allows us to apply the ideas of paragraphs IV and V and write the equation for coefficients (which now are power series): $\tilde{L}(f) = f/2 + \tilde{L}^2(f)$ From this we see that $\tilde{L}(f)$ (and thus $\sum_{n \geq 0} L_n f_1^nk$) is algebraic.\\
+%	To understand better what is happening here, observe that our $L$ can be seen as a parametric version of the order 1 random walk: we can think of considering the 'open' PHORS $Fx = f x \oplus F F x$ where $f$ is a variable of type $!_1 1 \multimap 1$; for each value we substitute to $f$, we then obtain a value for the non terminal $F$: we can then think of $F$ as depending over $f$, thus transforming $F: !_1 1 \to \1 $ into  $L: !_1 1 \to \1 $ 
+%\end{example}
+%The discussion of the last example gives us an outline of our strategy to treat infinitary PHORS: first, we need to introduce PHORS on an open parameter; secondly we need an introduction rule to transform a non-terminals $L_1: \tau$, whose definition dependins over a parameter of finite type $f: \phi$ into a non terminal $\lambda L(f): !_k$. 
+%\subsection{Parametric PHORS}
+%We now introduce the notion of a \emph{parametric finitely graded PHORS} (noted $\Gfin_{Par}$) 
+%\begin{definition}
+% A \emph{parametric finitely graded PHORS} is a triple $\gphors=(\nonterm, \C R, P, S)$, where $\nonterm$ is a finite set of typed non-terminals, $S\in\nonterm$ is the {start symbol} such that $\nonterm(S)=\1$, $P$ is a context $ f_1:_{k_1} \psi_1, \dots f_n:_{k_n}: \psi_n$ ($f_1, \dots f_n$ are called the paramters of the PHORS), and $\C R$ is a function that associates each $L\in\nonterm$ with a derivation $\nonterm\mid P : \psi_n \vdash \lambda x_1.\dots. x_n.t:\varphi$ such that $\varphi\sqsubseteq \nonterm(L)$, $t$ contains no $\lambda$-abstraction and $\nonterm\mid P , x_1,\dots, x_k\vdash t:\1$. 
+%\end{definition}  
+%In the case of a parametric PHORS, the interpretation of the $\lambda Y$ term $t_\gphors$ is a power series in $\fps{\Rsemiring}{\model{\nonterm} + \model{P}}^{\model{\nonterm}}$. All the reasonements of paragraph 6.2 continue to hold and we obtain an analogue of proposition 6.4:
+%\begin{proposition}
+%	For every $\Gfin_{Par}$ $\gphors=(\nonterm,\C, P R,S)$, the fps
+%	$\model{t_{\gphors}}^{\Rsemiring}\in \fps{\Rsemiring}{\model{\nonterm}}^{\model{\nonterm} + \model{P}}$ is finitary.
+%\end{proposition} 
+%From this and  Proposition \ref{prop:fintoalg}, we obtain then:
+%\begin{theorem}[$\Gfin_{Par}$ are algebraic]
+%	For all $\Gfin$ $\gphors=(\nonterm, \C R, P, S)$, $\model{S}^{\Rinf}\in \Rinf$ is $\fps{\mathbb Q^{+}}{\model{P}}$-algebraic and 
+%	$\model{S}^{\fps{\Rinf}{z}}\in \fps{\Rinf}{z}$ is $\fps{\mathbb Q^{+}}{\model{P}, z}$-algebraic.
+%\end{theorem}
+%\begin{example}
+%	Take the $\gphors$ with non terminals $S: \1, F: !_1 \to 1$ and free parameter $f: !_1 \to \1$:
+%	\begin{equation*}
+%	\begin{cases}
+%		S = F e\\
+%		F k = f k \oplus F F k
+%	\end{cases}
+%	\end{equation*}
+%	We see that the in this case $\model{f: !_1 \1 \to \1} = (f_0, f_1) \in (\Rinf)^2 $,   $\model{ fk : !_1 \1 \to \1} = f_1 k \in (\Rinf)^2 $ and  $\lambda \langle F,S\rangle. t_F:((\1\to \1)\times 1)\to (\1\to \1)$ is interpreted as the family of fps:
+%	\[
+%	s^F_i(y_{\N+1}, f_0, f_1)=
+%	\begin{cases}
+%		\frac{1}{2} (y_0 + y_0 y_1 + f_0)  
+%		& \text{ if }i=1,
+%		\\
+%		\frac{1}{2}(
+%		y_1^2+f_1)
+%		& \text{ if }i=1,\\
+%		\frac{1}{2}s_i(y_{\N})
+%		&\text{ if }i\in\N, i\neq 0, 1
+%		%\\
+%		%\sum_{n}y_n&\text{ if }i=\star.
+%	\end{cases}
+%	\]
+%	while $\model{\lambda \langle F,S\rangle. t_S:((\1\to \1)\times 1)\to \1}$ is a unique fps 
+%	$s^S(y_{\N +1}  f_0, f_1)\in \fps{\Rinf}{\N +1, f_0, f_1}$ given by $s^S(y_{\N +1, f_0, f_1})=\sum_{i\in \N} y_i$. The minimum fixpoint solution is then $s_1(y_\N, f_0, f_1)= 1- \sqrt{1-f_1^2}$, $s_i= f_0/\sqrt{1- f^2_1}$
+%\end{example}
+%\subsection{Abstraction of a parameter}
+%Given a parametric finitely graded PHORS $\gphors=(\nonterm, \C R, P, S)$, the interpretation of its non terminals $\model{L_i}^{\Rsemiring}$ is an algebraic power series in the variables $\model{P}$. It is then quite natural -at least semantically - to see $L_i$ as of type $!_\infty \psi_1 \multimap !_\infty \psi_ 2\dots !_\infty \psi_n \multimap \nonterm(L_i)$ This motivates the introduction of a new rule that allows this kind of transformation. First of all, given a type  $\phi$ and a context $\Delta= f_1:_{k_1} \psi_1, \dots f_1:_{k_n} \psi_n $ we define $I_\Delta(\phi)$ to be the type  $!_\infty \psi_1 \multimap !_\infty \psi_ 2\dots !_\infty \psi_n \multimap \nonterm(L_i) $. 
+%Then we introduce a rule:
+%\[
+%\infer[\lambda_\infty]{\nonterm, L'_i: I_\Delta(\phi) \mid \infty \Delta \vdash \lambda f_1 \dots f_n  t(L_i /L'_i f_1, \dots f_n): I_\Delta(\phi') }{\nonterm, L_i: \phi \mid \emptyset \vdash t: \phi' \quad \phi' \sqsubseteq \phi }
+%\]
+%To understand better how it works, let us focus at first on the case of a single non terminal $L \bydef L_i$. Here, the fixpoint of the premise is a familiy of power series $l \in (\fpp{\Rsemiring}{\model{N},P})^{\model{L}}$ solving the system of equations (over $\fpp{\Rsemiring}{P})$):
+%$$(l_i = \model{t}(l_{\model{L}}, x_{\model{P}}))_{i \in \model{L}}$$
+%Since this is an equation between fps, we can write it componentwise: in particular, we can write $l_i$ as $\sum_{\mu \in !P}l_{i,\mu} x_P^\mu $. Then let  $\model{t}'(x_{\model L, ! P}, x_P) \bydef \model{t}(\sum_{\mu \in !P}x_{i,\mu} x_P^\mu, x_{\model{P}})$. Then, the coefficients $l_{i_\mu} \in \Rsemiring$ are solution to:
+%$$(l_{i,\mu} = \model{t}'(l_{\model{L}, !\model{P}}, x_{\model{P}}))_{(i,\mu) \in \model{L} \times ! \model{P}}$$
+%but this is exactly the interpretation of the fixpoint in the consequence. We then get that the fixpoint of the consequence is equal to the fixpoint of the premise (up to an abstraction).  Moreover we see that if the consequence is such that $I_\Delta(\phi') \sqsubseteq \phi$, the premise is such that $\phi' \sqsubseteq \phi$:it is then a paramteric finitely graded $PHORS$, hence $\model{L}^{\Rinf}$ is an algebraic function and so is $\model{L}^{\Rinf}$. 
+%In the case of multiple non terminals, we can apply the previous reasonement to $Yt_{\gphors}$
+%\subsection{Infinitary application}
+%{\color{red}
+%
+%- discuss order 2 random walk: algebraic equations with power series coefficients correspond to admitting variables with infinite grade, but in a controlled way
+%
+%- parametric polynomial equations and their solution
+%
+%- Proposition 2. $n$ parametric polynomial equations in $n$ fps variables yield an algebraic fps
+%
+%- extended type system
+%
+%- Theorems 1/2/3 for the new type system, via Proposition 2
+%
+%}
+%
 
 
