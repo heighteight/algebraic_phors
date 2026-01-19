@@ -96,8 +96,14 @@ The interpretation of this is that, for any $i\in \N$, there are $C_i$ terminati
  		that is, every $s_i$ is a $\Q$-algebraic power series.
  	\end{theorem}
  	\begin{proof}
- 		The complete proof and the related elimination algorithm, based on classical methods from algebraic geometry(cite van Der Waerden, Introduction to ... ) can be found in Kuich and Salomaa's book (cite). Observe that elimination here is possible precisely because the fas $F$ is assumed to be proper.
+ 		The complete proof and the related elimination algorithm, based on classical methods from algebraic geometry(cite van Der Waerden, Introduction to ... ) can be found in Kuich and Salomaa's book (cite), theorems 16.9, 16.10. Observe that elimination here is possible precisely because the fas $F$ is assumed to be proper.
  	\end{proof}
+ 	\begin{remark}
+ 	\label{remark:semilinear}
+ 		As already said, if $a(x)= \sum_n a_n x^{p_n}$ is algebraic, then the growth of $p_n$ cannot be supralinear. If $a(x) =  \sum_{\mu \in !\Sigma} a_\mu x^\mu \in \fps{\Rinf}{x_\Sigma}$ is part of a $\Q^+$-proper algebraic family, much more can be said: as a consequence to theorem 16.35 of Kuich and Salomaa's book, the set:
+ 		$\{\mu \mid a_\mu \neq 0\} $
+ 		is semilinear. Rememeber that a family of multisets is said to be semilinear if it is the union of finitely many sets of the form $\{n_1 \mu_1 + \dots + n_k \mu _k  \mid n_1, \dots n_k \in \N \}$
+ 	\end{remark}
 %  Now, we recall the link between formal power series and the weighted relational model of linear logic. In (cite Laird, Manzonetto), given a continous semiring a category $\Qrel$ is defined, whose objects are sets and morphisms $\Qrel(X, Y)$ are $\Rsemiring$-valued matrices indexed by $X \times Y$. In the category $\Qrelkleisli{\Rsemiring}$, the coKleisli category of $\Qrel$ with respect to the $!$ comonad, morphisms $\Qrelkleisli{\Rsemiring} (X, Y)$ are $\Rsemiring$-valued matrices indexed by $!X \times Y$; as remarked in (cite Paolo and Davide), a matrix $(t_{\mu, y})_{\mu \in !X, y \in Y}$ can be seen as a $Y$-indexed family of power series $(\sum t_{\mu, y} x_X^\mu)_{y \in Y}$. By this identification, we can from now one see $\Qrelkleisli{\Rsemiring}$ as a category whose objects are set and whose morphisms $\Qrelkleisli{\Rsemiring} (X, Y)$ are  $Y$-indexed family $s_Y$ of power series over $x_X$.\\
 %  Observe that if $Y$ is an exponential object $!Y_1 \times Y_2$, then the arrow $Eval \circ f \times id_{Y_2}: X \times Y_2 \to Y_1$ is represented by the family of series $(\sum_{\kappa \in !Y_1} (\sum t_{\mu, (\kappa, y_2)} x_X^\mu) x_{Y_1}^\kappa)_{y_2 \in Y_2}$\\
 %  We will now discuss how fixpoints in $\Qrelkleisli{\Rsemiring}$ are related to fixpoint algebraic systems. Suppose we have a morphism $f \in \Qrelkleisli{\Rsemiring}(X \times Y, X)$. Now, we can define as follows its fixpoint $\fix f \in \Qrelkleisli{\Rsemiring}(Y, X)$. Take the succession:$f_0 \bydef  0 \times id_Y \in \Qrelkleisli{\Rsemiring}(1 \times Y ,X \times Y), \: f_{n+1} \bydef f \circ (f_n \times id_Y) \circ \langle id_\1, \Delta_Y \rangle  \in \Qrelkleisli{\Rsemiring}(1 \times Y, X)$ and finally $\fix f \bydef \sup_n f_n \in \Qrelkleisli{\Rsemiring}(1 \times Y \simeq Y, X)$.
@@ -169,9 +175,9 @@ A similar argument, applied to Example \ref{ex:phors3}, shows that the solution 
    	\label{cor:propertoalg}
    		If $s_X\in \fps{\Rsemiring'}{X+Y}^X$ is a \textit{proper} finitary family, then for each $x \in X$  $(\fix s_X)_x$ is an algebraic power series. Moreover, for all but finitely many $x$, $(\fix s_X)_x=0$
    \end{corollary}
-   Now assume that $X=\ X_1\to X_2 \bydef !X_1 \times X_2$ is an exponential object. In this case, we can consider  $eval(\fix s_X) = (\sum_{\kappa \in !X_1} r_{\kappa, x_2}(x_Y) x_{X_1}^\kappa)_{x_2 \in X_2}\in \fpp{\Rsemiring}{X_1 + Y}^{X_2}$. We have that this is an algebraic power series and, if $X_2$ is an exponential object itself, this can be iterated, always getting algebraic power series.
+   Now assume that $X=\ X_1\to X_2 \bydef !X_1 \times X_2$ is an exponential object. In this case, we can consider  $eval(\fix s_X) = (\sum_{\kappa \in !X_1} (\fix s_X)_{\kappa, x_2}(x_Y) x_{X_1}^\kappa)_{x_2 \in X_2}\in \fpp{\Rsemiring}{X_1 + Y}^{X_2}$. We have that this is an algebraic power series and, if $X_2$ is an exponential object itself, this can be iterated, always getting algebraic power series.
    	\begin{lemma}
-   If $s_X\in \fps{\Q}{(X_1 \to X_2)+Y}^{!X_1 \times X_2}$ is a family of algebraic power series such that all but finitely many $x \in !X_1 \times X_2 \: s_x =0$.   Then $eval(s_X)$ is a family of $\Q$-algebraic power series with parameters $x_{X_1}, x_Y$.  
+   If $s_X\in \fps{\Q}{(X_1 \to X_2)+Y}^{!X_1 \times X_2}$ is a family of algebraic power series such that for all but finitely many $x \in !X_1 \times X_2 \: s_x =0$,   then $eval(s_X)$ is a family of $\Q$-algebraic power series with parameters $x_{X_1}, x_Y$.  
    \end{lemma}  
    \begin{proof}
    	Since only finitely many $s_x \neq 0$, the $\sum_{\kappa \in !X_1} r_{\kappa, x_2}(x_Y) x_{X_1}^\kappa \in \fpp{\fps{\R}{Y}}{X}$ is a polynomial with $\fps{\R}{Y}$ coefficients that are $\Q$ algebraic. Now apply \ref{remark:algoveralg}

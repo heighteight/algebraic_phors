@@ -277,7 +277,17 @@ Now observe that the term $t_\gphors$ is in the form $\langle t_{1, L} \oplus_{p
 \begin{proof}
 	For (1), notice that $\model{S}^{\Rinf}=\model{S}^{\fps{\Rinf}{z}}$
 \end{proof}
-
+As a consequence of $\ref{remark:semilinear}$ we also obtain:
+\begin{corollary}
+	For all $\Gfin$ $\gphors=(\nonterm, \C R, S)$, the set $$\{n \mid \:  S \text{ terminates in } n \text{ steps}  \}$$
+	is semilinear
+\end{corollary}
+\begin{remark}
+	By interpreting  $t_L \oplus t_R$ by $z_1 \model{t_L}^{\Rinf} + z_2 \model{t_L}^{\Rinf}$, the previous corollary could be strengthened to say that the set:
+	$$\{(n,m) \mid \:  S \text{ terminates with } n \text{ left steps and } m \text{ rigth steps}\}$$ is semilinear.
+	This could also been deduced by the fact that the branch language of a linear HORS is multiple context-free (cite  Clairambault) and languages of this class are know to be semilinear (cite CHARACTERIZING STRUCTURAL DESCRIPTIONS PRODUCED BY VARIOUS.
+	GRAMMATICAL FORMALISMS), but it is still worth noticing that it can be proved by means of generating function techniques.
+\end{remark}
 %\begin{example}
 %Consider again $\gphors$ from Example \ref{ex:nonlin}.
 %
