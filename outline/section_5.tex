@@ -236,11 +236,11 @@ We will now show how, for any $\Gfin$ $\gphors$, the interpretation of the under
  
    Define, for every type $\varphi$, $\model{\varphi}$ as $\model{o^n}=1$ and $\model{!_k\varphi\multimap \psi}=!_k\model{\varphi}\times\model{\psi}$. Notice that $\varphi\tri T$ implies $\model{\varphi}\subseteq\model{T}$, but the variable sets $\model{\varphi}$ are always finite. 
    
-   Our general idea is the following: given a $\Gfin$ $\gphors=(\nonterm, \C R, S)$ and supposing $\nonterm\tri T$, from the derivations of $\nonterm\mid\emptyset \vdash t_L:\nonterm(L)$, we deduce a corresponding simply typed derivation of $T\vdash t_{\gphors}:T$ yielding a family
+   Our general idea is the following: given a $\Gfin$ $\gphors=(\nonterm, \C R, S)$ and supposing $\nonterm\tri T$, from the derivations $\C R(L)$ of $\nonterm\mid\emptyset \vdash t_L:\nonterm(L)$, we deduce a corresponding simply typed derivation of $T\vdash t_{\gphors}:T$ yielding a family
    $\model{t}^{\Rsemiring}\in \fps{\Rsemiring}{\model{T}}^{\model{T}}$.  
   At the same time, we will show that the finite set $\model{\nonterm}\subset\model{T}$ is both stable and polynomial, and we will conclude that $\model{t_{\gphors}}$ is finitary, hence, by Corollary \ref{cor:propertoalg}, algebraic.    
    
-   
+   The fundamental ingredient is the following lemma:
    
   \begin{lemma}[stability lemma]\label{lemma:stability}
   Let $\Rsemiring=\fps{\Rinf}{\Sigma}$.

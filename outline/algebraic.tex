@@ -164,12 +164,16 @@ We thus need to \emph{impose} a form of finiteness, via the following technical 
 
 
 \begin{definition}[variable and family restrictions]
-Let $s_X\in \fps{\Rsemiring}{\Sigma}^X$ be a family of fps, and let $\Sigma'\subset \Sigma$ and $X'\subset X$. Then:
-\begin{varitemize}
-\item for all $\sigma\in X$, $s_\sigma\vert_{\Sigma'}\in \fps{\Rsemiring}{\Sigma}$ is the fps $t$ defined by 
-$t(x_{\Sigma'},x_{\Sigma-\Sigma'})=s_\sigma(x_{\Sigma'},0)$;
-\item $s\vert_{\Sigma'}^{X'} \in \fps{\Rsemiring}{\Sigma}^X$ is the $X$-family $t_X$ defined by $t_\sigma= s_\sigma\vert_{\Sigma'}$, for all $\sigma\in X'$, and $t_\sigma=0$ otherwise.
-\end{varitemize}
+For all fps $s\in \fps{\Rsemiring}{\Sigma}$ and $\Sigma'\subset \Sigma$,
+ $s\vert_{\Sigma'}\in \fps{\Rsemiring}{\Sigma}$ is the fps $t$ defined by 
+$t(x_{\Sigma'},x_{\Sigma-\Sigma'})=s_\sigma(x_{\Sigma'},0)$.
+%
+%and $X'\subset X$. Then:
+%\begin{varitemize}
+%\item for all $\sigma\in X$, $s_\sigma\vert_{\Sigma'}\in \fps{\Rsemiring}{\Sigma}$ is the fps $t$ defined by 
+%$t(x_{\Sigma'},x_{\Sigma-\Sigma'})=s_\sigma(x_{\Sigma'},0)$;
+%\item $s\vert_{\Sigma'}^{X'} \in \fps{\Rsemiring}{\Sigma}^X$ is the $X$-family $t_X$ defined by $t_\sigma= s_\sigma\vert_{\Sigma'}$, for all $\sigma\in X'$, and $t_\sigma=0$ otherwise.
+%\end{varitemize}
  
 
 %\[
@@ -185,10 +189,10 @@ $t(x_{\Sigma'},x_{\Sigma-\Sigma'})=s_\sigma(x_{\Sigma'},0)$;
 % is the 
 %obtained by restricting $s_{X'}$ to the variables in $Y'$;
  \end{definition}
- Intuitively, in $s_\sigma\vert_{\Sigma'}$ we only keep those monomials $(s_\sigma)_\mu x^\mu$ from $s$ such that $\mu$ has support included in $\Sigma'$, and we 
- ``kill'' all monomials $(s_\sigma)_\mu x^{\mu}$ containing 
+ Intuitively, in $s\vert_{\Sigma'}$ we only keep those monomials $s_\mu x^\mu$ from $s$ such that $\mu$ has support included in $\Sigma'$, and we 
+ ``kill'' all monomials $s_\mu x^{\mu}$ containing 
  some $x^i$, with $i>0$ and $x\notin \Sigma'$. 
- Moreover, in $s\vert_{\Sigma'}^{X'}$ we furthermore ``kill'' all $s_\sigma$ with $\sigma\notin X'$.
+% Moreover, in $s\vert_{\Sigma'}^{X'}$ we furthermore ``kill'' all $s_\sigma$ with $\sigma\notin X'$.
  
  
 	\begin{definition}[finitary fps]\label{def:finitary}
