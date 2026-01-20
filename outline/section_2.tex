@@ -91,9 +91,9 @@ $
 such that $\gphors_n$ designates the probability that $\gphors$ terminates after \emph{exactly} $n$ reduction steps. Observe that the probability of termination of $\gphors$ is given by $a_{\gphors}(1)$. Moreover, $a'_{\gphors}(1)$, where
 $a'_{\gphors}(z)=\sum_{n=0}^{\infty}n\gphors_n z^{n+1}$ indicates 
 the \emph{derivative} of $a_{\gphors}(z)$, precisely captures the expected number of reduction steps to termination. 
-
-We think that the main value of this work resides in enabling the application of well-established methods from algebraic and analytic combinatorics to higher-order languages.
-As we'll see, this will allow us to reestablish, in a relatively elementary way, some already known results about the decidability of certain classes of PHORS (proved in the literature with syntactic methods like automata theory or intersection types), and actually to \emph{extend} such decidability results to larger classes of PHORS.
+%
+%We think that the main value of this work resides in enabling the application of well-established methods from algebraic and analytic combinatorics to higher-order languages.
+%As we'll see, this will allow us to reestablish, in a relatively elementary way, some already known results about the decidability of certain classes of PHORS (proved in the literature with syntactic methods like automata theory or intersection types), and actually to \emph{extend} such decidability results to larger classes of PHORS.
 
 It is worth observing at this point that, in our setting, the generating function $a_\gphors(z)$, while characterizing the termination problem for the PHORS $\gphors$, is \emph{not} an invariant of the corresponding branch language: for instance, two PHORS respectively inducing the non context-free language $\C L_1=\{0^n1^n0^n\mid n\in \N\}$ and the regular language 
 $\C L_2=\{1^{3n}\mid n\in \N\}$ would \emph{both} induce a rational generating function of the form $a(z)=\sum_{n=0}^{\infty}\frac{1}{2^{3n}}z^{3n}=\frac{1}{1-\left({z}/{2}\right)^3}$, as the latter only counts the number of reduction steps to termination. 

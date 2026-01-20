@@ -2,22 +2,21 @@
 
   
   As we saw, power series are infinitary objects and their manipulation can involve the concept of limit, making it generally uncomputable. In this section, we explore a way to provide somehow \emph{finitary} specifications for power series through the concept of algebraicity. 
-  Algebraic power series are widely used in algebra and combinatorics (cite Flajolet, Kauers, Eisenbud), in the context of rings or fields. Its treatment in semi-rings is less standard, but extensively studied in the context of formal language theory (cite Kuich, Schlund).
-    We will show that, through the relational semantics, such ideas apply naturally to the semantics of probabilistic $\lambda$-calculi.
+  Algebraic power series are widely used in algebra and combinatorics (cite Flajolet, Kauers, Eisenbud), in the context of rings or fields. Its treatment in semirings is less standard, but extensively studied in the context of formal language theory (cite Kuich, Schlund).
+    We will show that, through the weighted relational semantics, such ideas apply naturally to  probabilistic $\lambda$-calculi.
 
 \subsection{Fixpoint Algebraic Systems}
   
-In the previous section we have seen that a PHORS, seen through $\PLY$ as a fixpoint, can be associated with formal power series defined as minimal solutions of an equational system. In practice, computing such power series directly can be very hard; in particular, as we saw, these capture properties like AST or PAST which are undecidable in general. However, when the equational system defining them is algebraic, that is, expressed in terms of finitely many polynomial equations, it becomes possible to extract information, or even compute, such power series indirectly. 
+In the previous section we have seen that PHORS can be associated with formal power series defined as the minimal solution of a (generally infinite) equational system. In practice, computing such power series directly can be very hard; recall, by the way, that such fps capture properties like AST or PAST, which are undecidable in general. However, when the equational system defining a family of power series can be expressed by \emph{finitely many polynomial equations}, it becomes possible to extract information about such power series, or even, in some situations, to evaluate them exactly. 
 
-As a famous example, consider the fps $s(x)= \sum_{n \geq 0} \frac{1}{n+1} \binom{2n}{n} x^{n} \in \fps{\R}{x}$. One can verify that this is the Taylor expansion around $0$ of the (analytic) function $\frac{1-\sqrt{1-4z}}{2z}$. From this, it is easy to see, taking $p(w, x)= zw^2 - w + 1$, that $p(s, x)=0$. Observe that computing $s(1) = \sum_{n \geq 0} \frac{1}{n+1} \binom{2n}{n}$ as a limit is hard, but, using the equation $p(s(x), x)=0$, we can easily deduce that $s(1)$ is the (only) positive root of $w^2-w+1$. 
+As a famous example, consider again the fps $c(x)= \sum_{n \geq 0} C_n x^{n} \in \fps{\R}{x}$. One can verify that $c(x)$ is the Taylor expansion around $0$ of the (analytic) function $\frac{1-\sqrt{1-4x}}{2x}$. From this, it is easy to see, taking $p(w, x)= xw^2 - w + 1$, that $p(c(x), x)=0$. Observe that, while computing $c(1) = \sum_{n \geq 0} \frac{1}{n+1} \binom{2n}{n}$ as a limit is hard, we can easily deduce that $c(1)=1$ is the (only) positive root of $p(w,1)$.
 
 \begin{example}\label{ex:phors4}
-Equation \eqref{eq:alg2} from Example \ref{ex:phors3} can be rewritten as $p(a_1(z),z)=0$, where $p(w,z)=\frac{z}{2}w^2-w+\frac{z}{2}$, which gives the solution $a_1(z)=\frac{1-\sqrt{1-z^2}}{z}$.
-Using the previous fps $s(x)$ we deduce, with $w=\left(\frac{z}{2}\right)^2$, 
-\[
-a_1(z)=\frac{1-\sqrt{1-4w}}{2w}w=s(w)w=\sum_{i=0}^{\infty}\frac{C_i}{2^{2i+1}}z^{2i+1}.
-\]
+Equation \eqref{eq:alg1} from Example \ref{ex:phors2} can be rewritten as $p(a_\gphors(z),z)=0$, where $p(w,z)=\frac{1}{2}zw^2-w+\frac{1}{2}z$, which gives the solution $a_\gphors(z)=\frac{1-\sqrt{1-z^2}}{z}$.
+Using the fps $c(x)$ from above, we deduce, with $w=\left(\frac{z}{2}\right)^2$, 
+$a_\gphors(z)=\frac{1-\sqrt{1-4z}}{2z}z=c(z)z=\sum_{i=0}^{\infty}\frac{C_i}{2^{2i+1}}z^{2i+1}$.
 The interpretation of this is that, for any $i\in \N$, there are $C_i$ terminating reductions that make $2i+1$ probabilistic choices. On the other hand, there is no terminating path of even length, as there is no random walk going from 1 to 0 in an even number of steps.
+As already observed, all this implies that $\gphors$ is AST but not PAST.
 \end{example}
   
 %  
@@ -34,9 +33,9 @@ The interpretation of this is that, for any $i\in \N$, there are $C_i$ terminati
 %  As we saw, power series are infinitary objects and their manipulation can then involve the concept of limit, making it generally uncomputable. Moreover, the continuous semiring we will generally use in the context of probabilistic semantics will be $\Rinf$ and the semiring of formal power series over $\Rinf$: hence, the computation with the coefficients of power series themselves could be infinitary. To our rescue, we will use a way to give a finitary specification of power series: this will be the concept of algebraicity. 
   
   Before considering algebraic power series on a (continuous) semiring, let us first recall the case of rings, which is the one most customary in combinatorics
-  \begin{definition}
-  	Let $R$ be a ring  and let $R'\leq R$ a sub ring.
-  	A family $(s_1, \dots s_n)$ of formal power series $s_i \in \fps{R}{\Sigma}$ is an $R'$\textbf{algebraic family} if there exist polynomials $p_i \in \fpp{R'}{w_1, \dots w_n, \Sigma}$ such that:
+  \begin{definition}\label{def:fas1}
+  	Let $R$ be a ring  and let $R'\leq R$ a subring.
+  	A tuple $(s_1, \dots s_n)$ of formal power series $s_i \in \fps{R}{\Sigma}$ is an $R'$-\emph{algebraic family} if there exist polynomials $p_i \in \fpp{R'}{w_1, \dots w_n, \Sigma}$ such that:
   	\begin{equation*}
   	\begin{cases}
   		p_1(s_1, \dots s_n, x_\Sigma)=0\\
@@ -44,38 +43,47 @@ The interpretation of this is that, for any $i\in \N$, there are $C_i$ terminati
   		p_n(s_1, \dots s_n, x_\Sigma)=0\\
   	\end{cases}
   	\end{equation*}
-  	 If for an $s \in \fps{R}{\Sigma}$, $(s)$ is an $R'$algebraic family (i.e there exists a polynomial $p(w_1, x_\Sigma) \in \fpp{R'}{w \cup \Sigma}$ such that $p(s, x_\Sigma)=0$, we say that $s$ is $R'$algebraic; we also say that $p$ is an annihilating polynomial of $w_1$.
+  	 When $n=1$, an $R'$-algebraic family $(s)$ is simply called a 
+	 \emph{$R'$-algebraic fps} and the polynomial $p_1$ is called an \emph{annihilating polynomial} of $s$.
+%	 
+%	  (i.e there exists a polynomial $p(w_1, x_\Sigma) \in \fpp{R'}{w \cup \Sigma}$ such that $p(s, x_\Sigma)=0$),  and 
   \end{definition}
   
 
   \begin{example}
 %  	\begin{itemize}
 %  		\item 
-		Let $s \in \fps{\R}{x}$ be $\sum_{n \geq 0}x^n$. Then if we take the polynomial $p(w,x) = w(1-x)-1$, we get $p(s, x)=0$. Hence, $s$ is algebraic over $\Q$. Indeed, $s$ is the multiplicative inverse $(1-x)^{-1}$ of $(1-x)$ in $\fps{\R}{x}$. In general, every $\Q$ rational function (i.e every power series of the form $r_1(x_\Sigma)r_2(x_\Sigma)^{-1}$ for $r_1, r_2 \in \fps{\Q}{\Sigma}$) is algebraic over $\Q$. 
+		Let $s \in \fps{\R}{x}$ be $\sum_{n \geq 0}x^n$. Taking the polynomial $p(w,x) = w(1-x)-1$, we get $p(s(x), x)=0$. Hence, $s$ is algebraic over $\Q$. Indeed, $s$ is the multiplicative inverse $(1-x)^{-1}$ of $(1-x)$ in $\fps{\R}{x}$. In general, every $\Q$-rational function (i.e every power series of the form $r_1(x_\Sigma)r_2(x_\Sigma)^{-1}$ for $r_1, r_2 \in \fps{\Q}{\Sigma}$) is algebraic over $\Q$. 
 %  		\item Let $s= \sum_{n \geq 0} \frac{1}{n+1} \binom{2n}{n} x^{n} \in \fps{\R}{x}$. One can verify that this is the Taylor expansion around $0$ of the (analytic) function $\frac{1-\sqrt{1-4z}}{2z}$. From this, it is easy to see that, taking $p(w, x)= zw^2 - w + 1$, that $p(s, x)=0$. Observe that computing $s(1) = \sum_{n \geq 0} \frac{1}{n+1} \binom{2n}{n}$ as a limit is hard, but, using the equation $p(s(x), x)=0$, we can easily deduce that $s(1)$ is the (only) positive root of $w^2-w+1$. 
 %  		\end{itemize}
   \end{example}	
   \begin{remark}\label{rem:hadamard}
-  The non-zero coefficients of an algebraic power series cannot be ``too far'': if $a(x)=\sum_na_n x^{p_n}$ is algebraic, then $\lim_n p_n/n<\infty$: 
-  algebraic power series can always be analytically extended over all but finitely many points of the unitary circle; by contrast, by Fabry's gap theorem, if $\lim_n p_n/n$ diverges, then $a$ has the whole circle of convergence  as a natural boundary.
-  For instance, none of the series $\sum_n x^{n^2},\sum_n x^{n^3}, \sum_n x^{2^n}$ is algebraic.
+  The non-zero coefficients of an algebraic power series cannot be ``too far'': if $a(x)=\sum_na_n x^{p_n}$ is algebraic, then $\lim_n p_n/n<\infty$: this is a consequence of \emph{Fabry's gap theorem}, which asserts that, when $\lim_n p_n/n$ diverges, $a$ cannot be analytically continued on any point of its circle of convergence.
+%  
+%   
+%  algebraic power series can always be analytically extended over all but finitely many points of the unitary circle; by contrast, by Fabry's gap theorem,
+  For instance, no series of the form $\sum_n a_n x^{n^2},\sum_n a_n x^{n^3}, \sum_n a_nx^{2^n}$ is algebraic.
   \end{remark}
+  
+  
   \begin{remark}
   	\label{derivative-rational}
-  	If $s\in \fpp{\R}{x}$ has annihilating $p(w, x_\Sigma)$ is an irreducible annihilating polynomials (also called the minimal polynomial of $s$), then one can compute effectively a rational power series $r(x,y)$ such tha the following holds for the derivative $s'(x)$: of $s$: 
-  	$$s'(x) = r(x, s(x))  $$
+  	If $s\in \fps{\R}{x}$ is algebraic with annihilating polynomial $p(w, x_\Sigma)$,
+%	 (is an irreducible annihilating polynomial (also called the \emph{minimal polynomial} of $s$),
+also its derivative $s'\in \fps{\R}{x}$ is also algebraic. Moreover, one can compute effectively a rational function $r(x,y)$ such that $s'(x)$ can be computed from $s$ via 
+ $s'(x) = r(x, s(x))  $.
   \end{remark}
   \begin{remark}
   	\label{remark:algoveralg}
-  	$s \in \fps{R}{x_\Sigma}$ is $R'$algebraic iff $R'(x_\Sigma) \leq R(x_\Sigma)(s)$ is an algebraic extension of fields, where $R(x_\Sigma)$ is the field of rational functions with variables $x_\Sigma$. From this, we have that if $r \in \fpp{\fps{R}{x_\Sigma}}{y_{\Theta}}$ is a polynomial with variables $y_{\Theta}$ and coefficients that are $R'$algebraic fps, then $s$ is an $R'$algebraic fps with paramters $x_\Sigma, y_\Theta$. This is consequence of the basic fact that if $K \leq K'$ and $K' \leq K''$ are algebraic extension of fields, then $K \leq K''$ is algebraic. See (cite van der Waerden, 1) for the discussion of these concepts and results.
+  	$s \in \fps{R}{x_\Sigma}$ is $R'$-algebraic iff $R'(x_\Sigma) \leq R(x_\Sigma)(s)$ is an algebraic extension of fields, where $R(x_\Sigma)$ is the field of rational functions with variables $x_\Sigma$. From this, we have that if $r \in \fpp{\fps{R}{x_\Sigma}}{y_{\Theta}}$ is a polynomial with variables $y_{\Theta}$ and coefficients that are $R'$algebraic fps, then $s$ is an $R'$algebraic fps with paramters $x_\Sigma, y_\Theta$. This is consequence of the basic fact that if $K \leq K'$ and $K' \leq K''$ are algebraic extension of fields, then $K \leq K''$ is algebraic. See (cite van der Waerden, 1) for the discussion of these concepts and results.
   \end{remark}
 %  \begin{lemma}
 %  	If $p, q \in \fpp{R'}{w_1,x_\Sigma}$ are coprime, there exists a non zero polynomial $Res_{w_1}(p,q) \in \fpp{R'}{x_\Sigma}$ such that for each $(\bar w, \bar x_\Sigma)$ that is a common root of $p,q$ in an extension $R \supseteq R'$, then $Res(\bar x_\Sigma)=0$.
 %  \end{lemma}
 
-  The theory of algebraic power series should be stated in a slightly different way in the context of semirings: if $a \in \fps{\Rsemiring}{\Sigma}, a > 0$, then for each $k$ $a^k > 0$, hence it is not possible that $p(a, x_\Sigma)=0$ for some $p \in \fpp{\Rsemiring}{\Sigma}$. One must give the following definitions:
-   \begin{definition}
-	Let $\Rsemiring$ be a semiring and let $\Rsemiring'\leq \Rsemiring$ be a subsemiring. A  $\Rsemiring'$-\textbf{fixpoint algebraic system} (in short $\Rsemiring'$-\textbf{fas}) with parameters $x_\Sigma$ is a system of $n$ equations:
+  The theory of algebraic power series should be stated in a slightly different way in the context of semirings: if $a \in \fps{\Rsemiring}{\Sigma}, a > 0$, then for each $k$ $a^k > 0$, hence it is not possible that $p(a, x_\Sigma)=0$ for some $p \in \fpp{\Rsemiring}{\Sigma}$. Definition \ref{def:fas1} must thus be adapted as follows:
+     \begin{definition}\label{def:fas2}
+	Let $\Rsemiring$ be a semiring and let $\Rsemiring'\leq \Rsemiring$ be a subsemiring. A  $\Rsemiring'$-\emph{fixpoint algebraic system} (in short $\Rsemiring'$-\emph{FAS}) with parameters $x_\Sigma$ is a system of $n$ equations:
 	 \begin{equation}
 		\label{fixpointsystem}
 		\begin{cases}
@@ -84,25 +92,36 @@ The interpretation of this is that, for any $i\in \N$, there are $C_i$ terminati
 			w_n = w_n(s_1, \dots w_n, x_\Sigma)\\
 		\end{cases}
 		\end{equation}
-	A family $(s_1, \dots s_n)$ of formal power series $s_i \in \fps{\Rsemiring}{\Sigma}$ that is the minimal solution of a $\Rsemiring'$-fas is said a $\Rsemiring'$-\textbf{fixpoint algebraic family}\\
-	If the $p_i$ are such that $p_i(0,0)=0$ and for each $j$ the coefficient of the monomial $w_j$ in $p_i$ is $0$, we say that the system is \textbf{proper}.
+	A family $(s_1, \dots s_n)$ of formal power series $s_i \in \fps{\Rsemiring}{\Sigma}$ that is the minimal solution of a $\Rsemiring'$-FAS is said a $\Rsemiring'$-\emph{fixpoint algebraic family}. 
+	If the $p_i$ are such that $p_i(0,0)=0$ and, for each $j$, the coefficient of the monomial $w_j$ in $p_i$ is $0$, we say that the system is \emph{proper}.
 \end{definition}
-	The theory of systems like \eqref{fixpointsystem} has been extensively studied (cite Kuich, Schlund, Banderier-Drmota) in the context of combinatorics and formal language theory: in particular, it can be shown that they admit a (unique) minimal solution, that can be obtained by iterating the polynomials $p_1 \dots p_n$. In the following we will be in general be interested into $\Rinf$ power series algebraic over $\Q_{\geq 0}$: in this case, the polynomial equations $w_i= p_i, \: p \in \fpp{\Qpos}{\Sigma}$ can be rewritten as $p'_i \bydef p_i- w_i = 0, \: p \in \fpp{\Qpos}{\Sigma}$. Rather than speaking of the minimal solution of \eqref{fixpointsystem} as a system with coefficients in $\Qpos$, we will be able to speak about the minimal non-negative solution $(s_1, \dots s_n)$  of the system $(p'_i=0)_{1 \leq i \leq n}$ with coefficients over $\mathbb{Q}$.
- 	\\We will prove now that, in this case, if the fas is proper even more is true: every $s_i$ part of a $\Q^+$-algebraic family is algebraic:
- 	\begin{theorem}[Elimination of variables]
+	The theory of systems like \eqref{fixpointsystem} has been extensively studied (cite Kuich, Schlund, Banderier-Drmota) in the context of combinatorics and formal language theory: in particular, it can be shown that they admit a (unique) minimal solution, that can be obtained by iterating the polynomials $p_1 \dots p_n$. In the following we will be in general be interested into ${\Rinf}$-power series algebraic over $\Q_{\geq 0}$: in this case, the polynomial equations $w_i= p_i, \: p \in \fpp{\Qpos}{\Sigma}$ can be rewritten as $p'_i \bydef p_i- w_i = 0, \: p \in \fpp{\Qpos}{\Sigma}$. Rather than speaking of the minimal solution of \eqref{fixpointsystem} as a system with coefficients in $\Qpos$, we will be able to speak about the minimal non-negative solution $(s_1, \dots s_n)$  of the system $(p'_i=0)_{1 \leq i \leq n}$ with coefficients over $\mathbb{Q}$.
+ 	\\We will prove now that, in this case, if the FAS is proper, even more is true: every $s_i$ part of a $\Q^+$-algebraic family is algebraic:
+ 	\begin{theorem}[Variable Elimination]
  		\label{th:elimination}
- 		Let $F$ be a proper $\Q^+$-fas consisting of $n$ equations with parameters $x_\Sigma$ and let $(s_1, \dots s_n)$ be its minimal solution. From $F$ we can effectively compute irreducible polynomials $(q_i(w' , x_\Sigma))_{1 \leq i \leq n}$ such that:
- 		$$q_i(s_i, x_\Sigma)=0 \quad 1 \leq i \leq n $$ 
+ 		Let $F$ be a proper $\Q_{\geq 0}$-FAS consisting of $n$ equations with parameters $x_\Sigma$ and let $(s_1, \dots s_n)$ be its minimal solution. From $F$ we can effectively compute irreducible polynomials $(q_i(w' , x_\Sigma))_{1 \leq i \leq n}$ such that:
+ 		$q_i(s_i(x_\Sigma), x_\Sigma)=0$, for all $1 \leq i \leq n$, 
  		that is, every $s_i$ is a $\Q$-algebraic power series.
  	\end{theorem}
  	\begin{proof}
- 		The complete proof and the related elimination algorithm, based on classical methods from algebraic geometry(cite van Der Waerden, Introduction to ... ) can be found in Kuich and Salomaa's book (cite), theorems 16.9, 16.10. Observe that elimination here is possible precisely because the fas $F$ is assumed to be proper.
+ 		The complete proof and the related elimination algorithm, based on classical methods from algebraic geometry(cite van Der Waerden, Introduction to ... ) can be found in Kuich and Salomaa's book (cite), Thms.~16.9, 16.10. Observe that elimination here requires the FAS $F$ to be proper.
  	\end{proof}
+	
+ If $a(x),b(x)\in \fps{\Rsemiring}{x_\Sigma}$ are algebraic, then so are their sum $a(x)+b(x)$, multiplication $a(x)b(x)$, composition $a(b(x))$ and derivative $a'(x)$ (Concrete Teth.). Recall from Section 4 that $a(b(x))$ is well-defined thanks to the continuity of $\Rsemiring$ (composition of algebraic power series is not generally well-defined over arbitrary (semi)rings). 
+
  	\begin{remark}
  	\label{remark:semilinear}
- 		As already said, if $a(x)= \sum_n a_n x^{p_n}$ is algebraic, then the growth of $p_n$ cannot be supralinear. If $a(x) =  \sum_{\mu \in !\Sigma} a_\mu x^\mu \in \fps{\Rinf}{x_\Sigma}$ is part of a $\Q^+$-proper algebraic family, much more can be said: as a consequence to theorem 16.35 of Kuich and Salomaa's book, the set:
- 		$\{\mu \mid a_\mu \neq 0\} $
- 		is semilinear. Rememeber that a family of multisets is said to be semilinear if it is the union of finitely many sets of the form $\{n_1 \mu_1 + \dots + n_k \mu _k  \mid n_1, \dots n_k \in \N \}$
+	
+	
+	
+%	
+% 		As already said, if $a(x)= \sum_n a_n x^{p_n}$ is algebraic, then the growth of $p_n$ cannot be supralinear. 
+		When $a(x) =  \sum_{\mu \in !\Sigma} a_\mu x^\mu \in \fps{\Rinf}{x_\Sigma}$ is part of a $\Q^+$-proper algebraic family, we can refine what we said in Remark \ref{rem:hadamard}: as a consequence to (Kuich, Thm.~16.35), the support 
+ 		$\supp a=\{\mu \mid a_\mu \neq 0\} $
+ 		is \emph{semilinear}, that is, it is
+%		
+%		. Rememeber that a family of multisets is said to be semilinear if it is 
+		the union of finitely many sets of the form $\{n_1 \mu_1 + \dots + n_k \mu _k  \mid n_1, \dots n_k \in \N \}$.
  	\end{remark}
 %  Now, we recall the link between formal power series and the weighted relational model of linear logic. In (cite Laird, Manzonetto), given a continous semiring a category $\Qrel$ is defined, whose objects are sets and morphisms $\Qrel(X, Y)$ are $\Rsemiring$-valued matrices indexed by $X \times Y$. In the category $\Qrelkleisli{\Rsemiring}$, the coKleisli category of $\Qrel$ with respect to the $!$ comonad, morphisms $\Qrelkleisli{\Rsemiring} (X, Y)$ are $\Rsemiring$-valued matrices indexed by $!X \times Y$; as remarked in (cite Paolo and Davide), a matrix $(t_{\mu, y})_{\mu \in !X, y \in Y}$ can be seen as a $Y$-indexed family of power series $(\sum t_{\mu, y} x_X^\mu)_{y \in Y}$. By this identification, we can from now one see $\Qrelkleisli{\Rsemiring}$ as a category whose objects are set and whose morphisms $\Qrelkleisli{\Rsemiring} (X, Y)$ are  $Y$-indexed family $s_Y$ of power series over $x_X$.\\
 %  Observe that if $Y$ is an exponential object $!Y_1 \times Y_2$, then the arrow $Eval \circ f \times id_{Y_2}: X \times Y_2 \to Y_1$ is represented by the family of series $(\sum_{\kappa \in !Y_1} (\sum t_{\mu, (\kappa, y_2)} x_X^\mu) x_{Y_1}^\kappa)_{y_2 \in Y_2}$\\
@@ -116,18 +135,35 @@ The interpretation of this is that, for any $i\in \N$, there are $C_i$ terminati
 %	From this, it is clear that the power series $r_\Sigma= \fix f$ are the minimal solution of the infinite family of equations: $(r_x = s_x(r_x, x_Y))_{x \in X}$. 
 
 
-\subsection{From PHORS to Fas}
+\subsection{From PHORS to FAS}
 
 
-	We are interested in the case in which the fixpoint equations that define (the interpretation of) a PHORS in $\Qrelkleisli{\Rsemiring}$ are a fas, thus yielding as solution an algebraic power series.
+	We are interested in the case in which the fixpoint equations that define (the interpretation of) a PHORS in $\Qrelkleisli{\Rsemiring}$ form a FAS, thus yielding, as solution, an algebraic power series. Recall that higher-order types $T\to U$ are interpreted by \emph{infinitely many} variables and, consequently, higher-order terms translate into infinitely many equations.
+Our goal is to find ways to {reduce} such infinitary systems to more finitary (and manageable) ones.	
+
 	
-For this, let us first look at how fixpoints in $\Qrelkleisli{\Rsemiring}$ are related to fixpoint algebraic systems. 
-Suppose we have a morphism $f \in \Qrelkleisli{\Rsemiring}(X \times Y, X)$.
-	We have seen that the power series $r_X= \fix f$ are the minimal solution of the infinite family of equations: $(r_x = s_x(r_x, x_Y))_{x \in X}$ (cf.~Equation \eqref{eq:fixpointeq}).  
-To reduce this family to a fas it is enough to require $r_\Sigma$ to have finite support:
+	   As we saw, a PHORS $\gphors$ is interpreted via the families fps $a_{L}(z)(x_\Sigma)$ interpreting each non-terminal $L\in \nonterm$; these fps are collectively defined as the minimal solutions of the family of equations
+$(r_x = (t_\gphors)_x(r_x, z))_{x \in X}$
+induced by the morphism $\fps{(\fps{\Rinf}{z})}{X}^X$ interpreting $t_\gphors:T\to T$, where $T=\nonterm(L_1)\times\dots\times \nonterm(L_n)$ and $X=\model T$. 
+
+
+When $\gphors$ is order-1, this system can \emph{always} be reduced to a FAS:
+\begin{proposition}[order-1 PHORS are algebraic]
+For all order-1 PHORS $\gphors=(\nonterm, \C R,S)$ and non-terminal symbol $L\in \nonterm$, the fps $a_{L}(z)(x_1,\dots, x_n)$ is algebraic.
+\end{proposition}
+\begin{proof}
+When $\gphors$ is order-1, each type $\nonterm(L_i)$ is of the form $o\to\dots \to o\to o$:
+ hence $a_L(z)(x_1,\dots, x_n)$ can be written in the form $\sum_{(p_1,\dots,p_n)\in \N^n} w_{p_1,\dots, p_n}(z)x_1^{p_1}\dots x_n^{p_n}$. 
+Thanks to Lemma \ref{lemma:affine} we have that, if for some $i=1,\dots, n$, $p_i\geq 2$, then $ 
+w_{p_1,\dots, p_n}(z)=0$. We can thus reduce ourselves to a finite polynomial system only involving the finitely many $w_{p_1,\dots, p_n}(z)$, with the $p_i\in \{0,1\}$.
+\end{proof}
+
+In the result above, we obtain a FAS by observing that the interpretation of an order-1 PHORS  always involves fps with finite support, i.e.~polynomials. 
+Beyond order-1, this argument does not work anymore, as PHORS can be truly non-linear.
+We thus need to \emph{impose} a form of finiteness, via the following technical definition:
 	\begin{definition}[finitary fps]\label{def:finitary}
 		Let $s_X\in \fps{\Rsemiring}{X+Y}^X$ be a family of fps.
-		$s_X$ is called \emph{finitary} if there exists $X'\subset X$ such that the following set:
+		$s_X$ is called \emph{finitary} if there exists $X'\subset X$ such that the set:
 		\[
 		I(s_X,X')=
 		\{\sigma\in X \mid
@@ -135,8 +171,8 @@ To reduce this family to a fas it is enough to require $r_\Sigma$ to have finite
 		 (s_\sigma)\vert_{X'+Y}\neq 0\}
 %		 s_\sigma \in \fpp{\Rsemiring}{X' + Y} \}
 		  \]
-		 is finite and contained in $X'$, and moreover, for all $\sigma\in I(s_X,X')$, $(s_\sigma)\vert_{X'+Y}\in\fpp{\Rsemiring}{X'+Y}$ is a polynomial.\\
-		 If, moreover, for each $\sigma \in I(s_X, X')$ and for each $y \in Y$, $s_\sigma(0)=0$ and the coefficient of $y$ in $s_\sigma$ is $0$, we say that $s_X$ is a finitary proper family. 
+		 is finite and contained in $X'$, and moreover, for all $\sigma\in I(s_X,X')$, $(s_\sigma)\vert_{X'+Y}\in\fpp{\Rsemiring}{X'+Y}$ is a polynomial.
+		 If, moreover, for each $\sigma \in I(s_X, X')$ and for each $y \in Y$, $s_\sigma(0)=0$ and the coefficient of $y$ in $s_\sigma$ is $0$, we say that $s_X$ is a \emph{finitary proper family}. 
 %		 
 %%		(Take an $X$-indexed family  of polynomials $(s_x(x_X, x_Y))_{x \in X}$. If there exist an $X' \subseteq X$ such that
 %A family $s_X\in \fps{\Rsemiring}{X+Y}^X$ is said \emph{finitary} if there exists $X'\subset X$ such that $I(s_X, X')$ is finite and $I(s_X, X') \subseteq X'$.
@@ -144,11 +180,11 @@ To reduce this family to a fas it is enough to require $r_\Sigma$ to have finite
 	\end{definition}
 	
 The set $I(s_X,X')$ contains the fps from $s_X$ that either have a non-zero constant part or whose restriction to $X'$ is a non-zero polynomial. 	
-If $s_X$ is finitary, letting $A=I(\sigma_X,X')\subset X$, this ensures that, for all $a\in A$, the iterates $r^n_a$ (cf.~Eq.~\eqref{eq:fixpointeq}) are constructed by composing finitely many polynomials. The fixpoint $\fix s_X=\sup_n r^{n}_X$ will then be a solution of a fas generated from such polynomials:
+If $s_X$ is finitary, letting $A=I(\sigma_X,X')\subset X$, this ensures that, for all $a\in A$, the iterates $r^n_a$ (cf.~Eq.~\eqref{eq:fixpointeq}) are constructed by composing finitely many polynomials. The fixpoint $\fix s_X=\sup_n r^{n}_X$ will then be a solution of the FAS generated from such polynomials:
 
 	\begin{proposition}\label{prop:fintoalg}
 		 Let $\Rsemiring'\leq\Rsemiring$.  
-		 If $s_X\in \fps{\Rsemiring'}{X+Y}^X$ is a finitary family, then $\fix s_X$ has finite support and it is the minimal solution of a fixpoint algebraic family over $\Rsemiring'$ .  
+		 If $s_X\in \fps{\Rsemiring'}{X+Y}^X$ is a finitary family, then $\fix s_X$ has finite support and it is the minimal solution of a fixpoint algebraic system over $\Rsemiring'$ .  
    \end{proposition}
    \begin{proof}(Sketch)
    		For each $X'$ such that $I(s_\Sigma, X') \subseteq X'$ , the support of $\fix s_X$ is contained in $I(s_\Sigma, X')$. Now, let $A \bydef I(s_\Sigma, X')$. Take the (finite) system of equations: $(r_a = s^*_a(r_a, x_Y))_{a \in A}$, where $s^*_a=(s_a)\vert_{A+Y}$, and let $\bar r_A$ be one of its solutions. Then, define $(t_x)_{x \in X}$ to be $\bar r_x$ if $x \in A$ and $0$ otherwise. 
@@ -160,27 +196,42 @@ $s_x(t_x,x_Y)=s^*_x(\bar r_x,x_Y)=0$; if $x \not \in A$, then $(s_x)\vert_{A+Y}=
    \end{proof}
        Notice that, for the previous argument to work, simply asking that the $s_x$ be polynomials is not enough, as there would be anyway infinitely many equations. 
 
-   
-  \begin{example}
-    Let $X=\N+1$, $Y=0$ and $t_X\in \fps{\Rinf}{X+Y}$ be the fps from Example \ref{ex:phors2}. 
-  Letting $X'=\{1,\star\}\subset X$, we have
-  $I(t_X,X')=X'$, so the family is finitary. In other words, the fixpoint $a=\fix t_X$ can be computed by considering only the equations $a_1=t_1(a_1)$ (i.e.~\eqref{eq:alg1}) and $a_{\star}=a_1$.
-We deduce that $a_\star\in \Rinf$ is algebraic over $\mathbb Q^+$.
-A similar argument, applied to Example \ref{ex:phors3}, shows that the solution $a_\star(z)\in \fps{\Rinf}{z}$ is algebraic over $\fps{\mathbb Q^+}{z}$.
-    
-  \end{example}
-  From the proof of $\ref{prop:fintoalg}$ and  \ref{th:elimination},
+
+  Combining Theorem  $\ref{prop:fintoalg}$ and Proposition  \ref{th:elimination},
   we also get:
    \begin{corollary}
    	\label{cor:propertoalg}
+
+	
+	
    		If $s_X\in \fps{\Rsemiring'}{X+Y}^X$ is a \textit{proper} finitary family, then for each $x \in X$  $(\fix s_X)_x$ is an algebraic power series. Moreover, for all but finitely many $x$, $(\fix s_X)_x=0$
    \end{corollary}
-   Now assume that $X=\ X_1\to X_2 \bydef !X_1 \times X_2$ is an exponential object. In this case, we can consider  $eval(\fix s_X) = (\sum_{\kappa \in !X_1} (\fix s_X)_{\kappa, x_2}(x_Y) x_{X_1}^\kappa)_{x_2 \in X_2}\in \fpp{\Rsemiring}{X_1 + Y}^{X_2}$. We have that this is an algebraic power series and, if $X_2$ is an exponential object itself, this can be iterated, always getting algebraic power series.
-   	\begin{lemma}
-   If $s_X\in \fps{\Q}{(X_1 \to X_2)+Y}^{!X_1 \times X_2}$ is a family of algebraic power series such that for all but finitely many $x \in !X_1 \times X_2 \: s_x =0$,   then $eval(s_X)$ is a family of $\Q$-algebraic power series with parameters $x_{X_1}, x_Y$.  
-   \end{lemma}  
-   \begin{proof}
-   	Since only finitely many $s_x \neq 0$, the $\sum_{\kappa \in !X_1} r_{\kappa, x_2}(x_Y) x_{X_1}^\kappa \in \fpp{\fps{\R}{Y}}{X}$ is a polynomial with $\fps{\R}{Y}$ coefficients that are $\Q$ algebraic. Now apply \ref{remark:algoveralg}
-   \end{proof}
+%   Recall that, given a PHORS,  the fps $a_{\gphors}(z):=a_S(z)$ is mutually defined together with the fps corresponding to all non-terminal symbols. The result above ensures that, when all such fps are defined by a proper finitary algebraic system, $a_{\gphors}(z)$ is itself algebraic.
+
+
+   
+  \begin{example}
+    Let $X=\N+1$, $Y=\{z\}$ and $s_X\in \fps{\Rinf}{X+Y}^X\equiv\fps{(\fps{\Rinf}{z})}{X}^{X}$ be the fps from Example \ref{ex:phors2}. 
+  Letting $X'=\{1,\star\}\subset X$, we have
+  $I(s_X,X')=X'$, so the family is finitary. In other words, the fixpoint $a=\fix s_X$ can be computed by considering only the equations $a_1=s^F_1(a_1)$ (i.e.~\eqref{eq:alg1}) and $a_\gphors=a_{\star}=a_1$.
+Hence $a_\gphors(z)\in \fps{\Rinf}{z}$ is algebraic over $\mathbb Q^+$ (with parameter $z$).
+%A similar argument, applied to Example \ref{ex:phors3}, shows that the solution $a_\star(z)\in \fps{\Rinf}{z}$ is algebraic over $\fps{\mathbb Q^+}{z}$.
+
+    
+
+
+  \end{example}
+
+%In the next sections, we will explore two type disciplines that produce finitary fps.  
+
+
+   
+%   Now assume that $X=\ X_1\to X_2 \bydef !X_1 \times X_2$ is an exponential object. In this case, we can consider  $eval(\fix s_X) = (\sum_{\kappa \in !X_1} (\fix s_X)_{\kappa, x_2}(x_Y) x_{X_1}^\kappa)_{x_2 \in X_2}\in \fpp{\Rsemiring}{X_1 + Y}^{X_2}$. We have that this is an algebraic power series and, if $X_2$ is an exponential object itself, this can be iterated, always getting algebraic power series.
+%   	\begin{lemma}
+%   If $s_X\in \fps{\Q}{(X_1 \to X_2)+Y}^{!X_1 \times X_2}$ is a family of algebraic power series such that for all but finitely many $x \in !X_1 \times X_2 \: s_x =0$,   then $eval(s_X)$ is a family of $\Q$-algebraic power series with parameters $x_{X_1}, x_Y$.  
+%   \end{lemma}  
+%   \begin{proof}
+%   	Since only finitely many $s_x \neq 0$, the $\sum_{\kappa \in !X_1} r_{\kappa, x_2}(x_Y) x_{X_1}^\kappa \in \fpp{\fps{\R}{Y}}{X}$ is a polynomial with $\fps{\R}{Y}$ coefficients that are $\Q$ algebraic. Now apply \ref{remark:algoveralg}
+%   \end{proof}
 
  

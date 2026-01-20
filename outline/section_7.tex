@@ -1,25 +1,43 @@
-\subsection{Related works}
+% !TEX root = main.tex
+\section{Related Work}
 
-The connection between HORS and the relational semantics of linear logic appears at first in P.A. Melliès and C. Grellois' work (cite finitary semantics of linear logic and higher-order model-checking, indexed linear logic and
+An extensive literature in analytic combinatorics has explored different kinds of combinatorial structures having an algebraic generating function, in particular with respect to their asymptotic behaviur (for a comprehensive treatment, see Flajolet, Branderier).
+In the setting of imperative programming, the idea of using generating functions to analyse probabilistic programs is developed in (cite Klinkeberg PHd Thesis); notably, 
+of particular interest, with respect to our work is the characterization of while loops giving rise to rational generating functions.
+On the side of formal language theory, there exists a huge amount of work about generating functions; particularly relevant to this work is the paper (cite FROM INDEXED GRAMMARS TO GENERATING
+FUNCTIONS), in which they study generating functions of Aho's indexed languages (corresponding to order-2 safe HORS, thus going beyond the usual framework of context-freeness) and they give an explicit procedure to compute these functions under some restrictions, but do not give a characterization of grammars with an algebraic generating function.
+
+
+
+The connection between HORS and the relational semantics of linear logic first appears in  Melliès and Grellois' work (cite finitary semantics of linear logic and higher-order model-checking, indexed linear logic and
 higher-order model checking, Relational semantics of
 linear logic and higher-order model checking). Subsequently, in (cite
-Linearity in Higher-Order Recursion Schemes), a linear-non linear typing system for HORS is introduced, allowing for a finer complexity analysis of model checking and the behaviour of the purely affine fragment of it is studied in []. None of these work involve probabilistic behaviour.\\
-In (cite Ugo , Charles, Koabayashi), the problem of AST for PHORS is studied by directly translating a PHORS into (a possibly higher order) real functional equations: only in the case of order 1 PHORS, this produces a fixpoint algebraic system analogous the the ones considered in this work, thus implying a decidability result (while in the same work, undecidability from order 2 is proved). Also, techniques to approximate from above the probability of termination are considered. In (cite Ong), the decidability of AST/PAST for affine PHORS is proved . With respect to this work, they perform the translation from PHORS to real equation via an in intermediate automata-theoretic step, based on the equivalence between affine HORS and restricted pushdown automata (illustrated in (cite Pierre Clairembaut)).\\
-In the setting of imperative programming, the idea of using generating functions to analyse probabilistic programs is developed in (cite Klinkeberg PHd Thesis), where of particular interest with respect to our work is the characterization of while loops giving rise to rational generating functions.\\
-On the side of formal language theory, there exists a huge amount of work about generating functions; particularly relevant to this work is the paper (cite FROM INDEXED GRAMMARS TO GENERATING
-FUNCTIONS), in which they study generating functions of Aho's indexed languages (corresponding to order 2 safe HORS, thus going beyond the usual framework of context-freeness) and they give an explicit procedure to compute these functions under some restrictions, but do not give a characterization of grammars with an algebraic generating function.\\
-Finally, it is worthwhile to notice that in analytic combinatorics a lot of work has been done about different kinds of combinatorial structures having an algebraic generating function, in particular with respect to their asymptotic behaviour (cite Flajolet, Branderier)
+Linearity in Higher-Order Recursion Schemes), a linear-non linear typing system for HORS was introduced, allowing for a finer complexity analysis of model checking; its affine fragment is studied in []. None of these works involve probabilistic behavior.
 
-{\color{red}
+In (cite Ugo , Charles, Koabayashi), the problem of AST for PHORS is studied by directly translating a PHORS into (possibly higher-order) real functional equations: only in the case of order 1 PHORS, this produces a fixpoint algebraic system analogous the those considered in this work, thus implying a decidability result (while in the same work, undecidability from order-2 is proved). Techniques to approximate from above the probability of termination are also considered. In (cite Ong), the decidability of AST/PAST for affine PHORS is proved . With respect to our approach, they perform the translation from PHORS to real equations via an in intermediate automata-theoretic step, based on the equivalence between affine HORS and restricted pushdown automata (illustrated in (cite Pierre Clairembaut)).
 
 
-Here some perspectives, suggesting that our result is just the first and most obvious one.
 
-Extensions, e.g.~holonomic power series and restriction, e.g.~rational ones
+\section{Conclusion}
 
-Asymptotic estimations: a huge literature, can we use them to provide probability estimations?
+In this work we have shown that the combinatorial method of generating functions can be adapted, via the weighted relational semantics of linear logic, to the study of higher-order probabilistic languages. We think that the main value of this work resides in opening the possibility of applying well-established methods from algebraic and analytic combinatorics to the study of higher-order languages. We provided a first demonstration of this by showing how some the decidability of certain classes of PHORS (proved in the literature with syntactic methods like automata theory or intersection types) can be re-established, and actually \emph{extended}, in a relatively elementary way, via the notion of algebraic power series.
 
-Extracting properties of programs from the corresponding generating functions: factorization, recurrence properties, differential equations
-
-
-}
+At the same time, several other directions of application of combinatorial methods can be mentioned: on the one hand, could one capture a class of PHORS, extending the algebraic ones, giving rise to \emph{D-finite} power series (cite), i.e.~fps defined by linear \emph{differential} equations, and could this be related to the recently explored connections between {higher-order differentiation} and fixpoints in the weighted relational model (cite Galal Lemay)?
+On the other hand, could the vast literature on \emph{asymptotic estimations} for generating functions be applied to extract information about termination for even larger classes of PHORS?
+%
+%which extends the algebraic power series
+%
+%
+%{\color{red}
+%
+%
+%Here some perspectives, suggesting that our result is just the first and most obvious one.
+%
+%Extensions, e.g.~holonomic power series and restriction, e.g.~rational ones
+%
+%Asymptotic estimations: a huge literature, can we use them to provide probability estimations?
+%
+%Extracting properties of programs from the corresponding generating functions: factorization, recurrence properties, differential equations
+%
+%
+%}

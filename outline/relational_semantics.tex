@@ -14,8 +14,8 @@ let us call $!\Sigma$ the set of finite multisets over it, i.e functions $\mu: \
  $$s=\sum_{\mu \in !\Sigma} s_\mu x_\Sigma^{\mu}.$$ 
  We will sometimes write $s(x_\Sigma)$ to underline which variables appear in $s$.
  For each $s\in \fps{\Rsemiring}{\Sigma}$, its \emph{support} $\supp~s\subseteq \ !\Sigma$ is the set of multisets $\mu$ such that $s_{\mu}\neq 0$. 
-% Given $\Sigma'\subset \Sigma$ and $s\in \fps{\Rsemiring}{\Sigma}$, let
-% $s\vert_{\Sigma'}\in \fps{\Rsemiring}{\Sigma}$ be the composition of $s$ with the injection $!\Sigma'\hookrightarrow!\Sigma$. 
+ Given $\Sigma'\subset \Sigma$ and $s\in \fps{\Rsemiring}{\Sigma}$, its \emph{restriction to $\Sigma'$}, noted, 
+$s\vert_{\Sigma'}\in \fps{\Rsemiring}{\Sigma}$, is the composition of $s$ with the injection $\iota:!\Sigma'\hookrightarrow!\Sigma$, i.e.~$s\vert_{\Sigma'}(x_{\Sigma'})=\sum_{\mu\in !\Sigma'}s_{\iota(\mu)} x_{\Sigma'}^\mu$. 
 
 
   \begin{example}
@@ -94,8 +94,16 @@ form a (non-continuous) sub-semiring of $\fps{\Rsemiring}{\Sigma}$, that we will
 %     By this identification, we can from now one see $\Qrelkleisli{\Rsemiring}$ as a category whose objects are set and whose morphisms $\Qrelkleisli{\Rsemiring} (X, Y)$ are  $Y$-indexed family $s_Y$ of power series over $x_X$.\\
 
 %The category $\Qrel{\Rsemiring}$ is symmetric monoidal closed, with monoidal products and their their adjoints both given by $X\times Y$, yielding an interpretation of the \emph{linear} $\lambda$-calculus.
-$\Qrelkleisli{\Rsemiring}$ is cartesian closed, with cartesian products given by $X+Y$ (with neutral $0:=\emptyset$) and exponentials given by $!X\times Y$. The fundamental intuition about the exponential is that giving a $(!X\times Y)$-indexed family of fps $s_{\mu,y}(z_Z)\in \Qrelkleisli{\Rsemiring}(Z,!X\times Y)=\fps{\Rsemiring}{Z}^{!X\times Y}$ is the same as giving a $Y$-indexed family of fps $s(z_Z,x_{X})_y=\sum_{\mu\in !X}s_{\mu,y}(z_Z)x_X^{\mu}\in \Qrelkleisli{\Rsemiring}(Z+X,Y)\equiv \fps{\Rsemiring}{Z+X}^Y$.
-This generalizes the correspondence between a fps $\sum_{\mu\in !X} s_{\mu}x^\mu$ and its family of coefficients $(s_\mu)_{\mu\in \ !X}$.
+$\Qrelkleisli{\Rsemiring}$ is cartesian closed, with cartesian products given by $X+Y$ (with neutral $0:=\emptyset$) and exponentials given by $!X\times Y$. 
+This allows us to interpret simple types as $\model o=1:=\{\star\}$ and $\model{T\to U}=!\model{T}\times \model{U}$. Intuitively, a type $T$ translates into a set of variables, and a term $\Gamma\vdash t:T$ into a $\model{T}$-indexed family of fps $\model{t}^{\Rsemiring}_i(x_\Gamma)$ in \emph{as many variables as $\model{\Gamma}$}.
+Here we can observe the main challenge appearing with higher-order types, as these are interpreted by \emph{infinitely many} variables $\model{T\to U}=!\model{T}\times \model{U}$. For instance, $\model{o\to o}=!\model o\times \model o\equiv\N\times 1\equiv \N$ translates into a countable sequence of variables, and 
+$\model{(o\to o)\to (o\to o)}\equiv !\N\times\N$ has one distinct variable $x_{\mu,n}$ for each $\mu\in !\N$ and $n\in \N$.
+Higher-order terms correspond thus to fps in \emph{countably many} variables.
+
+
+%
+%The fundamental intuition about the exponential is that giving a $(!X\times Y)$-indexed family of fps $s_{\mu,y}(z_Z)\in \Qrelkleisli{\Rsemiring}(Z,!X\times Y)=\fps{\Rsemiring}{Z}^{!X\times Y}$ is the same as giving a $Y$-indexed family of fps $s(z_Z,x_{X})_y=\sum_{\mu\in !X}s_{\mu,y}(z_Z)x_X^{\mu}\in \Qrelkleisli{\Rsemiring}(Z+X,Y)\equiv \fps{\Rsemiring}{Z+X}^Y$.
+%This generalizes the correspondence between a fps $\sum_{\mu\in !X} s_{\mu}x^\mu$ and its family of coefficients $(s_\mu)_{\mu\in \ !X}$.
 %The interpretation of a program $M:A\to B$ is a $\Rsemiring$-matrix $\model{M}^{\Rsemiring}\in\Rsemiring^{!A\times B}=\fps{\Rsemiring}{0}^{!A\times B}$ whose entries $ (\model{M}^{\Rsemiring})_{\mu,b}$ represent ways of yielding $b$ by using each input $a\in A$ exactly $\mu(a)$ times. 
 
 
@@ -236,15 +244,20 @@ In (Barbarossa, Pistone) they also consider the interpretation of
 %\emph{parametric} choices $M\oplus_x N$, i.e.~choices according to some unknown bias $x$, by rewriting it as $x\cdot M+\overline{x}\cdot N$ (see Barbarossa and Pistone).
 
 %One can interpret $\PLY$ (or even probabilistic PCF) in all $\Qrelkleisli{\Rsemiring}$ with $\Rsemiring$ of the form $\fps{\Rinf}{\Sigma}$. 
-For every PHORS $\gphors=(\nonterm, \C R,S)$, we define the interpretation of each non-terminal $L_i\in\nonterm$ as $
-\model{L_i}^{\Rsemiring}:=  \model{\pi_i(Yt_{\gphors})}^{\Rsemiring}=\pi_i\left(\fix \model{t_{\gphors}}^{\Rsemiring}\right)\in \Rsemiring^{\model{\nonterm(L_i)}}$.  
-In particular, we define:
 
-\begin{definition}
-Given a PHORS $\gphors=(\nonterm,\C R,S)$, its \emph{probabilistic generating function}
-is the fps $a_{\gphors}(z):=\model{S}^{\fps{\Rinf}{z}}\in \fps{\Rinf}{z}$.
+All this leads to the following definitions
+\begin{definition}[probabilistic generating function of a PHORS]
+For every PHORS $\gphors=(\nonterm, \C R,S)$ and non-terminal $L_i:T_1\to\dots\to T_n\to o\in\nonterm$, letting $\Sigma=\model{T_1}+\dots+\model{T_n}$, we define the fps
+\[
+a_{L}(z)(x_{\Sigma}):=
+ \model{\pi_i(Yt_{\gphors})f_1\dots f_n}^{\fps{\Rinf}{z}}\in \fps{(\fps{\Rinf}{z})}{\Sigma}.
+\]  
+In particular, the \emph{probabilistic generating function of $\gphors$}
+is the fps $a_{\gphors}(z):=a_S(z)\in \fps{\Rinf}{z}$.
 \end{definition}
-This formal power series precisely captures the call-by-value probabilistic execution of closed terms, as stated below: 
+Notice that the $a_{L}(z)(x_\Sigma)=\pi_i\left(\fix \model{t_{\gphors}}^{\fps{\Rinf}{z}}\right)(x_\Sigma)$ is  the minimal solutions of the equational system $(r_x=(t_\gphors)_x(r_x,z))_{x\in \Sigma}$. 
+
+The generating function $a_\gphors(z)$ precisely captures the call-by-value probabilistic execution of closed terms, as stated below: 
 %the interpretation $\model{M}^{\Rinf}$ of a term $M:\1$ of ground type consists in a real number, since $\model{M}^{\Rinf}\in\Qrelkleisli{\Rsemiring}(0,\1)\equiv\fps{\Rsemiring}{0}\equiv\Rsemiring$, which coincides with the probability of termination of $M$, computed as the sum of the weights $w(R)\in \Rinf$ of all call-by-name probabilistic reductions $R:M{\to^*}e$:
 \begin{proposition}[cite Pagani and co]\label{prop:proba}
 For any PHORS $\gphors$,
@@ -355,6 +368,25 @@ We obtain then that $\mathbb P[\gphors\downarrow]=a_{\gphors}(1)=1$, that is, $\
  that $\mathbb E[S\downarrow]$ is given by the diverging series $a'_{\gphors}(1)=\sum_{i=0}^{\infty}\frac{2i+1}{2^{2i+1}}C_i=
 \infty$, that is, PAST fails.
 \end{example}
+
+  
+ For order-1 PHORS, we have the following useful lemma:
+\begin{lemma}\label{lemma:affine}
+For all order-1 PHORS $\gphors=(\nonterm, \C R,S)$ and non-terminal symbol $L\in \nonterm$, the power series $a_L$ is \emph{affine}:
+%
+%first-order $\PLY$-term $x_1:\1,\dots, x_n:\1\vdash_{\PLY}t:\1$, the fps 
+%$\model{t}^{\Rinf}(x_1,\dots, x_n)\in \fps{\Rinf}{x_1,\dots,x_n}$ is affine:
+ there exists $w_0,w_1,\dots, w_n\in\fps{\Rinf}{z}$ such that
+\[
+a_{L}(z)(x_1,\dots, x_n)
+=w_0(z)+w_1(z)x_1+\dots+w_n(z)x_n,
+\]
+where $w_0(1)=\mathbb P[L\vec x\to^* e]$ and
+$w_{i+1}(1)=\mathbb P[L\vec x\to^* x_{i+1}]$.
+\end{lemma}
+This result translates the fact that in a reduction of $Lx_1\dots x_n$ to normal form, a ground variable $x_i:\1$ can occur in head position \emph{at most once}: as soon as it does, we must have $Lx_1\dots x_n\to^* x$, that is, the reduction has terminated.
+
+
 
 %  Observe that, if $X=!X_1 \times X_2$ is an exponential object,
 %  for all $f\in \Qrelkleisli{\Rsemiring}(Y,X)$, the usual evaluation arrow 
