@@ -7,7 +7,7 @@
 
 \subsection{Fixpoint Algebraic Systems}
   
-In the previous section we have seen that a PHORS, seen through $\PLY$ as a fixpoint, can be associated with formal power series defined as minimal solutions of an equational system. Computing such power series directly can be very hard in general; in particular, as we saw, these capture properties like AST or PAST which are undecidable in general. However, when the equational system defining them is algebraic, that is, expressed in terms of polynomials, it becomes possible to extract information, or even compute, such power series indirectly. 
+In the previous section we have seen that a PHORS, seen through $\PLY$ as a fixpoint, can be associated with formal power series defined as minimal solutions of an equational system. In practice, computing such power series directly can be very hard; in particular, as we saw, these capture properties like AST or PAST which are undecidable in general. However, when the equational system defining them is algebraic, that is, expressed in terms of finitely many polynomial equations, it becomes possible to extract information, or even compute, such power series indirectly. 
 
 As a famous example, consider the fps $s(x)= \sum_{n \geq 0} \frac{1}{n+1} \binom{2n}{n} x^{n} \in \fps{\R}{x}$. One can verify that this is the Taylor expansion around $0$ of the (analytic) function $\frac{1-\sqrt{1-4z}}{2z}$. From this, it is easy to see, taking $p(w, x)= zw^2 - w + 1$, that $p(s, x)=0$. Observe that computing $s(1) = \sum_{n \geq 0} \frac{1}{n+1} \binom{2n}{n}$ as a limit is hard, but, using the equation $p(s(x), x)=0$, we can easily deduce that $s(1)$ is the (only) positive root of $w^2-w+1$. 
 
