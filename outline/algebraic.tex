@@ -149,7 +149,7 @@ induced by the morphism $\fps{(\fps{\Rinf}{z})}{X}^X$ interpreting $t_\gphors:T\
 
 When $\gphors$ is order-1, this system can \emph{always} be reduced to a FAS:
 \begin{proposition}[order-1 PHORS are algebraic]
-For all order-1 PHORS $\gphors=(\nonterm, \C R,S)$ and non-terminal symbol $L\in \nonterm$, the fps $a_{L}(z)(x_1,\dots, x_n)$ is algebraic.
+For all order-1 PHORS $\gphors=(\nonterm, \C R,S)$ and non-terminal symbol $L\in \nonterm$, the fps $a_{L}(z)(x_1,\dots, x_n)$ is $\mathbb Q$-algebraic.
 \end{proposition}
 \begin{proof}
 When $\gphors$ is order-1, each type $\nonterm(L_i)$ is of the form $o\to\dots \to o\to o$:
@@ -160,41 +160,102 @@ w_{p_1,\dots, p_n}(z)=0$. We can thus reduce ourselves to a finite polynomial sy
 
 In the result above, we obtain a FAS by observing that the interpretation of an order-1 PHORS  always involves fps with finite support, i.e.~polynomials. 
 Beyond order-1, this argument does not work anymore, as PHORS can be truly non-linear.
-We thus need to \emph{impose} a form of finiteness, via the following technical definition:
-	\begin{definition}[finitary fps]\label{def:finitary}
-		Let $s_X\in \fps{\Rsemiring}{X+Y}^X$ be a family of fps.
-		$s_X$ is called \emph{finitary} if there exists $X'\subset X$ such that the set:
-		\[
-		I(s_X,X')=
-		\{\sigma\in X \mid
-		 s_\sigma(0) \neq 0 \lor 
-		 (s_\sigma)\vert_{X'+Y}\neq 0\}
-%		 s_\sigma \in \fpp{\Rsemiring}{X' + Y} \}
-		  \]
-		 is finite and contained in $X'$, and moreover, for all $\sigma\in I(s_X,X')$, $(s_\sigma)\vert_{X'+Y}\in\fpp{\Rsemiring}{X'+Y}$ is a polynomial.
-		 If, moreover, for each $\sigma \in I(s_X, X')$ and for each $y \in Y$, $s_\sigma(0)=0$ and the coefficient of $y$ in $s_\sigma$ is $0$, we say that $s_X$ is a \emph{finitary proper family}. 
-%		 
-%%		(Take an $X$-indexed family  of polynomials $(s_x(x_X, x_Y))_{x \in X}$. If there exist an $X' \subseteq X$ such that
-%A family $s_X\in \fps{\Rsemiring}{X+Y}^X$ is said \emph{finitary} if there exists $X'\subset X$ such that $I(s_X, X')$ is finite and $I(s_X, X') \subseteq X'$.
-%%		 $(s_x(x_X, x_Y))_{x \in X}$ is a finitary family.
-	\end{definition}
-	
-The set $I(s_X,X')$ contains the fps from $s_X$ that either have a non-zero constant part or whose restriction to $X'$ is a non-zero polynomial. 	
-If $s_X$ is finitary, letting $A=I(\sigma_X,X')\subset X$, this ensures that, for all $a\in A$, the iterates $r^n_a$ (cf.~Eq.~\eqref{eq:fixpointeq}) are constructed by composing finitely many polynomials. The fixpoint $\fix s_X=\sup_n r^{n}_X$ will then be a solution of the FAS generated from such polynomials:
+We thus need to \emph{impose} a form of finiteness, via the following technical definitions:
 
+
+\begin{definition}[variable and family restrictions]
+For all fps $s\in \fps{\Rsemiring}{\Sigma}$ and $\Sigma'\subset \Sigma$,
+ $s\vert_{\Sigma'}\in \fps{\Rsemiring}{\Sigma}$ is the fps $t$ defined by 
+$t(x_{\Sigma'},x_{\Sigma-\Sigma'})=s_\sigma(x_{\Sigma'},0)$.
+%
+%and $X'\subset X$. Then:
+%\begin{varitemize}
+%\item for all $\sigma\in X$, $s_\sigma\vert_{\Sigma'}\in \fps{\Rsemiring}{\Sigma}$ is the fps $t$ defined by 
+%$t(x_{\Sigma'},x_{\Sigma-\Sigma'})=s_\sigma(x_{\Sigma'},0)$;
+%\item $s\vert_{\Sigma'}^{X'} \in \fps{\Rsemiring}{\Sigma}^X$ is the $X$-family $t_X$ defined by $t_\sigma= s_\sigma\vert_{\Sigma'}$, for all $\sigma\in X'$, and $t_\sigma=0$ otherwise.
+%\end{varitemize}
+ 
+
+%\[
+%\left(s\big\vert_{\Sigma'}\right)(x_{\Sigma})=
+%\sum_{\mu\in !\Sigma'}(s_i)_{\iota(\mu)}x^{\mu}_{\Sigma'},
+%\]
+%where $\iota$ is the injection $!\Sigma'\hookrightarrow !\Sigma$.
+%For all $X$-fam
+%
+%Given $X'\subset X$ and $\Sigma'\subset \Sigma$, the restriction map
+%$-\big\vert^{X'}_{\Sigma'}: \fps{\Rsemiring}{\Sigma}^X\to \fps{\Rsemiring}{\Sigma'}^{X'}\to  \fps{\Rsemiring}{\Sigma}^X$ 
+%associates a $X$-family of fps $s_X$ with the fps $s\big\vert_{\Sigma'}^{X'}$ defined as
+% is the 
+%obtained by restricting $s_{X'}$ to the variables in $Y'$;
+ \end{definition}
+ Intuitively, in $s\vert_{\Sigma'}$ we only keep those monomials $s_\mu x^\mu$ from $s$ such that $\mu$ has support included in $\Sigma'$, and we 
+ ``kill'' all monomials $s_\mu x^{\mu}$ containing 
+ some $x^i$, with $i>0$ and $x\notin \Sigma'$. 
+% Moreover, in $s\vert_{\Sigma'}^{X'}$ we furthermore ``kill'' all $s_\sigma$ with $\sigma\notin X'$.
+ 
+ 
+	\begin{definition}[finitary fps]\label{def:finitary}
+		Let $s_X\in \fps{\Rsemiring}{X+Y}^Z$ be a family of fps. A pair $(U\subseteq X,W\subseteq Z)$ is called:
+	\begin{varitemize}
+	\item \emph{stable} if for all $\sigma\in Z-W$, $s_\sigma \vert_{U+Y}=0$;
+	\item \emph{polynomial} if for all $\sigma\in W$, $s_\sigma \vert_{U+Y}$ has finite support (i.e.~it is a polynomial).
+	\end{varitemize}
+A family $s_X\in \fps{\Rsemiring}{X+Y}^X$ is called \emph{finitary} if there exists some finite $W\subset_{\mathrm{fin}}X$ such that $(W,W)$ is stable and polynomial.	
+If, moreover, for each $\sigma \in W$ and for each $y \in Y$, $s_\sigma(0)=0$ and the coefficient of $y$ in $s_\sigma$ is $0$, we say that $s_X$ is a \emph{finitary proper family}. 	
+	\end{definition}
+
+%  
+%	\begin{definition}[finitary fps]\label{def:finitary}
+%		Let $s_X\in \fps{\Rsemiring}{X+Y}^X$ be a family of fps.
+%		$s_X$ is called \emph{finitary} if there exists $X'\subset X$ such that the set:
+%		\[
+%		I(s_X,X')=
+%		\{\sigma\in X \mid
+%		 s_\sigma(0) \neq 0 \lor 
+%		 (s_\sigma)\vert_{X'+Y}\neq 0\}
+%%		 s_\sigma \in \fpp{\Rsemiring}{X' + Y} \}
+%		  \]
+%		 is finite and contained in $X'$, and moreover, for all $\sigma\in I(s_X,X')$, $(s_\sigma)\vert_{X'+Y}\in\fpp{\Rsemiring}{X'+Y}$ is a polynomial.
+%
+%%		 
+%%%		(Take an $X$-indexed family  of polynomials $(s_x(x_X, x_Y))_{x \in X}$. If there exist an $X' \subseteq X$ such that
+%%A family $s_X\in \fps{\Rsemiring}{X+Y}^X$ is said \emph{finitary} if there exists $X'\subset X$ such that $I(s_X, X')$ is finite and $I(s_X, X') \subseteq X'$.
+%%%		 $(s_x(x_X, x_Y))_{x \in X}$ is a finitary family.
+%	\end{definition}
+	
+
+Take a family $s_X\in \fps{\Rsemiring}{X+Y}^X$ and let $A\subseteq X$ be a stable set. 
+By stability, starting from $0$ and repeatedly applying $s_X$ we can never obtain a term of the form $s_\sigma(t)$, with $\sigma\notin A$. Moreover, if $A$ is also polynomial, then all such iterates are obtained by composing polynomials $s_\sigma\vert_{A+Y}$, with $\sigma\in A$; finally, if $A$ is finite, these polynomials are only finitely many. All this leads to the following:
+%
+% computing the iterates
+%$(s_X)^n(0)$, we can then never reach any $s_\sigma$, with $\sigma\notin W$: 
+%	
+%The set $I(s_X,X')$ contains the fps from $s_X$ that either have a non-zero constant part or whose restriction to $X'$ is a non-zero polynomial. 	
+%If $s_X$ is finitary, letting $A=I(\sigma_X,X')\subset X$, this ensures that, for all $a\in A$, the iterates $r^n_a$ (cf.~Eq.~\eqref{eq:fixpointeq}) are constructed by composing finitely many polynomials. The fixpoint $\fix s_X=\sup_n r^{n}_X$ will then be a solution of the FAS generated from such polynomials:
+%
 	\begin{proposition}\label{prop:fintoalg}
 		 Let $\Rsemiring'\leq\Rsemiring$.  
 		 If $s_X\in \fps{\Rsemiring'}{X+Y}^X$ is a finitary family, then $\fix s_X$ has finite support and it is the minimal solution of a fixpoint algebraic system over $\Rsemiring'$ .  
    \end{proposition}
-   \begin{proof}(Sketch)
-   		For each $X'$ such that $I(s_\Sigma, X') \subseteq X'$ , the support of $\fix s_X$ is contained in $I(s_\Sigma, X')$. Now, let $A \bydef I(s_\Sigma, X')$. Take the (finite) system of equations: $(r_a = s^*_a(r_a, x_Y))_{a \in A}$, where $s^*_a=(s_a)\vert_{A+Y}$, and let $\bar r_A$ be one of its solutions. Then, define $(t_x)_{x \in X}$ to be $\bar r_x$ if $x \in A$ and $0$ otherwise. 
+   \begin{proof}
+   Let $A\subseteq Y$ be finite, stable and polynomial as above.
+ Take the (finite) system of equations: $(r_a = s^*_a(r_a, x_Y))_{a \in A}$, where $s^*_a=(s_a)\vert_{A+Y}$, and let $\bar r_A$ be one of its solutions. Then, define $(t_x)_{x \in X}$ to be $\bar r_x$ if $x \in A$ and $0$ otherwise. 
 Then for all $x\in X$, $s_x(t_x,x_Y)=0$: if $x\in A$, since $t_X=\bar r_{A}+0_{X-A}$, we have
 $s_x(t_x,x_Y)=s^*_x(\bar r_x,x_Y)=0$; if $x \not \in A$, then $(s_x)\vert_{A+Y}=0$, which again implies
 %		
 %		$s_x$ does not contain any constant neither any variable $x_A, x_Y$: hence it satisfies 
 		$s_x(t_X, x_Y)=0$.
    \end{proof}
-       Notice that, for the previous argument to work, simply asking that the $s_x$ be polynomials is not enough, as there would be anyway infinitely many equations. 
+%
+%		 Take the (finite) system of equations: $(r_a = s^*_a(r_a, x_Y))_{a \in A}$, where $s^*_a=(s_a)\vert_{A+Y}$, and let $\bar r_A$ be one of its solutions. Then, define $(t_x)_{x \in X}$ to be $\bar r_x$ if $x \in A$ and $0$ otherwise. 
+%Then for all $x\in X$, $s_x(t_x,x_Y)=0$: if $x\in A$, since $t_X=\bar r_{A}+0_{X-A}$, we have
+%$s_x(t_x,x_Y)=s^*_x(\bar r_x,x_Y)=0$; if $x \not \in A$, then $(s_x)\vert_{A+Y}=0$, which again implies
+%%		
+%%		$s_x$ does not contain any constant neither any variable $x_A, x_Y$: hence it satisfies 
+%		$s_x(t_X, x_Y)=0$.
+%   \end{proof}
+%       Notice that, for the previous argument to work, simply asking that the $s_x$ be polynomials is not enough, as there would be anyway infinitely many equations. 
 
 
   Combining Theorem  $\ref{prop:fintoalg}$ and Proposition  \ref{th:elimination},
@@ -212,8 +273,7 @@ $s_x(t_x,x_Y)=s^*_x(\bar r_x,x_Y)=0$; if $x \not \in A$, then $(s_x)\vert_{A+Y}=
    
   \begin{example}
     Let $X=\N+1$, $Y=\{z\}$ and $s_X\in \fps{\Rinf}{X+Y}^X\equiv\fps{(\fps{\Rinf}{z})}{X}^{X}$ be the fps from Example \ref{ex:phors2}. 
-  Letting $X'=\{1,\star\}\subset X$, we have
-  $I(s_X,X')=X'$, so the family is finitary. In other words, the fixpoint $a=\fix s_X$ can be computed by considering only the equations $a_1=s^F_1(a_1)$ (i.e.~\eqref{eq:alg1}) and $a_\gphors=a_{\star}=a_1$.
+  Then one can easily check that $W=\{1,\star\}\subset X$ is stable and polynomial, so the family is finitary. In other words, the fixpoint $a=\fix s_X$ can be computed by considering only the equations $a_1=s^F_1(a_1)$ (i.e.~\eqref{eq:alg1}) and $a_\gphors=a_{\star}=a_1$.
 Hence $a_\gphors(z)\in \fps{\Rinf}{z}$ is algebraic over $\mathbb Q^+$ (with parameter $z$).
 %A similar argument, applied to Example \ref{ex:phors3}, shows that the solution $a_\star(z)\in \fps{\Rinf}{z}$ is algebraic over $\fps{\mathbb Q^+}{z}$.
 
