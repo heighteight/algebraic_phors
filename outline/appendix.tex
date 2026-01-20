@@ -1,5 +1,25 @@
 \section{Proofs of section 4}
-Consider the following very standard non-idempotent type system for lambda calculus: 
+We prove this by the connection between the relational model and non idempotent type systems.
+Take a standard non idempotent intersection type system, for example:
+$$
+\infer[app]{\biguplus \Gamma_i \uplus \Delta \vdash ts: \tau}{ \Gamma_i \vdash s: b_i \; (i \in \{1, \dots n\})\quad \Delta \vdash t:[b_1, \dots b_n] \to \tau}
+\qquad
+\infer[\lambda]{\Gamma\vdash \lambda x. t: \sigma \to \tau}{\Gamma, x: \sigma \vdash t:\tau}
+$$
+$$\infer[fix]{\biguplus \Gamma_i \uplus \Delta \vdash YM: \tau}{\Gamma_i \vdash YM: b_i \; (i \in \{1, \dots n\})\qquad \Delta \vdash M: [b_1, \dots, b_n] \to \tau}$$
+Then we obtain:
+\begin{lemma}
+	\label{lambdaYlinear}
+	Suppose that we have a $\lambda$Y term $t$ with $FV(t)=\{x_1, \dots x_n\}$ and that $x_1:\1 \dots x_n:\1 \vdash_{\lambda Y} t: \1 $. Then, for any derivation in this intersection type system with conclusion  $ x_1: \sigma_1 \dots  x_n: \sigma_n \vdash t:  \1 $, one of the following is true:
+	\begin{enumerate}
+		\item For every $i$, $\sigma_i = \emptyset$
+		\item there exists one $i$ such that $\sigma_i=[\1]$ and for each $j \neq i$, $\sigma_j=\emptyset$
+	\end{enumerate}
+\end{lemma}
+\begin{proof} 
+	If we have a typing of $ x_1: \sigma_1 \dots  x_n: \sigma_n \vdash t:  \1 $, $t$ has an head normal form, then take any head normal form $L$ of $t$ (which must satisfy  $ x_1: \sigma_1 \dots  x_n: \sigma_n \vdash L:  \1 $, hence also $ x_1:\1 \dots x_n:\1\vdash L:\1$) . Then either $L = x$ or $L=e$. In the first case, we can only derive $x_i:[1] \vdash x_i:1$, in the second we just have $x_i:\emptyset \vdash e:1$\\
+\end{proof}
+Then we get
 \begin{proposition}\label{prop:affine}
 	For all first-order terms $x_1:\1,\dots, x_n:\1\vdash_{\PLY}t:\1$, 
 	$\model{t}^{\Rinf}(x_1,\dots, x_n)\in \fps{\Rinf}{x_1,\dots,x_n}$ is affine: there exists scalars $w_0,w_1,\dots, w_n\in\mathbb R_{\geq 0}$ such that
@@ -11,8 +31,7 @@ Consider the following very standard non-idempotent type system for lambda calcu
 	$w_{i+1}=\mathbb P[t\to^* x_{i+1}]$.
 \end{proposition}
 \begin{proof}
-	By the soundness of the PCOH model (Lemma 20 in (cite Pagani)):
- 	$$\model{t}^{\Rinf} = \sum  $$
+	By the soundness of the weighted relational model with respect to intersection type (cite Pagani, Pistone e Barbarossa), the monomials $x_0^{i_0}, \dots x_n^{i_n}$ that appear with positive coefficient in $\model{t}^{\Rinf}(x_1,\dots, x_n)\in \fps{\Rinf}{x_1,\dots,x_n}$ correspond to derivations $x_1: [\1^{i_1}] \dots x_n: [\1^{i_n}] \vdash t: \1$. 
 \end{proof}
 \section{Proofs of section 6}
 \subsection{Proof of theorem 6.2}
@@ -94,7 +113,7 @@ Now we can prove by induction the following lemma:
 		\item If $\supp \mu \subseteq \Com(\psi)$, then $(\mu, \sigma) \not \in \Com(!_k \psi \multimap \varphi)$. Hence, by inductive hypothesis $\model{t}^\Rsemiring_{\mu, \sigma}=0$ and the product is $0$
 	\end{enumerate}
 	So we deduce that the restriction of $s_\sigma$ vanishes.\\
-	Now we prove part (2): let $\sigma \in \model{!_k\psi \multimap \varphi}$. By inductive hypothesis, for all $\mu$ such $|\mu|>k$ we have by induction hypothesis (1) that $\model{t}^\Rsemiring_{\mu, \sigma} \Big\vert_{\model{\nonterm}+ \model{\Delta}}=0$, hence \ref{eq:sumrestrict} is a finite sum, each term being a polynomial by induction hypothesis (2); we conclude that the sum is a polynomial. Now, let $f:_k \xi \in \Delta + k\Delta'$; assume that $f:_n \xi \in \Delta$ and $f_m: \xi \in \Delta'$ and let $y$ be a variables in $x_{f:_k \xi}$. We have that the maximal degree of each $\model{t}^\Rsemiring_{\mu, \sigma} \Big\vert_{\model{\nonterm}+ \model{\Delta}}$ in $y$ is (by inductive hypothesis) at most $n$ and the degree of each   $(\model{u}^\Rsemiring)\Big\vert_{\model{\nonterm}+ \model{\Delta'}}$ in $y$ is at most $m$. Since for all $\mu$ such $|\mu|>k$ we have  that $\model{t}^\Rsemiring_{\mu, \sigma} \Big\vert_{\model{\nonterm}+ \model{\Delta}}=0$, the maximal degree of a non zero product $\model{t}^\Rsemiring_{\mu, \sigma} \Big\vert_{\model{\nonterm}+ \model{\Delta}} (\model{u}^\Rsemiring)^\mu \Big\vert_{\model{\nonterm}+ \model{\Delta'}}$ is $n+km$.\\
+	Now we prove part (2): let $\sigma \in \model{!_k\psi \multimap \varphi}$. By inductive hypothesis, for all $\mu$ such $|\mu|>k$ we have by induction hypothesis (1) that $\model{t}^\Rsemiring_{\mu, \sigma} \Big\vert_{\model{\nonterm}+ \Com(\model{\Delta})}=0$, hence \ref{eq:sumrestrict} is a finite sum, each term being a polynomial by induction hypothesis (2); we conclude that the sum is a polynomial. Now, let $f:_k \xi \in \Delta + k\Delta'$; assume that $f:_n \xi \in \Com(\model{\Delta})$ and $f_m: \xi \in \Com(\model{\Delta'})$ and let $y$ be a variables in $x_{f:_k \xi}$. We have that the maximal degree of each $\model{t}^\Rsemiring_{\mu, \sigma} \Big\vert_{\model{\nonterm}+ \model{\Delta}}$ in $y$ is (by inductive hypothesis) at most $n$ and the degree of each   $(\model{u}^\Rsemiring)\Big\vert_{\model{\nonterm}+ \Com(\model{\Delta})}$ in $y$ is at most $m$. Since for all $\mu$ such $|\mu|>k$ we have  that $\model{t}^\Rsemiring_{\mu, \sigma} \Big\vert_{\model{\nonterm}+ \model{\Delta}}=0$, the maximal degree of a non zero product $\model{t}^\Rsemiring_{\mu, \sigma} \Big\vert_{\model{\nonterm}+ \Com(\model{\Delta})} (\model{u}^\Rsemiring)^\mu \Big\vert_{\model{\nonterm}+ \Com(\model{\Delta'})}$ is $n+km$.\\
 	Abstraction: suppose we know that the thesis is true for $\nonterm\mid\Delta, x_k: \psi \vdash t: \varphi \tri T$, with $\psi \tri S$. We want to prove that it is true for $\nonterm\mid\Delta \vdash \lambda x. t: !_k \psi \multimap \varphi \tri S \to T$. If we write $\model{t: T}^\Rsemiring_t$, $t \in \model{T}$ as a fps $s_t=\sum_{\kappa \in !{S}} r_{\kappa,t} (x_{{x:S}})^\kappa$ (with $r_\kappa \in \fps{\Rsemiring}{\nonterm+\Delta} $), we know by definition that 
 	$$\model{ \lambda x. t:  S \to T }^\Rsemiring_{\mu, t} \Big\vert_{\model{\nonterm}+ \Com(\model{\Delta})} = r_{\mu, t} \Big\vert_{\model{\nonterm}+ \Com(\model{\Delta})} $$
 	Take $(\mu, t) \not \in \Com(!_k\model{\psi} \multimap \model{\varphi})$. This means that $\supp \mu \subseteq \Com(\psi)$, but either $t \not \in \Com(\phi)$ or $|\mu| > k$. In the first case, we know $s_t=0$. Since $\supp \mu \subseteq \Com(\phi)$, then $x_{x:S}\vert_{\model{\nonterm}+ \Com(\model{\Delta})^\mu \neq 0}$ (as none of its variables with positive degree is equated to $0$ by this restriction), and so we must have also $r_{\mu, t} \Big\vert_{\model{\nonterm}+ \model{\Delta}}=0$.  
@@ -107,11 +126,85 @@ From this we obtain the following lemma about terms $\lambda x_1 \dots x_n.t: !_
 	Given a term $$\nonterm\mid\emptyset \vdash : \lambda x_1 \dots x_n.t: !_{k_1} \psi_1 \multimap \dots !_{k_1} \psi_n \multimap \1$$ with $!_{k_n} \psi_1 \multimap \dots !_{k_1} \psi_n \multimap \1 \tri T$, let $s_{\model{T}} \bydef \model{t: T}^{\Rsemiring} $ be its $\Qrelkleisli \Rsemiring$interpretation. Then:
 	\begin{enumerate}
 		\item If $\sigma \not \in \model{T} \setminus \model{!_{k_1} \psi_1 \multimap \dots !_{k_1} \psi_n \multimap \1}$, then $s_\sigma\Big\vert_{\model{\nonterm}}=0$
-		\item If  $\sigma \in \model{T} \setminus \model{!_{k_1} \psi_1 \multimap \dots !_{k_1} \psi_n \multimap \1}$, then $s \Big\vert_{\model{\nonterm}}$ is a polynomial 
+		\item If  $\sigma \in \model{T} \setminus \model{!_{k_1} \psi_1 \multimap \dots !_{k_1} \psi_n \multimap \1}$, then $s \Big\vert_{\model{\nonterm}}$ is a polynomial. 
 	\end{enumerate}
 \end{lemma}
 \begin{proof}
 	By lemma \ref{lemma:correctness}, the interpretation of $\nonterm\mid x_1:_{k_1} \dots x_n:_{k_n} \vdash : t: \1$ is a polynomial of total degree at most $k_i$ in the variables $x_{x_i:_{k_i}: \psi_i}$
 \end{proof}
+\section{Proofs of section 7}
+We consider an infinitary PHORS with nonterminals $\nonterm$, parameters $\mathcal{P}= \vec g$
+\begin{definition}
+	The set $T(L)$ of substituable terms for a non terminal $L \in \nonterm, \: \nonterm(L)= !_{\infty} \psi_1 \multimap \dots\multimap  !_{\infty} \psi_j \multimap \varphi$ is defined as follows:
+	$$T(L) \bydef \{[t_1, \dots t_n] \in \nonterm^* \: \mid \: \forall i \, (t_i \in \nonterm \cup \mathcal{P}\land (\nonterm \cup \mathcal{P}) t_i = \psi_i)  \}  $$
+\end{definition}
+Now we define a new reduced PHORS, with an enlarged set $\nonterm'$ of non-terminals
+\begin{definition}[Reduced nonterminals]
+	Let $\nonterm'$ be defined as:
+	$$\bigcup_{L \in \nonterm}\{\tilde{L}_\gamma : \varphi \mid \nonterm(L)=!_{\infty} \psi_1 \multimap \dots\multimap  !_{\infty} \psi_j \multimap \varphi, \;  \gamma \in T(L)\} $$
+\end{definition}
 
-\section{prova}
+Now we define a translation from applicative terms (i.e terms $t$ that can be typed as $\nonterm \mid \Delta \mid \mathcal{P} \vdash t: \tau $ only using  axioms and rules $@, @_\infty$) to a reduced applicative terms (i.e applicative terms $t'$ that can be typed as $\nonterm' \mid \Delta \mid \mathcal{P} \vdash t': \tau$ \textbf{without using the $@_\infty$ rule or any axiom of infinite type}).
+First we prove the following:
+\begin{lemma}
+	If $\mathcal{N}|\Delta| \mathcal{P} \vdash t: \tau$ is an applicative term of type $!_{\infty} \psi_{1} \multimap \tau$, then it is of the form $L t_{1} \ldots t_{k}$, where $L \in \mathcal{N}$ and $t_{i} \in \mathcal{N} \cup \mathcal{P}$.
+\end{lemma}
+Then we get: 
+\begin{lemma}
+	For every applicative term $\mathcal{N}|\Delta| \mathcal{P} \vdash t: \tau$, there exists a reduced applicative terms $\mathcal{N} \cup \mathcal{F}|\Delta| \mathcal{P} \vdash t: \tau$ such that $t=t^{\prime}\left[f_{1} / r_{1} \ldots f_{l} / r_{l}\right]$ and each $r_{i}$ is of the form $L L t_{1} \ldots t_{k}$, where $L \in \mathcal{N}$ and $t_{i} \in \mathcal{N} \cup \mathcal{P}$. If $\tau$ is a finite type, then $\mathcal{F}$ only contains finite types.
+\end{lemma}
+\begin{proof}
+If $\mathcal{N}|\Delta| \mathcal{P} \vdash t: \tau$ is an axiom of finite type, $t^{\prime}=t$. If $\mathcal{N}|\Delta| \mathcal{P} \vdash L: \tau, \mathcal{N}(L)= !_{\infty} \psi \multimap \tau$, then $t=f_{1}, \mathcal{F}=\left\{f_{1}:!_{\infty} \psi \multimap \tau\right\}$ and $r_{1}=L$.\\
+If $t=t_{1} t_{2}$ and the last step was a finitary application, take the terms $t_{1}^{\prime}$ and $t_{2}^{\prime}$ whose existence is recursively ensured; we can assume that the free variables $f_{1}, \ldots f_{n}$ and $f_{1}^{\prime}, \ldots f_{n^{\prime}}^{\prime}$ and the contexts $\mathcal{F}$ and $\mathcal{F}^{\prime}$ are disjoint upon renaming and define $t=t_{1}^{\prime} t_{2}^{\prime}$.\\
+If $t=t_{1} t_{2}: \tau$ and the last step was an infinitary application, then $t_{1}$ is of the form $L s_{1} \ldots s_{n}$ and $t_{2} \in \mathcal{N} \cup P$ : then take $t^{\prime}:=f_{1}, \mathcal{F}=\left\{f_{1}: \tau\right\}$ and $r_{1}=L s_{1} \ldots s_{n} t_{2}: \tau$\\
+\end{proof}
+Now we define a translation from applicative terms typable in $\Ginf$ to terms typable in $\Gfin$: 
+\begin{definition}
+ Let $\mathcal{N}|\Delta| \mathcal{P} \vdash t: \psi$ be an applicative term of finite type. Then we define its translation $R(t)$ to be the following finitary applicative term (i.e a term $t^{\prime}$ that can be typed in the finitary system as $\mathcal{N}^{\prime} \mid \Delta \cup \mathcal{P} \vdash t^{\prime}: \psi$, where $\operatorname{dom}\left(\mathcal{N}^{\prime}\right)=N^{\prime}$ ). Given $t$, take $t^{\prime}$ as defined in the last lemma. For each $r_{i}=L t_{1} \ldots t_{n}$ (which must be of finite type, as $t$ is such), define $R\left(r_{i}\right):=\tilde{L}_{\left[t_{1} \ldots t_{n}\right]} \in N^{\prime}$. Then define $R(t)$ to be the result of replacing every $f_{i}$ in $t^{\prime}$ by $R\left(r_{i}\right)$. Replace every type binding $f_{i}: \psi$ in $\mathcal{F}$ with a binding $R\left(r_{i}\right): \psi$ and every type binding $L: \psi \in \mathcal{N}$ by a type binding $L_{\square}: \psi$; the set of all the just defined type bindings is $\mathcal{N}^{\prime}$	
+\end{definition}
+Now we are ready to define the translation from a closed $\Ginf$ $\gphors$ to a $\Gfin$ $R(\gphors)$ having the same value tree:
+\begin{definition}
+Now define a new PHORS $\mathcal{G}'$ with nonterminals $\N'$ as follows: for each $L \in \nonterm$ with equation $L \vec f = t_L$ and for each $\tilde L_\gamma \in \N'$ take the following equation:
+$$\tilde L_\gamma x_1 \dots x_j = R(t_L[\vec g / \gamma]) $$
+\end{definition}
+This defines a finitary PHORS with parameters (as some of the substituable term in $\gamma$ might be parameters). 
+\begin{definition}
+	We say that a nonterminal $L$ depends over a nonterminal $G$ if (1) in the definition of $L$ $G$ occurs (2) Inductively, in the definition of $L$ a non terminal $G'$ occurs that depend over $G$ 
+\end{definition}
+\begin{lemma}
+	If $\gamma$ contains free parameter $p_1, \dots p_j$ and the definition of $\tilde L_{\gamma}$
+	is $\tilde L_\gamma x_1 \dots x_j = R(t_L[\vec g / \gamma]) $, then $R(t_L[\vec g / \gamma])$ contains non-terminals $G_\gamma'$ where $\gamma'$ contains free paramters amongst $p_1, \dots p_j$.
+\end{lemma}
+\begin{proof}
+	The only free variables in $t_L$ were the $g_1, \dots g_n$ and the $x_1, \dots x_j$. Since there was the free parameters in $\gamma$ were $p_1, \dots p_j$, $FV(t_L[\vec g / \gamma]) \subseteq \{x_1, \dots x_n, p_1, \dots p_j\}$: it does not contains only $p_1, \dots p_j$ as parameters. 
+\end{proof}
+Hence, we see that $\{L_\gamma \mid \gamma \text{contains no paramters}\}$ is closed for the dependency relation, hence we can build a PHORS that only include these non-terminals. It will in particular include $S_{[]}$. So we can solve it in the finitary system. So we have that:
+\begin{enumerate}
+	\item If we are interested on the decidability of AST/PAST we can only look at the component of the PHORS containing $\tilde{S}_{[]}$ and closed under dependency, which is a finitary PHORS without paramters.
+	\item If we are interested about the algbraicity of a non-terminal $L \vec g \vec f$, we can look at the component of the PHORS containing $\tilde{L}_{[\vec g]}$ and closed under dependency: it will be a PHORS in the paramters $g_1 \dots, g_n$, hence $\tilde{L}_{[g_1, \dots g_n]}$ will be interpreted as an algebraic power series over $g_1, \dots g_n$.
+\end{enumerate}
+Example: take the PHORS:
+\begin{equation*}
+	\begin{cases}
+		& S = L G e\\
+		& L f k = H f k \oplus f k\\
+		& G l = l \oplus \Omega\\
+		&  H g n = L g n \oplus H g n
+	\end{cases}
+\end{equation*}
+the infinitary parameters being $f, g$. We obtain reduced non terminals. $\tilde{S}, \tilde{G}, \tilde{L}_G, \tilde{L}_f, \tilde{L}_g,  \tilde{H}_G, \tilde{H}_f, \tilde{H}_g, $ and the compnent of the reduced PHORS containing $\tilde{S}$ is :
+\begin{equation*}
+	\begin{cases}
+		\tilde{S} = \tilde{L}_G e\\
+		\tilde{L}_G k = R(H G k \oplus  G K) = \tilde{H}_G k \oplus \tilde{G}_{[]} k \\
+		\tilde G_{[]} l = l \oplus \Omega\\
+		\tilde{H}_G k = R(L G n \oplus H G n) = \tilde{L}_G n \oplus \tilde{H}_G n
+	\end{cases}
+\end{equation*}
+while the component containing $\tilde{L}_f$ is:
+\begin{equation*}
+	\begin{cases}
+		\tilde{L}_f k = R( H f k \oplus  f k) = \tilde{H}_f \oplus f \\
+		\tilde{H}_f n = R(L f n \oplus H f n) = \tilde{L}_f n \oplus \tilde{H}_f n
+	\end{cases}
+\end{equation*}
