@@ -14,9 +14,9 @@ let us call $!\Sigma$ the set of finite multisets over it, i.e functions $\mu: \
  $$s=\sum_{\mu \in !\Sigma} s_\mu x_\Sigma^{\mu}.$$ 
  We will sometimes write $s(x_\Sigma)$ to underline which variables appear in $s$.
  For each $s\in \fps{\Rsemiring}{\Sigma}$, its \emph{support} $\supp~s\subseteq \ !\Sigma$ is the set of multisets $\mu$ such that $s_{\mu}\neq 0$. 
- Given $\Sigma'\subset \Sigma$ and $s\in \fps{\Rsemiring}{\Sigma}$, its \emph{restriction to $\Sigma'$}, noted, 
-$s\vert_{\Sigma'}\in \fps{\Rsemiring}{\Sigma}$, is the composition of $s$ with the injection $\iota:!\Sigma'\hookrightarrow!\Sigma$, i.e.~$s\vert_{\Sigma'}(x_{\Sigma'})=\sum_{\mu\in !\Sigma'}s_{\iota(\mu)} x_{\Sigma'}^\mu$. 
-
+% Given $\Sigma'\subset \Sigma$ and $s\in \fps{\Rsemiring}{\Sigma}$, its \emph{restriction to $\Sigma'$}, noted, 
+%$s\vert_{\Sigma'}\in \fps{\Rsemiring}{\Sigma}$, is the composition of $s$ with the injection $\iota:!\Sigma'\hookrightarrow!\Sigma$, i.e.~$s\vert_{\Sigma'}(x_{\Sigma'})=\sum_{\mu\in !\Sigma'}s_{\iota(\mu)} x_{\Sigma'}^\mu$. 
+%
 
   \begin{example}
   The power series $s(x)=\sum_{n} (1/2)^n x^n$ belongs to $\fps{\mathbb Q}{x}$.
@@ -53,10 +53,11 @@ r_{\mu }\cdot
 Since $\Qsemiring:=\fps{\Rsemiring}{\Sigma}$ is a continuous semiring, for any set $\Sigma'$ we can consider the continuous semiring $\fps{\Qsemiring}{\Sigma'}$ of formal power series whose coefficients are themselves power series (on $\Rsemiring$), and we have the isomorphism $\fps{\Qsemiring}{\Sigma'}=\fps{(\fps{\Rsemiring}{\Sigma})}{\Sigma'}\equiv\fps{\Rsemiring}{\Sigma+\Sigma'}$: this generalizes the well-known remark that a fps in two variables $s(x,y)$ can always be written as a fps $s_y(x)=\sum_n s_n(y)x^n$ in $x$ whose coefficients are fps $s_n(y)$ in $y$.
   
   
-   For a finite set $\Sigma$ and a natural number $k$, let $!_k\Sigma$ be the set of multisets $\mu$ of maximal multeplicity $k$ (i.e $\max_{x \in \Sigma} \mu(x)\leq k)$. This is clearly a subset of $!\Sigma$, corresponding to monomials over $x_\Sigma$ having degree at most $n$ in each variable. 
+%   For a finite set $\Sigma$ and a natural number $k$, let $!_k\Sigma$ be the set of multisets $\mu$ of maximal multeplicity $k$ (i.e $\max_{x \in \Sigma} \mu(x)\leq k)$. This is clearly a subset of $!\Sigma$, corresponding to monomials over $x_\Sigma$ having degree at most $n$ in each variable. 
 %   If a power series $s\in \fps{ \Rsemiring}{\Sigma}$ is such that $\supp s \subseteq !_k \Sigma$, for some $k\in \N$, we say that $s$ is a \textit{generalized} polynomial; 
 %   
 %    if moreover $\supp s$ is finite we say that it is a \emph{classical} polynomial. All classical polynomials are generalized polynomials, but the converse is not true unless $\Sigma$ is finite. When we say `polynomial' without any specification, we always mean a classical polynomial.
+   
    
 %  For a finite set $\Sigma$ and a natural number $k$, let $!_k\Sigma$ be the set of multisets $\mu$ of maximal multeplicity $k$ (i.e $\max_{x \in \Sigma} \mu(x)\leq k)$. This is clearly a subset of $!\Sigma$, corresponding to monomials over $x_\Sigma$ having degree at most $n$ in each variable. If a power series $s\in \fps{ \Rsemiring}{\Sigma}$ is such that $\supp s \subseteq !_k \Sigma$, for some $k\in \N$, we say that $s$ is a \textit{generalized} polynomial;  if moreover $\supp s$ is finite we say that it is a \emph{classical} polynomial. All classical polynomials are generalized polynomials, but the converse is not true unless $\Sigma$ is finite. When we say `polynomial' without any specification, we always mean a classical polynomial.
 %  \begin{example}
@@ -232,7 +233,7 @@ As shown by Proposition \ref{prop:proba} below, the variable $z$ plays the role 
 
 %\end{varitemize}
 
-\begin{remark}
+\begin{remark}\label{rem:tropical}
 In (Barbarossa, Pistone) they also consider the interpretation of
 \emph{parametric} choices  $M\oplus_x N$, i.e.~choices according to some unknown bias $x$, by taking the semiring 
   $\Qsemiring=\fps{\Rsemiring}{x,\overline x}$ and letting $\model{M\oplus_p N}^{\Qsemiring}=x\cdot M+\overline{x}\cdot N$. \end{remark}
