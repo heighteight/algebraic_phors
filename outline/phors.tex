@@ -93,7 +93,7 @@ We can now define the two central problems of this paper:
 	\end{varitemize}
 \end{definition}
 
-Following \cite{DBLP:journals/lmcs/KobayashiLG20}, we will restrict our attention to PHORS with a unique terminal symbol $e:\1$: a PHORS will thus be given as a triple $\gphors=(\nonterm, \C R, S)$. 
+Following \cite{DBLP:journals/lmcs/KobayashiLG20}, we focus on PHORS with a unique terminal symbol $e:\1$: a PHORS will thus be given as a triple $\gphors=(\nonterm, \C R, S)$. 
 
 
 \begin{example}\label{ex:phors0}
@@ -105,12 +105,12 @@ S&= Fe.
 As any choice either adds one $F$ or deletes one, and termination comes when $e$ is reached, it simulates a simple random walk starting from $+1$, adding $\pm 1$ at each step and terminating at $0$. We will see in the next sections that it is AST but not PAST. 
 \end{example}
 
-It is known that PAST implies AST. On the other side, in \cite{DBLP:journals/lmcs/KobayashiLG20}, it is proved that AST is undecidable for PHORS of order at least 2, while a decision procedure exists for PHORS of order 1. In \cite{DBLP:conf/lics/LiMO22}, it is shown that, if we restrict to applicative terms typable via affine types, AST and PAST are decidable. The proof builds upon the correspondence, devised in \cite{DBLP:conf/mfcs/ClairambaultM19}, between affine PHORS and restricted stack automata. As a consequence of the theorems of Section 6, we will see that this can be proved in a completely different way, without resorting to automata, but rather relying the relational model of linear logic.
+It is known that PAST implies AST. On the other side, in \cite{DBLP:journals/lmcs/KobayashiLG20}, it is proved that AST is undecidable for PHORS of order at least 2, while a decision procedure exists for PHORS of order 1. In \cite{DBLP:conf/lics/LiMO22}, it is shown that, if we restrict to terms typable via affine types, AST and PAST are decidable. The proof builds upon the correspondence, devised in \cite{DBLP:conf/mfcs/ClairambaultM19}, between affine PHORS and restricted stack automata. As a consequence of the theorems of Section 6, we will see that this can be proved in a completely different way, without resorting to automata, but rather relying the relational model of linear logic.
 
 
 
 \begin{remark}
-	To each PHORS we can associate an HORS whose value tree represents all the probabilistic choices that we are faced with during the reduction: to this aim, it is enough to treat every $\oplus_p$ as a terminal symbol of arity 2. Based on this translation of PHORS to HORS, we can see that the branching structure of the order-2 PHORS \eqref{eq:phors1}, yielding a non-context free branch language, 
+	To each PHORS we can associate an HORS whose value tree represents the probabilistic choices made during reduction: to this aim, it is enough to treat every $\oplus_p$ as a terminal symbol of arity 2. This way, we can see that the branching structure of the order-2 PHORS \eqref{eq:phors1}, yielding a non-context free branch language, 
 %	:
 %	\begin{align*}
 %		Hyx&=( H(A\circ y)x \oplus_{a}

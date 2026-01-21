@@ -1,7 +1,8 @@
 % !TEX root = main.tex
 
 
-In this section we introduce the class $\Gfin$, extending the affine PHORS of \cite{DBLP:conf/lics/LiMO22}, whose type discipline ensures that the corresponding generating functions are algebraic. We will show that both the AST and PAST problems are decidable for the PHORS typable in this system.
+In this section we introduce the class $\Gfin$, extending the PAHORS of \cite{DBLP:conf/lics/LiMO22}, of PHORS with algebraic generating function and decidable AST and PAST.
+% We will show that both the AST and PAST problems are decidable for the PHORS typable in this system.
 
 %
 %$\Gfin$ are an extension of the affine PHORS of (Li et al.) with \emph{finitely graded} exponentials $!_kA$ ($k\in \mathbb N$), allowing for a program to use a given input \emph{no more} than some fixed number of times.
@@ -48,7 +49,7 @@ k\emptyset&=\emptyset,\\
 k(\Delta,x:_{h}\varphi)  &= k\Delta,x:_{kh}\varphi,
 \end{align*}
 }
-where, as in (Gaboardi etc. \warn) we are assuming that $\Delta$ and $\Delta'$ agree on each variable (i.e.~they contain the same type bindings but may disagree on the corresponding coefficients). 
+where, as in e.g.~\cite{10.1145/3009837.3009890}, we are assuming that $\Delta$ and $\Delta'$ agree on each variable (i.e.~they contain the same type bindings but may disagree on the corresponding coefficients). 
 
 A type judgement is an expression of the form $\nonterm\mid\Delta\vdash t:\varphi$.
 % or
@@ -186,8 +187,8 @@ we can turn them into PAHORS with same semantics and branch language. Notice, ho
 Define the \emph{size} of a $\gphors$ as the number of its non-terminals times the maximum size of any of its terms, i.e.~
 $\|\gphors\|=|\nonterm|\times\max\{|t_L|\mid L\in\nonterm\}$, and let $\partial\gphors$ be the maximum grade occurring in $\gphors$.
 
-\begin{theorem}[Linearization of $\Gfin$]
-For every $\Gfin$ $\gphors=(\nonterm, \C R, S)$ there exists a PAHORS $\AFF\gphors=(\nonterm, \C R',S)$, with same non-terminals, size $\|\AFF\gphors\|\leq \partial\gphors{\|\gphors\|}$ and such that 
+\begin{theorem}[Linearization]
+For every $\Gfin$ $\gphors=(\nonterm, \C R, S)$ there exists a PAHORS $\AFF\gphors=(\nonterm, \C R',S)$ with size $\|\AFF\gphors\|\leq \partial\gphors{\|\gphors\|}$ and such that 
 $a_{\gphors}=a_{\AFF{\gphors}}$ and 
 $\C L(\gphors)=\C L(\AFF\gphors)$.
 
@@ -214,11 +215,11 @@ S&=HIIe
 Notice that the unique functional variable $y$, that was used twice, is now replaced by \emph{two} functional variables $y_1,y_2$, used once.
 \end{example}
 
-The following examples shows that $\|\AFF\gphors\|$ may grow exponentially in the size of $\gphors$:
 %In a $\Gfin$, the degree $\partial \gphors$ can be exponential in $\|\gphors\|$, so that $\AFF\gphors$ has size exponential in $\|\gphors\|$:
 
 \begin{example}
-Consider the order-2 $\Gfin$ $\gphors$ given by:
+$\|\AFF\gphors\|$ may be exponential in $\|\gphors\|$:
+take the order-2 $\Gfin$ $\gphors$ given by
 {\small
 \begin{align*}
 F_1fx&= f(fx)\\
@@ -229,7 +230,7 @@ F_{n}fx&= F_{n-1}(f\circ f)x\oplus_{p}x\\
 S&=F_n \ \mathrm{id} \  e
 \end{align*}
 }
-For all $i=1,\dots,n$, $\nonterm(F_i)=\ !_{2^{i}}\tau\multimap\tau$, whence
+As $\nonterm(F_n)=\ !_{2^{n}}\tau\multimap\tau$, 
 $\|\AFF{\gphors}\| \leq \partial\gphors\|\gphors\|=
 2^{\C O(\|\gphors\|)}\|\gphors\|$.
 \end{example}
@@ -240,7 +241,7 @@ $\|\AFF{\gphors}\| \leq \partial\gphors\|\gphors\|=
 
 We will now show how, for any $\Gfin$ $\gphors$, the interpretation of the underlying PHORS yields a finitary FAS, whose minimal solution is thus an algebraic family.
 
- For a finite set $\Sigma$ and a natural number $k$, let $!_k\Sigma$ be the set of multisets $\mu$ of maximal multeplicity $k$ (i.e $\max_{x \in \Sigma} \mu(x)\leq k)$. This is clearly a subset of $!\Sigma$, corresponding to monomials over $x_\Sigma$ having degree at most $n$ in each variable. 
+ For any set $\Sigma$  and $k\in \N$, let $!_k\Sigma\subseteq !\Sigma$ be the set of multisets $\mu$ of maximal multeplicity $k$ (i.e $\max_{x \in \Sigma} \mu(x)\leq k)$. $!_k\Sigma$ corresponds to the monomials over $x_\Sigma$ of degree at most $k$ in each variable. 
  
 % \begin{definition}
 %Given a $X$-family of fps $s_X\in \fps{\Rsemiring}{\Sigma}^X$, $\Sigma'\subset \Sigma$ and $X'\subset X$, let $s_X\big\vert_{\Sigma'}^{X'} \in \fps{\Rsemiring}{\Sigma}^X$ be the $X$-family $t_X$ defined by $t_i= s_i\vert_{\Sigma'}$, for all $i\in X'$, and $t_i=0$ otherwise.
@@ -249,11 +250,11 @@ We will now show how, for any $\Gfin$ $\gphors$, the interpretation of the under
 % \end{definition}
 
  
-   Define, for every type $\varphi$, $\model{\varphi}$ as $\model{o^n}=1$ and $\model{!_k\varphi\multimap \psi}=!_k\model{\varphi}\times\model{\psi}$. Notice that $\varphi\tri T$ implies $\model{\varphi}\subseteq\model{T}$, but the variable sets $\model{\varphi}$ are always finite. 
+   Define, for every type $\varphi$, $\model{\varphi}$ as $\model{o^n}=1$ and $\model{!_k\varphi\multimap \psi}=!_k\model{\varphi}\times\model{\psi}$. We extend this to contexts by $\model{\emptyset}=0$ and $\model{\nonterm,x:\varphi}=\model{\nonterm}+\model{\varphi}$ (irrespectively of grades). Notice that $\varphi\tri T$ implies $\model{\varphi}\subseteq\model{T}$, but the variable sets $\model{\varphi}$ are always finite. 
       
    Our general idea is the following: given a $\Gfin$ $\gphors=(\nonterm, \C R, S)$ and supposing $\nonterm\tri T$, from the derivations $\C R(L)$ of $\nonterm\mid\emptyset \vdash t_L:\nonterm(L)$, we deduce a corresponding simply typed derivation of $T\vdash t_{\gphors}:T$ yielding a family
    $\model{t}^{\Rsemiring}\in \fps{\Rsemiring}{\model{T}}^{\model{T}}$.  
-  At the same time, we will show that the finite set $\model{\nonterm}\subset\model{T}$ is both stable and polynomial, and we will conclude that $\model{t_{\gphors}}$ is finitary, hence, by Corollary \ref{cor:propertoalg}, algebraic.    
+  At the same time, we will show that the finite set $\model{\nonterm}\subset\model{T}$ yields a stable and polynomial pair, and we will conclude that $\model{t_{\gphors}}$ is finitary, hence, by Corollary \ref{cor:propertoalg}, algebraic.    
    
    The fundamental ingredient is the following lemma:
    
@@ -269,13 +270,13 @@ $\Gamma\vdash t: T$, the pair $(\model{\nonterm}+\model{\Delta}, \model{\varphi}
   Let a \emph{finitary} variable be any point in the interpretation of ${\nonterm},{\Delta},{\varphi}$, and a \emph{non-finitary} variable be any other point in the interpretation of $\Gamma$ and $T$.
    One argues, by induction on the derivation, for the following two claims:
    \begin{varenumerate} 
-   \item for all non-finitary variables $\sigma$, $\left(\model{t}^\Rsemiring\right)_\sigma\Big\vert_{\model{\nonterm}+\model{\Delta}}=0$;
+   \item for all non-finitary variables $\sigma$, $\left(\model{t}^\Rsemiring\right)_\sigma\big\vert_{\model{\nonterm}+\model{\Delta}}=0$;
    \item for all finitary variables $\sigma$, 
-   $\left(\model{t}^\Rsemiring\right)_\sigma\Big\vert_{\model{\nonterm}+\model{\Delta}}$ has 
+   $\left(\model{t}^\Rsemiring\right)_\sigma\big\vert_{\model{\nonterm}+\model{\Delta}}$ has 
    finite degree in each variable $x_{L:\nonterm(L)}$ and 
-   degree at most $k$ in each variable $x_{f:_k\psi}$.
+   degree $\leq k$ in each variable $x_{f:_k\psi}$.
    \end{varenumerate}
-   In the end, condition 1.~implies stability and condition 2.~implies polynomiality.
+%   In the end, condition 1.~implies stability and condition 2.~implies polynomiality.
    \end{proof}
 %   Given $\model{\varphi}\tri T$ and $\model{\psi}\tri U$, 
 %  every fps $s\in \fps{\Rsemiring}{\model{T}}^{\model U}$ 
@@ -334,7 +335,7 @@ $\Gamma\vdash t: T$, the pair $(\model{\nonterm}+\model{\Delta}, \model{\varphi}
 %
 %
 %
-An immediate consequence of the stability Lemma \ref{lemma:stability} is the following:
+An immediate consequence of Lemma \ref{lemma:stability} is the following:
 %
 %At this point, observe that a consequence of Proposition \ref{prop:finiok} and of the finiteness of the types of $\Gfin$ is that the fps $\model{t:\varphi\tri T}^{\Rsemiring}$ must have a finite support. This leads to the follows:
 %
@@ -371,9 +372,9 @@ As a consequence of Remark $\ref{remark:semilinear}$ we also obtain:
 	is semilinear
 \end{corollary}
 \begin{remark}
-	By interpreting  $t_L \oplus t_R$ as $x \model{t_L}^{\Rinf} + \overline x \model{t_L}^{\Rinf}$ (cf.~Remark \ref{rem:tropical}), the previous corollary could be strengthened to say that the set
+	By interpreting  $t_L \oplus t_R$ as $x \model{t_L} + \overline x \model{t_L}$ (cf.~Remark \ref{rem:tropical}), the previous corollary could be strengthened to say that the set
 	$\{(n,m) \mid \:  S \text{ terminates with } n \text{ left steps and } m \text{ rigth steps}\}$ is also semilinear.
-	This could also been deduced by the fact that the branch language of a linear HORS is multiple context-free (cite  \cite{DBLP:conf/mfcs/ClairambaultM19}) and languages of this class are known to be semilinear \cite{DBLP:conf/acl/Vijay-ShankerWJ87}, but it is still worth noticing that we reproved this fact via generating functions.
+	This could also been deduced by the fact that the branch language of a linear HORS is \emph{multiple context-free} \cite{DBLP:conf/mfcs/ClairambaultM19}, and languages of this class are known to be semilinear \cite{DBLP:conf/acl/Vijay-ShankerWJ87}, but it is still worth noticing that we reproved this fact via generating functions.
 \end{remark}
 %\begin{example}
 %Consider again $\gphors$ from Example \ref{ex:nonlin}.
@@ -392,14 +393,16 @@ As a consequence of Remark $\ref{remark:semilinear}$ we also obtain:
 %
 %\end{remark}
 
-Let us conclude by showing how to decide the AST and PAST problems:
+We conclude by deducing the decidability of AST and PAST:
 \begin{theorem}
 	AST and PAST are decidable for any $\Gfin$.	
 \end{theorem}
 \begin{proof}[Proof sketch]
-The  proof of Theorem \ref{Gfin-algebraic-theorem} is constructive: it gives a way to build effectively a FAS $(\vec x = p_i(\vec x))_{1 \leq i \leq n}$ that has $(a_L(z))_{L \in \nonterm}$ as its (minimal) solution by computing, for each $L \in \nonterm$, the interpretation $\model{\mathcal{R}(L)}^{\Rinf}$. 
-Once we have the FAS, we can check if $\mathbb P(\gphors\downarrow) = a_\gphors(1)=1$ via the first order Existential Theory of the Reals $\Etor$ \cite{DBLP:journals/jacm/EtessamiY09}: first, we create a first order formula $\phi( \vec x)$ expressing the fact that $\vec x$ satisfies $\vec x = p_i(\vec x)$, then we can express the fact that $x_1=1$ by the formula $\exists \vec{x}(x_1=1 \land \phi(\vec x) \land \forall \vec y ((\vec y < \vec x) \implies \neg \phi(\vec y)  ))$\\
-As for PAST, remember in the first place that PAST implies AST. Then, given a $\gphors=(\nonterm, \C R, S) \in \Gfin$, we can in the first place test if it is AST: if it is not, then it not PAST. If it AST, notice that by \ref{Gfin-algebraic-corollary}, $a_\gphors(z)$ is an algebraic power series. Then, we can, as pointed out in remark \ref{derivative-rational}, find a rational function $r(z, y)$ such that $a'_\gphors(z)= r(z, a_{\gphors}(z)) $. But then $\mathbb E(\gphors\downarrow) =a'_\gphors(1)= r(1,1)$.
+The  proof of Theorem \ref{Gfin-algebraic-theorem} is constructive: it gives a way to build effectively a FAS $(\vec x = p_i(\vec x))_{1 \leq i \leq n}$ that has $(a_L(z))_{L \in \nonterm}$ as its (minimal) solution.
+% by computing, for each $L \in \nonterm$, the interpretation $\model{\mathcal{R}(L)}^{\Rinf}$. 
+We can then check if $\mathbb P(\gphors\downarrow) = a_\gphors(1)=1$ via the first order Existential Theory of the Reals $\Etor$ \cite{DBLP:journals/jacm/EtessamiY09}: first, we create a first order formula $\phi( \vec x)$ expressing the fact that $\vec x$ satisfies $\vec x = p_i(\vec x)$, then we can express the fact that $x_1=1$ by the formula $\exists \vec{x}(x_1=1 \land \phi(\vec x) \land \forall \vec y ((\vec y < \vec x) \implies \neg \phi(\vec y)  ))$.
+
+As for PAST, remember that PAST implies AST. Then, given a $\gphors=(\nonterm, \C R, S) \in \Gfin$, we can first test if it is AST: if it is not, then it is not PAST. If it AST, notice that, by Corollary \ref{Gfin-algebraic-corollary}, $a_\gphors(z)$ is an algebraic power series. Then, we can, as pointed out in Remark \ref{derivative-rational}, effectively find a rational function $r(z, y)$ such that $a'_\gphors(z)= r(z, a_{\gphors}(z)) $. But then $\mathbb E(\gphors\downarrow) =a'_\gphors(1)= r(1,1)$.
 \end{proof}
 %
 %

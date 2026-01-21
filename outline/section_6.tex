@@ -1,6 +1,7 @@
 % !TEX root = main.tex
 
-In this section we introduce the class $\Ginf$, which extends the $\Gfin$ by admitting possibly infinite grades $!_\infty$, i.e.~variables that may be used an \emph{unbounded} number of times, although in a controlled way. 
+We now introduce a class of PHORS that extends the $\Gfin$ by admitting infinite grades $!_\infty$, corresponding to parameters that may be used an \emph{unbounded} number of times. Moreover, thanks to the composability of algebraic power series, and unlike the PAHORS and $\Gfin$, the $\Ginf$ are closed under \emph{composition}.
+
 
  
  
@@ -55,7 +56,8 @@ The typing rules will use three kinds of contexts:
 The rules are illustrated in Fig.~\ref{fig:typerulesinf}.
 The rules for finitary types are as in the previous section; the new rules are
 ax$_{\C P}$ and, notably, the infinitary abstraction and application rules $\lambda_\infty$ and $@_\infty$. In the rule $@_\infty$, it is assumed that the contexts $\nonterm$ and $\nonterm'$ are \emph{disjoint}. This rule states that an infinitary function $t:!_\infty\varphi\multimap\Psi$ can only be applied to either a \emph{fresh} non-terminal or another parameter. 
-Recall that in a PHORS each non-terminal $L$ is equated with a corresponding term $t_L$: so, when we apply a function $t:!_\infty \varphi\to \Psi$ to the symbol $L$, we are actually applying $t$ to the corresponding term $t_L$. The validity of this rule relies indeed in the possibility of \emph{composing} algebraic power series.
+Recall that in a PHORS each non-terminal $L$ is equated with a corresponding term $t_L$: so, when we apply a function $t:!_\infty \varphi\to \Psi$ to the symbol $L$, we are actually applying $t$ to the corresponding term $t_L$.
+% The validity of this rule relies indeed in the possibility of \emph{composing} algebraic power series.
 
 
 \begin{figure}
@@ -100,9 +102,16 @@ Recall that in a PHORS each non-terminal $L$ is equated with a corresponding ter
 \end{figure}
 
 \begin{definition}[$\Ginf$]
-A \emph{parametric bounded PHORS} (noted $\Ginf$) is a tuple $\gphors=(\nonterm, \C P,\C R, S)$, where $\nonterm$ is a finite set of (infinitarily) typed non-terminals $L:\Phi$, $\C P$ is a finite set of (finitariy) typed parameters $w:_\infty\varphi$, $S\in\nonterm$ is the {start symbol} such that $\nonterm(S)=\1$, and $\C R$ is a function that associates each $L\in\nonterm$ with a derivation $\nonterm\mid\C P\mid\emptyset\vdash \lambda x_1.\dots. x_n.t:\Phi$ such that $\Phi\sqsubseteq \nonterm(L)$, $t$ contains no $\lambda$-abstraction and $\nonterm\mid x_1,\dots, x_k\vdash t:\1$. 
+A \emph{(parametric) bounded PHORS} (noted $\Ginf$) is a tuple $\gphors=(\nonterm, \C P,\C R, S)$, where $\nonterm$ is a finite set of (infinitarily) typed non-terminals $L:\Phi$, $\C P$ is a finite set of (finitariy) typed parameters $w:_\infty\varphi$, $S\in\nonterm$ is the {start symbol} such that $\nonterm(S)=\1$, and $\C R$ is a function that associates each $L\in\nonterm$ with a derivation $\nonterm\mid\C P\mid\emptyset\vdash \lambda x_1.\dots. x_n.t:\Phi$ such that $\Phi\sqsubseteq \nonterm(L)$, $t$ contains no $\lambda$-abstraction and $\nonterm\mid x_1,\dots, x_k\vdash t:\1$. 
 
 \end{definition} 
+
+
+
+
+The PHORS from Example \eqref{ex:phorsLfx} is a closed $\Ginf$, with $\nonterm(L)=!_\infty\tau\multimap!_\infty\tau\multimap\tau$. 
+Instead, the non-algebraic PHORS from Example \eqref{ex:nonalg} is not a $\Ginf$:
+the only possibility here is to give type $\nonterm(L)=!_\infty \tau\to \tau$, but then the non-terminal $L$ cannot be applied to the function $f\circ f:\tau$, as the latter is neither a parameter nor a non-terminal. 
 
 
 
@@ -110,15 +119,25 @@ Notice that a $\Ginf$ $\gphors$ may contain \emph{open} parameters $w:_\infty\va
 We call $ \gphors$ \emph{closed} when $\C P=\emptyset$. 
 Two PHORS can be composed through their open parameters:
 \begin{definition}[composition of $\Gfin$]
-Given two $\Ginf$ $\gphors_1=(\nonterm_1,\C P\cup\{w:_\infty\varphi),\C R_1,S_1)$ and
+Given two $\Ginf$ $\gphors_1=(\nonterm_1,\C P\cup\{w:_\infty\nonterm(L)),\C R_1,S_1)$ and
 $\gphors_2=(\nonterm_2,\C P,\C R_2,S_2)$, where $\nonterm_1\cap\nonterm_2=\emptyset$
-and $\nonterm_2(L)\sqsubseteq\varphi$, their \emph{composition through $L:\varphi$} is the $\Ginf$ $\gphors_1(\gphors_2)=(\nonterm_1\cup\nonterm_2, \C P, \C R_1[L/w]\cup\C R_2,S_1)$.
+and $L\in \nonterm_2$. Their \emph{composition through $L$} is the $\Ginf$ $\gphors_1 \circ_L\gphors_2=(\nonterm_1\cup\nonterm_2, \C P, \C R_1[L/w]\cup\C R_2,S_1)$.
 \end{definition}
+The composition of two PHORS is interpreted via the composition of the associated formal power series, as shown below:
+
+\begin{lemma}\label{lemma:composition}
+$\model{\gphors_1\circ_L\gphors_2}^{\Rsemiring}(w_{\model{\C P}})=
+\model{\gphors_1}^{\Rsemiring}(\model{\gphors_2}^{\Rsemiring}(w_{\model{\C P}}),w_{\model{\C P}})$.
+%
+%
+%	Let  $\Ginf$ $\gphors_1=(\nonterm_1,\C P\cup\{w:_\infty\varphi),\C R_1,S_1)$ and
+%	$\gphors_2=(\nonterm_2,\C P,\C R_2,S_2)$ be two $\Ginf$ with $\nonterm_1 \cap \nonterm_2= \emptyset$ and $\nonterm_2(L) = \phi$. Let $\gphors_1(\gphors_2)$ be their composition along $L$. Then we have for each $L_1 \in \nonterm_1 $,
+%	$$\model{\gphors_1(\gphors_2)}_{L_1}^\Rsemiring(y_{\model{\C P}}) = \model{\gphors_1}^\Rsemiring_{\model{L_1}}(\model{\gphors_2}^\Rsemiring_{\model{L}}(y_{\model{\C P}}),y_{\model{\C P}} )$$
+%	and for each $L_2 \in \nonterm_2$,
+%	$$ \model{\gphors_1(\gphors_2)}_{L_2}^\Rsemiring(y_{\model{\C P}}) = \model{\gphors_2}_{L_2}^\Rsemiring(y_{\model{\C P}}) $$
+\end{lemma}
 
 
-The PHORS from Example \eqref{ex:phorsLfx} is a closed $\Ginf$, with $\nonterm(L)=!_\infty\tau\multimap!_\infty\tau\multimap\tau$. 
-Instead, the non-algebraic PHORS from Example \eqref{ex:nonalg} is not a $\Ginf$:
-the only possibility here is to give type $\nonterm(L)=!_\infty \tau\to \tau$, but then the non-terminal $L$ cannot be applied to the function $f\circ f:\tau$, as the latter is neither a parameter nor a non-terminal. 
 
 \subsection{Extracting Fas from $\Ginf$}
 
@@ -129,7 +148,7 @@ First, we will consider finitary PHORS with parameters, which can be shown algeb
 
 
 \paragraph*{Finitary Parametric PHORS}
-Consider a $\gphors=(\nonterm, \C P,\C R,S)$ that is parametric but \emph{finitary}, that is, all its non-terminal symbols have a finitary type. In other words, the derivations $\C R(L_i)$ are of the form $\nonterm\mid \C P\mid \emptyset \vdash t_{L_i}:\varphi$, where $\varphi\sqsubseteq \nonterm(L_i)$ and all types in $\nonterm$ and $\C P$ are finitary, but recall that the parameters $w:_\infty\psi$ in $\C P$ have infinite grade. 
+Consider a $\gphors=(\nonterm, \C P,\C R,S)$ that is parametric but \emph{finitary}, i.e.~all its non-terminal symbols have a finitary type. In other words, the derivations $\C R(L_i)$ are of the form $\nonterm\mid \C P\mid \emptyset \vdash t_{L_i}:\varphi$, where $\varphi\sqsubseteq \nonterm(L_i)$ and all types in $\nonterm$ and $\C P$ are finitary, but recall that the parameters $w$ in $\C P$ have infinite grade. 
 
 Supposing $\nonterm\tri T$ and $\C P\tri S$, from all such derivations we obtain a corresponding simply typed derivation of $T,S\vdash t_\gphors: T$, and thus a family of fps
 ${\model t}^{\Rsemiring}\in \fps{\Rsemiring}{\model T+\model S}^{\model T}$. Now, this family can be equivalently described as a family in $\fps{(\fps{\Rsemiring}{\model S})}{\model T }^{\model T}$, that is, as given by fps with variables in $\model T$ and coefficients in $\fps{\Rsemiring}{\model S}$. 
@@ -189,7 +208,7 @@ The following technical lemma relates then the minimal solutions of the systems 
 \begin{lemma}\label{lemma:fixpoint}
 Given sets $\nonterm,\widetilde{\nonterm},\C P$ and morphisms
 $t\in \Qrelkleisli{\Rsemiring}(\nonterm, \nonterm)$,
-$\tilde t\in \Qrelkleisli{\Rsemiring}(\widetilde{\nonterm}+\C P, \nonterm)$,
+$\tilde t\in \Qrelkleisli{\Rsemiring}(\widetilde{\nonterm}+\C P, \widetilde\nonterm)$,
 $\alpha\in \Qrelkleisli{\Rsemiring}(\nonterm+\C P, \widetilde{\nonterm})$,
 if we have:
 \begin{varitemize}
@@ -199,7 +218,7 @@ if we have:
 $,
 \end{varitemize} 
 then
-$\alpha\circ \langle {\mathsf{fix}}_{0,\nonterm} t,1_{\C P}\rangle=({\mathsf{fix}}_{\C P,\widetilde{\nonterm}} \tilde t)\circ 1_{\C P}\in \Qrelkleisli{\Rsemiring}(\C P, \widetilde{\nonterm})
+$\alpha\circ \langle {\mathsf{fix}}_{0,\nonterm} t,1_{\C P}\rangle={\mathsf{fix}}_{\C P,\widetilde{\nonterm}} \tilde t\in \Qrelkleisli{\Rsemiring}(\C P, \widetilde{\nonterm})
 $. 
 
 \end{lemma}

@@ -32,7 +32,7 @@ As already observed, all this implies that $\gphors$ is AST but not PAST.
 %  
 %  As we saw, power series are infinitary objects and their manipulation can then involve the concept of limit, making it generally uncomputable. Moreover, the continuous semiring we will generally use in the context of probabilistic semantics will be $\Rinf$ and the semiring of formal power series over $\Rinf$: hence, the computation with the coefficients of power series themselves could be infinitary. To our rescue, we will use a way to give a finitary specification of power series: this will be the concept of algebraicity. 
   
-  Before considering algebraic power series on a (continuous) semiring, let us first recall the case of rings, which is the one most customary in combinatorics. We will assume that all our rings are integral domains.
+  Before considering algebraic power series on a (continuous) semiring, let us recall the case of rings, indeed the one most customary in combinatorics. We assume our rings to be integral domains.
   \begin{definition}\label{def:fas1}
   	Let $R$ be a ring  and let $R'\leq R$ a subring.
   	A tuple $(s_1, \dots s_n)$ of formal power series $s_i \in \fps{R}{\Sigma}$ is an $R'$-\emph{algebraic family} if there exist polynomials $p_i \in \fpp{R'}{w_1, \dots w_n, \Sigma}$ such that:
@@ -97,18 +97,19 @@ also its derivative $s'\in \fps{\R}{x}$ is algebraic. Moreover, one can find eff
 	If the $p_i$ are such that $p_i(0,0)=0$ and, for each $j$, the coefficient of the monomial $w_j$ in $p_i$ is $0$, we say that the system is \emph{proper}.
 \end{definition}
 	The theory of systems like \eqref{fixpointsystem} has been extensively studied (\cite{DBLP:books/sp/KuichS86}, \cite{DBLP:journals/cpc/BanderierD15}) in the context of combinatorics and formal language theory: in particular, it can be shown that they admit a (unique) minimal solution, that can be obtained by iterating the polynomials $p_1 \dots p_n$. In the following we will be in general be interested into ${\Rinf}$-power series algebraic over $\Q_{\geq 0}$: in this case, the polynomial equations $w_i= p_i, \: p \in \fpp{\Qpos}{\Sigma}$ can be rewritten as $p'_i \bydef p_i- w_i = 0, \: p \in \fpp{\Qpos}{\Sigma}$. Rather than speaking of the minimal solution of \eqref{fixpointsystem} as a system with coefficients in $\Qpos$, we will be able to speak about the minimal non-negative solution $(s_1, \dots s_n)$  of the system $(p'_i=0)_{1 \leq i \leq n}$ with coefficients over $\mathbb{Q}$.
- 	\\We will prove now that, in this case, if the FAS is proper, even more is true: every $s_i$ part of a $\Q^+$-algebraic family is algebraic:
- 	\begin{theorem}[Variable Elimination]
+ 	\\
+	In this case, if the FAS is proper, even more is true: every $s_i$ part of a $\Q^+$-algebraic family is algebraic:
+ 	\begin{theorem}[Variable Elimination, \cite{DBLP:books/sp/KuichS86}, Thms.~16.9, 16.10]
  		\label{th:elimination}
  		Let $F$ be a proper $\Q_{\geq 0}$-FAS consisting of $n$ equations with parameters $x_\Sigma$ and let $(s_1, \dots s_n)$ be its minimal solution. From $F$ we can effectively compute irreducible polynomials $(q_i(w' , x_\Sigma))_{1 \leq i \leq n}$ such that:
  		$q_i(s_i(x_\Sigma), x_\Sigma)=0$, for all $1 \leq i \leq n$, 
  		that is, every $s_i$ is a $\Q$-algebraic power series.
  	\end{theorem}
- 	\begin{proof}
- 		The complete proof and the related elimination algorithm, based on classical methods from algebraic geometry(cite van Der Waerden, Introduction to ... ) can be found in Kuich and Salomaa's book \cite{DBLP:books/sp/KuichS86}, Thms.~16.9, 16.10. Observe that elimination here requires the FAS $F$ to be proper.
- 	\end{proof}
+% 	\begin{proof}
+% 		The complete proof and the related elimination algorithm, based on classical methods from algebraic geometry \cite{Van_der_Waerden2003-rd} can be found in Kuich and Salomaa's book \cite{DBLP:books/sp/KuichS86}, Thms.~16.9, 16.10. Observe that elimination here requires the FAS $F$ to be proper.
+% 	\end{proof}
 	
- If $a(x),b(x)\in \fps{\Rsemiring}{x_\Sigma}$ are algebraic, then so are their sum $a(x)+b(x)$, multiplication $a(x)b(x)$, composition $a(b(x))$ and derivative $a'(x)$ (Concrete Teth.). Recall from Section 4 that $a(b(x))$ is well-defined thanks to the continuity of $\Rsemiring$ (composition of algebraic power series is not generally well-defined over arbitrary (semi)rings). 
+ If $a(x),b(x)\in \fps{\Rsemiring}{x_\Sigma}$ are algebraic, then so are their sum $a(x)+b(x)$, multiplication $a(x)b(x)$, composition $a(b(x))$ and derivative $a'(x)$ \cite{DBLP:series/tmsc/KauersP11}. Recall from Section 4 that $a(b(x))$ is well-defined thanks to the continuity of $\Rsemiring$ (composition of algebraic power series is not generally well-defined over arbitrary (semi)rings). 
 
  	\begin{remark}
  	\label{remark:semilinear}

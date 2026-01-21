@@ -16,14 +16,13 @@ S& =F \  e
 where $F:o\to o$. 
 This is a very simple example of a PHORS: the upper case letters $F,S$ are called \emph{non-terminal} symbols, the execution of the program starts from the \emph{source} non-terminal $S:o$ by applying instances of the equations, read from left to right, as well as probabilistic choices, terminating when the unit constant $e:o$ is, eventually, produced. 
 If we ignore probabilities, we can consider the \emph{branch language} $\C L(\gphors)$ computed by the PHORS $\gphors$ as follows:
- replace the choice operation $\oplus_{\frac{1}{2}}$ with a binary terminal symbol $c:o\multimap o\multimap o$, and consider the following HORS (i.e.~non-probabilistic recursion scheme) $\gphors'$:
+ replace the choice operation $\oplus_{\frac{1}{2}}$ with a binary terminal symbol $c:o\to o\to o$, and consider the following HORS (i.e.~non-probabilistic recursion scheme) $\gphors'$,  where $G:(o\to o\to o)\to \tau$:
 \begin{equation}\label{eq:introphors2}
 \begin{aligned}
 Gzx&=  zx( Gzx)\\
-S& =F \ c \ e
+S& =F \ c \ e?
 \end{aligned}
-\end{equation}
-where $G:(o\multimap o\multimap o)\to \tau$. 
+\end{equation} 
 The execution of $\gphors'$ produces an infinite tree whose finite branches form the language $\C L(\gphors)=\{c^{n}e\mid n\in \N\}$.
 
 
@@ -42,7 +41,8 @@ The execution of $\gphors'$ produces an infinite tree whose finite branches form
 %If we replace the choice symbol $x\oplus_{\frac{1}{2}}y$ by a binary constant $c:o\multimap o\multimap o$, and we execute the source $S$, we see that it produces an infinite tree whose finite branches form the \emph{branch language} $\C L(\gphors)=\{c^{n}e\mid n\in \N\}$ of the PHORS.
 %
 
-Our goal is to extract a generating function from programs like \eqref{eq:introphors1}, i.e.~a formal power series $a_\gphors(z)=\sum_{i=0}^\infty a_iz^i$ capturing the probabilistic termination of $\gphors$. Recall that power series always induce \emph{analytic functions} defined over some open subset $U\subset \mathbb C$ of the field of complex numbers, and, when this set is not empty, can thus be studied with methods coming from both algebra and complex analysis. For instance, the formal power series $a(x)=\sum_{n=0}^\infty \frac{1}{2^n} x^n$ is equal to the analytic function $a(x)=\frac{1}{1-\frac{x}{2}}$ over the open set of complex numbers of absolute value strictly less than $ 2$ (riformulare come 'the power series is an expansion of the analytic function??'\warn).
+Our goal is to extract a generating function from programs like \eqref{eq:introphors1}, i.e.~a formal power series $a_\gphors(z)=\sum_{i=0}^\infty a_iz^i$ capturing the probabilistic termination of $\gphors$. Recall that a power series induces an \emph{analytic function} defined over some open subset $U\subset \mathbb C$ of the field of complex numbers, and, when this set is not empty, can thus be studied with methods coming from both algebra and complex analysis. For instance, the formal power series $a(x)=\sum_{n=0}^\infty \frac{1}{2^n} x^n$ is equal to the analytic function $a(x)=\frac{1}{1-\frac{x}{2}}$ over the open set of complex numbers of absolute value strictly less than $ 2$.
+% (riformulare come 'the power series is an expansion of the analytic function??'\warn).
 
 As anticipated, our fundamental ingredient to extract generating functions from PHORS is the weighted relational model of linear logic. This semantics is often styled \emph{quantitative}, as it provides a \emph{precise count} of the number of times that a program may use each of its inputs during any of its reductions.
 If we consider the HORS $\gphors'$, we see that, for any $i\in \N$, the term $Gzx$ has a unique way of terminating using $z$ exactly $i$ times; formally, each such reduction yields, in the semantics, a monomial of the form $z^{i}x$. By considering all possible reductions, the corresponding monomials yield then the power series below, interpreting the non-terminal $G$:
@@ -185,7 +185,7 @@ p(z,H_2(z))=0,
 \]
 where $p(z,w)= (\alpha z^2-1)w+\beta z$, yielding 
 $a_{H}(z,f,x)= \frac{\beta z}{1-\alpha z^2}f^2x$. 
-In this way we can finally deduce the probability of termination $a_{\gphors}(1)=
+This yields the termination probability $a_{\gphors}(1)=
 a_{H}(1,1,1)=
 \frac{\beta }{1-\alpha }$.
 
@@ -256,7 +256,7 @@ Similarly to the way in which we handle the formal variable $z$ counting probabi
 we show that it is possible to use variables in a PHORS in an \emph{unbounded} way, provided this variable behaves as a \emph{formal parameter} of the PHORS.
 This will allow us to use also infinitely graded types $!_\infty\sigma\multimap \tau$, although in a restricted way. 
 This idea leverages the intrinsically parametric nature of the weighted relational semantics, which allows one to pass smoothly from power series $s(x,w)$ in $x,w$, with values over some continuous semiring $\Rsemiring$, to ``parametric'' power series $s(w)(x)$ in $x$ with values themselves of the continuous semiring $\fps{\Rsemiring}{w}$ of power series in $x$.
-Moreover, thanks to the composability of algebraic power series, it will be possible to \emph{compose} an algebraic PHORS $\gphors_1(w)$, depending on some unbounded parameter $w$, with another algebraic PHORS $\gphors_2$, yielding a new PHORS $\gphors_1(\gphors_2)$, in which $\gphors_2$ is used unrestrictedly. 
+% an algebraic PHORS $\gphors_1(w)$, depending on some unbounded parameter $w$, with another algebraic PHORS $\gphors_2$, yielding a new PHORS $\gphors_1(\gphors_2)$, in which $\gphors_2$ is used unrestrictedly. 
 
 
 %\paragraph*{, }

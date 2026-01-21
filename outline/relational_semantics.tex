@@ -8,7 +8,7 @@ In this section, we recall the well-studied relational semantics of linear logic
 %but we will not have to worry too much about this, as we will work with a semirings $\Rsemiring$ (usually $\Rinf$) that has a subsemiring embe\\
 
 \subsection{Formal Power Series}
-Let us first introduce formal power series; for more details about them and their applications to combinatorics we refer to \cite{DBLP:books/daglib/0023751}, \cite{DBLP:series/tmsc/KauersP11}. Given a set $\Sigma$, 
+Let us first introduce formal power series (fps in short); for more details about them and their applications to combinatorics we refer to \cite{DBLP:books/daglib/0023751}, \cite{DBLP:series/tmsc/KauersP11}. Given a set $\Sigma$, 
 let us call $!\Sigma$ the set of finite multisets over it, i.e functions $\mu: \Sigma \to \NAT$ with finite support. Given a semiring $\Rsemiring$, the set of \emph{formal power series (with commuting variables) over $\Rsemiring$}, denoted $\fps{\Rsemiring}{\Sigma}$, is the set of all functions $!\Sigma \to \Rsemiring$. More concretely, if
  we introduce for each $s \in \Sigma$ a variable $x_s$ (we will denote by $x_\Sigma$ the set of all these variables), then a finite multiset $\mu \in !\Sigma$ can be seen as the monomial $x_\Sigma^\mu \bydef \Pi_{s \in \Sigma}x_s^{\mu(s)}$; then any formal power series $s\in \fps{\Rsemiring}{\Sigma}$ can be expressed as a formal sum:
  $$s=\sum_{\mu \in !\Sigma} s_\mu x_\Sigma^{\mu}.$$ 
@@ -66,9 +66,10 @@ Since $\Qsemiring:=\fps{\Rsemiring}{\Sigma}$ is a continuous semiring, for any s
 %   As usual, a classical polynomial $p$ can be written as a finite sum:
 %  $$p= \sum_{n_1 \dots n_{|\Sigma|} = 0}^k p_{n_1 \dots n_{|\Sigma|}} x_{\sigma_1}^{n_1} \dots x_{\sigma_{|\Sigma|}}^{n_{|\Sigma|}}$$
 
-A formal power series with finite support is simply called a \emph{polynomial}. 
-As usual, polynomials can be written as finite sums, and 
-%  $$p= \sum_{n_1 \dots n_{|\Sigma|} = 0}^k p_{n_1 \dots n_{|\Sigma|}} x_{\sigma_1}^{n_1} \dots x_{\sigma_{|\Sigma|}}^{n_{|\Sigma|}}$$
+%A formal power series with finite support is simply called a
+
+A \emph{polynomial} is a fps  with finite support  and can written, as usual, as a finite sum.
+They%  $$p= \sum_{n_1 \dots n_{|\Sigma|} = 0}^k p_{n_1 \dots n_{|\Sigma|}} x_{\sigma_1}^{n_1} \dots x_{\sigma_{|\Sigma|}}^{n_{|\Sigma|}}$$
 form a (non-continuous) sub-semiring of $\fps{\Rsemiring}{\Sigma}$, that we will denote as $\fpp{\Rsemiring}{\Sigma}$.
 
 % It is obviously not continuous, as the supremum of a collection of polynomials can be an infinite power series. Composition of polynomials do not involve infinite sums: the coefficients of the composition $r(s_\Sigma)$ are indeed polynomials in the coefficients of $r$ and $s_\Sigma$:
@@ -77,7 +78,7 @@ form a (non-continuous) sub-semiring of $\fps{\Rsemiring}{\Sigma}$, that we will
 %  	if $r \in \fpp{\Rsemiring}{\Sigma}$ and $s_\Sigma$ is a $\Sigma'$-indexed family of power series $\in  \fpp{\Rsemiring}{\Sigma'}$, then $\mu$ coefficient of $r(s_\Sigma) \in \fpp{\Rsemiring}{\Sigma'}$ is equal to:
 %  	$$p_{\mu}((r_\kappa)_{\kappa \in !_k\Sigma}, (s_{\sigma_1, \kappa})_{\kappa \in !_{k_1}\Sigma}  \dots (s_{\sigma_n, \kappa})_{\kappa \in !_{k_n}\Sigma}) $$
 %  \end{lemma}
-  Let us say something on what happens if we do not start with a continuous semiring $\Rsemiring$, but rather with a ring $R$. In this case, almost all of the constructions we made  still work: we can similarly define the set $\fps{R}{\Sigma}$ of formal power series over $R$, which is a ring, as well as its subring  $\fps{R}{\Sigma}$ of polynomials over $R$. Still, the composition of formal power series will not be defined in general, as it involves an infinite sum, while the composition of polynomials remains well-defined.
+If we do not start, as we do here, with a continuous semiring $\Rsemiring$, but rather with a ring $R$, almost all constructions still work: we can similarly define the set $\fps{R}{\Sigma}$ of formal power series over $R$, which is a ring, as well as its subring  $\fps{R}{\Sigma}$ of polynomials over $R$. Still, the composition of formal power series will not be defined in general, as it involves an infinite sum, while the composition of polynomials remains well-defined.
   
   
   \subsection{The Weighted Relational Semantics}
@@ -212,7 +213,7 @@ $\model{t}^{\Rsemiring}\in \Qrelkleisli{\Rsemiring}{\model\Gamma,\model T}\equiv
 \fps{\Rsemiring}{\model\Gamma}^{\model T}$.
 
 
-In order to interpret $\PLY$, we will restrict our attention to semirings of the form $\Rsemiring=\fps{\Rinf}{\{z\}+\Sigma}$, where $z$ denotes a distinguished variable. In this setting we interpret probabilistic choice (with bias $p$) as 
+To interpret $\PLY$, we restrict our attention to semirings of the form $\Rsemiring=\fps{\Rinf}{\{z\}+\Sigma}$, where $z$ denotes a distinguished variable. This allows us to interpret probabilistic choice (with bias $p$) as 
 \[
 \model{M\oplus_p N}^{\Rsemiring}=p z\cdot\model M+(1-p) z\cdot\model N.
 \]
@@ -234,7 +235,7 @@ As shown by Proposition \ref{prop:proba} below, the variable $z$ plays the role 
 %\end{varitemize}
 
 \begin{remark}\label{rem:tropical}
-In \cite{DBLP:journals/corr/abs-2501-15637} they also consider the interpretation of
+\cite{DBLP:journals/corr/abs-2501-15637} considers the interpretation of
 \emph{parametric} choices  $M\oplus_x N$, i.e.~choices according to some unknown bias $x$, by taking the semiring 
   $\Qsemiring=\fps{\Rsemiring}{x,\overline x}$ and letting $\model{M\oplus_p N}^{\Qsemiring}=x\cdot M+\overline{x}\cdot N$. \end{remark}
 % $\Qrelkleisli{\Rsemiring}$ has thus all the relevant structure to define an interpretation $\model{-}^{\Rsemiring}$ of higher-order languages with fixpoints, like the $\lambda Y$ calculus or PCF (see Laird Manzonetto for all details).
@@ -246,7 +247,7 @@ In \cite{DBLP:journals/corr/abs-2501-15637} they also consider the interpretatio
 
 %One can interpret $\PLY$ (or even probabilistic PCF) in all $\Qrelkleisli{\Rsemiring}$ with $\Rsemiring$ of the form $\fps{\Rinf}{\Sigma}$. 
 
-All this leads to the following definitions
+All this leads to the following definitions:
 \begin{definition}[probabilistic generating function of a PHORS]
 For every PHORS $\gphors=(\nonterm, \C R,S)$ and non-terminal $L_i:T_1\to\dots\to T_n\to o\in\nonterm$, letting $\Sigma=\model{T_1}+\dots+\model{T_n}$, we define the fps
 \[
@@ -258,9 +259,8 @@ is the fps $a_{\gphors}(z):=a_S(z)\in \fps{\Rinf}{z}$.
 \end{definition}
 Notice that the $a_{L}(z)(x_\Sigma)=\pi_i\left(\fix \model{t_{\gphors}}^{\fps{\Rinf}{z}}\right)(x_\Sigma)$ is  the minimal solutions of the equational system $(r_x=(t_\gphors)_x(r_x,z))_{x\in \Sigma}$. 
 
-The generating function $a_\gphors(z)$ precisely captures the call-by-value probabilistic execution of closed terms, as stated below: 
-%the interpretation $\model{M}^{\Rinf}$ of a term $M:\1$ of ground type consists in a real number, since $\model{M}^{\Rinf}\in\Qrelkleisli{\Rsemiring}(0,\1)\equiv\fps{\Rsemiring}{0}\equiv\Rsemiring$, which coincides with the probability of termination of $M$, computed as the sum of the weights $w(R)\in \Rinf$ of all call-by-name probabilistic reductions $R:M{\to^*}e$:
-\begin{proposition}[cite Pagani and co]\label{prop:proba}
+The generating function $a_\gphors(z)$ precisely captures the call-by-value probabilistic execution of closed terms, as stated below:%the interpretation $\model{M}^{\Rinf}$ of a term $M:\1$ of ground type consists in a real number, since $\model{M}^{\Rinf}\in\Qrelkleisli{\Rsemiring}(0,\1)\equiv\fps{\Rsemiring}{0}\equiv\Rsemiring$, which coincides with the probability of termination of $M$, computed as the sum of the weights $w(R)\in \Rinf$ of all call-by-name probabilistic reductions $R:M{\to^*}e$:
+\begin{proposition}\label{prop:proba}
 For any PHORS $\gphors$,
 \begin{align}
 %\model{S}^{\Rinf}&=\mathbb P(\gphors\downarrow),
@@ -270,9 +270,12 @@ a_{\gphors}(z)&=\sum_{i=0}^{\infty}\mathbb P(\gphors\downarrow_i)z^i,\label{eq:p
 \end{align}
 where $\mathbb P(\gphors\downarrow_i)=\sum_{R:t\to^i e}w(R)$ is the probability that $S$ terminates after exactly $i$ probabilistic steps. In particular, $a_\gphors(1)=\mathbb P(\gphors\downarrow)$. 
 \end{proposition}
+\begin{proof}
+From \cite{DBLP:conf/lics/LairdMMP13, DBLP:journals/jacm/EhrhardPT18,DBLP:journals/corr/abs-2501-15637} we know that each reduction $S\redbigp{\sigma,p}e$ precisely adds up one monomial $pz^{|\sigma|}$, so the monomial $a_{|\sigma|}z^{|\sigma|}$ in $a_\gphors(z)$ is the sum of the probabilities of all reductions $S\redbigp{\sigma,p}e$.
+\end{proof}
 %While \eqref{eq:prob1} indicates that the interpretation in $\Rinf$ precisely captures the probability of termination, \eqref{eq:prob2} provides a \emph{finer} result: 
-By marking with the variable $z$ each probabilistic reduction step, the coefficients of $a_\gphors(z)$ count the probability of terminating in exactly $i$ steps. 
-This leads to the following result, stating that the \emph{derivative} of $a_\gphors(z)$ captures the expected number of steps to termination:
+%By marking with the variable $z$ each probabilistic reduction step, the coefficients of $a_\gphors(z)$ count the probability of terminating in exactly $i$ steps. 
+From Proposition \ref{prop:proba} we deduce also that the \emph{derivative} of $a_\gphors(z)$ captures the expected number of steps to termination:
 
 \begin{corollary}\label{cor:expected}
 %\begin{equation}\label{eq:expected1}
