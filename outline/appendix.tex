@@ -130,18 +130,18 @@ From this we obtain the following lemma about terms $\lambda x_1 \dots x_n.t: !_
 \end{proof}
 \section{Proofs of section 7}
 \subsection{Proof of theorem 7.1 }
-We consider a parametric bounded PHORS $\gphors=(\nonterm, \C P,\C R, S)$ and we build from it a $\Gfin$ PHORS with paramters $R(\gphors)$ . In the case that $\gphors$ is closed, from $R(\Gfin)$ we can extract a subset of nonterminals that form a (parameter free) $\Gfin$.
+We consider a parametric bounded PHORS $\gphors=(\nonterm, \C P,\C R, S)$ and we build from it a $\Gfin$ with paramters $R(\gphors)$ . In the case that $\gphors$ is closed, from $R(\Gfin)$ we can extract a subset of nonterminals that form a (parameter free) $\Gfin$.
 \begin{definition}
 	The set $T(L)$ of substituable terms for a non terminal $L \in \nonterm, \: \nonterm(L)= !_{\infty} \psi_1 \multimap \dots\multimap  !_{\infty} \psi_j \multimap \varphi$ is defined as follows:
 	$$T(L) \bydef \{[t_1, \dots t_n] \in \nonterm^* \: \mid \: \forall i \, (t_i \in \nonterm \cup \mathcal{P}\land (\nonterm \cup \mathcal{P}) t_i = \psi_i)  \}  $$
 \end{definition}
-Now we define a new reduced PHORS, with an enlarged set $\nonterm'$ of non-terminals
+Now we define the enlarged set $\nonterm'$ of non-terminals of finite graded type, that will be used in $R(\gphors)$.
 \begin{definition}[Reduced nonterminals]
 	Let $\nonterm'$ be defined as:
 	$$\bigcup_{L \in \nonterm}\{\tilde{L}_\gamma : \varphi \mid \nonterm(L)=!_{\infty} \psi_1 \multimap \dots\multimap  !_{\infty} \psi_j \multimap \varphi, \;  \gamma \in T(L)\} $$
 \end{definition}
 
-Now we define a translation from applicative terms (i.e terms $t$ that can be typed as $\nonterm \mid \Delta \mid \mathcal{P} \vdash t: \tau $ only using  axioms and rules $@, @_\infty$) to a reduced applicative terms (i.e applicative terms $t'$ that can be typed as $\nonterm' \mid \Delta \mid \mathcal{P} \vdash t': \tau$ \textbf{without using the $@_\infty$ rule or any axiom of infinite type}).
+Now we define a translation from $\Ginf$ terms of finite type (i.e terms $t$ that can be typed as $\nonterm\mid\C P\mid\Delta\vdash \vdash t: \varphi $) to $\Gfin$ terms $R(t)$ that can be typed as $\nonterm' \mid \Delta \vdash R(t): \phi$. 
 First we prove the following:
 \begin{lemma}
 	If $\mathcal{N}|\Delta| \mathcal{P} \vdash t: \tau$ is an applicative term of type $!_{\infty} \psi_{1} \multimap \tau$, then it is of the form $L t_{1} \ldots t_{k}$, where $L \in \mathcal{N}$ and $t_{i} \in \mathcal{N} \cup \mathcal{P}$.
