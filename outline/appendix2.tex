@@ -1,0 +1,31 @@
+% !TEX root = main.tex
+
+
+\subsection{Proof of Lemma \ref{lemma:fixpoint}}
+
+
+\begin{proof}
+Recall that, given $s\in \Qrelkleisli{\Rsemiring}(Y+X,X)$ $\fix_{Y,X} s=\sup_n s^{n}$, where $s^{0}=0$ and $s^{n+1}=s\circ\langle\pi_1, s^{n}\rangle$. We will prove, by induction on $n$, that 
+$\alpha\circ \langle t^n,1_{\C P}\rangle=\tilde{t}^n$, from which the claim will follow by continuity. 
+Using the two hypotheses of the Lemma we have then
+\begin{align*}
+\alpha\circ \langle t^0,1_{\C P}\rangle=\alpha\circ \langle 0,1_{\C P}\rangle =0=s^0
+\end{align*}
+and
+\begin{align*}
+\alpha\circ \langle t^{n+1},1_{\C P}\rangle&=
+\alpha\circ \langle t\circ t^{n},1_{\C P}\rangle\\
+&=
+\alpha\circ \langle t\circ\pi_1,\pi_2\rangle
+\circ 
+\langle t^{n},1_{\C P}\rangle\\
+&=
+\tilde t\circ \langle\alpha\circ \langle\pi_1,\pi_2\rangle,\pi_2 \rangle\circ 
+\langle t^{n},1_{\C P}\rangle\\
+&=
+\tilde t\circ \langle\alpha\circ \langle t^n,1_{\C P}\rangle,1_{\C P}\rangle\\
+&\stackrel{\tiny\text{[I.H.]}}{=}
+\tilde t\circ \langle\tilde t^n,1_{\C P}\rangle=\tilde t^{n+1}.
+\end{align*}
+\end{proof}
+
