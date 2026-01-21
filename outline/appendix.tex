@@ -129,82 +129,6 @@ From this we obtain the following lemma about terms $\lambda x_1 \dots x_n.t: !_
 	By lemma \ref{lemma:correctness}, the interpretation of $\nonterm\mid x_1:_{k_1} \dots x_n:_{k_n} \vdash : t: \1$ is a polynomial of total degree at most $k_i$ in the variables $x_{x_i:_{k_i}: \psi_i}$
 \end{proof}
 \section{Proofs of section 7}
-\subsection{Proof of theorem 7.1 }
-We consider a parametric bounded PHORS $\gphors=(\nonterm, \C P,\C R, S)$ and we build from it a $\Gfin$ with paramters $R(\gphors)$ . In the case that $\gphors$ is closed, from $R(\Gfin)$ we can extract a subset of nonterminals that form a (parameter free) $\Gfin$.
-\begin{definition}
-	The set $T(L)$ of substituable terms for a non terminal $L \in \nonterm, \: \nonterm(L)= !_{\infty} \psi_1 \multimap \dots\multimap  !_{\infty} \psi_j \multimap \varphi$ is defined as follows:
-	$$T(L) \bydef \{[t_1, \dots t_n] \in \nonterm^* \: \mid \: \forall i \, (t_i \in \nonterm \cup \mathcal{P}\land (\nonterm \cup \mathcal{P}) t_i = \psi_i)  \}  $$
-\end{definition}
-Now we define the enlarged set $\nonterm'$ of non-terminals of finite graded type, that will be used in $R(\gphors)$.
-\begin{definition}[Reduced nonterminals]
-	Let $\nonterm'$ be defined as:
-	$$\bigcup_{L \in \nonterm}\{\tilde{L}_\gamma : \varphi \mid \nonterm(L)=!_{\infty} \psi_1 \multimap \dots\multimap  !_{\infty} \psi_j \multimap \varphi, \;  \gamma \in T(L)\} $$
-\end{definition}
-
-Now we define a translation from $\Ginf$ terms of finite type (i.e terms $t$ that can be typed as $\nonterm\mid\C P\mid\Delta\vdash \vdash t: \varphi $) to $\Gfin$ terms $R(t)$ that can be typed as $\nonterm' \mid \Delta \vdash R(t): \phi$. 
-First we prove the following:
-\begin{lemma}
-	If $\mathcal{N}|\Delta| \mathcal{P} \vdash t: \tau$ is an applicative term of type $!_{\infty} \psi_{1} \multimap \tau$, then it is of the form $L t_{1} \ldots t_{k}$, where $L \in \mathcal{N}$ and $t_{i} \in \mathcal{N} \cup \mathcal{P}$.
-\end{lemma}
-Then we get: 
-\begin{lemma}
-	For every applicative term $\mathcal{N}|\Delta| \mathcal{P} \vdash t: \tau$, there exists a reduced applicative terms $\mathcal{N} \cup \mathcal{F}|\Delta| \mathcal{P} \vdash t: \tau$ such that $t=t^{\prime}\left[f_{1} / r_{1} \ldots f_{l} / r_{l}\right]$ and each $r_{i}$ is of the form $L L t_{1} \ldots t_{k}$, where $L \in \mathcal{N}$ and $t_{i} \in \mathcal{N} \cup \mathcal{P}$. If $\tau$ is a finite type, then $\mathcal{F}$ only contains finite types.
-\end{lemma}
-\begin{proof}
-If $\mathcal{N}|\Delta| \mathcal{P} \vdash t: \tau$ is an axiom of finite type, $t^{\prime}=t$. If $\mathcal{N}|\Delta| \mathcal{P} \vdash L: \tau, \mathcal{N}(L)= !_{\infty} \psi \multimap \tau$, then $t=f_{1}, \mathcal{F}=\left\{f_{1}:!_{\infty} \psi \multimap \tau\right\}$ and $r_{1}=L$.\\
-If $t=t_{1} t_{2}$ and the last step was a finitary application, take the terms $t_{1}^{\prime}$ and $t_{2}^{\prime}$ whose existence is recursively ensured; we can assume that the free variables $f_{1}, \ldots f_{n}$ and $f_{1}^{\prime}, \ldots f_{n^{\prime}}^{\prime}$ and the contexts $\mathcal{F}$ and $\mathcal{F}^{\prime}$ are disjoint upon renaming and define $t=t_{1}^{\prime} t_{2}^{\prime}$.\\
-If $t=t_{1} t_{2}: \tau$ and the last step was an infinitary application, then $t_{1}$ is of the form $L s_{1} \ldots s_{n}$ and $t_{2} \in \mathcal{N} \cup P$ : then take $t^{\prime}:=f_{1}, \mathcal{F}=\left\{f_{1}: \tau\right\}$ and $r_{1}=L s_{1} \ldots s_{n} t_{2}: \tau$\\
-\end{proof}
-Now we define a translation from applicative terms typable in $\Ginf$ to terms typable in $\Gfin$: 
-\begin{definition}
- Let $\mathcal{N}|\Delta| \mathcal{P} \vdash t: \psi$ be an applicative term of finite type. Then we define its translation $R(t)$ to be the following finitary applicative term (i.e a term $t^{\prime}$ that can be typed in the finitary system as $\mathcal{N}^{\prime} \mid \Delta \cup \mathcal{P} \vdash t^{\prime}: \psi$, where $\operatorname{dom}\left(\mathcal{N}^{\prime}\right)=N^{\prime}$ ). Given $t$, take $t^{\prime}$ as defined in the last lemma. For each $r_{i}=L t_{1} \ldots t_{n}$ (which must be of finite type, as $t$ is such), define $R\left(r_{i}\right):=\tilde{L}_{\left[t_{1} \ldots t_{n}\right]} \in N^{\prime}$. Then define $R(t)$ to be the result of replacing every $f_{i}$ in $t^{\prime}$ by $R\left(r_{i}\right)$. Replace every type binding $f_{i}: \psi$ in $\mathcal{F}$ with a binding $R\left(r_{i}\right): \psi$ and every type binding $L: \psi \in \mathcal{N}$ by a type binding $L_{\square}: \psi$; the set of all the just defined type bindings is $\mathcal{N}^{\prime}$	
-\end{definition}
-Now we are ready to define the translation from a closed $\Ginf$ $\gphors$ to a $\Gfin$ $R(\gphors)$ having the same value tree:
-\begin{definition}
-Now define a new PHORS $\mathcal{G}'$ with nonterminals $\N'$ as follows: for each $L \in \nonterm$ with equation $L \vec f = t_L$ and for each $\tilde L_\gamma \in \N'$ take the following equation:
-$$\tilde L_\gamma x_1 \dots x_j = R(t_L[\vec g / \gamma]) $$
-\end{definition}
-This defines a finitary PHORS with parameters (as some of the substituable term in $\gamma$ might be parameters). 
-\begin{definition}
-	We say that a nonterminal $L$ depends over a nonterminal $G$ if (1) in the definition of $L$ $G$ occurs (2) Inductively, in the definition of $L$ a non terminal $G'$ occurs that depend over $G$ 
-\end{definition}
-\begin{lemma}
-	If $\gamma$ contains free parameter $p_1, \dots p_j$ and the definition of $\tilde L_{\gamma}$
-	is $\tilde L_\gamma x_1 \dots x_j = R(t_L[\vec g / \gamma]) $, then $R(t_L[\vec g / \gamma])$ contains non-terminals $G_\gamma'$ where $\gamma'$ contains free paramters amongst $p_1, \dots p_j$.
-\end{lemma}
-\begin{proof}
-	The only free variables in $t_L$ were the $g_1, \dots g_n$ and the $x_1, \dots x_j$. Since there was the free parameters in $\gamma$ were $p_1, \dots p_j$, $FV(t_L[\vec g / \gamma]) \subseteq \{x_1, \dots x_n, p_1, \dots p_j\}$: it does not contains only $p_1, \dots p_j$ as parameters. 
-\end{proof}
-Hence, we see that $\{L_\gamma \mid \gamma \text{contains no paramters}\}$ is closed for the dependency relation, hence we can build a PHORS that only include these non-terminals. It will in particular include $S_{[]}$. So we can solve it in the finitary system. So we have that:
-\begin{enumerate}
-	\item If we are interested on the decidability of AST/PAST we can only look at the component of the PHORS containing $\tilde{S}_{[]}$ and closed under dependency, which is a finitary PHORS without paramters.
-	\item If we are interested about the algbraicity of a non-terminal $L \vec g \vec f$, we can look at the component of the PHORS containing $\tilde{L}_{[\vec g]}$ and closed under dependency: it will be a PHORS in the paramters $g_1 \dots, g_n$, hence $\tilde{L}_{[g_1, \dots g_n]}$ will be interpreted as an algebraic power series over $g_1, \dots g_n$.
-\end{enumerate}
-Example: take the PHORS:
-\begin{equation*}
-	\begin{cases}
-		& S = L G e\\
-		& L f k = H f k \oplus f k\\
-		& G l = l \oplus \Omega\\
-		&  H g n = L g n \oplus H g n
-	\end{cases}
-\end{equation*}
-the infinitary parameters being $f, g$. We obtain reduced non terminals. $\tilde{S}, \tilde{G}, \tilde{L}_G, \tilde{L}_f, \tilde{L}_g,  \tilde{H}_G, \tilde{H}_f, \tilde{H}_g, $ and the compnent of the reduced PHORS containing $\tilde{S}$ is :
-\begin{equation*}
-	\begin{cases}
-		\tilde{S} = \tilde{L}_G e\\
-		\tilde{L}_G k = R(H G k \oplus  G K) = \tilde{H}_G k \oplus \tilde{G}_{[]} k \\
-		\tilde G_{[]} l = l \oplus \Omega\\
-		\tilde{H}_G k = R(L G n \oplus H G n) = \tilde{L}_G n \oplus \tilde{H}_G n
-	\end{cases}
-\end{equation*}
-while the component containing $\tilde{L}_f$ is:
-\begin{equation*}
-	\begin{cases}
-		\tilde{L}_f k = R( H f k \oplus  f k) = \tilde{H}_f \oplus f \\
-		\tilde{H}_f n = R(L f n \oplus H f n) = \tilde{L}_f n \oplus \tilde{H}_f n
-	\end{cases}
-\end{equation*}
 \subsection{About the composition of PHORS}
 Here, we prove that what has been defined in Definition 7.2 as the composition of two $\Ginf$ really deserves this name.
 Let  $\Ginf$ $\gphors=(\nonterm_1,\C P ,\C R_1,S_1)$ be a $\Ginf$. Recall that its $\Qrelkleisli{\Rsemiring}$ interpretation $\model{\gphors}$ is then an arrow in $\Qrelkleisli{\Rsemiring}(\model{P}, \model{N})$, which is a family $s_{\model{\nonterm}} \in \fps{\Rsemiring}{\model{\C P}}$ of fps.
@@ -216,23 +140,101 @@ Let  $\Ginf$ $\gphors=(\nonterm_1,\C P ,\C R_1,S_1)$ be a $\Ginf$. Recall that i
 	$$ \model{\gphors_1(\gphors_2)}_{L_2}^\Rsemiring(y_{\model{\C P}}) = \model{\gphors_2}_{L_2}^\Rsemiring(y_{\model{\C P}}) $$
 \end{lemma}
 \begin{proof}
-Let let respectively $s_{\model{\nonterm_1}}(y_\phi, y_{{\C P}})$, $r_{\model{\nonterm_2}}(y_{{\C P}})$ be the interpretations of $\gphors_1$ and $\gphors_2$. Then $s_{\model{\nonterm_1}}(y_\phi, y_{\nonterm{\C P}})$ is the minimal solution of the system $(S_1)$ of fixpoint equation:
-\begin{equation}
-	\label{eq:fixg1}
-z_{\model{\nonterm_1}}= p_{\model{\nonterm_1}}(z_{\model{\nonterm_1}}, z_w,y_{\C P} )
-\end{equation}
-and  $r_{\model{\nonterm_2}}(y_{{\C P}})$  is the minimal solution of the system of fixpoint equations 
-\begin{equation}
-	\label{eq:fixg2}
-	z_{\model{\nonterm_2}}= q_{\model{\nonterm_2}}(z_{\model{\nonterm_1}}, y_{\C P} )
-\end{equation} 
-Then, $\model{\gphors_1(\gphors_2)}$ is the fixpoint solution of the system:
-\begin{equation}
-	\label{eq:fixgcomp}
-	\begin{cases}
-		z_{\model{\nonterm_1}}= p_{\model{\nonterm_1}}(z_{\model{\nonterm_1}}, z_{\model{L: \phi}},y_{\C P} )\\
+	Let let respectively $s_{\model{\nonterm_1}}(y_\phi, y_{{\C P}})$, $r_{\model{\nonterm_2}}(y_{{\C P}})$ be the interpretations of $\gphors_1$ and $\gphors_2$. Then $s_{\model{\nonterm_1}}(y_\phi, y_{\nonterm{\C P}})$ is the minimal solution of the system $(S_1)$ of fixpoint equation:
+	\begin{equation}
+		\label{eq:fixg1}
+		z_{\model{\nonterm_1}}= p_{\model{\nonterm_1}}(z_{\model{\nonterm_1}}, z_w,y_{\C P} )
+	\end{equation}
+	and  $r_{\model{\nonterm_2}}(y_{{\C P}})$  is the minimal solution of the system of fixpoint equations 
+	\begin{equation}
+		\label{eq:fixg2}
 		z_{\model{\nonterm_2}}= q_{\model{\nonterm_2}}(z_{\model{\nonterm_1}}, y_{\C P} )
-	\end{cases}
-\end{equation}
-Clearly, since $q_{\model{\nonterm_2}}$ do not involve any variable from other equations, the fixpoint iteration for \ref{eq:fixgcomp}, restricted to the variables $z_{\model{\nonterm_2}}$ will be equal to the fixpoint iterations for \ref{eq:fixg2}. Hence the minimal solution of \ref{eq:fixgcomp}, restricted to the variables $z_{\model{\nonterm_2}}$ will be  $r_{\model{\nonterm_2}}$. Let then $(t_{\model{\nonterm_1}},r_{\model{\nonterm_2}})$ be the full minimal solution of \ref{eq:fixgcomp}. We see that $t_{\model{\nonterm_1}}$ is then the a solution of $z_{\model{\nonterm_1}}= p_{\model{\nonterm_1}}(z_{\model{\nonterm_1}}, r_{\model{\nonterm_2}} ,y_{\C P} )$; it must be the minimal one, as if there were a solution $t'_{\model{\nonterm_1}} \leq t_{\model{\nonterm_1}}$, this would give a smaller solution of \ref{eq:fixgcomp}. This proves the lemma.
+	\end{equation} 
+	Then, $\model{\gphors_1(\gphors_2)}$ is the fixpoint solution of the system:
+	\begin{equation}
+		\label{eq:fixgcomp}
+		\begin{cases}
+			z_{\model{\nonterm_1}}= p_{\model{\nonterm_1}}(z_{\model{\nonterm_1}}, z_{\model{L: \phi}},y_{\C P} )\\
+			z_{\model{\nonterm_2}}= q_{\model{\nonterm_2}}(z_{\model{\nonterm_1}}, y_{\C P} )
+		\end{cases}
+	\end{equation}
+	Clearly, since $q_{\model{\nonterm_2}}$ do not involve any variable from other equations, the fixpoint iteration for \ref{eq:fixgcomp}, restricted to the variables $z_{\model{\nonterm_2}}$ will be equal to the fixpoint iterations for \ref{eq:fixg2}. Hence the minimal solution of \ref{eq:fixgcomp}, restricted to the variables $z_{\model{\nonterm_2}}$ will be  $r_{\model{\nonterm_2}}$. Let then $(t_{\model{\nonterm_1}},r_{\model{\nonterm_2}})$ be the full minimal solution of \ref{eq:fixgcomp}. We see that $t_{\model{\nonterm_1}}$ is then the a solution of $z_{\model{\nonterm_1}}= p_{\model{\nonterm_1}}(z_{\model{\nonterm_1}}, r_{\model{\nonterm_2}} ,y_{\C P} )$; it must be the minimal one, as if there were a solution $t'_{\model{\nonterm_1}} \leq t_{\model{\nonterm_1}}$, this would give a smaller solution of \ref{eq:fixgcomp}. This proves the lemma.
 \end{proof}
+\subsection{Proof of theorem 7.3 }
+We consider a parametric bounded PHORS $\gphors=(\nonterm, \C P,\C R, S)$ and we build from it a $\Gfin$ with paramters $R(\gphors)$ . In the case that $\gphors$ is closed, from $R(\Gfin)$ we can extract a subset of nonterminals that form a (parameter free) $\Gfin$. Up to isomorphism (from a fps-theoretic viewpoint, up to commutation of the variables),we can always work in the case then non terminals have type $ !_{\infty} \psi_1 \multimap \dots\multimap  !_{\infty} \psi_j \multimap \varphi$. 
+\begin{definition}
+	The set $T(L)$ of substituable terms for a non terminal $L \in \nonterm, \: \nonterm(L)= !_{\infty} \psi_1 \multimap \dots\multimap  !_{\infty} \psi_j \multimap \varphi$ is defined as follows:
+	$$T(L) \bydef \{[t_1, \dots t_n] \in \nonterm^* \: \mid \: \forall i \, (t_i \in \nonterm \cup \mathcal{P}\land (\nonterm \cup \mathcal{P}) t_i = \psi_i)  \}  $$
+\end{definition}
+Now we define the enlarged set $\nonterm'$ of non-terminals of finite graded type, that will be used in $R(\gphors)$.
+\begin{definition}[Reduced nonterminals]
+	Let $\nonterm'$ be defined as:
+	$$\bigcup_{L \in \nonterm}\{\tilde{L}_\gamma : \varphi \mid \nonterm(L)=!_{\infty} \psi_1 \multimap \dots\multimap  !_{\infty} \psi_j \multimap \varphi, \;  \gamma \in T(L)\} $$
+\end{definition}
+
+Now we define a translation from $\Ginf$ applicative terms of finite type (i.e terms $t$ that can be typed as $\nonterm\mid\C P\mid\Delta\vdash t: \varphi $) to $\Gfin$ terms $R(t)$ that can be typed as $\nonterm' \mid \Delta \vdash R(t): \phi$. 
+First we prove the following:
+\begin{lemma}
+	If $\nonterm\mid\C P\mid\Delta \vdash t: \tau$ is an applicative term of type $!_{\infty} \psi_{1} \multimap \tau$, then it is of the form $L t_{1} \ldots t_{k}$, where $L \in \mathcal{N}$ and $t_{i} \in \mathcal{N} \cup \mathcal{P}$.
+\end{lemma}
+\begin{proof}
+	The only way an infinitary type can appear in $\Ginf$ applicative term is because of the axiom of a non-terminal with infinitary type. The only rule we can apply after this kinf of axiom is a sequence of $@_\infty$.
+\end{proof}
+Then we get: 
+\begin{lemma}
+	For every $\Ginf$ applicative term $\nonterm\mid\C P\mid\Delta\ \vdash t: \phi$ of finite type, there exists a $\Gfin$ applicative terms $\mathcal{N} \cup \mathcal{F}\mid \mathcal{P}\mid\Delta \vdash t': \phi$ such that $t=t^{\prime}\left[f_{1} / r_{1} \ldots f_{l} / r_{l}\right]$ and each $r_{i}$ is a $\Ginf$ applicative term of the form $ L t_{1} \ldots t_{k}$, where $L \in \nonterm$ and $t_{i} \in \nonterm \cup \mathcal{P}$.
+\end{lemma}
+\begin{proof} By induction, if $\mathcal{N}\mid \mathcal{P}\mid \Delta \vdash t: \tau$ is an axiom of finite type, $t^{\prime}=t$. If $\mathcal{N} \mid \mathcal{P} \mid \Delta \vdash L t_1 \dots t_k, \mathcal{N}(L)= !_{\infty} \psi_1 \multimap \ldots !_{\infty} \psi_k \multimap \varphi$, then $t=f_{1}, \mathcal{F}=\left\{f_{1}:  !_{\infty} \psi_1 \multimap \ldots !_{\infty} \psi_k \multimap \varphi\right\}$ and $r_{1}=L$.\\
+If $t=t_{1} t_{2}$ and the last step was a finitary application, take the terms $t_{1}^{\prime}$ and $t_{2}^{\prime}$ whose existence is recursively ensured; we can assume that the free variables $f_{1}, \ldots f_{n}$ and $f_{1}^{\prime}, \ldots f_{n^{\prime}}^{\prime}$ and the contexts $\mathcal{F}$ and $\mathcal{F}^{\prime}$ are disjoint upon renaming and define $t=t_{1}^{\prime} t_{2}^{\prime}$.\\
+\end{proof}
+Now we define a translation from applicative terms typable in $\Ginf$ to terms typable in $\Gfin$: 
+\begin{definition}
+ Let $\nonterm\mid \mathcal{P}\mid \Delta \vdash t: \varphi$ be $\Ginf$ applicative term of finite type. Then we define its translation $R(t)$ to be the following $\Gfin$ applicative term that can be typed as $\mathcal{N}^{\prime} \mid \Delta \cup \mathcal{P} \vdash R(t): \varphi$. Given $t$, take $t^{\prime}$ (typable as $\mathcal{N} \cup \mathcal{F}\mid \mathcal{P}\mid\Delta \vdash t': \phi$) as defined in the last lemma. For each $r_{i}=L t_{1} \ldots t_{n}$ as in the last lemma, define $R(r_{i}):=\tilde{L}_{\left[t_{1} \ldots t_{n}\right]} \in \nonterm'$. Then define $R(t)$ to be the result of replacing every $f_{i}$ in $t^{\prime}$ by $R\left(r_{i}\right)$. 
+\end{definition}
+Now we are ready to define the translation from a closed $\Ginf$ $\gphors$ to a $\Gfin$ $R(\gphors)$ having the same value tree:
+\begin{definition}
+Now define a new PHORS $\mathcal{G}'$ with nonterminals $\N'$ as follows: for each $L \in \nonterm$ with equation $L \vec f = t_L$ and for each $\tilde L_\gamma \in \N'$ take the following equation:
+$$\tilde L_\gamma x_1 \dots x_j = R(t_L[\vec g / \gamma]) $$
+\end{definition}
+This defines a finitary PHORS with parameters (as some of the substituable term in $\gamma$ might be parameters). 
+\begin{definition}
+	We define by induction the relation of dependency between non terminals: we say that a nonterminal $L$ depends over a nonterminal $G$ if either $G$ occurs in the rewriting rule of $L$ or there exists a non terminal $G'$  that occurs in the definition $L$ and $G'$ depends over $G$ 
+\end{definition}
+Let $L_{[p_1, \dots p_i]}$ be a reduced non terminal; we will say that it is open if at least one of the $p_i$ is a paramter. We will show now that in the recursive unfolding of a closed non terminals, only closed non terminals appear:
+\begin{lemma}
+	If $\gamma$ contains free parameter $p_1, \dots p_j$ and the rewriting rule of $\tilde L_{\gamma}$
+	is $\tilde L_\gamma x_1 \dots x_j \redbigp{p, d}R(t_d[\vec g / \gamma]) $, then $R(t_L[\vec g / \gamma])$ only contains non-terminals $G_\gamma'$ where the parameters appearing in $\gamma'$ are amongst $p_1, \dots p_j$. In particular, if $L_\gamma$ is closed, all non terminals occuring in $R(t_d[\vec g / \gamma]) $ are closed.
+\end{lemma}
+\begin{proof}
+	The only free variables in $t_d$ are paramters $g_1, \dots g_n$ and the $x_1, \dots x_j$. Since the only free parameters in $\gamma$ are $p_1, \dots p_j$, $FV(t_d[\vec g / \gamma]) \subseteq \{x_1, \dots x_n, p_1, \dots p_j\}$: it does contains only $p_1, \dots p_j$ as parameters, hence any reduced nonterminal in the translation $R(t_d[\vec g / \gamma])$ will only have this parameters. 
+\end{proof}
+%Hence, we see that $\{L_\gamma \mid \gamma \text{contains no paramters}\}$ is closed for the dependency relation, hence we can build a PHORS that only include these non-terminals. It will in particular include $S_{[]}$. So we can solve it in the finitary system. So we have that:
+%\begin{enumerate}
+%	\item If we are interested on the decidability of AST/PAST we can only look at the component of the PHORS containing $\tilde{S}_{[]}$ and closed under dependency, which is a finitary PHORS without paramters.
+%	\item If we are interested about the algbraicity of a non-terminal $L \vec g \vec f$, we can look at the component of the PHORS containing $\tilde{L}_{[\vec g]}$ and closed under dependency: it will be a PHORS in the paramters $g_1 \dots, g_n$, hence $\tilde{L}_{[g_1, \dots g_n]}$ will be interpreted as an algebraic power series over $g_1, \dots g_n$.
+%\end{enumerate}
+%Example: take the PHORS:
+%\begin{equation*}
+%	\begin{cases}
+%		& S = L G e\\
+%		& L f k = H f k \oplus f k\\
+%		& G l = l \oplus \Omega\\
+%		&  H g n = L g n \oplus H g n
+%	\end{cases}
+%\end{equation*}
+%the infinitary parameters being $f, g$. We obtain reduced non terminals. $\tilde{S}, \tilde{G}, \tilde{L}_G, \tilde{L}_f, \tilde{L}_g,  \tilde{H}_G, \tilde{H}_f, \tilde{H}_g, $ and the compnent of the reduced PHORS containing $\tilde{S}$ is :
+%\begin{equation*}
+%	\begin{cases}
+%		\tilde{S} = \tilde{L}_G e\\
+%		\tilde{L}_G k = R(H G k \oplus  G K) = \tilde{H}_G k \oplus \tilde{G}_{[]} k \\
+%		\tilde G_{[]} l = l \oplus \Omega\\
+%		\tilde{H}_G k = R(L G n \oplus H G n) = \tilde{L}_G n \oplus \tilde{H}_G n
+%	\end{cases}
+%\end{equation*}
+%while the component containing $\tilde{L}_f$ is:
+%\begin{equation*}
+%	\begin{cases}
+%		\tilde{L}_f k = R( H f k \oplus  f k) = \tilde{H}_f \oplus f \\
+%		\tilde{H}_f n = R(L f n \oplus H f n) = \tilde{L}_f n \oplus \tilde{H}_f n
+%	\end{cases}
+%\end{equation*}
