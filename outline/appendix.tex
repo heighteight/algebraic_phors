@@ -69,13 +69,9 @@ Then we have
 Finally, notice that $e$ is the only normal form both for $\gphors$ and $\AFF \gphors$ and that the linearisation of $e$ is $e$. From this we see that there exists a bisimulation between the rewriting system of $\gphors$ and the one of $\AFF \gphors$, hence they generate the same tree.
 \subsection{Proof of proposition}
 To prove proposition 6.3, we prove first the following correctness lemma:
-\begin{lemma}[Correctness of $\Gfin$]
+\begin{lemma}[Correctness of $\Gfin$ for ground terms]
 	\label{lemma:correctness}
-	Given an applicative term $\nonterm\mid\Delta\vdash t: \varphi$, let $s_{\model T} \bydef \model{t: T}_{}^{\Rsemiring} $ be its $\Qrelkleisli \Rsemiring$interpretation. Then,
-	\begin{enumerate}
-		\item If $\varphi= o^n$, for each $\sigma \in \model{o^n}$, $s_\sigma\big\vert_{\model{\nonterm}+ \model{\Delta}} \in \fpp{\Rsemiring}{\model{\nonterm}+ \model{\Delta}}$ is a polynomial. Moreover, for each $f:_k \psi \in \Delta$, the total degree of $s$ in the variables $x_{f:_k \psi}$ is at most $k$
-		%\item If $\varphi = !_k\varphi_1 \multimap \varphi_2$ is an arrow type, then for each 
-	\end{enumerate}
+	Given a term $\nonterm\mid\Delta\vdash t: \1$, let $s \bydef \model{t: \1^n}_{}^{\Rsemiring} $ be its $\Qrelkleisli \Rsemiring$interpretation, which consists of a single power series. Then, $s_\sigma\big\vert_{\model{\nonterm}+ \model{\Delta}} \in \fpp{\Rsemiring}{\model{\nonterm}+ \model{\Delta}}$ is a polynomial. Moreover, for each $f:_k \psi \in \Delta$, the total degree of $s$ in the variables $x_{f:_k \psi}$ is at most $k$
 \end{lemma}
 We don't prove directly this lemma, as the induction hypothesis would be not sufficient, but we pass through an intermediate step that uses some kind of reducibility candidates.
 \begin{definition}
@@ -120,7 +116,7 @@ Now we can prove by induction the following lemma:
 	Now assume that $t \in \Com(\phi)$ and $\|\mu| > k$. By inductive hypothesis, we know that $s\vert_{\model{\nonterm}+ \model{\Delta}}$ is polynomial of total degree at most $k$ in the variables $x_{x:S}$: hence $r_{\mu, t} \Big\vert_{\model{\nonterm}+ \model{\Delta}}=0$ for $\supp \mu \subseteq \Com(\psi)$ and $|\mu| > k$.
 	 $r_{\mu, t} \Big\vert_{\model{\nonterm}+ \Com(\model{\Delta})}=0$. Point (2) is in this case obvious. 
 \end{proof} 
-From the previous lemma, lemma \ref{lemma:correctness} is obvious by taking $\varphi=\1^n$  and observing that if $s\Big\vert_{\model{\nonterm}+ \Com(\model{\Delta})}=0$, then  $s\Big\vert_{\model{\nonterm}+ \model{\Delta}}=0$ (as $\Delta \subseteq \Com(\Delta)$)
+From the previous lemma, lemma \ref{lemma:correctness} is obvious by taking $\varphi=\1$  and observing that if $s\Big\vert_{\model{\nonterm}+ \Com(\model{\Delta})}=0$, then  $s\Big\vert_{\model{\nonterm}+ \model{\Delta}}=0$ (as $\Delta \subseteq \Com(\Delta)$)
 From this we obtain the following lemma about terms $\lambda x_1 \dots x_n.t: !_{k_1} \psi_1 \multimap \dots !_{k_n} \psi_n \multimap \1 $:
 \begin{lemma}
 	Given a term $$\nonterm\mid\emptyset \vdash : \lambda x_1 \dots x_n.t: !_{k_1} \psi_1 \multimap \dots !_{k_1} \psi_n \multimap \1$$ with $!_{k_n} \psi_1 \multimap \dots !_{k_1} \psi_n \multimap \1 \tri T$, let $s_{\model{T}} \bydef \model{t: T}^{\Rsemiring} $ be its $\Qrelkleisli \Rsemiring$interpretation. Then:
@@ -133,7 +129,8 @@ From this we obtain the following lemma about terms $\lambda x_1 \dots x_n.t: !_
 	By lemma \ref{lemma:correctness}, the interpretation of $\nonterm\mid x_1:_{k_1} \dots x_n:_{k_n} \vdash : t: \1$ is a polynomial of total degree at most $k_i$ in the variables $x_{x_i:_{k_i}: \psi_i}$
 \end{proof}
 \section{Proofs of section 7}
-We consider an infinitary PHORS with nonterminals $\nonterm$, parameters $\mathcal{P}= \vec g$
+\subsection{Proof of theorem 7.1 }
+We consider a parametric bounded PHORS $\gphors=(\nonterm, \C P,\C R, S)$ and we build from it a $\Gfin$ PHORS with paramters $R(\gphors)$ . In the case that $\gphors$ is closed, from $R(\Gfin)$ we can extract a subset of nonterminals that form a (parameter free) $\Gfin$.
 \begin{definition}
 	The set $T(L)$ of substituable terms for a non terminal $L \in \nonterm, \: \nonterm(L)= !_{\infty} \psi_1 \multimap \dots\multimap  !_{\infty} \psi_j \multimap \varphi$ is defined as follows:
 	$$T(L) \bydef \{[t_1, \dots t_n] \in \nonterm^* \: \mid \: \forall i \, (t_i \in \nonterm \cup \mathcal{P}\land (\nonterm \cup \mathcal{P}) t_i = \psi_i)  \}  $$
@@ -208,3 +205,34 @@ while the component containing $\tilde{L}_f$ is:
 		\tilde{H}_f n = R(L f n \oplus H f n) = \tilde{L}_f n \oplus \tilde{H}_f n
 	\end{cases}
 \end{equation*}
+\subsection{About the composition of PHORS}
+Here, we prove that what has been defined in Definition 7.2 as the composition of two $\Ginf$ really deserves this name.
+Let  $\Ginf$ $\gphors=(\nonterm_1,\C P ,\C R_1,S_1)$ be a $\Ginf$. Recall that its $\Qrelkleisli{\Rsemiring}$ interpretation $\model{\gphors}$ is then an arrow in $\Qrelkleisli{\Rsemiring}(\model{P}, \model{N})$, which is a family $s_{\model{\nonterm}} \in \fps{\Rsemiring}{\model{\C P}}$ of fps.
+\begin{lemma}
+	Let  $\Ginf$ $\gphors_1=(\nonterm_1,\C P\cup\{w:_\infty\varphi),\C R_1,S_1)$ and
+	$\gphors_2=(\nonterm_2,\C P,\C R_2,S_2)$ be two $\Ginf$ with $\nonterm_1 \cap \nonterm_2= \emptyset$ and $\nonterm_2(L) = \phi$. Let $\gphors_1(\gphors_2)$ be their composition along $L$. Then we have for each $L_1 \in \nonterm_1 $,
+	$$\model{\gphors_1(\gphors_2)}_{L_1}^\Rsemiring(y_{\model{\C P}}) = \model{\gphors_1}^\Rsemiring_{\model{L_1}}(\model{\gphors_2}^\Rsemiring_{\model{L}}(y_{\model{\C P}}),y_{\model{\C P}} )$$
+	and for each $L_2 \in \nonterm_2$,
+	$$ \model{\gphors_1(\gphors_2)}_{L_2}^\Rsemiring(y_{\model{\C P}}) = \model{\gphors_2}_{L_2}^\Rsemiring(y_{\model{\C P}}) $$
+\end{lemma}
+\begin{proof}
+Let let respectively $s_{\model{\nonterm_1}}(y_\phi, y_{{\C P}})$, $r_{\model{\nonterm_2}}(y_{{\C P}})$ be the interpretations of $\gphors_1$ and $\gphors_2$. Then $s_{\model{\nonterm_1}}(y_\phi, y_{\nonterm{\C P}})$ is the minimal solution of the system $(S_1)$ of fixpoint equation:
+\begin{equation}
+	\label{eq:fixg1}
+z_{\model{\nonterm_1}}= p_{\model{\nonterm_1}}(z_{\model{\nonterm_1}}, z_w,y_{\C P} )
+\end{equation}
+and  $r_{\model{\nonterm_2}}(y_{{\C P}})$  is the minimal solution of the system of fixpoint equations 
+\begin{equation}
+	\label{eq:fixg2}
+	z_{\model{\nonterm_2}}= q_{\model{\nonterm_2}}(z_{\model{\nonterm_1}}, y_{\C P} )
+\end{equation} 
+Then, $\model{\gphors_1(\gphors_2)}$ is the fixpoint solution of the system:
+\begin{equation}
+	\label{eq:fixgcomp}
+	\begin{cases}
+		z_{\model{\nonterm_1}}= p_{\model{\nonterm_1}}(z_{\model{\nonterm_1}}, z_{\model{L: \phi}},y_{\C P} )\\
+		z_{\model{\nonterm_2}}= q_{\model{\nonterm_2}}(z_{\model{\nonterm_1}}, y_{\C P} )
+	\end{cases}
+\end{equation}
+Clearly, since $q_{\model{\nonterm_2}}$ do not involve any variable from other equations, the fixpoint iteration for \ref{eq:fixgcomp}, restricted to the variables $z_{\model{\nonterm_2}}$ will be equal to the fixpoint iterations for \ref{eq:fixg2}. Hence the minimal solution of \ref{eq:fixgcomp}, restricted to the variables $z_{\model{\nonterm_2}}$ will be  $r_{\model{\nonterm_2}}$. Let then $(t_{\model{\nonterm_1}},r_{\model{\nonterm_2}})$ be the full minimal solution of \ref{eq:fixgcomp}. We see that $t_{\model{\nonterm_1}}$ is then the a solution of $z_{\model{\nonterm_1}}= p_{\model{\nonterm_1}}(z_{\model{\nonterm_1}}, r_{\model{\nonterm_2}} ,y_{\C P} )$; it must be the minimal one, as if there were a solution $t'_{\model{\nonterm_1}} \leq t_{\model{\nonterm_1}}$, this would give a smaller solution of \ref{eq:fixgcomp}. This, together with the fact that the fixpoint is continous in the parameters proves the lemma.
+\end{proof}
