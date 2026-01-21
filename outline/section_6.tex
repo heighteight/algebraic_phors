@@ -143,10 +143,10 @@ For all finitary parametric $\Ginf$ $\gphors=(\nonterm, \C P,\C R, S)$, for each
 \begin{example}\label{ex:Lfxpara}
 Consider the finitary $\Ginf$, with two parameters $f,g:_\infty\tau$, obtained from the one in Example \ref{ex:phorsLfx} by replacing the first equation and last equations with 
 \begin{align*}
-L_{[A,B]}x&= f(L_{[A,B]}(L_{[A,B]}x))\oplus_a gx\\
-S&= L_{[A,B]}e
+L_{[f,g]}x&= f(L_{[f,g]}(L_{[f,g]}x))\oplus_a gx\\
+S_{[f,g]}&= L_{[f,g]}e
 \end{align*}
-The interpretation of the new order-1 non-terminal $L_{[A,B]}:\tau$ is then the fps $a_{F}(z,f,g)(x)\in \fps{(\fps{\Rinf}{z,f,g})}{x}$ given by Equation \eqref{eq:catalan2}.
+The interpretation of the new order-1 non-terminal $L_{[f,g]}:\tau$ is then the fps $a_{F}(z,f,g)(x)\in \fps{(\fps{\Rinf}{z,f,g})}{x}$ given by Equation \eqref{eq:catalan2}.
 \end{example}
 
 
@@ -170,7 +170,7 @@ Now, for each $\tilde{L}_\gamma\in \widetilde{\nonterm}$, we can construct the f
 $\alpha_{L,\gamma}:=L\gamma$;
 
 \item a finitary term $\widetilde{\nonterm}\mid\C P \mid\emptyset\vdash \tilde{t}_{L,\gamma}:= \phi_L$ defined by 
-$\tilde t_{L,\gamma}= t_L\gamma\big[ \tilde L_{\gamma}/L\gamma\big]$.
+$\tilde t_{L,\gamma}=( t_L\gamma)\big[ \tilde L_{\gamma}/L\gamma\big]$.
 
 
 
@@ -231,10 +231,11 @@ We thus immediately obtain:
 \begin{corollary}
 For all closed $\Ginf=(\nonterm, \emptyset, \C R,S)$, and non-terminal $L\in \nonterm$, the  generating function $a_L(z)$ is algebraic. Moreover, the AST and PAST problems are decidable.
 \end{corollary}
-Notice that, if we apply this technique to the $\Ginf$ from Example \ref{ex:phorsLfx},
-we precisely get the one in Example \ref{ex:Lfxpara}.
-
-
+\begin{example}
+If we apply this technique to the $\Ginf$ from Example \ref{ex:phorsLfx},
+we must introduce all order-1 non-terminals $L_{[\gamma_1,\gamma_2]}$ with equations
+$L_{[\gamma_1,\gamma_2]}x=\gamma_1(L_{[\gamma_1,\gamma_2]}(L_{[\gamma_1,\gamma_2]}x)\oplus_a \gamma_2x$, where $\gamma_1,\gamma_2$ are either non-terminals or parameters. With $\gamma_1,\gamma_2=f,g$, we precisely get the equation in Example \ref{ex:Lfxpara}. By restricting ourselves to the connected component of $S_{[]}$ we obtain then a closed order-1 $\Gfin$ with non-terminals $S_{[]},A,B,L_{[A,B]}$.
+\end{example}
 %\begin{example}
 %Let $\sigma$ be a generator of the permutation group $\mathfrak S(n)$. Take a $\Ginf$
 %with equation $Lw_1\dots w_nx=w_1(Lw_{\sigma(1)}\dots w_{\sigma(n)})\oplus x$, where $L:(o\to o)^n\to(o\to o)$, as well as non-terminals $A_1,\dots, A_n$ and $S=LA_1\dots A_ne$. Intuitively, this PHORS computes all words of the form $w=a_1a_{\sigma(1)}\dots a_{\sigma^{|w|}(1)}$. Then the corresponding $\Gfin$ must contain, beyond $S$ and the $A_i$, $n!$ non-terminals $L_{[A_{\tau(1)},\dots, A_{\tau(n)}]}$, with $\tau\in \mathfrak S(n)$.
