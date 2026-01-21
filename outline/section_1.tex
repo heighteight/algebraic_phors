@@ -110,7 +110,7 @@ using our interpretation via the weighted relational model, we will show that fo
  
  Hence, on the one hand, in this work we capture a \emph{larger} class of PHORS than \cite{DBLP:conf/lics/LiMO22}, including PHORS admitting both bounded and unbounded forms of duplication, for which the AST and PAST problems remains decidable.
 On the other, our results suggest the \emph{robustness} of the class of PHORS individuated by \cite{DBLP:conf/lics/LiMO22}, as all PHORS typable in our discipline are shown 
- {equivalent} (in terms of both probabilistic termination and the corresponding language) to the affine PHORS, even though producing the corresponding affine program effectively may lead to an exponential blow up.
+ {equivalent} (in terms of both probabilistic termination and the corresponding language) to the affine PHORS, even though constructing the corresponding affine program effectively may lead to an exponential blow up.
 %   may have size more than exponential compared to the original, non-linear, one.
 
 
@@ -190,9 +190,10 @@ Our contributions can be resumed as follows:
 
 \item First, we show that the weighted relational semantics naturally associates each PHORS with generating functions capturing probability of termination and expected number of steps to termination, whose coefficients are implicitly defined via a countable system of equations. 
 
-\item Then, we introduce the \emph{finitely bounded PHORS}, $\Gfin$, extending the affine PHORS of \cite{DBLP:conf/lics/LiMO22} with finitely bounded non-linearity, and show that the corresponding generating functions are algebraic, leading to the decidability of AST and PAST.
+\item Then, we introduce the \emph{finitely bounded PHORS}, $\Gfin$, extending the PAHORS of \cite{DBLP:conf/lics/LiMO22} with finitely bounded non-linearity, and show that the corresponding generating functions are algebraic, leading to the decidability of AST and PAST.
 
-\item Finally, we introduce the \emph{infinitely bounded PHORS}, $\Ginf$, which extend the $\Gfin$ with a restricted use of \emph{unbounded} non-linearity, notably enabling the \emph{composition} of different PHORS. We show that this extension preserves both algebraicity and the decidability of AST and PAST.
+\item Finally, we introduce the \emph{infinitely bounded PHORS}, $\Ginf$, which extend the $\Gfin$ with a restricted use of \emph{unbounded} non-linearity, preserving algebraicity and decidability. Notably, the $\Ginf$ can be \emph{composed}, thus enabling a modular study of their generating functions.
+% of different PHORS. We show that this extension preserves both algebraicity and the decidability of AST and PAST.
 % 
 %e then introduce \emph{finitely graded PHORS}, $\Gfin$, extending the affine PHORS of (Ong) with bounded non-linearity, and show that the corresponding generating functions are algebraic, leading to the decidability of AST and PAST.
 %

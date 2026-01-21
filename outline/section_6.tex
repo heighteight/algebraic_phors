@@ -111,7 +111,7 @@ A \emph{(parametric) bounded PHORS} (noted $\Ginf$) is a tuple $\gphors=(\nonter
 
 The PHORS from Example \eqref{ex:phorsLfx} is a closed $\Ginf$, with $\nonterm(L)=!_\infty\tau\multimap!_\infty\tau\multimap\tau$. 
 Instead, the non-algebraic PHORS from Example \eqref{ex:nonalg} is not a $\Ginf$:
-the only possibility here is to give type $\nonterm(L)=!_\infty \tau\to \tau$, but then the non-terminal $L$ cannot be applied to the function $f\circ f:\tau$, as the latter is neither a parameter nor a non-terminal. 
+the only possibility is to give type $\nonterm(L)=!_\infty \tau\to \tau$, but then $L$ cannot be applied to the function $f\circ f:\tau$, as the latter is neither a parameter nor a non-terminal. 
 
 
 
@@ -137,6 +137,7 @@ $\model{\gphors_1\circ_L\gphors_2}^{\Rsemiring}(w_{\model{\C P}})=
 %	$$ \model{\gphors_1(\gphors_2)}_{L_2}^\Rsemiring(y_{\model{\C P}}) = \model{\gphors_2}_{L_2}^\Rsemiring(y_{\model{\C P}}) $$
 \end{lemma}
 
+Composability enables a \emph{modular} analysis of the generating functions of a PHORS: we may for instance first focus on certain subsets of non-terminals, replacing all others with parameters, and only later put the pieces together via composition.
 
 
 \subsection{Extracting Fas from $\Ginf$}

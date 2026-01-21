@@ -215,7 +215,7 @@ $\model{t}^{\Rsemiring}\in \Qrelkleisli{\Rsemiring}{\model\Gamma,\model T}\equiv
 
 To interpret $\PLY$, we restrict our attention to semirings of the form $\Rsemiring=\fps{\Rinf}{\{z\}+\Sigma}$, where $z$ denotes a distinguished variable. This allows us to interpret probabilistic choice (with bias $p$) as 
 \[
-\model{M\oplus_p N}^{\Rsemiring}=p z\cdot\model M+(1-p) z\cdot\model N.
+\model{M\oplus_p N}^{\Rsemiring}=p z\cdot\model{M}^{\Rsemiring}+(1-p) z\cdot\model{N}^{\Rsemiring}.
 \]
 As shown by Proposition \ref{prop:proba} below, the variable $z$ plays the role of a \emph{counter} for each probabilistic choice: each reduction $t\redbigp{\sigma, p}e$ will produce a monomial $pz^{|\sigma|}$ in the semantics.
 %
@@ -249,13 +249,14 @@ As shown by Proposition \ref{prop:proba} below, the variable $z$ plays the role 
 
 All this leads to the following definitions:
 \begin{definition}[probabilistic generating function of a PHORS]
-For every PHORS $\gphors=(\nonterm, \C R,S)$ and non-terminal $L_i:T_1\to\dots\to T_n\to o\in\nonterm$, letting $\Sigma=\model{T_1}+\dots+\model{T_n}$, we define the fps
+For every PHORS $\gphors=(\nonterm, \C R,S)$ and non-terminal $L_i:T_1\to\dots\to T_n\to o\in\nonterm$, letting $\Sigma=\model{T_1}+\dots+\model{T_n}$, we define:
 \[
 a_{L}(z)(x_{\Sigma}):=
  \model{\pi_i(Yt_{\gphors})f_1\dots f_n}^{\fps{\Rinf}{z}}\in \fps{(\fps{\Rinf}{z})}{\Sigma}.
 \]  
-In particular, the \emph{probabilistic generating function of $\gphors$}
-is the fps $a_{\gphors}(z):=a_S(z)\in \fps{\Rinf}{z}$.
+In particular, the fps $a_{\gphors}(z):=a_S(z)\in \fps{\Rinf}{z}$ is called
+the
+ \emph{probabilistic generating function of $\gphors$}.
 \end{definition}
 Notice that the $a_{L}(z)(x_\Sigma)=\pi_i\left(\fix \model{t_{\gphors}}^{\fps{\Rinf}{z}}\right)(x_\Sigma)$ is  the minimal solutions of the equational system $(r_x=(t_\gphors)_x(r_x,z))_{x\in \Sigma}$. 
 
