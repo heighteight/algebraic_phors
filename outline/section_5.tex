@@ -152,6 +152,21 @@ we can type  $A,B:\tau, H:!_2\tau\multimap \tau\mid \emptyset \vdash S:o$.
 \end{example}
 
 
+\begin{example}[a non-algebraic PHORS]\label{ex:nonalg}
+The PHORS $\gphors$ below:
+\begin{align*}
+Lfx &= L(f\circ f) x\oplus_{p} fx \\
+S&= L\ \mathrm{id}\  e
+\end{align*}
+is \emph{not} a $\Gfin$: if we try to type $t_L=L(y\circ y) x\oplus_{p} fx$ we obtain
+$L:\varphi \mid \emptyset\vdash \lambda y.\lambda x.t_L: \psi$, where $\psi=\ !_2\tau\multimap \tau\not\sqsubseteq \ !_1\tau\multimap\tau=\varphi$. 
+Indeed, the generating function $s^L(y_{\N},x)\in \fps{\Rsemiring}{\N+1}$ of $L$ satisfies 
+$s^L(y_\N,x)=\frac{1}{2}(
+y_1x+s^L( y^2_\N,x)
+)$, which yields the solution $s^L(y_\N,x)=\sum_i\frac{1}{2^{i+1}}y^{2^i}x$, that is not algebraic (cf. Remark~\ref{rem:hadamard}). 
+\end{example}
+
+
 
 %
 % there exists a derivation  the following is easily proved by induction:
@@ -235,7 +250,7 @@ We will now show how, for any $\Gfin$ $\gphors$, the interpretation of the under
 
  
    Define, for every type $\varphi$, $\model{\varphi}$ as $\model{o^n}=1$ and $\model{!_k\varphi\multimap \psi}=!_k\model{\varphi}\times\model{\psi}$. Notice that $\varphi\tri T$ implies $\model{\varphi}\subseteq\model{T}$, but the variable sets $\model{\varphi}$ are always finite. 
-   
+      
    Our general idea is the following: given a $\Gfin$ $\gphors=(\nonterm, \C R, S)$ and supposing $\nonterm\tri T$, from the derivations $\C R(L)$ of $\nonterm\mid\emptyset \vdash t_L:\nonterm(L)$, we deduce a corresponding simply typed derivation of $T\vdash t_{\gphors}:T$ yielding a family
    $\model{t}^{\Rsemiring}\in \fps{\Rsemiring}{\model{T}}^{\model{T}}$.  
   At the same time, we will show that the finite set $\model{\nonterm}\subset\model{T}$ is both stable and polynomial, and we will conclude that $\model{t_{\gphors}}$ is finitary, hence, by Corollary \ref{cor:propertoalg}, algebraic.    
@@ -245,7 +260,7 @@ We will now show how, for any $\Gfin$ $\gphors$, the interpretation of the under
   \begin{lemma}[stability lemma]\label{lemma:stability}
   Let $\Rsemiring=\fps{\Rinf}{\Sigma}$.
 For every derivation $\nonterm\mid\Delta\vdash t:\varphi$ refining a simply typed derivation
-$\Gamma\vdash t: T$, the pair $(\model{\nonterm}+\model{\Delta}, \model{\varphi})$ is stable and polynomial for $\model{t}^{\Rsemiring}$.
+$\Gamma\vdash t: T$, the pair $(\model{\nonterm}+\model{\Delta}, \model{\varphi})$ is stable and polynomial for $\model{t}^{\Rsemiring}_{\model\Gamma}$.
   
   
   
@@ -255,7 +270,7 @@ $\Gamma\vdash t: T$, the pair $(\model{\nonterm}+\model{\Delta}, \model{\varphi}
    One argues, by induction on the derivation, for the following two claims:
    \begin{varenumerate} 
    \item for all non-finitary variables $\sigma$, $\left(\model{t}^\Rsemiring\right)_\sigma\Big\vert_{\model{\nonterm}+\model{\Delta}}=0$;
-   \item for all finitary variables $\sigma$ and for all $x:_k\psi\in \Delta$, the fps
+   \item for all finitary variables $\sigma$, 
    $\left(\model{t}^\Rsemiring\right)_\sigma\Big\vert_{\model{\nonterm}+\model{\Delta}}$ has 
    finite degree in each variable $x_{L:\nonterm(L)}$ and 
    degree at most $k$ in each variable $x_{f:_k\psi}$.
@@ -326,8 +341,8 @@ An immediate consequence of the stability Lemma \ref{lemma:stability} is the fol
 
 
 \begin{proposition}
-For every $\Gfin$ $\gphors=(\nonterm,\C R,S)$, the fps
-$\model{t_{\gphors}}^{\Rsemiring}\in \fps{\Rsemiring}{\model{\nonterm}}^{\model{\nonterm}}$ is finitary.
+For every $\Gfin$ $\gphors=(\nonterm,\C R,S)$, with $\nonterm\tri T$, the fps
+$\model{t_{\gphors}}^{\Rsemiring}\in \fps{\Rsemiring}{\model{T}}^{\model{T}}$ is finitary (via $\model\nonterm$).
 % derivations of $\nonterm\mid\emptyset\vdash t_L:\varphi$, with $\varphi\sqsubseteq \nonterm{L}\tri T$, the fps
 %$\model{M:\psi\tri T}^{\Rsemiring}\in \fps{\Rsemiring}{\model{T}+\model{\Gamma}}^{\model{T}}$ is finitary.
 \end{proposition}
@@ -368,21 +383,6 @@ As a consequence of Remark $\ref{remark:semilinear}$ we also obtain:
 %
 %
 %\end{example}
-
-\begin{example}[a non-algebraic PHORS]
-The PHORS $\gphors$ below:
-\begin{align*}
-Lyx &= L(y\circ y) x\oplus_{p} fx \\
-S&= L\ \mathrm{id}\  e
-\end{align*}
-is \emph{not} a $\Gfin$: if we try to type $t_L=L(y\circ y) x\oplus_{p} fx$ we obtain
-$L:\varphi \mid \emptyset\vdash \lambda y.\lambda x.t_L: \psi$, where $\psi=\ !_2\tau\multimap \tau\not\sqsubseteq \ !_1\tau\multimap\tau=\varphi$. 
-Indeed, the generating function $s^L(y_{\N},x)\in \fps{\Rsemiring}{\N+1}$ of $L$ satisfies 
-$s^L(y_\N,x)=\frac{1}{2}(
-y_1x+s^L( y^2_\N,x)
-)$, which yields the solution $s^L(y_\N,x)=\sum_i\frac{1}{2^{i+1}}y^{2^i}x$, that is not algebraic (cf. Remark~\ref{rem:hadamard}). 
-\end{example}
-
 %
 %\begin{remark}
 %
@@ -395,12 +395,12 @@ y_1x+s^L( y^2_\N,x)
 
 Let us conclude by showing how to decide the AST and PAST problems:
 \begin{theorem}
-	AST and PAST are decidable for $\Gfin$.	
+	AST and PAST are decidable for any $\Gfin$.	
 \end{theorem}
 \begin{proof}[Proof sketch]
 The  proof of Theorem \ref{Gfin-algebraic-theorem} is constructive: it gives a way to build effectively a FAS $(\vec x = p_i(\vec x))_{1 \leq i \leq n}$ that has $(a_L(z))_{L \in \nonterm}$ as its (minimal) solution by computing, for each $L \in \nonterm$, the interpretation $\model{\mathcal{R}(L)}^{\Rinf}$. 
 Once we have the FAS, we can check if $\mathbb P(\gphors\downarrow) = a_\gphors(1)=1$ via the first order Existential Theory of the Reals $\Etor$ (cite Etessami-Yannakakis, 09): first, we create a first order formula $\phi( \vec x)$ expressing the fact that $\vec x$ satisfies $\vec x = p_i(\vec x)$, then we can express the fact that $x_1=1$ by the formula $\exists \vec{x}(x_1=1 \land \phi(\vec x) \land \forall \vec y ((\vec y < \vec x) \implies \neg \phi(\vec y)  ))$\\
-As for PAST, remember in the first place that PAST implies AST. Then, given a $\gphors=(\nonterm, \C R, S) \in \Gfin$, we can in the first place test if it is AST: if it is not, then it not PAST. If it AST, notice that by \ref{Gfin-algebraic-corollary}, $a_\gphors(z)$ is an algebraic power series. Then, we can, as pointed out in remark \ref{derivative-rational}, find a rational function $r(z, y)$ such that $a'_\gphors(z)= r(z, a_{\gphors}(z)) $. But then $E(\gphors\downarrow) =a'_\gphors(1)= r(1,1)$.
+As for PAST, remember in the first place that PAST implies AST. Then, given a $\gphors=(\nonterm, \C R, S) \in \Gfin$, we can in the first place test if it is AST: if it is not, then it not PAST. If it AST, notice that by \ref{Gfin-algebraic-corollary}, $a_\gphors(z)$ is an algebraic power series. Then, we can, as pointed out in remark \ref{derivative-rational}, find a rational function $r(z, y)$ such that $a'_\gphors(z)= r(z, a_{\gphors}(z)) $. But then $\mathbb E(\gphors\downarrow) =a'_\gphors(1)= r(1,1)$.
 \end{proof}
 %
 %
