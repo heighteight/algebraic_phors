@@ -32,7 +32,7 @@ As already observed, all this implies that $\gphors$ is AST but not PAST.
 %  
 %  As we saw, power series are infinitary objects and their manipulation can then involve the concept of limit, making it generally uncomputable. Moreover, the continuous semiring we will generally use in the context of probabilistic semantics will be $\Rinf$ and the semiring of formal power series over $\Rinf$: hence, the computation with the coefficients of power series themselves could be infinitary. To our rescue, we will use a way to give a finitary specification of power series: this will be the concept of algebraicity. 
   
-  Before considering algebraic power series on a (continuous) semiring, let us first recall the case of rings, which is the one most customary in combinatorics
+  Before considering algebraic power series on a (continuous) semiring, let us first recall the case of rings, which is the one most customary in combinatorics. We will assume that all our rings are integral domains.
   \begin{definition}\label{def:fas1}
   	Let $R$ be a ring  and let $R'\leq R$ a subring.
   	A tuple $(s_1, \dots s_n)$ of formal power series $s_i \in \fps{R}{\Sigma}$ is an $R'$-\emph{algebraic family} if there exist polynomials $p_i \in \fpp{R'}{w_1, \dots w_n, \Sigma}$ such that:
@@ -68,21 +68,22 @@ As already observed, all this implies that $\gphors$ is AST but not PAST.
   
   \begin{remark}
   	\label{derivative-rational}
-  	If $s\in \fps{\R}{x}$ is algebraic with annihilating polynomial $p(w, x_\Sigma)$,
+  	If $s\in \fps{\R}{x}$ is algebraic with an annihilating polynomial $p(w, x_\Sigma)$,
 %	 (is an irreducible annihilating polynomial (also called the \emph{minimal polynomial} of $s$),
-also its derivative $s'\in \fps{\R}{x}$ is also algebraic. Moreover, one can compute effectively a rational function $r(x,y)$ such that $s'(x)$ can be computed from $s$ via 
- $s'(x) = r(x, s(x))  $.
+also its derivative $s'\in \fps{\R}{x}$ is algebraic. Moreover, one can find effectively (\cite{CHUDNOVSKY1986271}, \cite{DBLP:series/tmsc/KauersP11}) a rational function $r(x,y)$ such that $s'(x)$ can be computed from $s$ via 
+ $s'(x) = r(x, s(x)) $.
   \end{remark}
   \begin{remark}
   	\label{remark:algoveralg}
-  	$s \in \fps{R}{x_\Sigma}$ is $R'$-algebraic iff $R'(x_\Sigma) \leq R(x_\Sigma)(s)$ is an algebraic extension of fields, where $R(x_\Sigma)$ is the field of rational functions with variables $x_\Sigma$. From this, we have that if $r \in \fpp{\fps{R}{x_\Sigma}}{y_{\Theta}}$ is a polynomial with variables $y_{\Theta}$ and coefficients that are $R'$algebraic fps, then $s$ is an $R'$algebraic fps with paramters $x_\Sigma, y_\Theta$. This is consequence of the basic fact that if $K \leq K'$ and $K' \leq K''$ are algebraic extension of fields, then $K \leq K''$ is algebraic. See (cite van der Waerden, 1) for the discussion of these concepts and results.
+  	$s \in \fps{R}{x_\Sigma}$ is $R'$-algebraic iff $R'(x_\Sigma) \leq R(x_\Sigma)(s)$ is an algebraic extension of fields, where $R(x_\Sigma)$ is the field of rational functions with variables $x_\Sigma$. From this, we have that if $r \in \fpp{\fps{R}{x_\Sigma}}{y_{\Theta}}$ is a polynomial with variables $y_{\Theta}$ and coefficients that are $R'$algebraic fps, then $s$ is an $R'$algebraic fps with paramters $x_\Sigma, y_\Theta$. This is consequence of the basic fact that if $K \leq K'$ and $K' \leq K''$ are algebraic extension of fields, then $K \leq K''$ is algebraic. See \cite{Van_der_Waerden2003-rd} for the discussion of these concepts and results.
   \end{remark}
 %  \begin{lemma}
 %  	If $p, q \in \fpp{R'}{w_1,x_\Sigma}$ are coprime, there exists a non zero polynomial $Res_{w_1}(p,q) \in \fpp{R'}{x_\Sigma}$ such that for each $(\bar w, \bar x_\Sigma)$ that is a common root of $p,q$ in an extension $R \supseteq R'$, then $Res(\bar x_\Sigma)=0$.
 %  \end{lemma}
 
   The theory of algebraic power series should be stated in a slightly different way in the context of semirings: if $a \in \fps{\Rsemiring}{\Sigma}, a > 0$, then for each $k$ $a^k > 0$, hence it is not possible that $p(a, x_\Sigma)=0$ for some $p \in \fpp{\Rsemiring}{\Sigma}$. Definition \ref{def:fas1} must thus be adapted as follows:
-     \begin{definition}\label{def:fas2}
+     \begin{definition}[\cite{DBLP:books/sp/KuichS86}]
+     	\label{def:fas2}
 	Let $\Rsemiring$ be a semiring and let $\Rsemiring'\leq \Rsemiring$ be a subsemiring. A  $\Rsemiring'$-\emph{fixpoint algebraic system} (in short $\Rsemiring'$-\emph{FAS}) with parameters $x_\Sigma$ is a system of $n$ equations:
 	 \begin{equation}
 		\label{fixpointsystem}
@@ -95,7 +96,7 @@ also its derivative $s'\in \fps{\R}{x}$ is also algebraic. Moreover, one can com
 	A family $(s_1, \dots s_n)$ of formal power series $s_i \in \fps{\Rsemiring}{\Sigma}$ that is the minimal solution of a $\Rsemiring'$-FAS is said a $\Rsemiring'$-\emph{fixpoint algebraic family}. 
 	If the $p_i$ are such that $p_i(0,0)=0$ and, for each $j$, the coefficient of the monomial $w_j$ in $p_i$ is $0$, we say that the system is \emph{proper}.
 \end{definition}
-	The theory of systems like \eqref{fixpointsystem} has been extensively studied (cite Kuich, Schlund, Banderier-Drmota) in the context of combinatorics and formal language theory: in particular, it can be shown that they admit a (unique) minimal solution, that can be obtained by iterating the polynomials $p_1 \dots p_n$. In the following we will be in general be interested into ${\Rinf}$-power series algebraic over $\Q_{\geq 0}$: in this case, the polynomial equations $w_i= p_i, \: p \in \fpp{\Qpos}{\Sigma}$ can be rewritten as $p'_i \bydef p_i- w_i = 0, \: p \in \fpp{\Qpos}{\Sigma}$. Rather than speaking of the minimal solution of \eqref{fixpointsystem} as a system with coefficients in $\Qpos$, we will be able to speak about the minimal non-negative solution $(s_1, \dots s_n)$  of the system $(p'_i=0)_{1 \leq i \leq n}$ with coefficients over $\mathbb{Q}$.
+	The theory of systems like \eqref{fixpointsystem} has been extensively studied (\cite{DBLP:books/sp/KuichS86}, \cite{DBLP:journals/cpc/BanderierD15}) in the context of combinatorics and formal language theory: in particular, it can be shown that they admit a (unique) minimal solution, that can be obtained by iterating the polynomials $p_1 \dots p_n$. In the following we will be in general be interested into ${\Rinf}$-power series algebraic over $\Q_{\geq 0}$: in this case, the polynomial equations $w_i= p_i, \: p \in \fpp{\Qpos}{\Sigma}$ can be rewritten as $p'_i \bydef p_i- w_i = 0, \: p \in \fpp{\Qpos}{\Sigma}$. Rather than speaking of the minimal solution of \eqref{fixpointsystem} as a system with coefficients in $\Qpos$, we will be able to speak about the minimal non-negative solution $(s_1, \dots s_n)$  of the system $(p'_i=0)_{1 \leq i \leq n}$ with coefficients over $\mathbb{Q}$.
  	\\We will prove now that, in this case, if the FAS is proper, even more is true: every $s_i$ part of a $\Q^+$-algebraic family is algebraic:
  	\begin{theorem}[Variable Elimination]
  		\label{th:elimination}
@@ -104,7 +105,7 @@ also its derivative $s'\in \fps{\R}{x}$ is also algebraic. Moreover, one can com
  		that is, every $s_i$ is a $\Q$-algebraic power series.
  	\end{theorem}
  	\begin{proof}
- 		The complete proof and the related elimination algorithm, based on classical methods from algebraic geometry(cite van Der Waerden, Introduction to ... ) can be found in Kuich and Salomaa's book (cite), Thms.~16.9, 16.10. Observe that elimination here requires the FAS $F$ to be proper.
+ 		The complete proof and the related elimination algorithm, based on classical methods from algebraic geometry(cite van Der Waerden, Introduction to ... ) can be found in Kuich and Salomaa's book \cite{DBLP:books/sp/KuichS86}, Thms.~16.9, 16.10. Observe that elimination here requires the FAS $F$ to be proper.
  	\end{proof}
 	
  If $a(x),b(x)\in \fps{\Rsemiring}{x_\Sigma}$ are algebraic, then so are their sum $a(x)+b(x)$, multiplication $a(x)b(x)$, composition $a(b(x))$ and derivative $a'(x)$ (Concrete Teth.). Recall from Section 4 that $a(b(x))$ is well-defined thanks to the continuity of $\Rsemiring$ (composition of algebraic power series is not generally well-defined over arbitrary (semi)rings). 
@@ -116,7 +117,7 @@ also its derivative $s'\in \fps{\R}{x}$ is also algebraic. Moreover, one can com
 	
 %	
 % 		As already said, if $a(x)= \sum_n a_n x^{p_n}$ is algebraic, then the growth of $p_n$ cannot be supralinear. 
-		When $a(x) =  \sum_{\mu \in !\Sigma} a_\mu x^\mu \in \fps{\Rinf}{x_\Sigma}$ is part of a $\Q^+$-proper algebraic family, we can refine what we said in Remark \ref{rem:hadamard}: as a consequence to (Kuich, Thm.~16.35), the support 
+		When $a(x) =  \sum_{\mu \in !\Sigma} a_\mu x^\mu \in \fps{\Rinf}{x_\Sigma}$ is part of a $\Q^+$-proper algebraic family, we can refine what we said in Remark \ref{rem:hadamard}: as a consequence to (\cite{DBLP:books/sp/KuichS86}, Thm.~16.35), the support 
  		$\supp a=\{\mu \mid a_\mu \neq 0\} $
  		is \emph{semilinear}, that is, it is
 %		

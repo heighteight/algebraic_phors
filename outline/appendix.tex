@@ -31,7 +31,7 @@ Then we get
 	$w_{i+1}=\mathbb P[t\to^* x_{i+1}]$.
 \end{proposition}
 \begin{proof}
-	By the soundness of the weighted relational model with respect to intersection type (cite Pagani, Pistone e Barbarossa), the monomials $x_0^{i_0}, \dots x_n^{i_n}$ that appear with positive coefficient in $\model{t}^{\Rinf}(x_1,\dots, x_n)\in \fps{\Rinf}{x_1,\dots,x_n}$ correspond to derivations $x_1: [\1^{i_1}] \dots x_n: [\1^{i_n}] \vdash t: \1$. 
+	By the soundness of the weighted relational model with respect to intersection type (\cite{DBLP:journals/jacm/EhrhardPT18}, \cite{DBLP:journals/corr/abs-2501-15637}), the monomials $x_0^{i_0}, \dots x_n^{i_n}$ that appear with positive coefficient in $\model{t}^{\Rinf}(x_1,\dots, x_n)\in \fps{\Rinf}{x_1,\dots,x_n}$ correspond to derivations $x_1: [\1^{i_1}] \dots x_n: [\1^{i_n}] \vdash t: \1$. 
 \end{proof}
 \section{Proofs of section 6}
 \subsection{Proof of theorem 6.2}
@@ -234,5 +234,5 @@ Then, $\model{\gphors_1(\gphors_2)}$ is the fixpoint solution of the system:
 		z_{\model{\nonterm_2}}= q_{\model{\nonterm_2}}(z_{\model{\nonterm_1}}, y_{\C P} )
 	\end{cases}
 \end{equation}
-Clearly, since $q_{\model{\nonterm_2}}$ do not involve any variable from other equations, the fixpoint iteration for \ref{eq:fixgcomp}, restricted to the variables $z_{\model{\nonterm_2}}$ will be equal to the fixpoint iterations for \ref{eq:fixg2}. Hence the minimal solution of \ref{eq:fixgcomp}, restricted to the variables $z_{\model{\nonterm_2}}$ will be  $r_{\model{\nonterm_2}}$. Let then $(t_{\model{\nonterm_1}},r_{\model{\nonterm_2}})$ be the full minimal solution of \ref{eq:fixgcomp}. We see that $t_{\model{\nonterm_1}}$ is then the a solution of $z_{\model{\nonterm_1}}= p_{\model{\nonterm_1}}(z_{\model{\nonterm_1}}, r_{\model{\nonterm_2}} ,y_{\C P} )$; it must be the minimal one, as if there were a solution $t'_{\model{\nonterm_1}} \leq t_{\model{\nonterm_1}}$, this would give a smaller solution of \ref{eq:fixgcomp}. This, together with the fact that the fixpoint is continous in the parameters proves the lemma.
+Clearly, since $q_{\model{\nonterm_2}}$ do not involve any variable from other equations, the fixpoint iteration for \ref{eq:fixgcomp}, restricted to the variables $z_{\model{\nonterm_2}}$ will be equal to the fixpoint iterations for \ref{eq:fixg2}. Hence the minimal solution of \ref{eq:fixgcomp}, restricted to the variables $z_{\model{\nonterm_2}}$ will be  $r_{\model{\nonterm_2}}$. Let then $(t_{\model{\nonterm_1}},r_{\model{\nonterm_2}})$ be the full minimal solution of \ref{eq:fixgcomp}. We see that $t_{\model{\nonterm_1}}$ is then the a solution of $z_{\model{\nonterm_1}}= p_{\model{\nonterm_1}}(z_{\model{\nonterm_1}}, r_{\model{\nonterm_2}} ,y_{\C P} )$; it must be the minimal one, as if there were a solution $t'_{\model{\nonterm_1}} \leq t_{\model{\nonterm_1}}$, this would give a smaller solution of \ref{eq:fixgcomp}. This proves the lemma.
 \end{proof}

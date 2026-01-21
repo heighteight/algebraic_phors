@@ -1,5 +1,5 @@
 % !TEX root = main.tex
-In this section, we recall the well-studied relational semantics of linear logic weighted over a continuous semiring $\Rsemiring$, although in a slightly different flavor than the one used in (cite Laird, Manzonetto): rather than using $\Rsemiring$-valued matrices, we will use formal power series over $\Rsemiring$, as in (cite Paolo and Davide). We will notably illustrate how this semantics yields an interpretation of PHORS as formal power series.
+In this section, we recall the well-studied relational semantics of linear logic weighted over a continuous semiring $\Rsemiring$, although in a slightly different flavor than the one used in \cite{DBLP:conf/lics/LairdMMP13}: rather than using $\Rsemiring$-valued matrices, we will use formal power series over $\Rsemiring$, as in \cite{DBLP:journals/corr/abs-2501-15637}. We will notably illustrate how this semantics yields an interpretation of PHORS as formal power series.
 
 % Then, we focus on algebraic power series: this is a concept widely used in algebra and combinatorics (cite Flajolet, Kauers, Eisenbud), in the context of rings or fields. Its treatment in semi-rings is less standard, but extensively studied in the context of formal language theory (cite Kuich, Schlund). We will show that, through the relational semantics, such ideas apply naturally to the semantics of probabilistic $\lambda$-calculi.
 
@@ -8,7 +8,7 @@ In this section, we recall the well-studied relational semantics of linear logic
 %but we will not have to worry too much about this, as we will work with a semirings $\Rsemiring$ (usually $\Rinf$) that has a subsemiring embe\\
 
 \subsection{Formal Power Series}
-Let us first introduce formal power series; for more details about them and their applications to combinatorics we refer to (cite the concrete tetrahedron). Given a set $\Sigma$, 
+Let us first introduce formal power series; for more details about them and their applications to combinatorics we refer to \cite{DBLP:books/daglib/0023751}, \cite{DBLP:series/tmsc/KauersP11}. Given a set $\Sigma$, 
 let us call $!\Sigma$ the set of finite multisets over it, i.e functions $\mu: \Sigma \to \NAT$ with finite support. Given a semiring $\Rsemiring$, the set of \emph{formal power series (with commuting variables) over $\Rsemiring$}, denoted $\fps{\Rsemiring}{\Sigma}$, is the set of all functions $!\Sigma \to \Rsemiring$. More concretely, if
  we introduce for each $s \in \Sigma$ a variable $x_s$ (we will denote by $x_\Sigma$ the set of all these variables), then a finite multiset $\mu \in !\Sigma$ can be seen as the monomial $x_\Sigma^\mu \bydef \Pi_{s \in \Sigma}x_s^{\mu(s)}$; then any formal power series $s\in \fps{\Rsemiring}{\Sigma}$ can be expressed as a formal sum:
  $$s=\sum_{\mu \in !\Sigma} s_\mu x_\Sigma^{\mu}.$$ 
@@ -82,7 +82,7 @@ form a (non-continuous) sub-semiring of $\fps{\Rsemiring}{\Sigma}$, that we will
   
   \subsection{The Weighted Relational Semantics}
   
-    Now, we recall the link between formal power series and the weighted relational model of linear logic (cite Laird, Manzonetto). Given a continous semiring $\Rsemiring$, the category 
+    Now, we recall the link between formal power series and the weighted relational model of linear logic \cite{DBLP:conf/lics/LairdMMP13}. Given a continous semiring $\Rsemiring$, the category 
      $\Qrelkleisli{\Rsemiring}$ has sets as objects, and morphisms $\Qrelkleisli{\Rsemiring}(X, Y)$ are $\Rsemiring$-valued matrices indexed by $!X \times Y$. 
      $\Qrelkleisli{\Rsemiring}$ is the coKleisli category, with respect to the $!$ comonad, of the more familiar category  $\Qrel{\Rsemiring}$ of sets and $\Rsemiring$-valued matrices. 
     
@@ -195,7 +195,7 @@ Notice that the evaluation $y:(\1\to\1),x:\1\vdash tx:\1$ is precisely interpret
 
 
 Beyond exponentials, 
-$\Qrelkleisli{\Rsemiring}$ is endowed with Conway fixpoints (cite Hasegawa): given a morphism $f \in \Qrelkleisli{\Rsemiring}(X + Y, X)$.  we define $\fix f \in \Qrelkleisli{\Rsemiring}(Y, X)$ as follows: take the sequence $f_0 \bydef  0 \times id_Y \in \Qrelkleisli{\Rsemiring}(1 \times Y ,X \times Y), \: f_{n+1} \bydef f \circ (f_n \times id_Y) \circ \langle id_\1, \Delta_Y \rangle  \in \Qrelkleisli{\Rsemiring}(1 \times Y, X)$ and finally let $\fix f \bydef \sup_n f_n \in \Qrelkleisli{\Rsemiring}( Y, X)$.
+$\Qrelkleisli{\Rsemiring}$ is endowed with Conway fixpoints \cite{DBLP:journals/mscs/Hasegawa09}: given a morphism $f \in \Qrelkleisli{\Rsemiring}(X + Y, X)$,  we define $\fix f \in \Qrelkleisli{\Rsemiring}(Y, X)$ as follows: take the sequence $f_0 \bydef  0 \times id_Y \in \Qrelkleisli{\Rsemiring}(1 \times Y ,X \times Y), \: f_{n+1} \bydef f \circ (f_n \times id_Y) \circ \langle id_\1, \Delta_Y \rangle  \in \Qrelkleisli{\Rsemiring}(1 \times Y, X)$ and finally let $\fix f \bydef \sup_n f_n \in \Qrelkleisli{\Rsemiring}( Y, X)$.
    It is worth to restate this construction in terms of power series: $f$ will be represented by an $X$-indexed family $(s_x(x_X, x_Y))_{x \in X}$. Then we can define its iterates and the fixpoint as follows, for $x \in X$:
    \begin{equation}\label{eq:fixpointeq}
    \begin{aligned}
@@ -234,7 +234,7 @@ As shown by Proposition \ref{prop:proba} below, the variable $z$ plays the role 
 %\end{varitemize}
 
 \begin{remark}\label{rem:tropical}
-In (Barbarossa, Pistone) they also consider the interpretation of
+In \cite{DBLP:journals/corr/abs-2501-15637} they also consider the interpretation of
 \emph{parametric} choices  $M\oplus_x N$, i.e.~choices according to some unknown bias $x$, by taking the semiring 
   $\Qsemiring=\fps{\Rsemiring}{x,\overline x}$ and letting $\model{M\oplus_p N}^{\Qsemiring}=x\cdot M+\overline{x}\cdot N$. \end{remark}
 % $\Qrelkleisli{\Rsemiring}$ has thus all the relevant structure to define an interpretation $\model{-}^{\Rsemiring}$ of higher-order languages with fixpoints, like the $\lambda Y$ calculus or PCF (see Laird Manzonetto for all details).

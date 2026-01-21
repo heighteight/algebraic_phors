@@ -42,7 +42,7 @@ The execution of $\gphors'$ produces an infinite tree whose finite branches form
 %If we replace the choice symbol $x\oplus_{\frac{1}{2}}y$ by a binary constant $c:o\multimap o\multimap o$, and we execute the source $S$, we see that it produces an infinite tree whose finite branches form the \emph{branch language} $\C L(\gphors)=\{c^{n}e\mid n\in \N\}$ of the PHORS.
 %
 
-Our goal is to extract a generating function from programs like \eqref{eq:introphors1}, i.e.~a formal power series $a_\gphors(z)=\sum_{i=0}^\infty a_iz^i$ capturing the probabilistic termination of $\gphors$. Recall that power series always induce \emph{analytic functions} defined over some open subsets $U\subset \mathbb C$ of the field of complex numbers, and can thus be studied with methods coming from both algebra and complex analysis. For instance, the formal power series $a(x)=\sum_{n=0}^\infty \frac{1}{2^n} x^n$ induces the analytic function $a(x)=\frac{1}{1-\frac{x}{2}}$ defined over the complex numbers of absolute value strictly less than $ 2$.
+Our goal is to extract a generating function from programs like \eqref{eq:introphors1}, i.e.~a formal power series $a_\gphors(z)=\sum_{i=0}^\infty a_iz^i$ capturing the probabilistic termination of $\gphors$. Recall that power series always induce \emph{analytic functions} defined over some open subset $U\subset \mathbb C$ of the field of complex numbers, and, when this set is not empty, can thus be studied with methods coming from both algebra and complex analysis. For instance, the formal power series $a(x)=\sum_{n=0}^\infty \frac{1}{2^n} x^n$ is equal to the analytic function $a(x)=\frac{1}{1-\frac{x}{2}}$ over the open set of complex numbers of absolute value strictly less than $ 2$ (riformulare come 'the power series is an expansion of the analytic function??'\warn).
 
 As anticipated, our fundamental ingredient to extract generating functions from PHORS is the weighted relational model of linear logic. This semantics is often styled \emph{quantitative}, as it provides a \emph{precise count} of the number of times that a program may use each of its inputs during any of its reductions.
 If we consider the HORS $\gphors'$, we see that, for any $i\in \N$, the term $Gzx$ has a unique way of terminating using $z$ exactly $i$ times; formally, each such reduction yields, in the semantics, a monomial of the form $z^{i}x$. By considering all possible reductions, the corresponding monomials yield then the power series below, interpreting the non-terminal $G$:
@@ -229,13 +229,13 @@ a_{H}(1,1,1)=
 %This example illustrates one fact that is general and one that only works in a \emph{restricted} class of situations. The general fact is that, for any PHORS $\gphors, the generating function $a_{\gphors}(z)$ is defined via a family of real coefficients which are mutually defined via a system of equations. 
 
 Unfortunately, termination probabilities cannot always be computed algebraically, as above.
-For instance, it is well-known that the generating functions of order-2 PHORS (which correspond to the so called \emph{indexed grammars}, cite) may fail to be algebraic. 
-In our semantics, the generating function $a_{\gphors}(z)$ of a PHORS $\gphors$ will be determined by a (countably) infinite family of equations, which we might not be able to solve either algebraically or analytically. 
+For instance, it is well-known that the generating functions of order-2 PHORS (which correspond to the so called \emph{indexed grammars}, cite) may fail to be algebraic \cite{DBLP:journals/ita/AdamsFM13}. 
+In our semantics, the generating function $a_{\gphors}(z)$ of a PHORS $\gphors$ will be determined by a (countably) infinite family of equations, which we might not be able to solve algebraically. 
 %Probability of termination for PHORS is still undecidable, anyway.
  
 The main theme of this work is then to find conditions under which the generating function $a_{\gphors}(z)$ may be found by solving some \emph{finite system of polynomial equations}, 
 and is, as a consequence, algebraic.
-Indeed, by relying on the decidable \emph{first order theory of the reals} $\Etor$ (cite qualcuno), from the algebraicity of $a_{\gphors}(z)$ we will deduce the existence of effective methods to answer both the AST and PAST problem for the corresponding PHORS $\gphors$.
+Indeed, by relying on the decidability of the \emph{first order theory of the reals} $\Etor$ (see for example \cite{Marker2002-jm} for an account of this classic result by Tarski), from the algebraicity of $a_{\gphors}(z)$ we will deduce the existence of effective methods to answer both the AST and PAST problem for the corresponding PHORS $\gphors$.
 
 
 \paragraph*{Algebraic PHORS via Bounded Exponentials}
@@ -243,7 +243,7 @@ Indeed, by relying on the decidable \emph{first order theory of the reals} $\Eto
 Such conditions come, once more, from the toolbox of linear logic: 
 as the relational semantics counts input uses, 
 bounding the number of equations interpreting the program amounts at bounding the number of uses that the program may do of each of its inputs.
-A first natural idea is thus to restrict ourselves to linear, or even affine, programs, as in (Ong et al.). Yet, the PHORS in \eqref{eq:phors1} shows that one can well admit {bounded} forms of non-linearity. 
+A first natural idea is thus to restrict ourselves to linear, or even affine, programs, as in \cite{DBLP:conf/lics/LiMO22}. Yet, the PHORS in \eqref{eq:phors1} shows that one can well admit {bounded} forms of non-linearity. 
 A standard and well-studied way to impose such bounds is via \emph{bounded  exponentials} (cite people) $!_nA$, where a program $t:\ !_nA\multimap B$ may use its input \emph{at most} $n$ times. 
 %Notice that, as we will see, this restriction continues to hold in presence of fixpoints: if $A$ is a finitely graded higher-order type and $M: A\to A$ is a program which may use its input $A$ \emph{unrestrictedly}, then its fixpoint $\mathrm{Fix}M:A$ is still ``finitary''.
 %: its interpretation still has a number of unknowns, which can be traced as the points of some algebraic variety, as we'll see.

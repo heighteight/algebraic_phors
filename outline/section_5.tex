@@ -1,7 +1,7 @@
 % !TEX root = main.tex
 
 
-In this section we introduce the class $\Gfin$, extending the affine PHORS of (Li et al.), whose type discipline ensures that the corresponding generating functions are algebraic. We will show that both the AST and PAST problems are decidable for the PHORS typable in this system.
+In this section we introduce the class $\Gfin$, extending the affine PHORS of \cite{DBLP:conf/lics/LiMO22}, whose type discipline ensures that the corresponding generating functions are algebraic. We will show that both the AST and PAST problems are decidable for the PHORS typable in this system.
 
 %
 %$\Gfin$ are an extension of the affine PHORS of (Li et al.) with \emph{finitely graded} exponentials $!_kA$ ($k\in \mathbb N$), allowing for a program to use a given input \emph{no more} than some fixed number of times.
@@ -29,7 +29,7 @@ We define an order relation $\varphi\sqsubseteq \psi$ between types by induction
 \infer{!_k\varphi\sqsubseteq !_h\psi}{k\leq h \quad\varphi\sqsubseteq\psi}
 \end{align*}
 
-The typing rules will use two kinds of contexts (as in Li et al.): 
+The typing rules will use two kinds of contexts (as in \cite{DBLP:conf/lics/LiMO22}): 
 \begin{varitemize}
 \item non-linear contexts, noted $\nonterm,\nonterm'$ will be used for non-terminal symbols; these are finite sets of type bindings of the form $L:\varphi$; intuitively, we put no restrictions on the number of times a non-terminal is used;
 
@@ -48,7 +48,7 @@ k\emptyset&=\emptyset,\\
 k(\Delta,x:_{h}\varphi)  &= k\Delta,x:_{kh}\varphi,
 \end{align*}
 }
-where, as in (Gaboardi etc.) we are assuming that $\Delta$ and $\Delta'$ agree on each variable (i.e.~they contain the same type bindings but may disagree on the corresponding coefficients). 
+where, as in (Gaboardi etc. \warn) we are assuming that $\Delta$ and $\Delta'$ agree on each variable (i.e.~they contain the same type bindings but may disagree on the corresponding coefficients). 
 
 A type judgement is an expression of the form $\nonterm\mid\Delta\vdash t:\varphi$.
 % or
@@ -373,8 +373,7 @@ As a consequence of Remark $\ref{remark:semilinear}$ we also obtain:
 \begin{remark}
 	By interpreting  $t_L \oplus t_R$ as $x \model{t_L}^{\Rinf} + \overline x \model{t_L}^{\Rinf}$ (cf.~Remark \ref{rem:tropical}), the previous corollary could be strengthened to say that the set
 	$\{(n,m) \mid \:  S \text{ terminates with } n \text{ left steps and } m \text{ rigth steps}\}$ is also semilinear.
-	This could also been deduced by the fact that the branch language of a linear HORS is multiple context-free (cite  Clairambault) and languages of this class are known to be semilinear (cite CHARACTERIZING STRUCTURAL DESCRIPTIONS PRODUCED BY VARIOUS.
-	GRAMMATICAL FORMALISMS), but it is still worth noticing that we reproved this fact via generating functions.
+	This could also been deduced by the fact that the branch language of a linear HORS is multiple context-free (cite  \cite{DBLP:conf/mfcs/ClairambaultM19}) and languages of this class are known to be semilinear \cite{DBLP:conf/acl/Vijay-ShankerWJ87}, but it is still worth noticing that we reproved this fact via generating functions.
 \end{remark}
 %\begin{example}
 %Consider again $\gphors$ from Example \ref{ex:nonlin}.
