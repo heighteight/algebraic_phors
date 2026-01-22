@@ -73,10 +73,10 @@ To prove proposition 6.3, we prove first the following correctness lemma:
 	\label{lemma:correctness}
 	Given a term $\nonterm\mid\Delta\vdash t: \1$, let $s \bydef \model{t: \1}_{}^{\Rsemiring} $ be its $\Qrelkleisli \Rsemiring$interpretation, which consists of a single power series. Then, $s_\sigma\big\vert_{\model{\nonterm}+ \model{\Delta}}$ is a polynomial. Moreover, for each $f:_k \psi \in \Delta$, the total degree of $s$ in the variables $x_{f:_k \psi}$ is at most $k$
 \end{lemma}
-We recall that given a polynomial $ P = \sum_\kappa \in !S a_\kappa x_S^\kappa$, and a subset $S' \subset S$, the total degree of $P$ in the variables $x_{S'}$ is $\max_{\kappa \mid a_\kappa \neq 0} (\sum_{i \in S'} \mu(i))$.
+We recall that given a polynomial $ P = \sum_{\kappa \in !S} a_\kappa x_S^\kappa$, and a subset $S' \subset S$, the total degree of $P$ in the variables $x_{S'}$ is $\max_{\kappa \mid a_\kappa \neq 0} (\sum_{i \in S'} \mu(i))$.
 We don't prove directly the last lemma, as the induction hypothesis would be not sufficient, but we pass through an intermediate step that reminds of reducibility candidates.
 \begin{definition}
-	For each type $\varphi \tri T$, we define by induction a set ${\Com}(\varphi)$ such that $\model{\varphi} \subseteq \Com(\phi) \subseteq \model{T}$:
+	For each type $\varphi$, we define by induction a set ${\Com}(\varphi)$ such that $\model{\varphi} \subseteq \Com(\phi) \subseteq \model{\st{\varphi}}$:
 	\begin{enumerate}
 		\item $\Com(\1^n)= \model{\1^n}$
 		\item $\Com( !_k \psi \multimap \varphi \tri S \to T) \bydef \{(\mu, f) \in !\model{S} \times \model{T}\mid \supp \mu \subseteq \Com(\psi) \implies (|\mu| \leq k \land \Com(f))\}$
@@ -85,9 +85,9 @@ When $\Delta= f:_{k_1} \psi_1, \dots f:_{k_n} \psi_n$ is a context, $\Com(\Delta
 \end{definition}
 Now we can prove by induction the following lemma:
 \begin{lemma}
-	Given a term $\nonterm\mid\Delta\vdash t: \1$, with $\varphi\tri T$, let $s_{\model{T}} \bydef \model{t: T}^{\Rsemiring} $ be its $\Qrelkleisli \Rsemiring$interpretation. We have that:
+	Given a term $\nonterm\mid\Delta\vdash t: \varphi$, let $s_{\model{\st{\varphi}}} \bydef \model{t: \st{\varphi}}^{\Rsemiring} $ be its $\Qrelkleisli \Rsemiring$interpretation. We have that:
 	\begin{enumerate}
-		\item For each $\sigma \in \model{T} \setminus \Com(\model{\varphi})$, 
+		\item For each $\sigma \in \model{\st{\varphi}} \setminus \Com(\model{\varphi})$, 
 		\begin{equation}
 			s_\sigma\big\vert_{\model{\nonterm}+ \Com(\model{\Delta})}=0
 		\end{equation}
@@ -96,7 +96,7 @@ Now we can prove by induction the following lemma:
 \end{lemma}
 	\begin{proof}
 		By induction on the type derivation $\nonterm\mid\Delta\vdash t:\varphi$. We immediately see this is true for the axioms. We discuss here the crucial cases: application and abstraction.\\ 
-		Application: suppose we know that the thesis is true for $\nonterm\mid\Delta\vdash t:!_k \psi \multimap \varphi \tri T \to S$ and $\nonterm\mid\Delta'\vdash u: \psi \tri T$. We want to prove that it is true for $\nonterm\mid\Delta+ k\Delta'\vdash (tu): \varphi \tri T$ Let $s_{\model{S}} \bydef \model{tu: S}^\Rsemiring$ We know that by definition:
+		Application: suppose we know that the thesis is true for $\nonterm\mid\Delta\vdash t:!_k \psi \multimap \varphi$ and $\nonterm\mid\Delta'\vdash u: \psi$. We want to prove that it is true for $\nonterm\mid\Delta+ k\Delta'\vdash (tu): \st{\varphi}$ Let $s_{\model{\st{\varphi}}} \bydef \model{tu: \st{\varphi}}^\Rsemiring$ We know that by definition:
 		$$s_\sigma\big\vert_{\model{\nonterm}+ \Com(\model{\Delta}+ \model{\Delta'})} = \left( \sum_{\mu \in !{\model{T}}} \model{t}^\Rsemiring_{\mu, \sigma} (\model{u}^\Rsemiring)^\mu \right) \Big\vert_{\model{\nonterm}+ \Com(\model{\Delta}+ \model{\Delta'})} $$
 
 	When we restrict the RHS to variables from $\model{\nonterm}+ \model{\Delta}+ \model{\Delta'}$, we obtain:
@@ -110,9 +110,9 @@ Now we can prove by induction the following lemma:
 		\item If $\supp \mu \subseteq \Com(\psi)$, then $(\mu, \sigma) \not \in \Com(!_k \psi \multimap \varphi)$. Hence, by inductive hypothesis $\model{t}^\Rsemiring_{\mu, \sigma}=0$ and the product is $0$
 	\end{enumerate}
 	So we deduce that the restriction of $s_\sigma$ vanishes.\\
-	Now we prove part (2): let $\sigma \in \model{!_k\psi \multimap \varphi}$. By part (1) of the inductive hypothesis, for all $\mu$ such that  $|\mu|>k$ and $(\model{u}^\Rsemiring)^\mu \Big\vert_{\model{\nonterm}+ \Com(\model{\Delta})} \neq 0$  we have that $\model{t}^\Rsemiring_{\mu, \sigma} \Big\vert_{\model{\nonterm}+ \Com(\model{\Delta})}=0$, hence \ref{eq:sumrestrict} is a finite sum, each term being a polynomial by induction hypothesis (2); we conclude that the sum is a polynomial. Now, let $f:_l \xi \in \Delta + k\Delta'$; assume that $f:_n \xi {\Delta}$ and $f_m: \xi {\Delta'}$ ($l= n+km$) and let $\vec y$ be the set of variables $\Com(\model{{f:_l \xi}})$. We have that the total degree in $\vec y$ of each $\model{t}^\Rsemiring_{\mu, \sigma} \Big\vert_{\model{\nonterm}+ \Com(\model{\Delta})}$ that gives a contribution to the sum is (by inductive hypothesis) at most $n$ and the total degree in $\vec y$ of each   $(\model{u}^\Rsemiring)_{j}\Big\vert_{\model{\nonterm}+ \Com(\model{\Delta})}, \: j \in \model{T}$  that gives a contribution to the sum is at most $m$. Since for all $\mu$ such $|\mu|>k$ we have  that $\model{t}^\Rsemiring_{\mu, \sigma} \Big\vert_{\model{\nonterm}+ \model{\Delta}}=0$, the maximal total degree of a non zero product $\model{t}^\Rsemiring_{\mu, \sigma} \Big\vert_{\model{\nonterm}+ \Com(\model{\Delta})} (\model{u}^\Rsemiring)^\mu \Big\vert_{\model{\nonterm}+ \Com(\model{\Delta'})}$ is $n+km$.\\
-	Abstraction: suppose we know that the thesis is true for $\nonterm\mid\Delta, x_k: \psi \vdash t: \varphi \tri T$, with $\psi \tri S$. We want to prove that it is true for $\nonterm\mid\Delta \vdash \lambda x. t: !_k \psi \multimap \varphi \tri S \to T$. If we write $\model{t: T}^\Rsemiring_t$, $t \in \model{T}$ as a fps $s_t=\sum_{\kappa \in !{S}} r_{\kappa,t} (x_{{x:S}})^\kappa$ (with $r_\kappa \in \fps{\Rsemiring}{\nonterm+\Delta} $), we know by definition that 
-	$$\model{ \lambda x. t:  S \to T }^\Rsemiring_{\mu, t} \Big\vert_{\model{\nonterm}+ \Com(\model{\Delta})} = r_{\mu, t} \Big\vert_{\model{\nonterm}+ \Com(\model{\Delta})} $$
+	Now we prove part (2): let $\sigma \in \model{!_k\psi \multimap \varphi}$. By part (1) of the inductive hypothesis, for all $\mu$ such that  $|\mu|>k$ and $(\model{u}^\Rsemiring)^\mu \Big\vert_{\model{\nonterm}+ \Com(\model{\Delta})} \neq 0$  we have that $\model{t}^\Rsemiring_{\mu, \sigma} \Big\vert_{\model{\nonterm}+ \Com(\model{\Delta})}=0$, hence \ref{eq:sumrestrict} is a finite sum, each term being a polynomial by induction hypothesis (2); we conclude that the sum is a polynomial. Now, let $f:_l \xi \in \Delta + k\Delta'$; assume that $f:_n \xi {\Delta}$ and $f_m: \xi {\Delta'}$ ($l= n+km$) and let $\vec y$ be the set of variables $\Com(\model{{f:_l \xi}})$. We have that the total degree in $\vec y$ of each $\model{t}^\Rsemiring_{\mu, \sigma} \Big\vert_{\model{\nonterm}+ \Com(\model{\Delta})}$ that gives a contribution to the sum is (by inductive hypothesis) at most $n$ and the total degree in $\vec y$ of each   $(\model{u}^\Rsemiring)_{j}\Big\vert_{\model{\nonterm}+ \Com(\model{\Delta})}, \: j \in \model{\st{\psi}}$  that gives a contribution to the sum is at most $m$. Since for all $\mu$ such $|\mu|>k$ we have  that $\model{t}^\Rsemiring_{\mu, \sigma} \Big\vert_{\model{\nonterm}+ \model{\Delta}}=0$, the maximal total degree of a non zero product $\model{t}^\Rsemiring_{\mu, \sigma} \Big\vert_{\model{\nonterm}+ \Com(\model{\Delta})} (\model{u}^\Rsemiring)^\mu \Big\vert_{\model{\nonterm}+ \Com(\model{\Delta'})}$ is $n+km$.\\
+	Abstraction: suppose we know that the thesis is true for $\nonterm\mid\Delta, x_k: \psi \vdash t: \varphi$. We want to prove that it is true for $\nonterm\mid\Delta \vdash \lambda x. t: !_k \psi \multimap \varphi$. If we write $\model{t: \st{\varphi}}^\Rsemiring_t$, $t \in \model{\st{\varphi}}$ as a fps $s_t=\sum_{\kappa \in !{\st{\varphi}}} r_{\kappa,t} (x_{{x:\st{\varphi}}})^\kappa$ (with $r_\kappa \in \fps{\Rsemiring}{\nonterm+\Delta} $), we know by definition that 
+	$$\model{ \lambda x. t:  \st{\psi} \to \st{\varphi} }^\Rsemiring_{\mu, t} \Big\vert_{\model{\nonterm}+ \Com(\model{\Delta})} = r_{\mu, t} \Big\vert_{\model{\nonterm}+ \Com(\model{\Delta})} $$
 	Take $(\mu, t) \not \in \Com(!_k\model{\psi} \multimap \model{\varphi})$. This means that $\supp \mu \subseteq \Com(\psi)$, but either $t \not \in \Com(\phi)$ or $|\mu| > k$. In the first case, we know $s_t=0$. Since $\supp \mu \subseteq \Com(\phi)$, then $x_{x:S}\vert_{\model{\nonterm}+ \Com(\model{\Delta})^\mu \neq 0}$ (as none of its variables with positive degree is equated to $0$ by this restriction), and so we must have also $r_{\mu, t} \Big\vert_{\model{\nonterm}+ \Com(\model{\Delta})}=0$.  
 	Now assume that $t \in \Com(\phi)$ and $\|\mu| > k$. By inductive hypothesis, we know that $s\vert_{\model{\nonterm}+ \Com(\model{\Delta})}$ is a polynomial of total degree at most $k$ in the variables $x_{x:S}$: hence $r_{\mu, t} \Big\vert_{\model{\nonterm}+ \model{\Delta}}=0$ for $\supp \mu \subseteq \Com(\psi)$ and $|\mu| > k$.
 	 $r_{\mu, t} \Big\vert_{\model{\nonterm}+ \Com(\model{\Delta})}=0$. Point (2) is in this case obvious. 
@@ -120,10 +120,10 @@ Now we can prove by induction the following lemma:
 From the previous lemma, lemma \ref{lemma:correctness} is obvious by taking $\varphi=\1$  and observing that if $s\Big\vert_{\model{\nonterm}+ \Com(\model{\Delta})}=0$, then  $s\Big\vert_{\model{\nonterm}+ \model{\Delta}}=0$ (as $\Delta \subseteq \Com(\Delta)$)
 From this we obtain the following lemma about terms $\lambda x_1 \dots x_n.t: !_{k_1} \psi_1 \multimap \dots !_{k_n} \psi_n \multimap \1 $:
 \begin{lemma}
-	Given a term $$\nonterm\mid\emptyset \vdash : \lambda x_1 \dots x_n.t: !_{k_1} \psi_1 \multimap \dots !_{k_1} \psi_n \multimap \1$$ with $!_{k_n} \psi_1 \multimap \dots !_{k_1} \psi_n \multimap \1 \tri T$, let $s_{\model{T}} \bydef \model{t: T}^{\Rsemiring} $ be its $\Qrelkleisli \Rsemiring$interpretation. Then:
+	Given a term $$\nonterm\mid\emptyset \vdash : \lambda x_1 \dots x_n.t: \varphi$$ with $\varphi = !_{k_1} \psi_1 \multimap \dots !_{k_n} \psi_n \multimap \1$, let $s_{\model{\st{\varphi}}} \bydef \model{t: \st{\varphi}}^{\Rsemiring} $ be its $\Qrelkleisli \Rsemiring$interpretation. Then:
 	\begin{enumerate}
-		\item If $\sigma \not \in \model{T} \setminus \model{!_{k_1} \psi_1 \multimap \dots !_{k_1} \psi_n \multimap \1}$, then $s_\sigma\Big\vert_{\model{\nonterm}}=0$
-		\item If  $\sigma \in \model{T} \setminus \model{!_{k_1} \psi_1 \multimap \dots !_{k_1} \psi_n \multimap \1}$, then $s \Big\vert_{\model{\nonterm}}$ is a polynomial. 
+		\item If $\sigma \not \in \model{\st{\varphi}} \setminus \model{\varphi}$, then $s_\sigma\Big\vert_{\model{\nonterm}}=0$
+		\item If  $\sigma \in \model{\st{\varphi}}$, then $s \Big\vert_{\model{\nonterm}}$ is a polynomial. 
 	\end{enumerate}
 \end{lemma}
 \begin{proof}
