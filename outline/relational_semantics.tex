@@ -263,8 +263,9 @@ a_{L}(z)(x_{\Sigma}):=
 In particular, the fps $a_{\gphors}(z):=a_S(z)\in \fps{\Rinf}{z}$ is called
 the
  \emph{probabilistic generating function of $\gphors$}.
+
 \end{definition}
-Notice that the $a_{L}(z)(x_\Sigma)=\pi_i\left(\fix \model{t_{\gphors}}^{\fps{\Rinf}{z}}\right)(x_\Sigma)$ is the minimal solutions of the equational system $(r_x=(t_\gphors)_x(r_x,z))_{x\in \Sigma}$. 
+Given the interpretation $\model{\gphors}^{\Rsemiring}\in\fps{\Rsemiring}{\model\nonterm}^{\model\nonterm}$ of the simply typed term $t_\gphors:\nonterm\to\nonterm$, observe that $a_{L_i}(z)(x_\Sigma)=\pi_i\left(\fix \model{{\gphors}}^{\Rsemiring}\right)$ is the minimal solutions of the equational system $(r_x=(\model{\gphors}^{\Rsemiring})_x(r_x,z))_{x\in \Sigma}$. 
 
 The generating function $a_\gphors(z)$ precisely captures the call-by-name probabilistic execution of closed terms, as stated below:%the interpretation $\model{M}^{\Rinf}$ of a term $M:\1$ of ground type consists in a real number, since $\model{M}^{\Rinf}\in\Qrelkleisli{\Rsemiring}(0,\1)\equiv\fps{\Rsemiring}{0}\equiv\Rsemiring$, which coincides with the probability of termination of $M$, computed as the sum of the weights $w(R)\in \Rinf$ of all call-by-name probabilistic reductions $R:M{\to^*}e$:
 \begin{proposition}\label{prop:proba}

@@ -34,7 +34,7 @@ $\nonterm\vdash \lambda x_1.\dots. x_n. t_L:\nonterm(L)$, such that $t_L$ contai
 $\nonterm, x_1,\dots, x_n\vdash t_L:\1$. 
 To $\gphors$ can we then associate the $\LY$-term
 $Yt_{\gphors}:\nonterm$, where 
-$t_{\gphors}:= \lambda \langle L_1,\dots, L_n\rangle. \langle  t_{L_1} \dots  t_{L_n}\rangle: \nonterm\to \nonterm$.
+$t_{\gphors}:= \lambda \langle L_1,\dots, L_n\rangle. \langle  t_{L_1} \dots  t_{L_n}\rangle: \nonterm\to \nonterm$. In the sequel, we will often use $\gphors$ also to denote the term $t_\gphors$, unless this creates ambiguity.
 
 
 
@@ -135,7 +135,7 @@ The \emph{call-by-name reduction $\redbigp{}$} of the $\PLY$-calculus is the clo
 %  The address and weight of a reduction can be defined as for PHORS. 
   
  
-The translation of a PHORS $\gphors$ into a term $M_{\gphors}$ of the $\PLY$-calculus works as in the case of HORS. In particular, reductions sequences $R:S\redbigp{\sigma, p}n$ to normal form are in one-to-one correspondence with probabilistic call-by-name reductions $R:M_S\redbigp{\sigma, p}n$ to normal form in $\PLY$.
+The translation of a PHORS $\gphors$ into a term $t_{\gphors}$ of the $\PLY$-calculus works as in the case of HORS. In particular, reductions sequences $R:S\redbigp{\sigma, p}n$ to normal form are in one-to-one correspondence with probabilistic call-by-name reductions $R:M_S\redbigp{\sigma, p}n$ to normal form in $\PLY$.
 For example, the PHORS from Example \ref{ex:phors0} is encoded in $\PLY$ by $Yt_{\gphors}:(o\to o)\times o$, with $t_{\gphors}=Y \lambda\langle F,S\rangle. t':((\1\to \1)\times \1)\to ((\1\to \1)\times \1)$ and  
 $t'=
 \langle \lambda  x.F(Fx)\oplus_{\frac{1}{2}} x, Fe\rangle$. 
