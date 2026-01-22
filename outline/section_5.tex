@@ -1,7 +1,7 @@
 % !TEX root = main.tex
 
 
-In this section we introduce the class $\Gfin$, extending the PAHORS of \cite{DBLP:conf/lics/LiMO22}, of PHORS with algebraic generating function and decidable AST and PAST.
+In this section we introduce a first class of PHORS, called $\Gfin$, extending the PAHORS of \cite{DBLP:conf/lics/LiMO22}, with algebraic generating function and, consequently, decidable AST and PAST.
 % We will show that both the AST and PAST problems are decidable for the PHORS typable in this system.
 
 %
@@ -49,41 +49,29 @@ k\emptyset&=\emptyset,\\
 k(\Delta,x:_{h}\varphi)  &= k\Delta,x:_{kh}\varphi,
 \end{align*}
 }
-where, as in e.g.~\cite{10.1145/3009837.3009890}, we are assuming that $\Delta$ and $\Delta'$ agree on each variable (i.e.~they contain the same type bindings but may disagree on the corresponding coefficients). 
+
+\noindent where, as in e.g.~\cite{10.1145/3009837.3009890}, we are assuming that $\Delta$ and $\Delta'$ agree on each variable (i.e.~they contain the same type bindings but may disagree on the corresponding coefficients). 
 
 A type judgement is an expression of the form $\nonterm\mid\Delta\vdash t:\varphi$.
 % or
 %$\emptyset;\emptyset\vdash^{\mathrm{fix}} t:\varphi$. The second form of type judgements are called \emph{PHORS-typings}. Notice that in a PHORS-typing we require the context to be empty.
 The typing rules are illustrated in Fig.~\ref{fig:typerules}.
 \begin{definition}[$\Gfin$]
-A \emph{finitely graded PHORS} (noted $\Gfin$) is a triple $\gphors=(\nonterm, \C R, S)$, where $\nonterm$ is a finite set of typed non-terminals, $S\in\nonterm$ is the {start symbol} such that $\nonterm(S)=\1$, and $\C R$ is a function that associates each $L\in\nonterm$ with a derivation $\nonterm\mid\emptyset\vdash \lambda x_1.\dots. x_n.t:\varphi$
+A \emph{finitely graded PHORS} (noted $\Gfin$) is a triple $\gphors=(\nonterm, \C D, S)$, where $\nonterm$ is a finite set of typed non-terminals, $S\in\nonterm$ is the {start symbol} such that $\nonterm(S)=\1$, and $\C D$ is a function that associates each $L\in\nonterm$ with a derivation $\nonterm\mid\emptyset\vdash \lambda x_1.\dots. x_n.t:\varphi$
 %(t_L \oplus_p t_R):\varphi$ 
 such that $\varphi\sqsubseteq \nonterm(L)$, $t$ contains no $\lambda$-abstraction and $\nonterm\mid x_1,\dots, x_k\vdash t:\1$.
 %t_L \oplus t_R:\1$. 
 \end{definition} 
 
-Fom any $\Gfin$ we can canonically extract the underlying (unrestricted) PHORS.
-Observe first that the rules (and indeed the derivations) of $\Gfin$ can be seen as \emph{quantitative refinements} of those of $\PLY$. First, every type $\varphi$ is (uniquely) a \emph{refinement} of some simple type $T$: the refinement relation $\varphi\tri T$ is defined by
-$\1^n\tri\1^n$ and 
-by $\varphi\tri T , \psi\tri U\Rightarrow !_k\varphi\multimap\psi\tri T\to U$.
-%
-%\[
-%\infer{\1\tri\1}{}\qquad
-%\infer{\varphi\&\psi\tri T\& U }{\varphi\tri T & \psi\tri U}\qquad
-%\infer{!_k\varphi\multimap\psi\tri T\to U }{\varphi\tri T & \psi\tri U}
-%\]
-Notice that $\varphi\sqsubseteq \psi$ implies $\varphi\tri T\Leftrightarrow \psi\tri T$. 
-Next, for every derivation $\pi:\nonterm\mid\Delta \vdash t:\varphi$, 
-by replacing each $\psi$ by $U$, where $\psi\tri U$, we obtain, by induction, a simply typed derivation $\Gamma\vdash t:T$, where $\nonterm\mid\Delta\tri \Gamma$ and $\varphi\tri T$. 
-
+Since affine implication is expressed by $!_1\varphi\multimap \psi$, 
+%and every derivation $\nonterm\mid x_1,\dots, x_k\vdash t :\1$ yields a semantically equivalent derivation  $\nonterm\mid x_1,\dots, x_k\vdash t \oplus_1 t :\1$, 
+it is immediate that all PAHORS are $\Gfin$, so all our results translate automatically to them. In particular, as the PHORS from Example \ref{ex:phors1} is affine, it is also a $\Gfin$.
 
 
 
 %Differently from (Li et al.), we require terms to be always of the form $t_L\oplus_p t_R$. This poses no syntactic restriction, since a term $t$ can always be turned into $t\oplus_p t$, but will ensure that the corresponding FAS is proper.
 
-Moreover, as affine implication is expressed by $!_1\varphi\multimap \psi$, 
-%and every derivation $\nonterm\mid x_1,\dots, x_k\vdash t :\1$ yields a semantically equivalent derivation  $\nonterm\mid x_1,\dots, x_k\vdash t \oplus_1 t :\1$, 
-it is immediate that all PAHORS are $\Gfin$, so all our results translate automatically to them. In particular, as the PHORS from Example \ref{ex:phors1} is affine, it is also a $\Gfin$.
+
 
 
 
@@ -141,8 +129,8 @@ it is immediate that all PAHORS are $\Gfin$, so all our results translate automa
 
 \begin{example}\label{ex:nonlin}
 The $\gphors$ from \eqref{eq:phors1} in Section 2 is not affine, but is a $\Gfin$: 
-$A,B$ are linear and $Hyx$ may use the functional variable $y$ at most two times, and
-we can type  $A,B:\tau, H:!_2\tau\multimap \tau\mid \emptyset \vdash S:o$.
+letting $\nonterm(A)=\nonterm(B)=\tau$ and $\nonterm(H)=!_2\tau\multimap\tau$, we can correctly type  $\nonterm\mid  \emptyset \vdash \lambda f. \lambda x.t_H: \nonterm(H)$, where
+$t_H= (H(A\circ f)x\oplus_a H(B\circ f)x)\oplus_a f(fx)$.
 
 %, with $\nonterm(A)=\nonterm(B)=\tau$ and 
 %$\nonterm. 
@@ -159,8 +147,9 @@ The PHORS $\gphors$ below:
 Lfx &= L(f\circ f) x\oplus_{p} fx \\
 S&= L\ \mathrm{id}\  e
 \end{align*}
-is \emph{not} a $\Gfin$: if we try to type $t_L=L(y\circ y) x\oplus_{p} fx$ we obtain
-$L:\varphi \mid \emptyset\vdash \lambda y.\lambda x.t_L: \psi$, where $\psi=\ !_2\tau\multimap \tau\not\sqsubseteq \ !_1\tau\multimap\tau=\varphi$. 
+is \emph{not} a $\Gfin$: if we try to type $t_L=L(y\circ y) x\oplus_{p} fx$
+with $\nonterm(L)=!_k\tau\multimap \tau$, we obtain
+$\nonterm \mid \emptyset\vdash \lambda y.\lambda x.t_L: \psi$, where $\psi=\ !_{2k}\tau\multimap \tau\not\sqsubseteq\nonterm(L)$. 
 Indeed, the generating function $s^L(y_{\N},x)\in \fps{\Rsemiring}{\N+1}$ of $L$ satisfies 
 $s^L(y_\N,x)=\frac{1}{2}(
 y_1x+s^L( y^2_\N,x)
@@ -178,17 +167,11 @@ y_1x+s^L( y^2_\N,x)
 
 While the $\Gfin$ are not linear, they can be \emph{linearized}:
 we can turn them into PAHORS with same semantics and branch language. Notice, however, that the resulting affine PHORS might have size exponential in the original one.
-
-%
-%
-%
-%, the set of corresponding branch languages do indeed coincide: this means that for any $\Gfin$ it is possible to find a PAHORS defining the same branch language.
-
-Define the \emph{size} of a $\gphors$ as the number of its non-terminals times the maximum size of any of its terms, i.e.~
-$\|\gphors\|=|\nonterm|\times\max\{|t_L|\mid L\in\nonterm\}$, and let $\partial\gphors$ be the maximum grade occurring in $\gphors$.
+More precisely, define the \emph{size} of a $\gphors$ as the number of its non-terminals times the maximum size of any of its terms, i.e.~
+$\|\gphors\|=|\nonterm|\times\max\{|\C D(L)|\mid L\in\nonterm\}$, and let $\partial\gphors$ be the maximum grade occurring in $\gphors$. Then we have:
 
 \begin{theorem}[Linearization]
-For every $\Gfin$ $\gphors=(\nonterm, \C R, S)$ there exists a PAHORS $\AFF\gphors=(\nonterm, \C R',S)$ with size $\|\AFF\gphors\|\leq \partial\gphors{\|\gphors\|}$ and such that 
+For every $\Gfin$ $\gphors=(\nonterm, \C D, S)$ there exists a PAHORS $\AFF\gphors=(\nonterm, \C D',S)$ with size $\|\AFF\gphors\|\leq \partial\gphors{\|\gphors\|}$  such that 
 $a_{\gphors}=a_{\AFF{\gphors}}$ and 
 $\C L(\gphors)=\C L(\AFF\gphors)$.
 
@@ -205,14 +188,14 @@ Then, by induction, any derivation of $\nonterm\mid \Delta\vdash t:\varphi$ yiel
 The linearization of the $\Gfin$ from Example \ref{ex:nonlin} yields the PAHORS below:
 {\small
 \begin{align*}\label{eq:phors2}
-Ly_1y_2x&=( L(A\circ y_1)(A\circ y_2)x \oplus_{a}
-L(B\circ y_1)(B\circ y_2)x )\oplus_{a}y_1(y_2x)\\
+Lf_1f_2x&=( L(A\circ f_1)(A\circ f_2)x \oplus_{a}
+L(B\circ f_1)(B\circ f_2)x )\oplus_{a}f_1(f_2x)\\
 Ax&= x\oplus_{b} \Omega\\
 Bx&=x\oplus_{c} \Omega\\
 S&=HIIe
 \end{align*}
 }
-Notice that the unique functional variable $y$, that was used twice, is now replaced by \emph{two} functional variables $y_1,y_2$, used once.
+Notice that the unique functional variable $f$, that was used twice, is now replaced by \emph{two} functional variables $f_1,f_2$, used once.
 \end{example}
 
 %In a $\Gfin$, the degree $\partial \gphors$ can be exponential in $\|\gphors\|$, so that $\AFF\gphors$ has size exponential in $\|\gphors\|$:
@@ -241,34 +224,37 @@ $\|\AFF{\gphors}\| \leq \partial\gphors\|\gphors\|=
 
 We will now show how, for any $\Gfin$ $\gphors$, the interpretation of the underlying PHORS yields a finitary FAS, whose minimal solution is thus an algebraic family.
 
- For any set $\Sigma$  and $k\in \N$, let $!_k\Sigma\subseteq !\Sigma$ be the set of multisets $\mu$ of maximal multeplicity $k$ (i.e $\max_{x \in \Sigma} \mu(x)\leq k)$. $!_k\Sigma$ corresponds to the monomials over $x_\Sigma$ of degree at most $k$ in each variable. 
- 
-% \begin{definition}
-%Given a $X$-family of fps $s_X\in \fps{\Rsemiring}{\Sigma}^X$, $\Sigma'\subset \Sigma$ and $X'\subset X$, let $s_X\big\vert_{\Sigma'}^{X'} \in \fps{\Rsemiring}{\Sigma}^X$ be the $X$-family $t_X$ defined by $t_i= s_i\vert_{\Sigma'}$, for all $i\in X'$, and $t_i=0$ otherwise.
-%
-%A $X$-family of fps $s_X\in \fps{\Rsemiring}{X}^X$ is \emph{finitary} if there exists $Y\subset X$ such that $(s_X)\big\vert_Y^Y$ is a finite family of polynomials.
-% \end{definition}
 
- 
-   Define, for every type $\varphi$, $\model{\varphi}$ as $\model{o^n}=1$ and $\model{!_k\varphi\multimap \psi}=!_k\model{\varphi}\times\model{\psi}$. We extend this to contexts by $\model{\emptyset}=0$ and $\model{\nonterm,x:\varphi}=\model{\nonterm}+\model{\varphi}$ (irrespectively of grades). Notice that $\varphi\tri T$ implies $\model{\varphi}\subseteq\model{T}$, but the variable sets $\model{\varphi}$ are always finite. 
+First, from any $\Gfin$ we can canonically extract the underlying (simply typed) PHORS.
+Observe first that the rules (and indeed the derivations) of $\Gfin$ can be seen as \emph{quantitative refinements} of the simply typed ones. Indeed, every type $\varphi$ is (uniquely) a \emph{refinement} of some simple type $\st{\varphi}$: the simple types $\st\varphi$ are defined by $\st{(o^n)}=o^n$ and $\st{(!_k\varphi\multimap\psi)}=\st\varphi\to\st\psi$.
+Notice that $\varphi\sqsubseteq \psi$ implies $\st\varphi=\st\psi$. 
+Moreover, for every derivation $\pi:\nonterm\mid\Delta \vdash t:\varphi$, 
+by replacing each $\psi$ by $\st\psi$, we obtain, by induction, a simply typed derivation $\st\pi:\st\nonterm,\st\Delta\vdash t:\st\varphi$.
+
+
+ For any set $\Sigma$  and $k\in \N$, let $!_k\Sigma\subseteq !\Sigma$ be the set of multisets $\mu$ of maximal multeplicity $k$ (i.e $\max_{x \in \Sigma} \mu(x)\leq k)$. $!_k\Sigma$ corresponds to the monomials over $x_\Sigma$ of degree at most $k$ in each variable. 
+  Define then, for every type $\varphi$, $\model{\varphi}$ as $\model{o^n}=1$ and $\model{!_k\varphi\multimap \psi}=!_k\model{\varphi}\times\model{\psi}$. We extend this to contexts by $\model{\emptyset}=0$ and $\model{\nonterm,x:\varphi}=\model{\nonterm}+\model{\varphi}$ (irrespectively of grades). Notice that $\model{\varphi}\subseteq\model{\st\varphi}$, but the variable sets $\model{\varphi}$ are always finite. 
+   
+   
+
       
-   Our general idea is the following: given a $\Gfin$ $\gphors=(\nonterm, \C R, S)$ and supposing $\nonterm\tri T$, from the derivations $\C R(L)$ of $\nonterm\mid\emptyset \vdash t_L:\nonterm(L)$, we deduce a corresponding simply typed derivation of $T\vdash t_{\gphors}:T$ yielding a family
-   $\model{t}^{\Rsemiring}\in \fps{\Rsemiring}{\model{T}}^{\model{T}}$.  
-  At the same time, we will show that the finite set $\model{\nonterm}\subset\model{T}$ yields a stable and polynomial pair, and we will conclude that $\model{t_{\gphors}}$ is finitary, hence, by Corollary \ref{cor:propertoalg}, algebraic.    
+   Our general idea is the following: given a $\Gfin$ $\gphors=(\nonterm, \C D, S)$, from the derivations $\C D(L)$ of $\nonterm\mid\emptyset \vdash t_L:\nonterm(L)$, we deduce a corresponding simply typed derivation of $ t_{\gphors}:\st\nonterm\to \st\nonterm$ yielding a family
+   $\model{t}^{\Rsemiring}\in \fps{\Rsemiring}{\model{\st\nonterm}}^{\model{\st\nonterm}}$.  
+  At the same time, we will show that the finite set $\model{\nonterm}\subset\model{\st\nonterm}$ yields a stable and polynomial pair, and we will conclude that $\model{t_{\gphors}}$ is finitary, hence, by Corollary \ref{cor:propertoalg}, algebraic.    
    
    The fundamental ingredient is the following lemma:
    
   \begin{lemma}[stability lemma]\label{lemma:stability}
   Let $\Rsemiring=\fps{\Rinf}{\Sigma}$.
-For every derivation $\nonterm\mid\Delta\vdash t:\varphi$ refining a simply typed derivation
-$\Gamma\vdash t: T$, the pair $(\model{\nonterm}+\model{\Delta}, \model{\varphi})$ is stable and polynomial for $\model{t}^{\Rsemiring}_{\model\Gamma}$.
+For every derivation $\nonterm\mid\Delta\vdash t:\varphi$, the pair $(\model{\nonterm}+\model{\Delta}, \model{\varphi})$ is stable and polynomial for $\model{t}^{\Rsemiring}\in \fps{\Rsemiring}{\model{\st\nonterm}+\model{\st\Delta}}^{\model{\st\varphi}}$.
   
   
   
   \end{lemma}
   \begin{proof}[Proof sketch]
-  Let a \emph{finitary} variable be any point in the interpretation of ${\nonterm},{\Delta},{\varphi}$, and a \emph{non-finitary} variable be any other point in the interpretation of $\Gamma$ and $T$.
-   One argues, by induction on the derivation, for the following two claims:
+  Let a \emph{finitary} variable be any point in the interpretation of ${\nonterm},{\Delta},{\varphi}$, and a \emph{non-finitary} variable be any point in 
+  $\model{\st\nonterm}-\model{\nonterm},\model{\st\Delta}-\model{\Delta},\model{\st\varphi}-\model{\varphi}$.
+By induction on the derivation, one shows the following two claims:
    \begin{varenumerate} 
    \item for all non-finitary variables $\sigma$, $\left(\model{t}^\Rsemiring\right)_\sigma\big\vert_{\model{\nonterm}+\model{\Delta}}=0$;
    \item for all finitary variables $\sigma$, 
@@ -316,7 +302,7 @@ $\Gamma\vdash t: T$, the pair $(\model{\nonterm}+\model{\Delta}, \model{\varphi}
 %\]
 %\end{proposition}
 %
-%For every $\Gfin$ $\gphors=(\nonterm, \C R,S)$, we can define the interpretation of each non-terminal $L_i$ as we did for PHORS, i.e.~ 
+%For every $\Gfin$ $\gphors=(\nonterm, \C D,S)$, we can define the interpretation of each non-terminal $L_i$ as we did for PHORS, i.e.~ 
 %$
 %\model{L_i}^{\Rsemiring}:=  \model{\pi_i(Yt_{\gphors})}=\pi_i\left(\fix \model{t_{\gphors}}\right)\in \Rsemiring^{\model{\nonterm(L_i)}}.
 %$ 
@@ -325,7 +311,7 @@ $\Gamma\vdash t: T$, the pair $(\model{\nonterm}+\model{\Delta}, \model{\varphi}
 %% the finitary interpretations $\model{t:\1\tri \1}^{\Rsemiring}$ correctly capture $\mathbb P(t\downarrow)$ and $\mathbb E(t\downarrow)$.
 %
 %\begin{corollary}
-%For every $\Gfin$ $\gphors=(\nonterm, \C R,S)$, 
+%For every $\Gfin$ $\gphors=(\nonterm, \C D,S)$, 
 %\[
 %\model{S}^{\Rinf}=\mathbb P(\gphors\downarrow),
 %\qquad
@@ -342,8 +328,8 @@ An immediate consequence of Lemma \ref{lemma:stability} is the following:
 
 
 \begin{proposition}
-For every $\Gfin$ $\gphors=(\nonterm,\C R,S)$, with $\nonterm\tri T$, the fps
-$\model{t_{\gphors}}^{\Rsemiring}\in \fps{\Rsemiring}{\model{T}}^{\model{T}}$ is finitary (via $\model\nonterm$).
+For every $\Gfin$ $\gphors=(\nonterm,\C D,S)$, the fps
+$\model{t_{\gphors}}^{\Rsemiring}\in \fps{\Rsemiring}{\model{\st\nonterm}}^{\model{\st\nonterm}}$ is finitary (via $\model\nonterm$).
 % derivations of $\nonterm\mid\emptyset\vdash t_L:\varphi$, with $\varphi\sqsubseteq \nonterm{L}\tri T$, the fps
 %$\model{M:\psi\tri T}^{\Rsemiring}\in \fps{\Rsemiring}{\model{T}+\model{\Gamma}}^{\model{T}}$ is finitary.
 \end{proposition}
@@ -351,12 +337,12 @@ $\model{t_{\gphors}}^{\Rsemiring}\in \fps{\Rsemiring}{\model{T}}^{\model{T}}$ is
 Thanks to Proposition \ref{prop:fintoalg} and the observation that all coefficients of $\model{t_\gphors}^{\Rinf}$ are rational, we obtain then:
 \begin{theorem}
 	\label{Gfin-algebraic-theorem}
-	For all $\Gfin$ $\gphors=(\nonterm, \C R, S)$, $(a_L)_{L \in \nonterm}$ is a $\Q^{+}$ fixpoint algebraic family with parameter $z$
+	For all $\Gfin$ $\gphors=(\nonterm, \C D, S)$, $(a_L)_{L \in \nonterm}$ is a $\Q^{+}$ fixpoint algebraic family with parameter $z$
 \end{theorem}
 %Now observe that the term $t_\gphors$ is in the form $\langle t_{1, L} \oplus_{p_n}  t_{1, R} \dots  t_{n, L} \oplus_{p_n} t_{n_R} \rangle$. We thus have that every fps $s(x_{\model{\nonterm},} z)$ belonging to $\model{t_\gphors}^{\fpp{\Rinf}{z}}$ is divisible by $z$. In particular $s(0_{\model{\nonterm}} 0)=0$ and for every variable $x \in x_{\model{\nonterm}}$ the monomial $x$ does not appear in $s$: hence, $\model{t_\gphors}^{\fpp{\Rinf}{z}}$ is a proper algebraic family. Then, by \ref{cor:propertoalg}, each $\model{L}^{\fps{\Rinf}{z}}$ is an algebraic power series:
 \begin{corollary}[$\Gfin$ are algebraic]
 	\label{Gfin-algebraic-corollary}
-	 For all $\Gfin$ $\gphors=(\nonterm, \C R, S)$,
+	 For all $\Gfin$ $\gphors=(\nonterm, \C D, S)$,
 	\begin{varenumerate}
 \item for each $L \in \nonterm$, $a_L(z)$ is an algebraic power series.  
 \item $\mathbb P(\gphors\downarrow)$ is a $\mathbb Q^{+}$ algebraic number and 
@@ -368,7 +354,7 @@ Thanks to Proposition \ref{prop:fintoalg} and the observation that all coefficie
 %\end{proof}
 As a consequence of Remark $\ref{remark:semilinear}$ we also obtain:
 \begin{corollary}
-	For all $\Gfin$ $\gphors=(\nonterm, \C R, S)$, the set $\{n \mid \:  S \text{ terminates in } n \text{ steps}  \}$
+	For all $\Gfin$ $\gphors=(\nonterm, \C D, S)$, the set $\{n \mid \:  S \text{ terminates in } n \text{ steps}  \}$
 	is semilinear
 \end{corollary}
 \begin{remark}
@@ -402,7 +388,7 @@ The  proof of Theorem \ref{Gfin-algebraic-theorem} is constructive: it gives a w
 % by computing, for each $L \in \nonterm$, the interpretation $\model{\mathcal{R}(L)}^{\Rinf}$. 
 We can then check if $\mathbb P(\gphors\downarrow) = a_\gphors(1)=1$ via the first order Existential Theory of the Reals $\Etor$ \cite{DBLP:journals/jacm/EtessamiY09}: first, we create a first order formula $\phi( \vec x)$ expressing the fact that $\vec x$ satisfies $\vec x = p_i(\vec x)$, then we can express the fact that $x_1=1$ by the formula $\exists \vec{x}(x_1=1 \land \phi(\vec x) \land \forall \vec y ((\vec y < \vec x) \implies \neg \phi(\vec y)  ))$.
 
-As for PAST, remember that PAST implies AST. Then, given a $\gphors=(\nonterm, \C R, S) \in \Gfin$, we can first test if it is AST: if it is not, then it is not PAST. If it AST, notice that, by Corollary \ref{Gfin-algebraic-corollary}, $a_\gphors(z)$ is an algebraic power series. Then, we can, as pointed out in Remark \ref{derivative-rational}, effectively find a rational function $r(z, y)$ such that $a'_\gphors(z)= r(z, a_{\gphors}(z)) $. But then $\mathbb E(\gphors\downarrow) =a'_\gphors(1)= r(1,1)$.
+As for PAST, remember that PAST implies AST. Then, given a $\gphors=(\nonterm, \C D, S) \in \Gfin$, we can first test if it is AST: if it is not, then it is not PAST. If it AST, notice that, by Corollary \ref{Gfin-algebraic-corollary}, $a_\gphors(z)$ is an algebraic power series. Then, we can, as pointed out in Remark \ref{derivative-rational}, effectively find a rational function $r(z, y)$ such that $a'_\gphors(z)= r(z, a_{\gphors}(z)) $. But then $\mathbb E(\gphors\downarrow) =a'_\gphors(1)= r(1,1)$.
 \end{proof}
 %
 %
@@ -426,6 +412,16 @@ As for PAST, remember that PAST implies AST. Then, given a $\gphors=(\nonterm, \
 %
 %}
 \begin{remark}
-	Let us denote by $\exptower{a}{b}$ the tower of exponential of base $a$ and height $b$. Then, for an order $n$ PHORS with nonterminals of maximal grade $k$ and maximal arity $r$, the set $\model{\nonterm}$ has at most $\exptower{k}{n} r^n $ elements. If every nonterminal occurs at least in the definition in another nonterminal (if this is not the case it could be anyway discarded), then $r^n \leq \| \gphors\|$. The polynomial $\model{t_L}^{\Q^+}$ involve then at most $\exptower{k}{n} \| \gphors\|^n$ variables and they can be computed by at most $|t_L|$ products or sum of polynomials: the total cost of these operations will be $O(\exptower{k}{n}^2 \| \gphors \|^{2n+1})$ and we have to perform them for each non terminal: the total time complexity of computing the FAS system is then $O(\exptower{k}{n}^2 \| \gphors \|^{2n+2})$. Using a polynomial space algorithm to decide $\Etor$, we can then see that the space complexity of deciding AST with our method \emph{for fixed order PHORS} is polynomial  in their size $\|\gphors \|$, but \emph{grows superexponentially} when the order is not fixed. Since the algorithm to compute the rational function of Remark \ref{derivative-rational} is polynomial \cite{CHUDNOVSKY1986271}, we can conclude the same for PAST.
+The complexity of our decision procedure for AST and PAST can be reconstructed 
+as follows:
+for an order $n$ PHORS with non-terminals of maximal grade $k$ and maximal arity $r$, the set $\model{\nonterm}$ has at most $\exptower{k}{n} r^n $ elements, where $\exptower{a}{b}$ the tower of exponential of base $a$ and height $b$. As $r\leq\|\gphors\|$, , 
+%
+%
+%. If every nonterminal occurs at least in the definition in another nonterminal (if this is not the case it could be anyway discarded), then $r^n \leq \| \gphors\|$. 
+the polynomial $\model{t_L}^{\Q^+}$ involves at most $\exptower{k}{n} \| \gphors\|^n$ variables and they can be computed by at most $|t_L|$ products or sum of polynomials: the total cost of these operations will be $O(\exptower{k}{n}^2 \| \gphors \|^{2n+1})$ and we have to perform them for each non terminal: the total time complexity of computing the FAS system is then $O(\exptower{k}{n}^2 \| \gphors \|^{2n+2})$. Using a polynomial space algorithm to decide $\Etor$, we can then see that the space complexity of deciding AST with our method \emph{for fixed order PHORS} is polynomial  in their size $\|\gphors \|$, but \emph{grows superexponentially} when the order is not fixed. Since the algorithm to compute the rational function of Remark \ref{derivative-rational} is polynomial \cite{CHUDNOVSKY1986271}, we can conclude the same for PAST.
+%
+%
+%
+%	Let us denote by $\exptower{a}{b}$ the tower of exponential of base $a$ and height $b$. Then, 
 \end{remark}
 

@@ -31,9 +31,10 @@ The language of HORS is equivalent to the $\LY$-calculus, that is, the simply-ty
 in $\gphors=(\nonterm, \C T, \C R, S)$ the function $\C R$ can be equivalently defined as a
 function associating each non-terminal $L\in \nonterm$ with a simply typed term 
 $\nonterm\vdash \lambda x_1.\dots. x_n. t_L:\nonterm(L)$, such that $t_L$ contains no $\lambda$-abstraction and 
-$\nonterm, x_1,\dots, x_n\vdash t_L:\1$. To $\gphors$ can we then associate the $\LY$-term
-$Yt_{\gphors}:\nonterm(L_1)\times\dots\times\nonterm(L_n)$, where 
-$t_{\gphors}:= \lambda \langle L_1,\dots, L_n\rangle. \langle  t_{L_1} \dots  t_{L_n}\rangle: \nonterm(L_1)\times\dots\times\nonterm(L_n)\to\nonterm(L_1)\times\dots\times\nonterm(L_n)$.
+$\nonterm, x_1,\dots, x_n\vdash t_L:\1$. 
+To $\gphors$ can we then associate the $\LY$-term
+$Yt_{\gphors}:\nonterm$, where 
+$t_{\gphors}:= \lambda \langle L_1,\dots, L_n\rangle. \langle  t_{L_1} \dots  t_{L_n}\rangle: \nonterm\to \nonterm$.
 
 
 
