@@ -1,6 +1,6 @@
 \section{Proofs of section 4}
 We prove this by the connection between the relational model and non idempotent type systems.
-Take a standard non idempotent intersection type system, for example:
+Take a standard non idempotent intersection intersection type system, for example:
 $$
 \infer[app]{\biguplus \Gamma_i \uplus \Delta \vdash ts: \tau}{ \Gamma_i \vdash s: b_i \; (i \in \{1, \dots n\})\quad \Delta \vdash t:[b_1, \dots b_n] \to \tau}
 \qquad
@@ -17,9 +17,9 @@ Then we obtain:
 	\end{enumerate}
 \end{lemma}
 \begin{proof} 
-	If we have a typing of $ x_1: \sigma_1 \dots  x_n: \sigma_n \vdash t:  \1 $, $t$ has an head normal form, then take any head normal form $L$ of $t$ (which must satisfy  $ x_1: \sigma_1 \dots  x_n: \sigma_n \vdash L:  \1 $, hence also $ x_1:\1 \dots x_n:\1\vdash L:\1$) . Then either $L = x$ or $L=e$. In the first case, we can only derive $x_i:[1] \vdash x_i:1$, in the second we just have $x_i:\emptyset \vdash e:1$\\
+	If we have a typing of $ x_1: \sigma_1 \dots  x_n: \sigma_n \vdash t:  \1 $, $t$ has an head normal form, then take any head normal form $h$ of $t$ (which must satisfy  $ x_1: \sigma_1 \dots  x_n: \sigma_n \vdash h:  \1 $, hence also $ x_1:\1 \dots x_n:\1\vdash h:\1$) . Then either $L = x$ or $L=e$. In the first case, we can only derive $x_i:[1] \vdash x_i:1$, in the second we just have $x_i:\emptyset \vdash e:1$\\
 \end{proof}
-Then we get
+From this we can deduce:
 \begin{proposition}\label{prop:affine}
 	For all first-order terms $x_1:\1,\dots, x_n:\1\vdash_{\PLY}t:\1$, 
 	$\model{t}^{\Rinf}(x_1,\dots, x_n)\in \fps{\Rinf}{x_1,\dots,x_n}$ is affine: there exists scalars $w_0,w_1,\dots, w_n\in\mathbb R_{\geq 0}$ such that
@@ -60,20 +60,21 @@ To see that $\AFF \gphors$ generates the same tree as $\gphors$, we need the fol
 	By induction on the definition of linearisation.
 \end{proof}
 Then we have
-\begin{lemma} For each non terminal $L$ and $d \in l,r$
+\begin{lemma} For each non terminal $L$ and $d \in \{l,r\}$
 	$L t_1 \dots t_n  \redbigp{\mathsf d,p} t_L[x_1/t_1, \dots x_n/t_n]$ iff $\Aff(L t_1 \dots t_n)  \redbigp{\mathsf d,p} \Aff(t_d[x_1/t_1, \dots x_n/t_n])$
 \end{lemma}
 \begin{proof}
 	We have that $\Aff(Lt_1 \dots t_n)= \AFF L \Aff(t_1)^{n_1} \dots \Aff(t_k)^{n_k} \AFF{\redbigp{\mathsf d,p}} \Aff(t_d)[x_1^{n_1}/(t_1)^{n_1}, \dots x_1^{n_1}/(t_k)^{n_k}]$, but this by the previous lemma is equal (all terms being closed, no renaming of the free variables is needed) to $\Aff(t_d[x_1/t_1, \dots x_n/t_n])$
 \end{proof}  
 Finally, notice that $e$ is the only normal form both for $\gphors$ and $\AFF \gphors$ and that the linearisation of $e$ is $e$. From this we see that there exists a bisimulation between the rewriting system of $\gphors$ and the one of $\AFF \gphors$, hence they generate the same tree.
-\subsection{Proof of proposition}
+\subsection{Proof of proposition 6.3}
 To prove proposition 6.3, we prove first the following correctness lemma:
 \begin{lemma}[Correctness of $\Gfin$ for ground terms]
 	\label{lemma:correctness}
-	Given a term $\nonterm\mid\Delta\vdash t: \1$, let $s \bydef \model{t: \1^n}_{}^{\Rsemiring} $ be its $\Qrelkleisli \Rsemiring$interpretation, which consists of a single power series. Then, $s_\sigma\big\vert_{\model{\nonterm}+ \model{\Delta}} \in \fpp{\Rsemiring}{\model{\nonterm}+ \model{\Delta}}$ is a polynomial. Moreover, for each $f:_k \psi \in \Delta$, the total degree of $s$ in the variables $x_{f:_k \psi}$ is at most $k$
+	Given a term $\nonterm\mid\Delta\vdash t: \1$, let $s \bydef \model{t: \1}_{}^{\Rsemiring} $ be its $\Qrelkleisli \Rsemiring$interpretation, which consists of a single power series. Then, $s_\sigma\big\vert_{\model{\nonterm}+ \model{\Delta}}$ is a polynomial. Moreover, for each $f:_k \psi \in \Delta$, the total degree of $s$ in the variables $x_{f:_k \psi}$ is at most $k$
 \end{lemma}
-We don't prove directly this lemma, as the induction hypothesis would be not sufficient, but we pass through an intermediate step that uses some kind of reducibility candidates.
+We recall that given a polynomial $ P = \sum_\kappa \in !S a_\kappa x_S^\kappa$, and a subset $S' \subset S$, the total degree of $P$ in the variables $x_{S'}$ is $\max_{\kappa \mid a_\kappa \neq 0} (\sum_{i \in S'} \mu(i))$.
+We don't prove directly the last lemma, as the induction hypothesis would be not sufficient, but we pass through an intermediate step that uses some kind of reducibility candidates.
 \begin{definition}
 	For each type $\varphi \tri T$, we define by induction a set ${\Com}(\varphi)$ such that $\model{\varphi} \subseteq \Com(\phi) \subseteq \model{T}$:
 	\begin{enumerate}
