@@ -17,7 +17,7 @@ a certain degree of fragility: relatively minor extensions suffice to render the
 
 What, then, happens when one considers model-checking problems for probabilistic \emph{and} higher-order programs? Recently, Kobayashi et al.~\cite{DBLP:journals/lmcs/KobayashiLG20} have introduced \emph{probabilistic higher-order recursive schemes} (PHORS), a probabilistic variant of HORS, which can be seen as the natural randomized variation on the theme of HORS. Unfortunately, verifying natural probabilistic counterparts of reachability and termination properties is in general a much more difficult task and is undecidable for PHORS, contrary to what happens for HORS and recursive Markov chains. For example, in a probabilistic setting, a natural property is \emph{almost sure termination} (AST), that is, termination with probability 1. Now, while termination is the quintessential \emph{semi-decidable} property for a Turing-complete language (and is even \emph{decidable} for HORS),  AST is $\Pi^0_2$-complete in Turing-complete probabilistic languages \cite{DBLP:journals/acta/KaminskiKM19}, and its decidability fails for PHORS, already at order 2 \cite{DBLP:journals/lmcs/KobayashiLG20}. For these reasons, the recent literature has focused on capturing sub-classes of PHORS for which AST and, possibly, the related \emph{positive almost sure termination} (PAST) -- the finiteness of the \emph{expected} number of steps to termination -- could be shown decidable, and thus possibly amenable to verification and model-checking techniques. Notably, while \cite{DBLP:journals/lmcs/KobayashiLG20} established the decidability of AST for order-1 PHORS, Li et al.~\cite{DBLP:conf/lics/LiMO22} established the decidability of both AST and PAST for the \emph{affine} PHORS (styled PAHORS), i.e.~the recursive programs which are allowed to use each of their inputs \emph{at most} once during their reductions.
 
-Despite the aforementioned results, the nature of the problem remains poorly understood, and a precise assessment of its computational difficulty is still lacking. For instance, it is currently unknown whether the decidability problem for PHORS remains $\Pi^0_2$-complete, or whether it can, while being undecidable, be placed lower in the arithmetical hierarchy. Similarly, while different methods (like intersection types or automata theory) have been applied to achieve decidability, a general approach encompassing all these results has not yet been identified. We therefore believe that it is important to investigate the nature of this problem in greater depth, which is the primary goal of this paper.
+Despite the aforementioned results, the nature of the problem remains poorly understood, and a precise assessment of its computational difficulty is still lacking. For instance, it is currently unknown whether the decidability problem for PHORS remains $\Pi^0_2$-complete, or whether it can, while being undecidable, be placed lower in the arithmetical hierarchy. Similarly, while different methods (like intersection types, game semantics or automata theory) have been applied to achieve decidability, a general approach encompassing all these results has not yet been identified. We therefore believe that it is important to investigate the nature of this problem in greater depth, which is the primary goal of this paper.
 % In the remainder of this introduction, we present a new perspective that will allow us to shed fresh light on the problem.
 
 
@@ -49,7 +49,7 @@ In the case above, it easily leads to a closed expression $c(x)=\frac{1-\sqrt{1-
 %In combinatorics, these kind of situations are typical of \emph{counting sequences}, that is, of sequences $(a_n)_{n\in \BB N}$ that represent the cardinality $a_n$ of a certain class of entities which can be constructed out of $n$ basic elements (e.g.~the famous 
 %A standard and powerful approach to study counting sequences $(a_n)_{n\in \BB N}$ is by investigating the analytic properties of the corresponding \emph{generating functions} $F(x)=\sum_{n=0}^\infty a_n x^n$, formal power series defining analytic functions over some open subset of the complex numbers.  
 
-Starting from Chomsky and Sch\"utzenberger's (\cite{CHOMSKY1963118}), generating functions have been widely applied in formal language theory. For example, it is well-known that for all regular languages $L$, the associated generating function $L(x)=\sum_{n=0 }^{\infty}L_nx^n$, where $L_n$ counts the words of $L$ of length $n$, is \emph{rational}, that is, it can be written as a fraction $L(x)=p(x)/q(x)$ of two polynomials.
+Starting from Chomsky and Sch\"utzenberger's seminal work \cite{CHOMSKY1963118}, generating functions have been widely applied in formal language theory. For example, it is well-known that for all regular languages $L$, the associated generating function $L(x)=\sum_{n=0 }^{\infty}L_nx^n$, where $L_n$ counts the words of $L$ of length $n$, is \emph{rational}, that is, it can be written as a fraction $L(x)=p(x)/q(x)$ of two polynomials.
 %
 %
 % defined by linear recurrence equations (like e.g.~the Fibonacci numbers $f_{n+2}=f_n+f_{n+1}$), and the corresponding generating function $\widehat L(x)=\sum_{n=0}^{\infty}L_nx^n$ is thus \emph{rational}, i.e.~a fraction $\frac{\mathscr{p}(x)}{\mathscr{q}(x)}$ of two polynomials.
@@ -97,12 +97,12 @@ A natural question is thus: can we find a way to relate the complexity of the te
 
 \paragraph*{Generating Functions via Linear Logic}
 
-Generating functions have been applied in the literature both for the study of
-formal grammars \cite{DBLP:books/sp/KuichS86} and 
+Generating functions have been applied in the literature to the study of
+both formal grammars \cite{DBLP:books/sp/KuichS86} and 
  \emph{first-order} programming languages (also in the probabilistic case, \cite{Klinkenberg2021,Klinkenberg2024}).  However, extending this natural and powerful approach to functional programs is challenging, as it is \emph{prima facie} not obvious how to associate \emph{higher-order} functions  with sequences of real numbers, as required to induce a generating function. 
 
 
-In this work we provide a solution to this problem, by presenting the first combinatorial study of the termination problem for {higher-order} recursive programs like the PHORS.
+In this work we provide a solution to this problem, by presenting the first combinatorial study of the termination problem for {higher-order} recursive programs like PHORS.
 To do this, we exploit in an essential way two ideas coming from the toolbox of linear logic.
 The first fundamental ingredient is the \emph{weighted relational model} \cite{DBLP:conf/lics/LairdMMP13}, which associates proofs in linear logic, as well as PCF programs, with families of \emph{formal power series} with coefficients in a continuous semiring.
 We show how this model can be used to associate each PHORS with a corresponding generating function $a_\gphors(z)$ in an elegant and compositional way.
@@ -112,7 +112,7 @@ The viewpoint of generating functions provides a \emph{novel} way to look at thi
 using our interpretation via the weighted relational model, we will show that for all affine PHORS, while the corresponding language might \emph{not} be context-free, the corresponding generating function is, in fact, always algebraic.
  Actually, the combinatorial viewpoint allows us to go beyond the linear/affine restriction and consider even \emph{non-linear} PHORS typable via the discipline of \emph{graded} or \emph{bouned exponentials} \cite{GIRARD19921, 10.1007/978-3-642-02273-9_8, 10.1007/978-3-642-54833-8_19, 10.1007/978-3-642-54833-8_18}: this discipline allows one to define types of the form $!_n A \multimap B$, intuitively expressing functions from $A$ to $B$ using their inputs \emph{at most} $n$ times. 
  
- Hence, on the one hand, in this work we capture a \emph{larger} class of PHORS than \cite{DBLP:conf/lics/LiMO22}, including PHORS admitting both bounded and unbounded forms of duplication, for which the AST and PAST problems remains decidable.
+ Hence, on the one hand, in this work we capture a \emph{larger} class of programs than \cite{DBLP:conf/lics/LiMO22}, including PHORS admitting both bounded and unbounded forms of duplication, for which the AST and PAST problems remains decidable.
 On the other, our results suggest the \emph{robustness} of the class of PHORS individuated by \cite{DBLP:conf/lics/LiMO22}: all PHORS typable in our discipline are shown 
  {equivalent} (in terms of both probabilistic termination and the corresponding language) to some PAHORS, even though reconstructing the latter effectively may lead to an exponential blow up in size.
 %   may have size more than exponential compared to the original, non-linear, one.
@@ -196,7 +196,7 @@ Our contributions can be resumed as follows:
 
 \item Then, we introduce the \emph{finitely bounded PHORS}, $\Gfin$, extending the PAHORS of \cite{DBLP:conf/lics/LiMO22} with finitely bounded non-linearity, and show that the corresponding generating functions are algebraic, leading to the decidability of AST and PAST.
 
-\item Finally, we introduce the a yet larger class $\Ginf$, extending the $\Gfin$ with a restricted use of \emph{unbounded} non-linearity, still preserving algebraicity and decidability. Notably, the $\Ginf$ can be \emph{composed}, thus enabling a modular study of their generating functions.
+\item Finally, we introduce an even larger class $\Ginf$, extending the $\Gfin$ with a restricted use of \emph{unbounded} non-linearity, still preserving algebraicity and decidability. Notably, the $\Ginf$ can be \emph{composed}, thus enabling a modular study of their generating functions.
 % of different PHORS. We show that this extension preserves both algebraicity and the decidability of AST and PAST.
 % 
 %e then introduce \emph{finitely graded PHORS}, $\Gfin$, extending the affine PHORS of (Ong) with bounded non-linearity, and show that the corresponding generating functions are algebraic, leading to the decidability of AST and PAST.

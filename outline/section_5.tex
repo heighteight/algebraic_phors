@@ -1,7 +1,7 @@
 % !TEX root = main.tex
 
 
-In this section we introduce a first class of PHORS, called $\Gfin$, extending the PAHORS of \cite{DBLP:conf/lics/LiMO22}, with algebraic generating function and, consequently, decidable AST and PAST.
+In this section we introduce a first class of PHORS, called $\Gfin$, whose corresponding  generating function is algebraic and whose AST and PAST problems are, consequently, decidable.
 % We will show that both the AST and PAST problems are decidable for the PHORS typable in this system.
 
 %
@@ -17,7 +17,7 @@ We use types defined by the grammar below:
 \varphi,\psi&:= \1^n\mid \  !_k\varphi\multimap \varphi
 %\\
 %\xi&:=\ !_k \varphi
- \qquad (k\in\mathbb N).
+ \qquad (1\leq n\in\mathbb N).
 \end{align*}
 We let $\tau$ be an abbreviation for the affine function type $!_1o\multimap o$. 
 We define an order relation $\varphi\sqsubseteq \psi$ between types by induction by
@@ -37,8 +37,7 @@ The typing rules will use two kinds of contexts (as in \cite{DBLP:conf/lics/LiMO
 
 \item graded contexts, noted $\Delta,\Delta'$ will be used for the arguments to be passed to the non-terminales; they are finite sets of type bindings of the form $x:_k \varphi$. Intuitively, the binding $x :_k \varphi$ means that we can use $x$ with type $\varphi$ \emph{at most} $k$ times.
 \end{varitemize}
-
-We define by induction the operations $\Delta+\Delta',k\Delta$ on graded contexts as follows:
+\noindent We define by induction the operations $\Delta+\Delta',k\Delta$ on graded contexts:
 {\small
 \begin{align*}
 \Delta +\emptyset &= \Delta, \\
@@ -55,9 +54,9 @@ k(\Delta,x:_{h}\varphi)  &= k\Delta,x:_{kh}\varphi,
 A type judgement is an expression of the form $\nonterm\mid\Delta\vdash t:\varphi$.
 % or
 %$\emptyset;\emptyset\vdash^{\mathrm{fix}} t:\varphi$. The second form of type judgements are called \emph{PHORS-typings}. Notice that in a PHORS-typing we require the context to be empty.
-The typing rules are illustrated in Fig.~\ref{fig:typerules}.
+The typing rules are in Fig.~\ref{fig:typerules}.
 \begin{definition}[$\Gfin$]
-A \emph{finitely graded PHORS} (noted $\Gfin$) is a triple $\gphors=(\nonterm, \C D, S)$, where $\nonterm$ is a finite set of typed non-terminals, $S\in\nonterm$ is the {start symbol} such that $\nonterm(S)=\1$, and $\C D$ is a function that associates each $L\in\nonterm$ with a derivation $\nonterm\mid\emptyset\vdash \lambda x_1.\dots. x_n.t:\varphi$
+A \emph{finitely graded PHORS} (noted $\Gfin$) is a triple $\gphors=(\nonterm, \C D, S)$, where $\nonterm$ is a finite set of typed non-terminals, $S\in\nonterm$ is the {start symbol} such that $\nonterm(S)=\1$, and $\C D$ associates each $L\in\nonterm$ with a derivation $\nonterm\mid\emptyset\vdash \lambda x_1.\dots. x_n.t:\varphi$
 %(t_L \oplus_p t_R):\varphi$ 
 such that $\varphi\sqsubseteq \nonterm(L)$, $t$ contains no $\lambda$-abstraction and $\nonterm\mid x_1,\dots, x_k\vdash t:\1$.
 %t_L \oplus t_R:\1$. 
@@ -65,7 +64,7 @@ such that $\varphi\sqsubseteq \nonterm(L)$, $t$ contains no $\lambda$-abstractio
 
 Since affine implication is expressed by $!_1\varphi\multimap \psi$, 
 %and every derivation $\nonterm\mid x_1,\dots, x_k\vdash t :\1$ yields a semantically equivalent derivation  $\nonterm\mid x_1,\dots, x_k\vdash t \oplus_1 t :\1$, 
-it is immediate that all PAHORS are $\Gfin$, so all our results translate automatically to them. In particular, as the PHORS from Example \ref{ex:phors1} is affine, it is also a $\Gfin$.
+it is immediate that all PAHORS are $\Gfin$, so all our results translate automatically to them. In particular, as the PHORS from Example \ref{ex:phors0} is affine, it is also a $\Gfin$.
 
 
 
@@ -166,7 +165,7 @@ y_1x+s^L( y^2_\N,x)
 
 
 While the $\Gfin$ are not linear, they can be \emph{linearized}:
-we can turn them into PAHORS with same semantics and branch language. Notice, however, that the resulting affine PHORS might have size exponential in the original one.
+we can turn them into PAHORS having the same semantics and branch language. Notice, however, that the resulting affine PHORS might have size exponential in the original one.
 More precisely, define the \emph{size} of a $\gphors$ as the number of its non-terminals times the maximum size of any of its terms, i.e.~
 $\|\gphors\|=|\nonterm|\times\max\{|\C D(L)|\mid L\in\nonterm\}$, and let $\partial\gphors$ be the maximum grade occurring in $\gphors$. Then we have:
 
@@ -414,11 +413,11 @@ As for PAST, remember that PAST implies AST. Then, given a $\gphors=(\nonterm, \
 \begin{remark}
 The complexity of our decision procedure for AST and PAST can be reconstructed 
 as follows:
-for an order $n$ PHORS with non-terminals of maximal grade $k$ and maximal arity $r$, the set $\model{\nonterm}$ has at most $\exptower{k}{n} r^n $ elements, where $\exptower{a}{b}$ the tower of exponential of base $a$ and height $b$. As $r\leq\|\gphors\|$, , 
+for an order $n$ PHORS with non-terminals of maximal grade $k$ and maximal arity $r$, the set $\model{\nonterm}$ has at most $\exptower{k}{n} \cdot r^n $ elements, with $\exptower{a}{b}$ the tower of exponential of base $a$ and height $b$. As $r\leq\|\gphors\|$, 
 %
 %
 %. If every nonterminal occurs at least in the definition in another nonterminal (if this is not the case it could be anyway discarded), then $r^n \leq \| \gphors\|$. 
-the polynomial $\model{t_L}^{\Q^+}$ involves at most $\exptower{k}{n} \| \gphors\|^n$ variables and they can be computed by at most $|t_L|$ products or sum of polynomials: the total cost of these operations will be $O(\exptower{k}{n}^2 \| \gphors \|^{2n+1})$ and we have to perform them for each non terminal: the total time complexity of computing the FAS system is then $O(\exptower{k}{n}^2 \| \gphors \|^{2n+2})$. Using a polynomial space algorithm to decide $\Etor$, we can then see that the space complexity of deciding AST with our method \emph{for fixed order PHORS} is polynomial  in their size $\|\gphors \|$, but \emph{grows superexponentially} when the order is not fixed. Since the algorithm to compute the rational function of Remark \ref{derivative-rational} is polynomial \cite{CHUDNOVSKY1986271}, we can conclude the same for PAST.
+the polynomial $\model{t_L}^{\Q^+}$ involves at most $\exptower{k}{n} \| \gphors\|^n$ variables and they can be computed by at most $|t_L|$ products or sum of polynomials: the total cost of these operations will be $O(\exptower{k}{n}^2 \| \gphors \|^{2n+1})$ and we have to perform them for each non terminal: the total time complexity of computing the FAS system is then $O(\exptower{k}{n}^2 \| \gphors \|^{2n+2})$. Using a polynomial space algorithm to decide $\Etor$ \cite{DBLP:journals/jacm/EtessamiY09}, we can then see that the space complexity of deciding AST with our method \emph{for fixed order PHORS} is polynomial  in their size $\|\gphors \|$, but \emph{grows superexponentially} when the order is not fixed. Since the algorithm to compute the rational function of Remark \ref{derivative-rational} is polynomial \cite{CHUDNOVSKY1986271}, we can conclude the same for PAST.
 %
 %
 %
