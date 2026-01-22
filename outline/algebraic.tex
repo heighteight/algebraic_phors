@@ -2,19 +2,19 @@
 
   
   As we saw, power series are infinitary objects and their manipulation can involve the concept of limit, making it generally uncomputable. In this section, we explore a way to provide somehow \emph{finitary} specifications for power series through the concept of algebraicity. 
-  Algebraic power series are widely used in algebra and combinatorics (cite Flajolet, Kauers, Eisenbud), in the context of rings or fields. Its treatment in semirings is less standard, but extensively studied in the context of formal language theory (cite Kuich, Schlund).
+  Algebraic power series are widely used in algebra and combinatorics, in the context of rings or fields. Its treatment in semirings is less standard, but extensively studied in the context of formal language theory.
     We will show that, through the weighted relational semantics, such ideas apply naturally to  probabilistic $\lambda$-calculi.
 
 \subsection{Fixpoint Algebraic Systems}
   
 In the previous section we have seen that PHORS can be associated with formal power series defined as the minimal solution of a (generally infinite) equational system. In practice, computing such power series directly can be very hard; recall, by the way, that such fps capture properties like AST or PAST, which are undecidable in general. However, when the equational system defining a family of power series can be expressed by \emph{finitely many polynomial equations}, it becomes possible to extract information about such power series, or even, in some situations, to evaluate them exactly. 
 
-As a famous example, consider again the fps $c(x)= \sum_{n \geq 0} C_n x^{n} \in \fps{\R}{x}$. One can verify that $c(x)$ is the Taylor expansion around $0$ of the (analytic) function $\frac{1-\sqrt{1-4x}}{2x}$. From this, it is easy to see, taking $p(w, x)= xw^2 - w + 1$, that $p(c(x), x)=0$. Observe that, while computing $c(1) = \sum_{n \geq 0} \frac{1}{n+1} \binom{2n}{n}$ as a limit is hard, we can easily deduce that $c(1)=1$ is the (only) positive root of $p(w,1)$.
+As a famous example, consider again the fps $c(x)= \sum_{n \geq 0} C_n x^{n} \in \fps{\R}{x}$. One can verify that $c(x)$ is the Taylor expansion around $0$ of the (analytic) function $\frac{1-\sqrt{1-4x}}{2x}$. From this, it is easy to see, taking $p(w, x)= xw^2 - w + 1$, that $p(c(x), x)=0$. Observe that, while computing a value like $c(1/4) = \sum_{n \geq 0} \frac{1}{4^n(n+1)} \binom{2n}{n}$ as a limit is hard, we can easily deduce that $c(1/4)=1$ is the (only) positive root of $p(w,1/4)$.
 
 \begin{example}\label{ex:phors4}
 Equation \eqref{eq:alg1} from Example \ref{ex:phors2} can be rewritten as $p(a_\gphors(z),z)=0$, where $p(w,z)=\frac{1}{2}zw^2-w+\frac{1}{2}z$, which gives the solution $a_\gphors(z)=\frac{1-\sqrt{1-z^2}}{z}$.
-Using the fps $c(x)$ from above, we deduce, with $w=\left(\frac{z}{2}\right)^2$, 
-$a_\gphors(z)=\frac{1-\sqrt{1-4z}}{2z}z=c(z)z=\sum_{i=0}^{\infty}\frac{C_i}{2^{2i+1}}z^{2i+1}$.
+Using the fps $c(x)$ from above, we deduce, with $x=\left(\frac{z}{2}\right)^2$, 
+$a_\gphors(z)=\frac{1-\sqrt{1-4z}}{2z}z=c(z)\frac{z}{2}=\sum_{i=0}^{\infty}\frac{C_i}{2^{2i+1}}z^{2i+1}$.
 The interpretation of this is that, for any $i\in \N$, there are $C_i$ terminating reductions that make $2i+1$ probabilistic choices. On the other hand, there is no terminating path of even length, as there is no random walk going from 1 to 0 in an even number of steps.
 As already observed, all this implies that $\gphors$ is AST but not PAST.
 \end{example}
