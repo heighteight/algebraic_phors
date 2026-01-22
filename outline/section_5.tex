@@ -252,17 +252,15 @@ For every derivation $\nonterm\mid\Delta\vdash t:\varphi$, the pair $(\model{\no
   
   \end{lemma}
   \begin{proof}[Proof sketch]
-  Let a \emph{finitary} variable be any point in the interpretation of ${\nonterm},{\Delta},{\varphi}$, and a \emph{non-finitary} variable be any point in 
-  $\model{\st\nonterm}-\model{\nonterm},\model{\st\Delta}-\model{\Delta},\model{\st\varphi}-\model{\varphi}$.
-By induction on the derivation, one shows the following two claims:
+  Let a \emph{finitary} variable be any $\sigma\in\model{\nonterm},\model{\Delta},\model{\varphi}$, and a \emph{non-finitary} one be any $\sigma\in\model{\st\nonterm}-\model{\nonterm},\model{\st\Delta}-\model{\Delta},\model{\st\varphi}-\model{\varphi}$.
+By induction, one shows the following two claims:
    \begin{varenumerate} 
-   \item for all non-finitary variables $\sigma$, $\left(\model{t}^\Rsemiring\right)_\sigma\big\vert_{\model{\nonterm}+\model{\Delta}}=0$;
-   \item for all finitary variables $\sigma$, 
-   $\left(\model{t}^\Rsemiring\right)_\sigma\big\vert_{\model{\nonterm}+\model{\Delta}}$ has 
+   \item for all non-finitary $\sigma$, $(\model{t}^\Rsemiring)_\sigma\big\vert_{\model{\nonterm}+\model{\Delta}}=0$;
+   \item for all finitary $\sigma$, 
+   $(\model{t}^\Rsemiring)_\sigma\big\vert_{\model{\nonterm}+\model{\Delta}}$ has 
    finite degree in each variable $x_{L:\nonterm(L)}$ and 
    degree $\leq k$ in each variable $x_{f:_k\psi}$.
    \end{varenumerate}
-%   In the end, condition 1.~implies stability and condition 2.~implies polynomiality.
    \end{proof}
 %   Given $\model{\varphi}\tri T$ and $\model{\psi}\tri U$, 
 %  every fps $s\in \fps{\Rsemiring}{\model{T}}^{\model U}$ 
@@ -426,3 +424,8 @@ the polynomial $\model{t_L}^{\Q^+}$ involves at most $\exptower{k}{n} \| \gphors
 %	Let us denote by $\exptower{a}{b}$ the tower of exponential of base $a$ and height $b$. Then, 
 \end{remark}
 
+\begin{remark}
+Beyond AST/PAST, the algebraicity of $a_\gphors(z)$ ensures the computability of 
+its coefficients $\mathbb P(\gphors\downarrow_i)$, cf.~Remark
+\ref{coefficients-rational}.
+\end{remark}

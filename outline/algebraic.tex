@@ -7,9 +7,10 @@
 
 \subsection{Fixpoint Algebraic Systems}
   
-In the previous section we have seen that PHORS can be associated with formal power series defined as the minimal solution of a (generally infinite) equational system. In practice, computing such power series directly can be very hard; recall, by the way, that such fps capture properties like AST or PAST, which are undecidable in general. However, when the equational system defining a family of power series can be expressed by \emph{finitely many polynomial equations}, it becomes possible to extract information about such power series, or even, in some situations, to evaluate them exactly. 
+In the previous section we have seen that PHORS can be associated with formal power series defined as the minimal solution of a (generally infinite) equational system. In practice, computing such power series directly can be very hard; recall, by the way, that such fps capture properties like AST or PAST, which are undecidable in general. However, when the equational system defining a family of power series can be expressed by \emph{finitely many polynomial equations}, it becomes possible to extract information about such power series
+as well as the sequences of their coefficients.
 
-As a famous example, consider again the fps $c(x)= \sum_{n \geq 0} C_n x^{n} \in \fps{\R}{x}$. One can verify that $c(x)$ is the Taylor expansion around $0$ of the (analytic) function $\frac{1-\sqrt{1-4x}}{2x}$. From this, it is easy to see, taking $p(w, x)= xw^2 - w + 1$, that $p(c(x), x)=0$. Observe that, while computing e.g.~$c(1/4) = \sum_{n \geq 0} \frac{1}{4^n(n+1)} \binom{2n}{n}$ as a limit is hard, we can easily deduce that $c(1/4)=1$ is the (only) positive root of $p(w,1/4)$.
+As a famous example, consider again the fps $c(x)= \sum_{n \geq 0} C_n x^{n} \in \fps{\R}{x}$. $c(x)$ is the Taylor expansion around $0$ of the (analytic) function $\frac{1-\sqrt{1-4x}}{2x}$. From this, it is easy to see, taking $p(w, x)= xw^2 - w + 1$, that $p(c(x), x)=0$. Observe that, while computing e.g.~$c(1/4) = \sum_{n \geq 0} \frac{1}{4^n(n+1)} \binom{2n}{n}$ as a limit is hard, we can easily deduce that $c(1/4)=1$ is the (only) positive root of $p(w,1/4)$.
 
 \begin{example}\label{ex:phors4}
 Equation \eqref{eq:alg1} from Example \ref{ex:phors2} can be rewritten as $p(a_\gphors(z),z)=0$, where $p(w,z)=\frac{1}{2}zw^2-w+\frac{1}{2}z$, which gives the solution $a_\gphors(z)=\frac{1-\sqrt{1-z^2}}{z}$.
@@ -74,6 +75,15 @@ Now, as $1$ is the smallest root of $p(w,1)$, we easily obtain $\mathbb P[\gphor
 also its derivative $s'\in \fps{\R}{x}$ is algebraic. Moreover, one can find effectively (\cite{CHUDNOVSKY1986271}, \cite{DBLP:series/tmsc/KauersP11}) a rational function $r(x,y)$ such that $s'(x)$ can be computed from $s$ via 
  $s'(x) = r(x, s(x)) $.
   \end{remark}
+    \begin{remark}
+  	\label{coefficients-rational}
+	The coefficients $a_n$ of an algebraic fps
+$a(x)=\sum_n a_n x^n$ with annihilating polynomial $p(w, x)$ satisfying $p(0,0)\neq 0$ and $\partial_yp\neq 0$ can be computed explicitly via a ``multinomial formula''   \cite{BANDERIER_DRMOTA_2015}.
+
+
+%	 (is an irreducible annihilating polynomial (also called the \emph{minimal polynomial} of $s$),
+
+   \end{remark}
 %  \begin{remark}
 %  	\label{remark:algoveralg}
 %  	$s \in \fps{R}{x_\Sigma}$ is $R'$-algebraic iff $R'(x_\Sigma) \leq R(x_\Sigma)(s)$ is an algebraic extension of fields, where $R(x_\Sigma)$ is the field of rational functions with variables $x_\Sigma$. From this, we have that if $r \in \fpp{\fps{R}{x_\Sigma}}{y_{\Theta}}$ is a polynomial with variables $y_{\Theta}$ and coefficients that are $R'$algebraic fps, then $s$ is an $R'$algebraic fps with paramters $x_\Sigma, y_\Theta$. This is consequence of the basic fact that if $K \leq K'$ and $K' \leq K''$ are algebraic extension of fields, then $K \leq K''$ is algebraic. See \cite{Van_der_Waerden2003-rd} for the discussion of these concepts and results.

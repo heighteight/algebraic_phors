@@ -34,13 +34,14 @@ Despite the aforementioned results, the nature of the problem remains poorly und
 
 \paragraph*{Probabilistic Termination via Generating Functions}
 
-Behind the difficulty of estimating the probability of termination of higher-order programs lies the challenge of \emph{counting} probabilities over a typically \emph{infinite} set of reductions, even when these reductions follow some well-defined recursive pattern. 
+Estimating the probability of termination of higher-order programs is hard, because it demands to \emph{count} probabilities over a typically \emph{infinite} set of reductions, a problem that remains difficult even when these reductions follow some well-defined recursive pattern. 
 
 In fact, similar counting problems are common in the field of combinatorics, in which they are addressed by studying the algebraic and analytic properties of the corresponding \emph{generating functions}, i.e.~of the formal power series that are naturally associated with the sequence of numbers that one wishes to compute or estimate.   
 A famous example is provided by the well-known \emph{Catalan numbers} $C_n=\frac{1}{n+1}\binom{2n}{n}$, where $C_n$ is the number of labeled binary trees with $n$ nodes. 
-The generating function $c(x)=\sum_{n=0}^{\infty}C_n x^n$ can be characterized as the solution of a simple algebraic equation, namely $xc(x)^2-c(x)+1=0$. 
-Such algebraic descriptions can be used to capture several properties of the corresponding sequences (and, in some cases, even to provide an explicit formula for all of them \cite{BANDERIER_DRMOTA_2015}). 
-In the case above, it easily leads to a closed expression $c(x)=\frac{1-\sqrt{1-4x}}{2x}$ that can be used to compute $c(x)$ effectively.
+This sequence induces the generating function $c(x)=\sum_{n=0}^{\infty}C_n x^n$, which can be characterized as the solution of a simple algebraic equation, namely $xc(x)^2-c(x)+1=0$. 
+From a polynomial equation like this it is possible to extract informations about the generating function and the corresponding sequence that it would be otherwise very hard to compute directly.
+% (and, in some cases, even to effectively reconstruct the terms of sequence \cite{BANDERIER_DRMOTA_2015}). 
+In our example, it allows us to deduce the closed expression $c(x)=\frac{1-\sqrt{1-4x}}{2x}$, hence providing a way to compute the values of $c(x)$ effectively.
 
 %
 %The latter can then be used to capture several properties of $C_n$ , and notably to replace the infinite series by 
