@@ -204,7 +204,7 @@ $\Qrelkleisli{\Rsemiring}$ is endowed with Conway fixpoints \cite{DBLP:journals/
    It is worth to restate this construction in terms of power series: $f$ will be represented by an $X$-indexed family $(s_x(x_X, x_Y))_{x \in X}$. Then we can define its iterates and the fixpoint as follows, for $x \in X$:
    \begin{equation}\label{eq:fixpointeq}
    \begin{aligned}
-   	& r_x^{(0)}(x_Y) = 0 \in \fps{\Rsemiring}{Y}\\
+   	& r_x^{(0)}(x_Y) = 0 \in \fps{\Rsemiring}{Y}
    	& r^{(n+1)}_x(x_Y) =  s_x(r_X(x_Y), x_Y)\\
    	& (\fix s_X)_x(x_Y) = \sup_n r^{(n)}_x(x_Y)
    \end{aligned}
@@ -253,19 +253,24 @@ As shown by Proposition \ref{prop:proba} below, the variable $z$ plays the role 
 
 %One can interpret $\PLY$ (or even probabilistic PCF) in all $\Qrelkleisli{\Rsemiring}$ with $\Rsemiring$ of the form $\fps{\Rinf}{\Sigma}$. 
 
+We now see how any PHORS $\gphors=(\nonterm,\C D,S)$ produces a 
+morphism $\model{\gphors}^{\fps{\Rinf}{z}}$ (i.e.~$\model{t_{\gphors}}^{\fps{\Rinf}{z}}$) in
+$\Qrelkleisli{\fps{\Rinf}{z}}(\model\nonterm,\model\nonterm)\equiv \fps{(\fps{\Rinf}{z})}{\model\nonterm}^{\model\nonterm}$, i.e.~a $\model{\nonterm}$-indexed family of power series in the variables $x_{\model{\nonterm}}$.
+%in
+%$\fps{(\fps{\Rinf}{z})}{\model\nonterm}^{\model\nonterm}$. 
 All this leads to the following definitions:
-\begin{definition}[probabilistic generating function of a PHORS]
+\begin{definition}[PGF of a PHORS]
 For every PHORS $\gphors=(\nonterm, \C R,S)$ and non-terminal $L_i:T_1\to\dots\to T_n\to o\in\nonterm$, letting $\Sigma=\model{T_1}+\dots+\model{T_n}$, we define:
 \[
-a_{L}(z)(x_{\Sigma}):=
- \model{\pi_i(Yt_{\gphors})f_1\dots f_n}^{\fps{\Rinf}{z}}\in \fps{(\fps{\Rinf}{z})}{\Sigma}.
+a_{L_i}(z)(x_{\Sigma}):=\pi_i\left(
+\mathsf{fix}_{\nonterm}\model{{\gphors}}^{\fps{\Rinf}{z}}\right)\in \fps{(\fps{\Rinf}{z})}{\Sigma}.
 \]  
 In particular, the fps $a_{\gphors}(z):=a_S(z)\in \fps{\Rinf}{z}$ is called
 the
  \emph{probabilistic generating function of $\gphors$}.
 
 \end{definition}
-Given the interpretation $\model{\gphors}^{\Rsemiring}\in\fps{\Rsemiring}{\model\nonterm}^{\model\nonterm}$ of the simply typed term $t_\gphors:\nonterm\to\nonterm$, observe that $a_{L_i}(z)(x_\Sigma)=\pi_i\left(\fix \model{{\gphors}}^{\Rsemiring}\right)$ is the minimal solutions of the equational system $(r_x=(\model{\gphors}^{\Rsemiring})_x(r_x,z))_{x\in \Sigma}$. 
+Observe that the fps $a_{L_i}(z)(x_\Sigma)$ are the minimal solutions of the equational system $(r_x=(\model{\gphors}^{\Rsemiring})_x(r_x,z))_{x\in \model\nonterm}$ induced by $\gphors$. 
 
 The generating function $a_\gphors(z)$ precisely captures the call-by-name probabilistic execution of closed terms, as stated below:%the interpretation $\model{M}^{\Rinf}$ of a term $M:\1$ of ground type consists in a real number, since $\model{M}^{\Rinf}\in\Qrelkleisli{\Rsemiring}(0,\1)\equiv\fps{\Rsemiring}{0}\equiv\Rsemiring$, which coincides with the probability of termination of $M$, computed as the sum of the weights $w(R)\in \Rinf$ of all call-by-name probabilistic reductions $R:M{\to^*}e$:
 \begin{proposition}\label{prop:proba}
