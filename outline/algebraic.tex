@@ -1,7 +1,7 @@
 % !TEX root = main.tex
 
   
-  As we saw, power series are infinitary objects and their manipulation can involve the concept of limit, making it generally uncomputable. In this section, we explore a way to provide somehow \emph{finitary} specifications for power series through the concept of algebraicity. 
+  As we saw, power series are infinitary objects and their manipulation involves the concept of limit, making them generally uncomputable. In this section, we explore a way to provide  \emph{finitary} specifications for power series through the concept of algebraicity. 
   Algebraic power series are widely used in algebra and combinatorics, in the context of rings or fields. Its treatment in semirings is less standard, but extensively studied in the context of formal language theory.
     We will show that, through the weighted relational semantics, such ideas apply naturally to  probabilistic $\lambda$-calculi.
 
@@ -9,14 +9,15 @@
   
 In the previous section we have seen that PHORS can be associated with formal power series defined as the minimal solution of a (generally infinite) equational system. In practice, computing such power series directly can be very hard; recall, by the way, that such fps capture properties like AST or PAST, which are undecidable in general. However, when the equational system defining a family of power series can be expressed by \emph{finitely many polynomial equations}, it becomes possible to extract information about such power series, or even, in some situations, to evaluate them exactly. 
 
-As a famous example, consider again the fps $c(x)= \sum_{n \geq 0} C_n x^{n} \in \fps{\R}{x}$. One can verify that $c(x)$ is the Taylor expansion around $0$ of the (analytic) function $\frac{1-\sqrt{1-4x}}{2x}$. From this, it is easy to see, taking $p(w, x)= xw^2 - w + 1$, that $p(c(x), x)=0$. Observe that, while computing a value like $c(1/4) = \sum_{n \geq 0} \frac{1}{4^n(n+1)} \binom{2n}{n}$ as a limit is hard, we can easily deduce that $c(1/4)=1$ is the (only) positive root of $p(w,1/4)$.
+As a famous example, consider again the fps $c(x)= \sum_{n \geq 0} C_n x^{n} \in \fps{\R}{x}$. One can verify that $c(x)$ is the Taylor expansion around $0$ of the (analytic) function $\frac{1-\sqrt{1-4x}}{2x}$. From this, it is easy to see, taking $p(w, x)= xw^2 - w + 1$, that $p(c(x), x)=0$. Observe that, while computing e.g.~$c(1/4) = \sum_{n \geq 0} \frac{1}{4^n(n+1)} \binom{2n}{n}$ as a limit is hard, we can easily deduce that $c(1/4)=1$ is the (only) positive root of $p(w,1/4)$.
 
 \begin{example}\label{ex:phors4}
 Equation \eqref{eq:alg1} from Example \ref{ex:phors2} can be rewritten as $p(a_\gphors(z),z)=0$, where $p(w,z)=\frac{1}{2}zw^2-w+\frac{1}{2}z$, which gives the solution $a_\gphors(z)=\frac{1-\sqrt{1-z^2}}{z}$.
 Using the fps $c(x)$ from above, we deduce, with $x=\left(\frac{z}{2}\right)^2$, 
 $a_\gphors(z)=\frac{1-\sqrt{1-4z}}{2z}z=c(z)\frac{z}{2}=\sum_{i=0}^{\infty}\frac{C_i}{2^{2i+1}}z^{2i+1}$.
 The interpretation of this is that, for any $i\in \N$, there are $C_i$ terminating reductions that make $2i+1$ probabilistic choices. On the other hand, there is no terminating path of even length, as there is no random walk going from 1 to 0 in an even number of steps.
-As already observed, all this implies that $\gphors$ is AST but not PAST.
+Now, as $1$ is the smallest root of $p(w,1)$, we easily obtain $\mathbb P[\gphors\downarrow]=a_{\gphors}(1)=1$, that is, that $\gphors$ is AST; moreover, $\mathbb E[S\downarrow]$ is given by the diverging series $a'_{\gphors}(1)=\sum_{i=0}^{\infty}\frac{2i+1}{2^{2i+1}}C_i=
+\infty$, that is, PAST fails.
 \end{example}
   
 %  
@@ -73,10 +74,10 @@ As already observed, all this implies that $\gphors$ is AST but not PAST.
 also its derivative $s'\in \fps{\R}{x}$ is algebraic. Moreover, one can find effectively (\cite{CHUDNOVSKY1986271}, \cite{DBLP:series/tmsc/KauersP11}) a rational function $r(x,y)$ such that $s'(x)$ can be computed from $s$ via 
  $s'(x) = r(x, s(x)) $.
   \end{remark}
-  \begin{remark}
-  	\label{remark:algoveralg}
-  	$s \in \fps{R}{x_\Sigma}$ is $R'$-algebraic iff $R'(x_\Sigma) \leq R(x_\Sigma)(s)$ is an algebraic extension of fields, where $R(x_\Sigma)$ is the field of rational functions with variables $x_\Sigma$. From this, we have that if $r \in \fpp{\fps{R}{x_\Sigma}}{y_{\Theta}}$ is a polynomial with variables $y_{\Theta}$ and coefficients that are $R'$algebraic fps, then $s$ is an $R'$algebraic fps with paramters $x_\Sigma, y_\Theta$. This is consequence of the basic fact that if $K \leq K'$ and $K' \leq K''$ are algebraic extension of fields, then $K \leq K''$ is algebraic. See \cite{Van_der_Waerden2003-rd} for the discussion of these concepts and results.
-  \end{remark}
+%  \begin{remark}
+%  	\label{remark:algoveralg}
+%  	$s \in \fps{R}{x_\Sigma}$ is $R'$-algebraic iff $R'(x_\Sigma) \leq R(x_\Sigma)(s)$ is an algebraic extension of fields, where $R(x_\Sigma)$ is the field of rational functions with variables $x_\Sigma$. From this, we have that if $r \in \fpp{\fps{R}{x_\Sigma}}{y_{\Theta}}$ is a polynomial with variables $y_{\Theta}$ and coefficients that are $R'$algebraic fps, then $s$ is an $R'$algebraic fps with paramters $x_\Sigma, y_\Theta$. This is consequence of the basic fact that if $K \leq K'$ and $K' \leq K''$ are algebraic extension of fields, then $K \leq K''$ is algebraic. See \cite{Van_der_Waerden2003-rd} for the discussion of these concepts and results.
+%  \end{remark}
 %  \begin{lemma}
 %  	If $p, q \in \fpp{R'}{w_1,x_\Sigma}$ are coprime, there exists a non zero polynomial $Res_{w_1}(p,q) \in \fpp{R'}{x_\Sigma}$ such that for each $(\bar w, \bar x_\Sigma)$ that is a common root of $p,q$ in an extension $R \supseteq R'$, then $Res(\bar x_\Sigma)=0$.
 %  \end{lemma}
@@ -96,7 +97,7 @@ also its derivative $s'\in \fps{\R}{x}$ is algebraic. Moreover, one can find eff
 	A family $(s_1, \dots s_n)$ of formal power series $s_i \in \fps{\Rsemiring}{\Sigma}$ that is the minimal solution of a $\Rsemiring'$-FAS is said a $\Rsemiring'$-\emph{fixpoint algebraic family}. 
 	If the $p_i$ are such that $p_i(0,0)=0$ and, for each $j$, the coefficient of the monomial $w_j$ in $p_i$ is $0$, we say that the system is \emph{proper}.
 \end{definition}
-	The theory of systems like \eqref{fixpointsystem} has been extensively studied (\cite{DBLP:books/sp/KuichS86}, \cite{DBLP:journals/cpc/BanderierD15}) in the context of combinatorics and formal language theory: in particular, it can be shown that they admit a (unique) minimal solution, that can be obtained by iterating the polynomials $p_1 \dots p_n$. In the following we will be in general be interested into ${\Rinf}$-power series algebraic over $\Q_{\geq 0}$: in this case, the polynomial equations $w_i= p_i, \: p \in \fpp{\Qpos}{\Sigma}$ can be rewritten as $p'_i \bydef p_i- w_i = 0, \: p \in \fpp{\Qpos}{\Sigma}$. Rather than speaking of the minimal solution of \eqref{fixpointsystem} as a system with coefficients in $\Qpos$, we will be able to speak of the minimal non-negative solution $(s_1, \dots s_n)$  of the system $(p'_i=0)_{1 \leq i \leq n}$ with coefficients over $\mathbb{Q}$.
+	The theory of systems like \eqref{fixpointsystem} has been extensively studied (\cite{DBLP:books/sp/KuichS86}, \cite{DBLP:journals/cpc/BanderierD15}) in the context of combinatorics and formal language theory: in particular, it can be shown that they admit a (unique) minimal solution, that can be obtained by iterating the polynomials $p_1 \dots p_n$. In the following we will be in general be interested in ${\Rinf}$-power series algebraic over $\Q_{\geq 0}$: in this case, the polynomial equations $w_i= p_i, \: p \in \fpp{\Qpos}{\Sigma}$ can be rewritten as $p'_i \bydef p_i- w_i = 0, \: p \in \fpp{\Qpos}{\Sigma}$. Rather than speaking of the minimal solution of \eqref{fixpointsystem} as a system with coefficients in $\Qpos$, we can then speak of the minimal non-negative solution $(s_1, \dots s_n)$  of the system $(p'_i=0)_{1 \leq i \leq n}$ with coefficients over $\mathbb{Q}$.
 	In this case, if the FAS is proper, even more is true: every $s_i$ part of a $\Q^+$-algebraic family is algebraic:
  	\begin{theorem}[Variable Elimination, \cite{DBLP:books/sp/KuichS86}, Thms.~16.9, 16.10]
  		\label{th:elimination}
@@ -107,8 +108,7 @@ also its derivative $s'\in \fps{\R}{x}$ is algebraic. Moreover, one can find eff
 % 	\begin{proof}
 % 		The complete proof and the related elimination algorithm, based on classical methods from algebraic geometry \cite{Van_der_Waerden2003-rd} can be found in Kuich and Salomaa's book \cite{DBLP:books/sp/KuichS86}, Thms.~16.9, 16.10. Observe that elimination here requires the FAS $F$ to be proper.
 % 	\end{proof}
-	
- If $a(x),b(x)\in \fps{\Rsemiring}{x_\Sigma}$ are algebraic, then so are their sum $a(x)+b(x)$, multiplication $a(x)b(x)$, composition $a(b(x))$ and derivative $a'(x)$ \cite{DBLP:series/tmsc/KauersP11}. Recall from Section 4 that $a(b(x))$ is well-defined thanks to the continuity of $\Rsemiring$ (composition of algebraic power series is not generally well-defined over arbitrary (semi)rings). 
+	Over any semiring $\Rsemiring$, if $a(x),b(x)\in \fps{\Rsemiring}{x_\Sigma}$ are algebraic, then so are their sum $a(x)+b(x)$, multiplication $a(x)b(x)$, and derivative $a'(x)$ \cite{DBLP:series/tmsc/KauersP11}. If $\Rsemiring$ is continuous, the same holds of their composition $a(b(x))$ (while, as we saw in Section 4, composition is not always well-defined over arbitrary (semi)rings). 
 
  	\begin{remark}
  	\label{remark:semilinear}
@@ -143,9 +143,10 @@ also its derivative $s'\in \fps{\R}{x}$ is algebraic. Moreover, one can find eff
 Our goal is to find ways to {reduce} such infinitary systems to more finitary (and manageable) ones.	
 
 	
-	   As we saw, a PHORS $\gphors$ is interpreted via the families fps $a_{L}(z)(x_\Sigma)$ interpreting each non-terminal $L\in \nonterm$; these fps are collectively defined as the minimal solutions of the family of equations
+	   As we saw, a PHORS $\gphors$ is interpreted via the fps $a_{L}(z)(x_\Sigma)$ interpreting each non-terminal $L\in \nonterm$; these fps are collectively defined as the minimal solutions of the family of equations
 $(r_x = (t_\gphors)_x(r_x, z))_{x \in X}$
-induced by the morphism $\fps{(\fps{\Rinf}{z})}{X}^X$ interpreting $t_\gphors:T\to T$, where $T=\nonterm(L_1)\times\dots\times \nonterm(L_n)$ and $X=\model T$. 
+induced by the morphism $\fps{(\fps{\Rinf}{z})}{\model{\nonterm}}^{\model{\nonterm}}$ interpreting $t_\gphors:\nonterm\to \nonterm$.
+%, where $T=\nonterm(L_1)\times\dots\times \nonterm(L_n)$ and $X=\model T$. 
 
 
 When $\gphors$ is order-1, this system can \emph{always} be reduced to a FAS:
@@ -158,11 +159,11 @@ When $\gphors$ is order-1, each type $\nonterm(L_i)$ is of the form $o\to\dots \
 Thanks to Lemma \ref{lemma:affine} we have that, if for some $i=1,\dots, n$, $p_i\geq 2$, then $ 
 w_{p_1,\dots, p_n}(z)=0$. We can thus reduce ourselves to a finite polynomial system only involving the finitely many $w_{p_1,\dots, p_n}(z)$, with the $p_i\in \{0,1\}$.
 \end{proof}
+Since, as we'll see, AST and PAST can be decided once a PHORS is interpreted as a FAS, we see that the well-known decidability of order-1 PHORS naturally follows from the simple nature of their generating functions.  
 
-In the result above, we obtain a FAS by observing that the interpretation of an order-1 PHORS  always involves fps with finite support, i.e.~polynomials. 
+%In the result above, we obtain a FAS by observing that the interpretation of an order-1 PHORS  always involves fps with finite support, i.e.~polynomials. 
 Beyond order-1, this argument does not work anymore, as PHORS can be truly non-linear.
-We thus need to \emph{impose} a form of finiteness, via the following technical definitions:
-
+We thus need to restrict ourselves to systems satisfying a suitable form of finiteness, defined below:
 
 \begin{definition}[variable and family restrictions]
 For all fps $s\in \fps{\Rsemiring}{\Sigma}$ and $\Sigma'\subset \Sigma$,
@@ -197,7 +198,7 @@ $t(x_{\Sigma'},x_{\Sigma-\Sigma'})=s_\sigma(x_{\Sigma'},0)$.
  
  
 	\begin{definition}[finitary fps]\label{def:finitary}
-		Let $s_X\in \fps{\Rsemiring}{X+Y}^Z$ be a family of fps. A pair $(U\subseteq X,W\subseteq Z)$ is called:
+		Let $s_X\in \fps{\Rsemiring}{X+Y}^Z$ be a family of fps. A pair $(U,V)$, where $U\subseteq X$ and $W\subseteq Z$, is called:
 	\begin{varitemize}
 	\item \emph{stable} if for all $\sigma\in Z-W$, $s_\sigma \vert_{U+Y}=0$;
 	\item \emph{polynomial} if for all $\sigma\in W$, $s_\sigma \vert_{U+Y}$ has finite support (i.e.~it is a polynomial).
@@ -259,7 +260,7 @@ $s_x(t_x,x_Y)=s^*_x(\bar r_x,x_Y)=0$; if $x \not \in A$, then $(s_x)\vert_{A+Y}=
 %       Notice that, for the previous argument to work, simply asking that the $s_x$ be polynomials is not enough, as there would be anyway infinitely many equations. 
 
 
-  Combining Theorem  $\ref{prop:fintoalg}$ and Proposition  \ref{th:elimination},
+  Combining Proposition  $\ref{prop:fintoalg}$ and Theorem  \ref{th:elimination},
   we also get:
    \begin{corollary}
    	\label{cor:propertoalg}
