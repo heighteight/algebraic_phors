@@ -17,7 +17,7 @@ We use types defined by the grammar below:
 \varphi,\psi&:= \1^n\mid \  !_k\varphi\multimap \varphi
 %\\
 %\xi&:=\ !_k \varphi
- \qquad (1\leq n\in\mathbb N).
+ \qquad (1\leq n\in\mathbb N, \: k \in \mathbb N).
 \end{align*}
 We let $\tau$ be an abbreviation for the affine function type $!_1o\multimap o$. 
 We define an order relation $\varphi\sqsubseteq \psi$ between types by induction by
@@ -170,6 +170,7 @@ More precisely, define the \emph{size} of a $\gphors$ as the number of its non-t
 $\|\gphors\|=|\nonterm|\times\max\{|\C D(L)|\mid L\in\nonterm\}$, and let $\partial\gphors$ be the maximum grade occurring in $\gphors$. Then we have:
 
 \begin{theorem}[Linearization]
+	\label{theorem:linearisation}
 For every $\Gfin$ $\gphors=(\nonterm, \C D, S)$ there exists a PAHORS $\AFF\gphors=(\nonterm, \C D',S)$ with size $\|\AFF\gphors\|\leq \partial\gphors{\|\gphors\|}$  such that 
 $a_{\gphors}=a_{\AFF{\gphors}}$ and 
 $\C L(\gphors)=\C L(\AFF\gphors)$.
@@ -327,6 +328,7 @@ An immediate consequence of Lemma \ref{lemma:stability} is the following:
 
 
 \begin{proposition}
+	\label{prop:finitefamily}
 For every $\Gfin$ $\gphors=(\nonterm,\C D,S)$, the fps
 $\model{t_{\gphors}}^{\Rsemiring}\in \fps{\Rsemiring}{\model{\st\nonterm}}^{\model{\st\nonterm}}$ is finitary (via $\model\nonterm$).
 % derivations of $\nonterm\mid\emptyset\vdash t_L:\varphi$, with $\varphi\sqsubseteq \nonterm{L}\tri T$, the fps
