@@ -14,16 +14,16 @@ S& =F \  e
 \end{aligned}
 \end{equation}
 where $F:o\to o$. 
-This is a very simple example of a PHORS: the upper case letters $F,S$ are called \emph{non-terminal} symbols, the execution of the program starts from the \emph{source} non-terminal $S:o$ by applying instances of the equations, read from left to right, as well as probabilistic choices, terminating when the unit constant $e:o$ is, eventually, produced. 
+This is a very simple example of a order-1 PHORS: the upper case letters $F,S$ are called \emph{non-terminal} symbols, the execution of the program starts from the \emph{source} non-terminal $S:o$ by applying instances of the equations, read from left to right, as well as probabilistic choices, terminating when the unit constant $e:o$ is, eventually, produced. 
 If we ignore probabilities, we can consider the \emph{branch language} $\C L(\gphors)$ computed by the PHORS $\gphors$ as follows:
- replace the choice operation $\oplus_{\frac{1}{2}}$ with a binary terminal symbol $c:o\to o\to o$, and consider the following HORS (i.e.~non-probabilistic recursion scheme) $\gphors'$,  where $G:(o\to o\to o)\to \tau$:
+ replace each choice $t\oplus_{\frac{1}{2}}u$ with a non-deterministic operation $ct+cu$ marked by an order-1 variable $c:o\to o$; this leads to consider the following (non-deterministic) HORS $\gphors'$,  where $F':( o\to o)\to \tau$:
 \begin{equation}\label{eq:introphors2}
 \begin{aligned}
-Gzx&=  zx( Gzx)\\
-S& =F \ c \ e?
+F'zx&=  zx + F'zx\\
+S& =F' \ c \ e
 \end{aligned}
 \end{equation} 
-The execution of $\gphors'$ produces an infinite tree whose finite branches form the language $\C L(\gphors)=\{c^{n}e\mid n\in \N\}$.
+The non-deterministic execution of $\gphors'$ produces an infinite tree whose finite branches form the language $\C L(\gphors)=\{c^{n}e\mid n\in \N\}$.
 
 
 %
@@ -41,24 +41,26 @@ The execution of $\gphors'$ produces an infinite tree whose finite branches form
 %If we replace the choice symbol $x\oplus_{\frac{1}{2}}y$ by a binary constant $c:o\multimap o\multimap o$, and we execute the source $S$, we see that it produces an infinite tree whose finite branches form the \emph{branch language} $\C L(\gphors)=\{c^{n}e\mid n\in \N\}$ of the PHORS.
 %
 
-Our goal is to extract a generating function from programs like \eqref{eq:introphors1}, i.e.~a formal power series $a_\gphors(z)=\sum_{i=0}^\infty a_iz^i$ capturing the probabilistic termination of $\gphors$. Recall that a power series induces an \emph{analytic function} defined over some open subset $U\subset \mathbb C$ of the field of complex numbers, and, when this set is not empty, can thus be studied with methods coming from both algebra and complex analysis. For instance, the formal power series $a(x)=\sum_{n=0}^\infty \frac{1}{2^n} x^n$ is equal to the analytic function $a(x)=\frac{1}{1-\frac{x}{2}}$ over the open set of complex numbers of absolute value strictly less than $ 2$.
+Our goal is to extract a generating function from programs like \eqref{eq:introphors1}, i.e.~a formal power series $a_\gphors(z)=\sum_{i=0}^\infty a_iz^i$ capturing the probabilistic termination of $\gphors$. Recall that a power series induces an \emph{analytic function} defined over some open subset $U\subset \mathbb C$ of the field of complex numbers, which, when this set is not empty, can thus be studied with methods coming from both algebra and complex analysis. For instance, the formal power series $a(x)=\sum_{n=0}^\infty \frac{1}{2^n} x^n$ is equal to the analytic function $a(x)=\frac{1}{1-\frac{x}{2}}$ over the open set of complex numbers of absolute value strictly less than $ 2$.
 % (riformulare come 'the power series is an expansion of the analytic function??'\warn).
 
 As anticipated, our fundamental ingredient to extract generating functions from PHORS is the weighted relational model of linear logic. This semantics is often styled \emph{quantitative}, as it provides a \emph{precise count} of the number of times that a program may use each of its inputs during any of its reductions.
-If we consider the HORS $\gphors'$, we see that, for any $i\in \N$, the term $Gzx$ has a unique way of terminating using $z$ exactly $i$ times; formally, each such reduction yields, in the semantics, a monomial of the form $z^{i}x$. By considering all possible reductions, the corresponding monomials yield then the power series below, interpreting the non-terminal $G$:
+If we consider the HORS $\gphors'$, we see that, for any $i\in \N$, the term $F'zx$ has a unique way of terminating using $z$ exactly $i$ times. Formally, each such reduction yields, in the semantics, a monomial of the form $z^{i}x$. Notice that the parameter $z$ precisely counts the number of times that a choice is made.
+By considering all possible reductions, the corresponding monomials yield then the power series below:
 \[
-a_{G}(z,x)=\sum_{i>0}^{\infty}z^i x
+a_{F'}(z,x)=\sum_{i>0}^{\infty}z^i x
 \]
-We can get back to the original PHORS $\gphors$ by interpreting the ``choice'' constant $c:o\multimap o\multimap o$ as the linear map $c(z)(x,y)=z(\frac{1}{2}x+\frac{1}{2}y)$; the parameter $z$ here intuitively counts the number of times that a choice is made; indeed, all this yields the generating function
+To get back to the original PHORS $\gphors$ we can simply add probabilities, i.e.~
+interpret $x\oplus_{\frac{1}{2}}y$ as $z(\frac{1}{2}x+\frac{1}{2}y)$, yielding the rational power series
 %
 %We can back to the original PHORS $\gphors$, interpret
 \[
 a_{F}(z,x)=\sum_{i>0}^{\infty}\frac{1}{2^i}z^i x=\frac{x}{1-\frac{z}{2}}-x
 \]
-which says that the probability that $Fx$ terminates using $x$ once and making $i>0$ choices (i.e.~using $z$ $i$ times) is $\frac{1}{2^i}$. 
+saying that the probability that $Fx$ terminates using $x$ once and making $i>0$ choices (i.e.~using $z$ $i$ times) is $\frac{1}{2^i}$. 
 As $e$ trivially terminates with probability 1, we can then associate the source symbol $S$ with the generating function
 $a_{S}(z):=a_{F}(z,1)=\sum_{i>0}^{\infty}\frac{1}{2^i}z^i=\frac{1}{1-z/2}-1$,
-which describes the reductions with $i$ choices, and deduce that $\gphors$ terminates with probability $a_{S}(1)=1$, i.e.~almost surely. 
+which describes the reductions with $i$ choices, and finally deduce that $\gphors$ terminates with probability $a_{S}(1)=1$, i.e.~almost surely. 
 
 %
 %has only one (trivial) way of terminating, we obtain the following generating functions 
@@ -86,10 +88,10 @@ which describes the reductions with $i$ choices, and deduce that $\gphors$ termi
 
 Using the ideas just sketched, as we show in Section 4, any PHORS $\gphors$ can be associated with a generating function 
 $
-a_{\gphors}(z):=a_{S}(z)=\sum_{n=0}^\infty \gphors_n z^n
+a_{\gphors}(z):=a_{S}(z)=\sum_{n=0}^\infty a_n z^n
 $
-such that $\gphors_n$ designates the probability that $\gphors$ terminates after \emph{exactly} $n$ reduction steps. Observe that the probability of termination of $\gphors$ is given by $a_{\gphors}(1)$. Moreover, $a'_{\gphors}(1)$, where
-$a'_{\gphors}(z)=\sum_{n=0}^{\infty}n\gphors_n z^{n+1}$ indicates 
+such that $a_n$ designates the probability that $\gphors$ terminates after \emph{exactly} $n$ reduction steps. Observe that the probability of termination of $\gphors$ is given by $a_{\gphors}(1)$. Moreover, $a'_{\gphors}(1)$, where
+$a'_{\gphors}(z)=\sum_{n=0}^{\infty}na_n z^{n+1}$ indicates 
 the \emph{derivative} of $a_{\gphors}(z)$, precisely captures the expected number of reduction steps to termination. 
 %
 %We think that the main value of this work resides in enabling the application of well-established methods from algebraic and analytic combinatorics to higher-order languages.
@@ -136,7 +138,7 @@ $\C L_2=\{1^{3n}\mid n\in \N\}$ would \emph{both} induce a rational generating f
 %c^{n+1}a^{n}b^{n}a^n\mid n\in \mathbb{N}\}
 %$
 
-\paragraph*{Algebraic Generating Functions via Bounded Exponentials}
+\paragraph*{PHORS with Algebraic Generating Functions}
 
 Consider now a slightly more complex PHORS $\gphors$, defined by:
 \begin{equation}\label{eq:phors1}
@@ -148,12 +150,12 @@ Bx&=x\oplus_{c} \Omega\\
 S&=HIe,
 \end{aligned}
 \end{equation}
-where $H:\tau\to \tau$, $A,B:\tau$ and $S:o$, $\Omega$ stands for a diverging term, 
+where $H:(o\to o)\to(o\to o)$, $A,B:o\to o$ and $S:o$, $\Omega$ stands for a diverging term, 
 and $a,b,c,d$ stand for rational biases for the probabilistic choice operators. Observe that $H$ is not linear, as it may use the variable $f$ twice.
 %
 %This is indeed an example of PHORS: the upper case letters are called \emph{non-terminal} symbols, the execution of the program starts from the order 0 non-terminal $S$ by applying instances of the equations, read from left to right, as well as probabilistic choices, until the unit constant $e$ is, eventually, produced. 
 %Notice that $I$ and $\Omega$ stand, respectively, for the identity and diverging terms, and that $a,b,c,d$ stand for rational biases for the probabilistic choice operators.
-Using distinct constants $a,b,c:o\multimap o\multimap o$ for each choice symbol we can see that the branch language of $\gphors$, namely
+Using distinct constants $a,b,c:o\to o$ for each choice symbol we can see that the branch language of $\gphors$,
 %
 %We can canonically associate an infinite tree with the program above by considering binary function symbols $a,b,c$ with each choice operator. The word language (defined as in \cite{}) consisting of all the finite branches of this tree is then 
 $$
@@ -163,23 +165,23 @@ is not context-free, as it contains an arbitrary word repeated twice.
 
 
 %In the relational interpretation, a non-terminal symbol $N$ yields a sequence of coefficients $N_n$ (and a corresponding generating function  $\model{N}(y,x)=\sum_nN_ny^n x$), and each order-1 non-terminal $N$ yields a unique real coefficient. 
-In the weighted relational semantics, the non-terminal $H:\tau\to\tau$ yields, as before, a generating function $a_{H}(z,f,x)=\sum_{i}^{\infty}H_{i}(z) f^{i} x$, where
-$H_{i}(z)=\sum_j H_{ij}z^j$ is the generating function counting the probability that $Hfx$ terminates using $f$ exactly $i$ times, $x$ once, and making $j$ probabilistic choices.
+In the weighted relational semantics, the non-terminal $H$ yields, as before, a power series $a_{H}(z,f,x)=\sum_{i}^{\infty}H_{i}(z) f^{i} x$, where
+$H_{i}(z)=\sum_j H_{ij}z^j$ counts the probability that $Hfx$ terminates using $f$ exactly $i$ times, $x$ once, but running through an arbitrary number of choices.
 %$A,B:\tau$ yield two real values, and $S:o$ yields a real value capturing the probability of termination of the PHORS.
 %Using $\model{H}(f,x)=\sum_nH_nf^n x$, 
-By translating equations \eqref{eq:phors1} into equations between the corresponding power series, we are led to the following equations for the coefficients $H_{ij}$: 
+By translating \eqref{eq:phors1} into equations between the corresponding power series, we are led to: 
 \begin{equation}\label{eq:poly}
 \begin{aligned}
 H_{2}(z)&=
-\alpha H_{2}(z)z^2  +\beta z, \qquad\qquad  H_{ij}=0 \quad (i\neq 2),
+\alpha H_{2}(z)z^2  +\beta z, \qquad\qquad  H_{ij}(z)=0 \quad (i\neq 2),
 %\model{A}x&=bx+(1-b)0\\
 %\model Bx&=cx+(1-c)0\\
 %\model S&=H_2\cdot 1\cdot 1,
 \end{aligned}
 \end{equation}
 where $\alpha=(a^2b^2+a(1-a)c^2)$ and $\beta=1-a$.
-The generating function 
-$a_{`Hfx'}(z,f,x)=H_2(z)f^2x$ can then be computed by finding a solution of the \emph{polynomial equation}
+The power series 
+$a_{H}(z,f,x)=H_2(z)f^2x$ can then be computed by solving the \emph{polynomial equation}
 \[
 p(z,H_2(z))=0,
 \]
@@ -229,33 +231,34 @@ a_{H}(1,1,1)=
 %This example illustrates one fact that is general and one that only works in a \emph{restricted} class of situations. The general fact is that, for any PHORS $\gphors, the generating function $a_{\gphors}(z)$ is defined via a family of real coefficients which are mutually defined via a system of equations. 
 
 Unfortunately, termination probabilities cannot always be computed algebraically, as above.
-For instance, it is well-known that the generating functions of order-2 PHORS (which correspond to the so called \emph{indexed grammars}, cite) may fail to be algebraic \cite{DBLP:journals/ita/AdamsFM13}. 
+For instance, it is well-known that the generating functions of order-2 PHORS (which correspond to the so called \emph{indexed grammars}, \cite{DBLP:conf/focs/Aho67}) may fail to be algebraic \cite{DBLP:journals/ita/AdamsFM13}. 
 In our semantics, the generating function $a_{\gphors}(z)$ of a PHORS $\gphors$ will be determined by a (countably) infinite family of equations, which we might not be able to solve algebraically. 
 %Probability of termination for PHORS is still undecidable, anyway.
  
 The main theme of this work is then to find conditions under which the generating function $a_{\gphors}(z)$ may be found by solving some \emph{finite system of polynomial equations}, 
 and is, as a consequence, algebraic.
-Indeed, by relying on the decidability of the \emph{first order theory of the reals} $\Etor$ (see for example \cite{Marker2002-jm} for an account of this classic result by Tarski), from the algebraicity of $a_{\gphors}(z)$ we will deduce the existence of effective methods to answer both the AST and PAST problem for the corresponding PHORS $\gphors$.
+Indeed, by relying on the decidability of the \emph{first order theory of the reals} $\Etor$  \cite{Marker2002-jm}, from the algebraicity of $a_{\gphors}(z)$ we will deduce the existence of effective methods to answer both the AST and PAST problem for the corresponding PHORS $\gphors$.
 
 
 \paragraph*{Algebraic PHORS via Bounded Exponentials}
 
-Such conditions come, once more, from the toolbox of linear logic: 
+To obtain such conditions we rely, once more, on the toolbox of linear logic: 
 as the relational semantics counts input uses, 
-bounding the number of equations interpreting the program amounts at bounding the number of uses that the program may do of each of its inputs.
-A first natural idea is thus to restrict ourselves to linear, or even affine, programs, as in \cite{DBLP:conf/lics/LiMO22}. Yet, the PHORS in \eqref{eq:phors1} shows that one can well admit {bounded} forms of non-linearity. 
-A standard and well-studied way to impose such bounds is via \emph{bounded  exponentials} (cite people) $!_nA$, where a program $t:\ !_nA\multimap B$ may use its input \emph{at most} $n$ times. 
+bounding the number of \emph{unknowns} that we need to solve to compute the interpretation of the program amounts at bounding the number of uses that the program may do of each of its inputs.
+A first obvious idea would be thus to restrict ourselves to linear, or even affine, programs, as in \cite{DBLP:conf/lics/LiMO22}. Yet, the PHORS in \eqref{eq:phors1} shows that one can well admit {bounded} forms of non-linearity. 
+A standard and well-studied way to impose such bounds is via \emph{bounded  exponentials} \cite{GIRARD19921, 10.1007/978-3-642-02273-9_8, 10.1007/978-3-642-54833-8_19, 10.1007/978-3-642-54833-8_18} $!_nA$, where a program $t:\ !_nA\multimap B$ may use its input \emph{at most} $n$ times. 
 %Notice that, as we will see, this restriction continues to hold in presence of fixpoints: if $A$ is a finitely graded higher-order type and $M: A\to A$ is a program which may use its input $A$ \emph{unrestrictedly}, then its fixpoint $\mathrm{Fix}M:A$ is still ``finitary''.
 %: its interpretation still has a number of unknowns, which can be traced as the points of some algebraic variety, as we'll see.
-In our example, the non-terminal $H:\tau \to\tau$ could be given the bounded type $!_2\tau\multimap \tau$, as $H$ uses its input $f$ twice (indeed, all generating functions $H_i(z)$ are equal to zero, for $i\neq 2$).
+In our example, the non-terminal $H$ could be given the bounded type $!_2(!_1o\multimap o)\multimap (!_1o\multimap o)$, as $H$ uses its input $f$ twice (indeed, all generating functions $H_i(z)$ are equal to zero, for $i\neq 2$).
 %This leads us to introduce the class $\Gfin$ of bounded PHORS. 
 
 
 But it is possible to go even beyond that, still preserving decidability.
-Similarly to the way in which we handle the formal variable $z$ counting probabilistic choices, 
-we show that it is possible to use variables in a PHORS in an \emph{unbounded} way, provided this variable behaves as a \emph{formal parameter} of the PHORS.
-This will allow us to use also infinitely graded types $!_\infty\sigma\multimap \tau$, although in a restricted way. 
+Similarly to how we handled the formal variable $z$ counting probabilistic choices above, 
+an algebraic PHORS may well use some inputs in an \emph{unbounded} way, provided these are handled as \emph{formal parameters}.
 This idea leverages the intrinsically parametric nature of the weighted relational semantics, which allows one to pass smoothly from power series $s(x,w)$ in $x,w$, with values over some continuous semiring $\Rsemiring$, to ``parametric'' power series $s(w)(x)$ in $x$ with values themselves of the continuous semiring $\fps{\Rsemiring}{w}$ of power series in $x$.
+This allows us to admit also infinitely graded types $!_\infty\sigma\multimap \tau$, although used in a restricted way. 
+
 % an algebraic PHORS $\gphors_1(w)$, depending on some unbounded parameter $w$, with another algebraic PHORS $\gphors_2$, yielding a new PHORS $\gphors_1(\gphors_2)$, in which $\gphors_2$ is used unrestrictedly. 
 
 
