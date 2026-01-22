@@ -261,6 +261,7 @@ By induction, one shows the following two claims:
    finite degree in each variable $x_{L:\nonterm(L)}$ and 
    degree $\leq k$ in each variable $x_{f:_k\psi}$.
    \end{varenumerate}
+   \vskip-4mm
    \end{proof}
 %   Given $\model{\varphi}\tri T$ and $\model{\psi}\tri U$, 
 %  every fps $s\in \fps{\Rsemiring}{\model{T}}^{\model U}$ 
@@ -339,7 +340,7 @@ Thanks to Proposition \ref{prop:fintoalg} and the observation that all coefficie
 	For all $\Gfin$ $\gphors=(\nonterm, \C D, S)$, $(a_L)_{L \in \nonterm}$ is a $\Q^{+}$ fixpoint algebraic family with parameter $z$
 \end{theorem}
 %Now observe that the term $t_\gphors$ is in the form $\langle t_{1, L} \oplus_{p_n}  t_{1, R} \dots  t_{n, L} \oplus_{p_n} t_{n_R} \rangle$. We thus have that every fps $s(x_{\model{\nonterm},} z)$ belonging to $\model{t_\gphors}^{\fpp{\Rinf}{z}}$ is divisible by $z$. In particular $s(0_{\model{\nonterm}} 0)=0$ and for every variable $x \in x_{\model{\nonterm}}$ the monomial $x$ does not appear in $s$: hence, $\model{t_\gphors}^{\fpp{\Rinf}{z}}$ is a proper algebraic family. Then, by \ref{cor:propertoalg}, each $\model{L}^{\fps{\Rinf}{z}}$ is an algebraic power series:
-\begin{corollary}[$\Gfin$ are algebraic]
+\begin{corollary}
 	\label{Gfin-algebraic-corollary}
 	 For all $\Gfin$ $\gphors=(\nonterm, \C D, S)$,
 	\begin{varenumerate}
@@ -423,9 +424,9 @@ the polynomial $\model{t_L}^{\Q^+}$ involves at most $\exptower{k}{n} \| \gphors
 %
 %	Let us denote by $\exptower{a}{b}$ the tower of exponential of base $a$ and height $b$. Then, 
 \end{remark}
-
+%
 \begin{remark}
-Beyond AST/PAST, the algebraicity of $a_\gphors(z)$ ensures the computability of 
-its coefficients $\mathbb P(\gphors\downarrow_i)$, cf.~Remark
-\ref{coefficients-rational}.
+Beyond AST/PAST, whenever $a_{\gphors}(z)=\sum^{\infty}_{i=0} \mathbb P(\gphors\downarrow_i)z^i$ satisfies a polynomial equation of the form
+$a_{\gphors}(z)=z\cdot p(a_{\gphors}(z),z)$ (which is the case of all our examples), all its coefficients $\mathbb P(\gphors\downarrow_i)$ are effectively computable (cf.~Remark
+\ref{coefficients-rational}, taking $q(w,z)=zp(w,z)-w$).
 \end{remark}
