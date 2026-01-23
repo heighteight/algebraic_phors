@@ -78,11 +78,10 @@ also its derivative $s'\in \fps{\R}{x}$ is algebraic. Moreover, one can find eff
     \begin{remark}
   	\label{coefficients-rational}
 	The coefficients $a_n$ of a unary algebraic fps
-$a(x)=\sum_n a_n x^n$ whose annihilating polynomial $p(w, x)$ satisfies $p(0,0)= 0$ and $\partial_wp(0,0)\neq 0$ can be computed directly via a ``multinomial formula'' derived from the Lagrange inversion formula  \cite{BANDERIER_DRMOTA_2015}.
-
-
-%	 (is an irreducible annihilating polynomial (also called the \emph{minimal polynomial} of $s$),
-
+$a(x)=\sum_n a_n x^n$ whose annihilating polynomial $p(w, x)$ satisfies $p(0,0)= 0$, $\partial_wp(0,0)\neq 0$ and $p(0,z)\neq 0$ can be computed directly via a ``multinomial formula'' \cite{BANDERIER_DRMOTA_2015}.
+More generally, since all algebraic functions are \emph{D-finite} \cite{DBLP:series/tmsc/KauersP11}, one can deduce a linear recursive equation with polynomial coefficients 
+$p_0(n)a_n+p_1(n)a_{n+1}+\dots +p_r(n)a_{n+r}=0$ that can be used to
+compute the $a_n$ effectively.
    \end{remark}
 %  \begin{remark}
 %  	\label{remark:algoveralg}
@@ -169,7 +168,7 @@ When $\gphors$ is order-1, each type $\nonterm(L_i)$ is of the form $o\to\dots \
 Thanks to Lemma \ref{lemma:affine} we have that, if for some $i=1,\dots, n$, $p_i\geq 2$, then $ 
 w_{p_1,\dots, p_n}(z)=0$. We can thus reduce ourselves to a finite polynomial system only involving the finitely many $w_{p_1,\dots, p_n}(z)$, with the $p_i\in \{0,1\}$.
 \end{proof}
-Since, as we'll see, AST and PAST can be decided once a PHORS is interpreted as a FAS, we see that the well-known decidability of order-1 PHORS naturally follows from the simple nature of their generating functions.  
+Since, as we'll see, AST and PAST can be decided once a PHORS is interpreted as a FAS, we see that the well-known decidability of order-1 PHORS naturally follows from the simple nature of their generating functions, which are always affine.  
 
 %In the result above, we obtain a FAS by observing that the interpretation of an order-1 PHORS  always involves fps with finite support, i.e.~polynomials. 
 Beyond order-1, this argument does not work anymore, as PHORS can be truly non-linear.

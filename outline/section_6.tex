@@ -169,7 +169,7 @@ Consider a $\gphors=(\nonterm, \C P,\C D,S)$ that is parametric but \emph{finita
 By arguing as in the previous section, but reasoning over the semiring $\fps{\Rsemiring}{\model S}$, we can conclude that the pair of finite variable sets $(\model \nonterm,\model \nonterm)$ is stable and polynomial, yielding:
 
 \begin{proposition}
-For all finitary parametric $\Ginf$ $\gphors=(\nonterm, \C P,\C D, S)$, for each $L\in \nonterm$, the fps $a_L(z,w_{\model{\C P}})\in \fps{\Rinf}{z,w_{\model{\C P}}}$ is algebraic. 
+For all finitary parametric $\Ginf$ $\gphors=(\nonterm, \C P,\C D, S)$, the fps $a_L(z,w_{\model{\C P}})\in \fps{\Rinf}{z,w_{\model{\C P}}}$ are all algebraic. 
 \end{proposition}
 
 \begin{example}\label{ex:Lfxpara}
@@ -189,10 +189,7 @@ The idea is to replace each non-terminal $L$ with possibly infinitely graded inp
 
 Let then $\gphors=(\nonterm,\emptyset, \C D,S)$ be a closed $\Ginf$. 
 For any non-terminal $L$ whose type can be written as $\nonterm(L)=!_\infty \phi_1\multimap\dots\multimap !_\infty\phi_k\multimap \phi_L$,
-let $\C P_L$ be the parameter context formed by all $w_i:_\infty\phi_i$, and let $T(L)$  be the sets of \emph{sostituable terms}, defined as:	
-\[
-T(L) \bydef \{[t_1, \dots t_n] \in (\nonterm\cup\C P_L)^* \: \mid \: \forall i \, (\nonterm \cup \mathcal{P}) (t_i) = \phi_i)  \} 
-\]
+let $\C P_L$ be the parameter context formed by all $w_i:_\infty\phi_i$, and let $T(L) \bydef \{[t_1, \dots t_n] \in (\nonterm\cup\C P_L)^* \: \mid \: \forall i \, (\nonterm \cup \mathcal{P}) (t_i) = \phi_i)  \}$ be the sets of \emph{sostituable terms}.
 Let $\widetilde{\nonterm}$ be a new set of finitely typed non-terminals containing, for each $L\in \nonterm$ as above and $\gamma\in T(L)$, a non-terminal $\tilde{L}_\gamma:\phi_L$.
 Finally, let $\C P$ be the concatenation of all $\C P_L$.
 
@@ -224,20 +221,19 @@ $t\in \Qrelkleisli{\Rsemiring}(\nonterm, \nonterm)$,
 $\tilde t\in \Qrelkleisli{\Rsemiring}(\widetilde{\nonterm}+\C P, \widetilde\nonterm)$,
 $\alpha\in \Qrelkleisli{\Rsemiring}(\nonterm+\C P, \widetilde{\nonterm})$,
 if we have:
-\begin{varitemize}
+\begin{varenumerate}
 \item $\alpha\circ \langle 0,1_\C P \rangle=0\in \Qrelkleisli{\Rsemiring}(\C P, \widetilde{\nonterm})$, 
 \item $\alpha\circ \langle t\circ \pi_1,\pi_2  \rangle=
 \tilde t\circ \langle \alpha\circ \langle \pi_1,\pi_2 \rangle,\pi_2\rangle\in \Qrelkleisli{\Rsemiring}(\nonterm+\C P, \widetilde{\nonterm})
 $,
-\end{varitemize} 
+\end{varenumerate} 
 then
 $\alpha\circ \langle {\mathsf{fix}}_{0,\nonterm} t,1_{\C P}\rangle={\mathsf{fix}}_{\C P,\widetilde{\nonterm}} \tilde t\in \Qrelkleisli{\Rsemiring}(\C P, \widetilde{\nonterm})
 $. 
 
 \end{lemma}
 
-Notice that the first condition of Lemma \ref{lemma:fixpoint}
-clearly holds for the interpretation of $\alpha=\langle \model{\alpha_{L,\gamma}}^{\Rsemiring}\rangle_{L,\gamma}$, and that the second condition is precisely \eqref{eq:alphaeq}. 
+Notice that condition 1.~of Lemma \ref{lemma:fixpoint} clearly holds for the interpretation of $\alpha=\langle \model{\alpha_{L,\gamma}}^{\Rsemiring}\rangle_{L,\gamma}$, and condition 2.~is precisely \eqref{eq:alphaeq}. 
 %In the above, given $s\in \Qrelkleisli{\Rsemiring}(0, !X\times Y)$ and 
 % $t\in \Qrelkleisli{\Rsemiring}(Z, X)$, we write $s\cdot t\in  \Qrelkleisli{\Rsemiring}(Z,  Y)$ for the evaluation of $s$ on $t$.
 
