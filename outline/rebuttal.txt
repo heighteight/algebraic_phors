@@ -25,7 +25,7 @@ We thank the reviewers for pointing out further references. The paper [ErhhardPT
 
 > I wonder how to prove that this fixed point is Conway.
 
-The proof is in Charles Grellois and Paul-André Melliès, An infinitary model of linear logic, property 3.
+The proof is in [24], property 3.
 
 > What do you mean by the point-wise partial order? 
 
