@@ -21,7 +21,7 @@ We indeed consider the pointwise order $ \sum_\mu s_{\mu} x^\mu \le \sum_\mu t_\
 $$ \vec a^{(0)}(z) = \vec 0 \in \fps{\Rinf}{z} \quad \vec a^{(n+1)}(z) = p(\vec a^{(n)}, z) \quad \vec{a}(z)= (\sup_n \vec{a}^{(n)})(z)$$
 On the other side, the minimal solution of the system $\vec x = p(\vec x , 1)$ is defined by
 $$ \vec x^{(0)} = \vec 0  \quad \vec x^{(n+1)} = p(\vec x^{(n)}, 1) \quad \vec x = \sup_n \vec{x}^{(n)}$$
-As evaluation in 1 is a Scott continous semiring homomorphism $\fps{\Rinf}{z} \to \Rinf$, we can prove by induction over $n$ that $\forall n \: a^{(n)}(1)$ and then $\vec{x} = a(1)$
+As evaluation in 1 is a Scott continous semiring homomorphism $\fps{\Rinf}{z} \to \Rinf$, we can prove by induction over $n$ that $\forall n \: a^{(n)}(1)= x^{(n)}$ and then $\vec{x} = a(1)$
 (probably here it can be better to give a categorical statement).
 1. Is there anything that I miseed in Section 7?
 The proof in section 7, while it relies partially on a syntactic translation, has also a semantic content
