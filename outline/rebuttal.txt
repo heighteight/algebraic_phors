@@ -1,38 +1,37 @@
-\documentclass[11pt]{article}
-
-%\usepackage[margin=0.7in, ]{geometry} 
-\usepackage{amsmath,amsthm,amssymb,scrextend}
-\usepackage{fancyhdr}
-\usepackage{proof}
-\usepackage{xargs}
-\usepackage{xcolor}
-\include{macros}
-\pagestyle{fancy}
-
-\begin{document}
+Reviewer A:
+ Does your semantics make it possible to observe similar phenomena for PHORS? 
+ This is for sure an interesting question, but we do not think that the results introduced in this paper alone are enough to answer it.
+ As mentioned above, I would appreciate further intuition about the fragment \mathrm{PBHORS}^{\infty}. 
+ From a syntactic viewpoint, \mathrm{PBHORS}^{\infty} adds some subject reduction to the finitary system.
+ If a \mathrm{PBHORS}^{<\infty} contains an equation of the form Fx=t, where t includes the nonterminal G, 
+ we can construct a PHORS with the same termination behaviour by changing the equation in  Fg​x=t[G∖g]
+ and replacing every occurenc of F by FG. The result is not a \mathrm{PBHORS}^{<\infty}, but it is indeed
+ a \mathrm{PBHORS}^{\infty}. 
 	
-Reviewer B:\\
+Reviewer B:
 	
-p.3, l.271: Are the statement being claimed and the statement being proved not reversed? If the language determines $a_G$, then $a_G$ is invariant under the language, so the argument here does not provide a counterexample in that direction.\\
+p.3, l.271: Are the statement being claimed and the statement being proved not reversed? If the language determines $a_G$, then $a_G$ is invariant under the language, so the argument here does not provide a counterexample in that direction.
 This is true, we should say that the generating function does not characterize the language, as different languages can have the same gf\\
-p.6, l.602: I wonder how to prove that this fixed point is Conway. Laird (LICS 2016) proved that it is uniform, but I could not find a proof of Conway.\\ 
-The proof is in Charles Grellois and Paul-Andr´e Melli`es, An infinitary model of linear logic, property 3.\\
-
+p.6, l.602: I wonder how to prove that this fixed point is Conway. Laird (LICS 2016) proved that it is uniform, but I could not find a proof of Conway.
+The proof is in Charles Grellois and Paul-Andr´e Melli`es, An infinitary model of linear logic, property 3.
 On line 521 (p.5), "if we take on it the pointwise partial order". What do you mean by the point-wise partial order? Do you mean 
 $$ \sum_\mu s_{\mu} x^\mu \le \sum_\mu t_\mu x^\mu \Leftrightarrow \forall \mu. s_\mu \le t_\mu $$?  Or, do you compare them as functions in the point-wise mannar? If the former, I am wondering if the poin-wise minimun solution computed in the proof of Theorem 6.7 is actually $a_G(1)$. If the latter, I am wondering the bijection $$ R\{\{x\}\}\{\{y\}\} \cong R\{\{x,y\}\} $$ is order-isomorphic? (On the left-hand side, are we supposed to compare the values obtained by substituting elements of $R$ for $ y $ instead of $ R\{\{x\}\}$?)\\
-
 We indeed consider the pointwise order $ \sum_\mu s_{\mu} x^\mu \le \sum_\mu t_\mu x^\mu \Leftrightarrow \forall \mu. s_\mu \le t_\mu $. In Theorem 6.7, the minimal solution of the system is indeed $a_\gphors(1)$ for the following reason:\\
 (elementary version) the coefficients $\vec a(z) \in \fps{\Rinf}{z}$ are define by fixpoint iteration as follows:
 $$ \vec a^{(0)}(z) = \vec 0 \in \fps{\Rinf}{z} \quad \vec a^{(n+1)}(z) = p(\vec a^{(n)}, z) \quad \vec{a}(z)= (\sup_n \vec{a}^{(n)})(z)$$
 On the other side, the minimal solution of the system $\vec x = p(\vec x , 1)$ is defined by
 $$ \vec x^{(0)} = \vec 0  \quad \vec x^{(n+1)} = p(\vec x^{(n)}, 1) \quad \vec x = \sup_n \vec{x}^{(n)}$$
 As evaluation in 1 is a Scott continous semiring homomorphism $\fps{\Rinf}{z} \to \Rinf$, we can prove by induction over $n$ that $\forall n \: a^{(n)}(1)$ and then $\vec{x} = a(1)$
-(probably here it can be better to give a categorical statement).\\
-\\2. The proof of Theorem 6.7 seems to rely on a characterzation of $$ a_{\mathcal{G}} $$ as the minimum solution of an FAS. Is it possible to decide AST sololy by the algebraicity of $$ a_{\mathcal{G}} $$ (possibly with a definifing polynomial)?\\
-To our knowledge, proving 6.7 directly by algebraicity would require a deep analysis of the variable elimination procedure (Theorem 5.1) to keep track of the spurious solutions that it could introduce; as the decidability of ETOR is proved by quantifier elimination (that can be seen as a generalization of variable elimination), it looked more natural to use directly ETOR. 
-It should be noted that this kind of reasonment is indeed standard in the theory of formal languages, where the celebrated Chomsky-Schutzenberger theorem is indeed proved in the same way: first one writes a system of fixpoint equations on the semiring $\mathbb{R}^{\geq 0}$ and then by variable elimination on the ring $\mathbb{R}$ one reduces on one single equation (which cannot be done on a semiring). 
-While our result about termination could be proved just by considering the fixpoint equation, algebraicity of the power series has a much wider interest than AST: not only it gives an easy proof of PAST, but we can use it to decide if an algebraic PHORS has a finite value tree or two algebraic PHORS have the same tree (parellel to what is well know in the theory of context-free languages).
-	
-	
-	
-\end{document}
+(probably here it can be better to give a categorical statement).
+1. Is there anything that I miseed in Section 7?
+The proof in section 7, while it relies partially on a syntactic translation, has also a semantic content
+(Lemma 7.3). The parameters disappear in the case of a closed PHORS, as they are all replaced by
+non terminals, but would remain for a non-closed one (for example, if we allow other constants than e )
+2. The proof of Theorem 6.7 seems to rely on a characterzation of $$ a_{\mathcal{G}} $$ as the minimum solution of an FAS. Is it possible to decide AST sololy by the algebraicity of $$ a_{\mathcal{G}} $$ (possibly with a definifing polynomial)?\\
+The central result of Section 6 is Theorem 6.4, which establishes that the power series constitutes part of the minimal solution to a finite system of fixed-point equations. Given that the context is a semiring, this characterization of such power series as algebraic is natural, as discussed in paragraph 5; analogous definitions are well-established in formal language theory (e.g., Kuich and Salomaa, Semirings, Automata, Languages; Droste and Kuich, Handbook of Finite Automata) as well as in combinatorics (Banderier and Drmota, Formulae and Asymptotics for Coefficients of Algebraic Functions).
+Corollary 6.5.1—which states that these series are also algebraic in the traditional field-theoretic sense—is an auxiliary result rather than the primary focus. This corollary could be significant for further decidability results (for instance, determining whether two PHORS share the same generating function), it is not our main concern. In contrast to the approach taken by Ong, the fixed-point system derived here defines power series with a distinct probabilistic interpretation. Consequently, as you correctly reamrked, the moments can be obtained by differentiating the power series. Nevertheless, even in this framework, the fixed-point characterization remains an indispensable.
+
+\Reviewer C
+
+The fact that values are in [0,1] is assured by the adequacy of the weighted relational model, proved in Laird et al. Weighted relational models of typed lambda-calculi, which for example enables us to deduce Proposition 4.1: since adequacy ensures that the coefficients we are computing are equal to the probability of terminating with a certain sequence of choices, they must be numbers in [0,1].
+
