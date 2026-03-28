@@ -11,7 +11,7 @@ This is a very interesting question, but we are not sure that the results introd
 
 > I would appreciate further intuition about the fragment PBHORS^infty. 
 
-The PBHORS^infty admit variables that can be used an unbounded number of times, and which can be seen, syntactically, as "place-holders" for non-terminal symbols. Even in a deterministic setting, this allows us to capture many natural examples which are not typable in a linear setting (for instance, examples 2.9,2.10,2.11 from [32]). At the same time, we observed that transforming such examples effectively into linear or finitely graded (P)HORS does not seem obvious (as our reduction relies both on an exponential syntactic translation and a non-trivial semantic argument cf. Lemma 7.3).
+The PBHORS^infty admit variables that can be used an unbounded number of times, and which can be seen, syntactically, as "place-holders" for non-terminal symbols. This allows us to capture many natural examples which are not typable in a linear setting (for instance, examples 2.9,2.10,2.11 from [32]). At the same time, even in a deterministic setting, we observed that transforming such examples effectively into linear or finitely graded (P)HORS does not seem obvious (as our reduction relies both on an exponential syntactic translation and a non-trivial semantic argument cf. Lemma 7.3).
 
 From a syntactic viewpoint, PBHORS^infty adds some subject expansion to the finitary system.
 If a PBHORS^{<infty} contains an equation of the form Fx=t, where t includes the nonterminal G, 
