@@ -1,7 +1,7 @@
 % !TeX spellcheck = en_US
 \documentclass[a4paper,10pt]{article}
 
-\usepackage{xcolor}
+\usepackage{xcolor, amssymb}
 
 
 \newcommand{\red}[1]{\textcolor{red}{#1}}
@@ -19,14 +19,20 @@ Points raised by the reviewers:
 
 \begin{itemize}
 	\item Review A:
+	\begin{itemize}
+		\item \red{Does your semantics make it possible to observe similar phenomena for PHORS? }
+		In general, our semantics collapses together different trees as soon as they have the same number of branches consisting of every length. This simplification is useful in this context, as we are interested in the probability of termination, which only depends on the number of choices and not on their order: for example, at ll. 274-279 we present a regular and a non context-free language having the same generating function. In particular, the system of algebraic equation arising from a $\mathrm{PBHORS}^{<\infty}$ and $\mathrm{PBHORS}^{\infty}$ of any order is always equivalent to the system arising from some order 1 PHORS, that, while possibly having a completely different tree, has the same termination probability. Because of this, we do not think that our technique let us observe the collapse at order 4, which appears to generate from finer (and not just probabilistic-theoretic ) properties of PAHORS.  In this regard, it could be interesting to study the case in which variables do not commute, thus achieving a much stricter correspondence between generating functions and languages.
+	\end{itemize}
 
 \item Review B:
 	\begin{itemize}
 	\item \red{What do you mean by the point-wise partial order?}
 	
 	We indeed consider the pointwise order over the coefficients of the power series. 
-	In Theorem 6.7, that the minimal solution of the system is indeed $a_G(1)$ can be shown using the fact that fixpoints in QRel are defined by iteration: given a polynomial equation $x=p(x,z)$, its lfp $a(z)$ is the sup of $a^0(z)=0$ and $a^{n+1}(z)=p(a^n(z),z)$, while
-	the lfp y of $x=p(x,1)$ is the sup of $y^0=0, y^{n+1}=p(y^n,1)$; as evaluation in 1 is a Scott continous semiring homomorphism, we can prove by induction over n that $a^{n}(1)=y^n$ and then $a(1)=y$.
+	In Theorem 6.7, that the minimal solution of the system is indeed $a_G(1)$ can be shown using the fact that fixpoints in QRel are defined by iteration: given a system of polynomial equations $(x_i=p(\vec x,z))_{i \in I}$, its lfp $a_I(z)$ is the sup of $a_I^0(z)=0$ and $a_I^{n+1}(z)=p(a_I^n(z),z)$, while
+	the lfp y of $(x_i=p(\vec x,z))_{i \in I}$ is the sup of $y_I^0=0, y_I^{n+1}=p_I(y^n,1)$; as evaluation in 1 is a Scott continous semiring homomorphism, we can prove by induction over n that $a_I^{n}(1)=y_I^n$ and then $a_I(1)=y$.\\
+	\red{- p.10, Remark 6.3: I believe that the coefficients of $a_G$ themselves can be computed directly and fairly easily}\\
+	This is true, but it should noted that the Flajolet–Soria  formulas in [6] allow to make asymptotic estimates that are not possible by a direct computation. In particular, one could obtain, according theorem 3 in [6] estimates of the form $\mathbb{P}(\mathcal{G}\downarrow_n) \sim n^\alpha \rho^n $ for some $\alpha, \rho \in \mathbb{R}$. While the computation of these constants is not treated in this paper, the approach through algebraic fixpoint system opens the way to this kind of analysis, that could not be performed by direct computation.
 \end{itemize}
 
 
