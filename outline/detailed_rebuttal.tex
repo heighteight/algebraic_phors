@@ -19,43 +19,20 @@ Points raised by the reviewers:
 
 \begin{itemize}
 	\item Review A:
-	\begin{itemize}
-		\item \red{\#169: You seem to justify a theoretical result with "not common in programming practice."}
-	
-	We removed all references to 'programming practice'.
-	
-	\item \red{\#1216-1217 It's unusual to say "classic results" for a 2018 paper.}
-	
-	We removed 'classic'
-	
-	\item \red{sub-linear in what? How is the input size measured?}
-	
-	We added a footnote at line 78, page 2.
-
-\end{itemize}
 
 \item Review B:
 	\begin{itemize}
-		\item \red{Why is the diagram on p.25 not covering all the abstract machines in the paper?}
+	\item \red{What do you mean by the point-wise partial order?}
 	
-	Now it does cover all machines but for the HAM, which is really just a technical tool not deserving to appear in the conclusions. The diagram is also at the end of the introduction, now.		
+	We indeed consider the pointwise order over the coefficients of the power series. 
+	In Theorem 6.7, that the minimal solution of the system is indeed $a_G(1)$ can be shown using the fact that fixpoints in QRel are defined by iteration: given a polynomial equation $x=p(x,z)$, its lfp $a(z)$ is the sup of $a^0(z)=0$ and $a^{n+1}(z)=p(a^n(z),z)$, while
+	the lfp y of $x=p(x,1)$ is the sup of $y^0=0, y^{n+1}=p(y^n,1)$; as evaluation in 1 is a Scott continous semiring homomorphism, we can prove by induction over n that $a^{n}(1)=y^n$ and then $a(1)=y$.
 \end{itemize}
 
 
 \item Review C:
-	\begin{itemize}
-		\item \red{No example showing duplication.}
-	
-		At the end of the technical report associated to the paper there is a simple example of duplicating term which is evaluated with each one of the studied machines, to show how they differently deal with it.
-		
-		After introducing each machine we in the paper now we point to the technical report saying that there the reader can find an example of duplication.
-		
-		\item \red{Definition 6.3 requires s'' to "surround l". It seems that it must be the case after a bt2,l step. Why do you add this requirement?}
-		
-		In the rebuttal we answered that the requirement was indeed not needed. But we were wrong. It is true that whatever bt2,l steps would extend the context and the log, but the definition of 'surrounding' additionally asks the tape to be empty, which is required.
-		
-		\item The reviewer pointed out that we used twice the dichotomy \emph{local/global}, once for to contrast the management of logs by the lambda-IAM and the lambda-JAM, and once for contrasting the way lambda-JAM and the lambda-PAM trace the history of the run. We changed the second one, replacing local/global with \emph{fragmented/monolitic} 
-\end{itemize}
+
+
 \end{itemize}
 
 
