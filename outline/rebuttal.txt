@@ -8,6 +8,7 @@ Reviewer A:
 > Does your semantics make it possible to observe similar phenomena for PHORS? 
 
 This is a very interesting question, but we are not sure that the results introduced in this paper alone are enough to answer it.
+We point out that in our approach - contrary to what is often done in formal language theory - the variables of the power series are supposed to be commutative, as we are only interested in probability and enumeration problems and not to the order of choices . A consequence of this is that the finite system of fixpoint equations that we extract from a finitary PHORS of any order could already be obtained by an order 1 PHORS: by forgetting the order, collapse of the formal power series (but obviously not of the undelying languages) he problem to order 1. It looks then unlikely that these thechinques can provide insights on the collapse you mention; it could be of interest, though, to explore what would happen if we consider non-commuting variables.
 
 > I would appreciate further intuition about the fragment PBHORS^infty. 
 
