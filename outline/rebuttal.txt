@@ -17,7 +17,7 @@ REVIEWER B:
 
 > There is insufficient discussion of prior work on the relationship between linear-logic semantics and formal power series.
 
-We thank the reviewer for pointing out further references. The paper [ErhhardPT18] is our [16], cited in Section 4, and, while it deals with PCOH, it is one of the main inspirations of our approach. 
+We thank the reviewer for pointing out further references. The paper [EhrhardPT18] is our [16], cited in Section 4, and, while it deals with PCOH, it is one of the main inspirations of our approach. 
 
 > Is there anything that I missed in Section 7?
 
