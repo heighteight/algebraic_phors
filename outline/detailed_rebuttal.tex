@@ -1,7 +1,7 @@
 % !TeX spellcheck = en_US
 \documentclass[a4paper,10pt]{article}
 
-\usepackage{xcolor, amssymb}
+\usepackage{xcolor, amssymb, stmaryrd}
 
 
 \newcommand{\red}[1]{\textcolor{red}{#1}}
@@ -45,12 +45,21 @@ The proof is in [24], property 3.
 	\item\red{p.10, Remark 6.3: I believe that the coefficients of $a_G$ themselves can be computed directly and fairly easily}
 	
 	This is true, but it should noted that the formulas in [6] can be used to make asymptotic estimates that are not possible by a direct computation. In particular, according to Theorem 3 in [6], one could obtain estimates of the form $\mathbb{P}(\mathcal{G}\downarrow_n) \sim n^\alpha \rho^n $ for some $\alpha, \rho \in \mathbb{R}$. While the computation of these constants is not treated in this paper, the approach through fixpoint algebraic systems opens the way to this kind of analysis, which would not be possible via direct computations.
+	
+	\red{ p.9, Def.6.1: What does the final judgment mean? (The same expression also appears in Definition 7.1.)}\\
+	The type judgement $\mathcal{N} \mid x_1 \dots x_n \vdash t: o$ refers to the fact the each nonterminal of a PBHORS must have type of the form $!_{k_1}\tau_1  \multimap \dots \multimap !_{k_n } \tau_n \multimap o $ (this requirement is already present in the non-graded case of general PHORS).
+	
+	\red{p.10, l.1066: What do you mean by $ [\![t_G]\!]^{\mathbb{R}^{+\infty}_{\ge 0}} $? The coefficient semiring in the interpretation had always been assumed to be $ \mathbb{R}^{+\infty}_{\ge 0}\{\{ \{z\} + \Sigma \}\} $ (on line 619), but this seems to contradict that. I think a somewhat more careful argument is needed here.}\\
+	The coefficient semiring for the interpretation of $t_G$ for $PBHORS^{<\infty}$ is $\mathbb{R}^{+\infty}_{\ge 0}\ \{\{z\}\}$ (l. 834), while additional parameters are only needed for $PBHORS^{+\infty}$. As the equations defining the PHORS are of the form $F = t_L \oplus_p t_R$, with $p \in \mathbb{Q}$, we can see $t_G= zt'_G$, where $t'_G$ belongs to the polynomial ring $ \mathbb{Q}^{+\infty}_{\ge 0} \{\llbracket \mathcal{N} \rrbracket \} $ (i.e $t_G$ is a polynomial with rational coefficients and variables $z, \mathcal{N}$).
+	
 
 	\item\red{ p.10, Example 7.1: I do not think this represents the Dyck language (there is obviously a branch corresponding to (ace)).
 }
 
 Our explanation of the example is probably not the clearest, we admit. But what we claim is that the branch language contains all words of the form ``$w )$'', where $w$ is a word from the Dyck language. To be more precise, we should have actually written all words of the form ``$w ) e$'', where $w$ is from the Dyck language. So, for instance, the word ``$ace$'', corresponding to ``$)e$'', is indeed part of our claimed branch language.
 
+\item \red{ p.11, Fig.2: Please explain the $@_{\infty}$ rule in a bit more detail. Since the distinction between finite and infinitary types is quite powerful, it seems to me that the argument in Section 7.2 would still go through even without this disjointness assumption.}\\
+We thank the reviewer for the observation. It appears indeed that Theorem 7.4 can hold without the disjointness condition.
 \end{itemize}
 
 \end{itemize}
