@@ -1,7 +1,6 @@
 We would like to thank the reviewer for their insightful observations. We reply below to the high-level questions, while some technical questions requiring more space (and LaTeX) have been answered in the following document (the underlying URL is anonymized):
 
-http://....
-
+https://anonymous.4open.science/r/rebuttal_detail/detailed_rebuttal.pdf
 
 REVIEWER A:
 
