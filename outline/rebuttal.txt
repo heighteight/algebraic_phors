@@ -17,7 +17,7 @@ REVIEWER B:
 
 > There is insufficient discussion of prior work on the relationship between linear-logic semantics and formal power series.
 
-We thank the reviewer for pointing out further references. The paper [EhrhardPT18] is our [16], cited in Section 4, and, while it deals with PCOH, it is indeed one of the main inspirations of our approach. 
+We thank the reviewer for pointing out further references. The paper [EhrhardPT18] is our [16], cited in Section 4, and, while it deals with PCOH, it is indeed one of the main inspirations of our approach. Beyond this, we will highlight more clearly in the introduction that the contents of Section 4 rely on a relatively large literature. 
 
 > Is there anything that I missed in Section 7?
 
@@ -32,6 +32,10 @@ Our results rely on a definition of "algebraic fps" as minimal solutions of a sy
 Thanks for this remark! Indeed, the moments can be obtained by differentiating the power series, all of which can be expressed in the theory of the reals (while it is not clear to us how this could be done following the approach of [37]). Nevertheless, as for AST and PAST, we think that the fixed-point notion of algebraicity remains essential. 
 
 REVIEWER C:
+
+> An incredible amount of background material is required, and this does hurt the readability.
+
+We agree that the paper is quite dense, and relies on non-trivial results from different literatures. We will do our best to make it more self-contained.
 
 > How can you be sure that these sets have solutions in [0,1]? 
 
