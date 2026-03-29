@@ -11,33 +11,26 @@ This is a very interesting question, but we are not sure that the results introd
 
 > As mentioned above, I would appreciate further intuition about the fragment PBHORS^infty. 
 
-From a syntactic viewpoint, PBHORS^infty adds some subject expansion to the finitary system. If a PBHORS^{<infty} contains an equation of the form Fx=t, where t includes the nonterminal G, we can construct a PHORS with the same termination behaviour by changing the equation in  Fg​x=t[G∖g] and replacing every occurrence of F by FG. The result is not a PBHORS^{<infty}, but it is indeed a PBHORS^infty.
+The PBHORS^infty admit variables that can be used an unbounded number of times, and which can be seen, syntactically, as "place-holders" for non-terminal symbols. This allows us to capture many natural examples which are not typable in a linear setting (for instance, examples 2.9,2.10,2.11 from [32]). At the same time, even in a deterministic setting, we observed that transforming such examples effectively into linear or finitely graded (P)HORS does not seem obvious (as our reduction relies both on an exponential syntactic translation and a non-trivial semantic argument cf. Lemma 7.3).
 	
 REVIEWER B:
 
 > There is insufficient discussion of prior work on the relationship between linear-logic semantics and formal power series.
 
-We thank the reviewer for pointing out further references. The paper [ErhhardPT18] is our [16], cited in Section 4, and, while it deals with PCOH, it is certainly one of the main inspirations of our approach. 
-
-> I wonder how to prove that this fixed point is Conway.
-
-The proof is in [24], property 3.
-
-> What do you mean by the point-wise partial order? 
-
-We indeed consider the pointwise order over the coefficients of the power series. In Theorem 6.7, that the minimal solution of the system is indeed a_G(1) can be shown using the fact that fixpoints in QRel are defined by iteration: given a polynomial equation x=p(x,z), its lfp a(z) is the sup of a^0(z)=0 and a^{n+1}(z)=p(a^n(z),z), while the lfp y of x=p(x,1) is the sup of y^0=0, y^{n+1}=p(y^n,1); as evaluation in 1 is a Scott continous semiring homomorphism, we can prove by induction over n that a^{n}(1)=y^n and then a(1)=y.
+We thank the reviewer for pointing out further references. The paper [ErhhardPT18] is our [16], cited in Section 4, and, while it deals with PCOH, it is one of the main inspirations of our approach. 
 
 > Is there anything that I missed in Section 7?
 
-It is true that our discussion focuses a lot on the syntactic translation, but the core of the argument is given by Lemma 7.3 which shows that, under suitable conditions, the fixpoint of a PHORS^infty coincides with a fixpoint computed with parameters from P (in the statement of the lemma we should have highlighted more that the final fixpoint in RRel(P, N) can be seen as a fixpoint in R{{P}}Rel(0,N)). The translation provides a syntactic way to recover this underlying parametric fixpoint. Concerning the examples, the parameters disappear in the case of a closed PHORS, as they are all replaced by non terminals, but would remain for a non-closed one (for example, if we allow other constants other than e )
+It is true that our discussion focuses a lot on the syntactic translation, but the core of the argument is given by Lemma 7.3 which shows that, under suitable conditions, an infinitary fixpoint coincides with a finitary fixpoint with parameters from P (in the statement of the lemma we should have highlighted that the final fixpoint lives indeed in R{{P}}Rel(0,N)). The translation provides a syntactic counterpart to this essentially semantic observation. Concerning the examples, the parameters disappear in the case of a closed PHORS, as they are all replaced by non terminals, but would remain for a non-closed one (for example, if we allow other constants other than e).
 
-> Is it possible to decide AST solely by the algebraicity? 
+> The argument uses not only algebraicity but also the stronger fact that it is given as the least fixed point 
+[...] Is it possible to decide AST solely by the algebraicity? 
 
-It is worth to stress that our results rely on a definition of "algebraic fps" as minimal solution of a system of (polynomial) equations. This is an adaptation of the traditional field-theoretic notion to semirings and is well-established in combinatorics [6] and formal language theory [33] (but also Droste and Kuich, Handbook of Finite Automata). It's the notion underlying Chomsky-Schützenberger's characterization of context-free languages via algebraic fps. Corollary 6.5.1—which states that these series are also algebraic in the traditional sense—is an auxiliary result that allows us to exploit well-known results from elimination theory. Still, this corollary could indeed be significant to obtain further decidability results (for instance, determining whether two PHORS share the same generating function). 
+Our results rely on a definition of "algebraic fps" as minimal solution of a system of (polynomial) equations. This is an adaptation to semirings of the traditional field-theoretic notion and is well-established in combinatorics [6] and formal language theory [33] (but also Droste and Kuich, Handbook of Finite Automata). It's the notion underlying Chomsky-Schützenberger's characterization of context-free languages via algebraic fps in [11]. Notice that algebraic fps are also algebraic in the traditional sense (cf. our Theorem 5.1). Our approach to AST and PAST relies on the first notion (even if it exploits the second as well), as the Rel-interpretation of a PHORS, that characterizes its probability of termination, truly is the lfp of the associated system of equations. Yet, standard algebraicity could be used to obtain further decidability results (for instance, determining whether two PHORS share the same generating function). 
 
 > The threshold problem for the second moment might also be decidable. 
 
-Thanks for this remark! Indeed, the moments can be obtained by differentiating the power series, all of which can be expressed in the theory of the reals (while it is not clear to us how this could be done following the approach of [37]). Nevertheless, as is for AST and PAST, we think that the fixed-point notion of algebraicity remains essential. 
+Thanks for this remark! Indeed, the moments can be obtained by differentiating the power series, all of which can be expressed in the theory of the reals (while it is not clear to us how this could be done following the approach of [37]). Nevertheless, as for AST and PAST, we think that the fixed-point notion of algebraicity remains essential. 
 
 
 REVIEWER C:
