@@ -44,8 +44,13 @@ The proof is in [24], property 3.
 	\item\red{p.10, Remark 6.3: I believe that the coefficients of $a_G$ themselves can be computed directly and fairly easily}
 	
 	This is true, but it should noted that the formulas in [6] can be used to make asymptotic estimates that are not possible by a direct computation. In particular, according to Theorem 3 in [6], one could obtain estimates of the form $\mathbb{P}(\mathcal{G}\downarrow_n) \sim n^\alpha \rho^n $ for some $\alpha, \rho \in \mathbb{R}$. While the computation of these constants is not treated in this paper, the approach through fixpoint algebraic systems opens the way to this kind of analysis, which would not be possible via direct computations.
-\end{itemize}
 
+	\item\red{ p.10, Example 7.1: I do not think this represents the Dyck language (there is obviously a branch corresponding to (ace)).
+}
+
+Our explanation of the example is probably not the clearest, we admit. But what we claim is that the branch language contains all words of the form ``$w )$'', where $w$ is a word from the Dyck language. To be more precise, we should have actually written all words of the form ``$w ) e$'', where $w$ is from the Dyck language. So, for instance, the word ``$ace$'', corresponding to ``$)e$'', is indeed part of our claimed branch language.
+
+\end{itemize}
 
 \item Review C:
 
