@@ -42,24 +42,32 @@ The proof is in [24], property 3.
 	In Theorem 6.7, that the minimal solution of the system is indeed $a_G(1)$ can be shown using the fact that fixpoints in QRel are defined by iteration: given a system of polynomial equations $(x_i=p(\vec x,z))_{i \in I}$, its lfp $a_I(z)$ is the sup of $a_I^0(z)=0$ and $a_I^{n+1}(z)=p(a_I^n(z),z)$, while
 	the lfp y of $(x_i=p(\vec x,z))_{i \in I}$ is the sup of $y_I^0=0, y_I^{n+1}=p_I(y^n,1)$; as evaluation in 1 is a Scott continous semiring homomorphism, we can prove by induction over $n$ that $a_I^{n}(1)=y_I^n$, from which it follows that $a_I(1)=y$.
 	
-	\item\red{p.10, Remark 6.3: I believe that the coefficients of $a_G$ themselves can be computed directly and fairly easily}
+		\item\red{ p.9, Def.6.1: What does the final judgment mean? (The same expression also appears in Definition 7.1.)}\\
+	The type judgement $\mathcal{N} \mid x_1 \dots x_n \vdash t: o$ refers to the fact the each nonterminal of a PBHORS must have type of the form $!_{k_1}\tau_1  \multimap \dots \multimap !_{k_n } \tau_n \multimap o $ (this requirement is already present in the non-graded case of general PHORS). We took the same notation from [37], Def.~2.9, for uniformity, but we agree that it is not very clear.
 	
-	This is true, but it should noted that the formulas in [6] can be used to make asymptotic estimates that are not possible by a direct computation. In particular, according to Theorem 3 in [6], one could obtain estimates of the form $\mathbb{P}(\mathcal{G}\downarrow_n) \sim n^\alpha \rho^n $ for some $\alpha, \rho \in \mathbb{R}$. While the computation of these constants is not treated in this paper, the approach through fixpoint algebraic systems opens the way to this kind of analysis, which would not be possible via direct computations.
+	\item \red{- p.9, l.993: "in the affine system of (Ong et al.)" Please cite this properly. Is this meant to refer to [37]? If so, calling it "Ong et al." ignores the author order in the paper and is disrespectful to the authors of [37]}
 	
-	\red{ p.9, Def.6.1: What does the final judgment mean? (The same expression also appears in Definition 7.1.)}\\
-	The type judgement $\mathcal{N} \mid x_1 \dots x_n \vdash t: o$ refers to the fact the each nonterminal of a PBHORS must have type of the form $!_{k_1}\tau_1  \multimap \dots \multimap !_{k_n } \tau_n \multimap o $ (this requirement is already present in the non-graded case of general PHORS).
+	Of course, this is a typo, in all other places in which we cited [37] we indeed used ``Li et al.''. Thanks for spotting this.
 	
-	\red{p.10, l.1066: What do you mean by $ [\![t_G]\!]^{\mathbb{R}^{+\infty}_{\ge 0}} $? The coefficient semiring in the interpretation had always been assumed to be $ \mathbb{R}^{+\infty}_{\ge 0}\{\{ \{z\} + \Sigma \}\} $ (on line 619), but this seems to contradict that. I think a somewhat more careful argument is needed here.}\\
-	The coefficient semiring for the interpretation of $t_G$ for $PBHORS^{<\infty}$ is $\mathbb{R}^{+\infty}_{\ge 0}\ \{\{z\}\}$ (l. 834), while additional parameters are only needed for $PBHORS^{+\infty}$. As the equations defining the PHORS are of the form $F = t_L \oplus_p t_R$, with $p \in \mathbb{Q}$, we can see $t_G= zt'_G$, where $t'_G$ belongs to the polynomial ring $ \mathbb{Q}^{+\infty}_{\ge 0} \{\llbracket \mathcal{N} \rrbracket \} $ (i.e $t_G$ is a polynomial with rational coefficients and variables $z, \mathcal{N}$).
+	\item\red{p.10, l.1066: What do you mean by $ [\![t_G]\!]^{\mathbb{R}^{+\infty}_{\ge 0}} $? The coefficient semiring in the interpretation had always been assumed to be $ \mathbb{R}^{+\infty}_{\ge 0}\{\{ \{z\} + \Sigma \}\} $ (on line 619), but this seems to contradict that. I think a somewhat more careful argument is needed here.}
 	
+Yes, that is a typo, thanks for spotting that. The coefficient semiring for the interpretation of $t_G$ for $PBHORS^{<\infty}$ is $\mathbb{R}^{+\infty}_{\ge 0}\ \{\{z\}\}$ (l. 834). Moreover, the statement ``all coefficients are rational'' should be made more precise: 
+ $t_G$ is a polynomial with rational coefficients and variables $z, \mathcal{N}$. Indeed, as the equations defining the PHORS are of the form $F = t_L \oplus_p t_R$, with $p \in \mathbb{Q}$, we can see that $t_G$ is of the form $ zt'_G$, where $t'_G$ belongs to the polynomial ring $ \mathbb{Q}^{+\infty}_{\ge 0} \{\llbracket \mathcal{N} \rrbracket \} $.	
 
 	\item\red{ p.10, Example 7.1: I do not think this represents the Dyck language (there is obviously a branch corresponding to (ace)).
 }
 
 Our explanation of the example is probably not the clearest, we admit. But what we claim is that the branch language contains all words of the form ``$w )$'', where $w$ is a word from the Dyck language. To be more precise, we should have actually written all words of the form ``$w ) e$'', where $w$ is from the Dyck language. So, for instance, the word ``$ace$'', corresponding to ``$)e$'', is indeed part of our claimed branch language.
 
-\item \red{ p.11, Fig.2: Please explain the $@_{\infty}$ rule in a bit more detail. Since the distinction between finite and infinitary types is quite powerful, it seems to me that the argument in Section 7.2 would still go through even without this disjointness assumption.}\\
-We thank the reviewer for the observation. It appears indeed that Theorem 7.4 can hold without the disjointness condition.
+\item \red{ p.11, Fig.2: Please explain the $@_{\infty}$ rule in a bit more detail. Since the distinction between finite and infinitary types is quite powerful, it seems to me that the argument in Section 7.2 would still go through even without this disjointness assumption.}
+
+Thanks for this observation. We realized indeed that Theorem 7.4 can hold without the disjointness condition.
+
+\item\red{p.10, Remark 6.3: I believe that the coefficients of $a_G$ themselves can be computed directly and fairly easily}
+	
+	This is true, but it should noted that the formulas in [6] can be used to make asymptotic estimates that are not possible by a direct computation. In particular, according to Theorem 3 in [6], one could obtain estimates of the form $\mathbb{P}(\mathcal{G}\downarrow_n) \sim n^\alpha \rho^n $ for some $\alpha, \rho \in \mathbb{R}$. While the computation of these constants is not treated in this paper, the approach through fixpoint algebraic systems opens the way to this kind of analysis, which would not be possible via direct computations.
+	
+
 \end{itemize}
 
 \end{itemize}
