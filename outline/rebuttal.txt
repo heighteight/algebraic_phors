@@ -17,21 +17,19 @@ REVIEWER B:
 
 > There is insufficient discussion of prior work on the relationship between linear-logic semantics and formal power series.
 
-We thank the reviewer for pointing out further references. The paper [EhrhardPT18] is our [16], cited in Section 4, and, while it deals with PCOH, it is one of the main inspirations of our approach. 
+We thank the reviewer for pointing out further references. The paper [EhrhardPT18] is our [16], cited in Section 4, and, while it deals with PCOH, it is indeed one of the main inspirations of our approach. 
 
 > Is there anything that I missed in Section 7?
 
 It is true that our discussion focuses a lot on the syntactic translation, but the core of the argument is given by Lemma 7.3 which shows that, under suitable conditions, an infinitary fixpoint coincides with a finitary fixpoint with parameters from P (in the statement of the lemma we should have highlighted that the final fixpoint lives indeed in R{{P}}Rel(0,N)). The translation provides a syntactic counterpart to this essentially semantic observation. Concerning the examples, the parameters disappear in the case of a closed PHORS, as they are all replaced by non terminals, but would remain for a non-closed one (for example, if we allow other constants other than e).
 
-> The argument uses not only algebraicity but also the stronger fact that it is given as the least fixed point 
-[...] Is it possible to decide AST solely by the algebraicity? 
+> The argument uses not only algebraicity but also the stronger fact that it is given as the least fixed point [...] Is it possible to decide AST solely by the algebraicity? 
 
-Our results rely on a definition of "algebraic fps" as minimal solution of a system of (polynomial) equations. This is an adaptation to semirings of the traditional field-theoretic notion and is well-established in combinatorics [6] and formal language theory [33] (but also Droste and Kuich, Handbook of Finite Automata). It's the notion underlying Chomsky-Schützenberger's characterization of context-free languages via algebraic fps in [11]. Notice that algebraic fps are also algebraic in the traditional sense (cf. our Theorem 5.1). Our approach to AST and PAST relies on the first notion (even if it exploits the second as well), as the Rel-interpretation of a PHORS, that characterizes its probability of termination, truly is the lfp of the associated system of equations. Yet, standard algebraicity could be used to obtain further decidability results (for instance, determining whether two PHORS share the same generating function). 
+Our results rely on a definition of "algebraic fps" as minimal solutions of a system of (polynomial) equations. This is an adaptation to semirings of the traditional field-theoretic notion and is well-established in combinatorics [6] and formal language theory [33] (but also Droste and Kuich, Handbook of Finite Automata). This is the notion underlying Chomsky-Schützenberger's characterization of context-free languages via algebraic fps in [11]. Notice that algebraic fps are also algebraic in the traditional sense (cf. our Theorem 5.1). Our approach to AST and PAST relies on the first notion (even if it exploits the second as well), as the Rel-interpretation of a PHORS, that characterizes its probability of termination, truly is the lfp of the associated system of equations. Yet, standard algebraicity could be used to obtain further decidability results (for instance, determining whether two PHORS share the same generating function). 
 
 > The threshold problem for the second moment might also be decidable. 
 
 Thanks for this remark! Indeed, the moments can be obtained by differentiating the power series, all of which can be expressed in the theory of the reals (while it is not clear to us how this could be done following the approach of [37]). Nevertheless, as for AST and PAST, we think that the fixed-point notion of algebraicity remains essential. 
-
 
 REVIEWER C:
 
