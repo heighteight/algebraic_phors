@@ -226,33 +226,33 @@ We will now show how, for any $\Gfin$ $\gphors$, the interpretation of the under
 
 
 First, from any $\Gfin$ we can canonically extract the underlying (simply typed) PHORS.
-Observe first that the rules (and indeed the derivations) of $\Gfin$ can be seen as \emph{quantitative refinements} of the simply typed ones. Indeed, every type $\varphi$ is (uniquely) a \emph{refinement} of some simple type $\st{\varphi}$: the simple types $\st\varphi$ are defined by $\st{(o^n)}=o^n$ and $\st{(!_k\varphi\multimap\psi)}=\st\varphi\to\st\psi$.
-Notice that $\varphi\sqsubseteq \psi$ implies $\st\varphi=\st\psi$. 
+Observe first that the rules (and indeed the derivations) of $\Gfin$ can be seen as \emph{quantitative refinements} of the simply typed ones. Indeed, every type $\varphi$ is (uniquely) a \emph{refinement} of some simple type $\sat{\varphi}$: the simple types $\sat\varphi$ are defined by $\sat{(o^n)}=o^n$ and $\sat{(!_k\varphi\multimap\psi)}=\sat\varphi\to\sat\psi$.
+Notice that $\varphi\sqsubseteq \psi$ implies $\sat\varphi=\sat\psi$. 
 Moreover, for every derivation $\pi:\nonterm\mid\Delta \vdash t:\varphi$, 
-by replacing each $\psi$ by $\st\psi$, we obtain, by induction, a simply typed derivation $\st\pi:\st\nonterm,\st\Delta\vdash t:\st\varphi$.
+by replacing each $\psi$ by $\sat\psi$, we obtain, by induction, a simply typed derivation $\sat\pi:\sat\nonterm,\sat\Delta\vdash t:\sat\varphi$.
 
 
  For any set $\Sigma$  and $k\in \N$, let $!_k\Sigma\subseteq !\Sigma$ be the set of multisets $\mu$ of maximal multeplicity $k$ (i.e $\max_{x \in \Sigma} \mu(x)\leq k)$. $!_k\Sigma$ corresponds to the monomials over $x_\Sigma$ of degree at most $k$ in each variable. 
-  Define then, for every type $\varphi$, $\model{\varphi}$ as $\model{o^n}=1$ and $\model{!_k\varphi\multimap \psi}=!_k\model{\varphi}\times\model{\psi}$. We extend this to contexts by $\model{\emptyset}=0$ and $\model{\nonterm,x:\varphi}=\model{\nonterm}+\model{\varphi}$ (irrespectively of grades). Notice that $\model{\varphi}\subseteq\model{\st\varphi}$, but the variable sets $\model{\varphi}$ are always finite. 
+  Define then, for every type $\varphi$, $\model{\varphi}$ as $\model{o^n}=1$ and $\model{!_k\varphi\multimap \psi}=!_k\model{\varphi}\times\model{\psi}$. We extend this to contexts by $\model{\emptyset}=0$ and $\model{\nonterm,x:\varphi}=\model{\nonterm}+\model{\varphi}$ (irrespectively of grades). Notice that $\model{\varphi}\subseteq\model{\sat\varphi}$, but the variable sets $\model{\varphi}$ are always finite. 
    
    
 
       
-   Our general idea is the following: given a $\Gfin$ $\gphors=(\nonterm, \C D, S)$, from the derivations $\C D(L)$ of $\nonterm\mid\emptyset \vdash t_L:\nonterm(L)$, we deduce a corresponding simply typed derivation of $ t_{\gphors}:\st\nonterm\to \st\nonterm$ yielding a family
-   $\model{t}^{\Rsemiring}\in \fps{\Rsemiring}{\model{\st\nonterm}}^{\model{\st\nonterm}}$.  
-  At the same time, we will show that the finite set $\model{\nonterm}\subset\model{\st\nonterm}$ yields a stable and polynomial pair, and we will conclude that $\model{t_{\gphors}}$ is finitary, hence, by Corollary \ref{cor:propertoalg}, algebraic.    
+   Our general idea is the following: given a $\Gfin$ $\gphors=(\nonterm, \C D, S)$, from the derivations $\C D(L)$ of $\nonterm\mid\emptyset \vdash t_L:\nonterm(L)$, we deduce a corresponding simply typed derivation of $ t_{\gphors}:\sat\nonterm\to \sat\nonterm$ yielding a family
+   $\model{t}^{\Rsemiring}\in \fps{\Rsemiring}{\model{\sat\nonterm}}^{\model{\sat\nonterm}}$.  
+  At the same time, we will show that the finite set $\model{\nonterm}\subset\model{\sat\nonterm}$ yields a stable and polynomial pair, and we will conclude that $\model{t_{\gphors}}$ is finitary, hence, by Corollary \ref{cor:propertoalg}, algebraic.    
    
    The fundamental ingredient is the following lemma:
    
   \begin{lemma}[stability lemma]\label{lemma:stability}
   Let $\Rsemiring=\fps{\Rinf}{\Sigma}$.
-For every derivation $\nonterm\mid\Delta\vdash t:\varphi$, the pair $(\model{\nonterm}+\model{\Delta}, \model{\varphi})$ is stable and polynomial for $\model{t}^{\Rsemiring}\in \fps{\Rsemiring}{\model{\st\nonterm}+\model{\st\Delta}}^{\model{\st\varphi}}$.
+For every derivation $\nonterm\mid\Delta\vdash t:\varphi$, the pair $(\model{\nonterm}+\model{\Delta}, \model{\varphi})$ is stable and polynomial for $\model{t}^{\Rsemiring}\in \fps{\Rsemiring}{\model{\sat\nonterm}+\model{\sat\Delta}}^{\model{\sat\varphi}}$.
   
   
   
   \end{lemma}
   \begin{proof}[Proof sketch]
-  Let a \emph{finitary} variable be any $\sigma\in\model{\nonterm},\model{\Delta},\model{\varphi}$, and a \emph{non-finitary} one be any $\sigma\in\model{\st\nonterm}-\model{\nonterm},\model{\st\Delta}-\model{\Delta},\model{\st\varphi}-\model{\varphi}$.
+  Let a \emph{finitary} variable be any $\sigma\in\model{\nonterm},\model{\Delta},\model{\varphi}$, and a \emph{non-finitary} one be any $\sigma\in\model{\sat\nonterm}-\model{\nonterm},\model{\sat\Delta}-\model{\Delta},\model{\sat\varphi}-\model{\varphi}$.
 By induction, one shows the following two claims:
    \begin{varenumerate} 
    \item for all non-finitary $\sigma$, $(\model{t}^\Rsemiring)_\sigma\big\vert_{\model{\nonterm}+\model{\Delta}}=0$;
@@ -329,7 +329,7 @@ An immediate consequence of Lemma \ref{lemma:stability} is the following:
 \begin{proposition}
 	\label{prop:finitefamily}
 For every $\Gfin$ $\gphors=(\nonterm,\C D,S)$, the fps
-$\model{t_{\gphors}}^{\Rsemiring}\in \fps{\Rsemiring}{\model{\st\nonterm}}^{\model{\st\nonterm}}$ is finitary (via $\model\nonterm$).
+$\model{t_{\gphors}}^{\Rsemiring}\in \fps{\Rsemiring}{\model{\sat\nonterm}}^{\model{\sat\nonterm}}$ is finitary (via $\model\nonterm$).
 % derivations of $\nonterm\mid\emptyset\vdash t_L:\varphi$, with $\varphi\sqsubseteq \nonterm{L}\tri T$, the fps
 %$\model{M:\psi\tri T}^{\Rsemiring}\in \fps{\Rsemiring}{\model{T}+\model{\Gamma}}^{\model{T}}$ is finitary.
 \end{proposition}

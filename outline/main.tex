@@ -1,31 +1,69 @@
-%\documentclass[sigplan,nonacm,screen,review, anonymous]{acmart}
-\documentclass[sigconf,anonymous, review]{acmart}
 
-\AtBeginDocument{%
-  \providecommand\BibTeX{{%
-    Bib\TeX}}}
+\documentclass[a4paper,UKenglish,cleveref, autoref, thm-restate]{lipics-v2021}
+%This is a template for producing LIPIcs articles. 
+%See lipics-v2021-authors-guidelines.pdf for further information.
+%for A4 paper format use option "a4paper", for US-letter use option "letterpaper"
+%for british hyphenation rules use option "UKenglish", for american hyphenation rules use option "USenglish"
+%for section-numbered lemmas etc., use "numberwithinsect"
+%for enabling cleveref support, use "cleveref"
+%for enabling autoref support, use "autoref"
+%for anonymousing the authors (e.g. for double-blind review), add "anonymous"
+%for enabling thm-restate support, use "thm-restate"
+%for enabling a two-column layout for the author/affilation part (only applicable for > 6 authors), use "authorcolumns"
+%for producing a PDF according the PDF/A standard, add "pdfa"
 
-% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
-%Template version as of 6/27/2024
+%\pdfoutput=1 %uncomment to ensure pdflatex processing (mandatatory e.g. to submit to arXiv)
+%\hideLIPIcs  %uncomment to remove references to LIPIcs series (logo, DOI, ...), e.g. when preparing a pre-final version to be uploaded to arXiv or another public repository
 
-\usepackage[nameinlink]{cleveref}
-\usepackage{enumitem}[shortlabels]
-\makeatletter
-\AtEndPreamble{%
-  \theoremstyle{acmdefinition}
-  \@ifundefined{rem}{%
-    \newtheorem{rem}[theorem]{Remark}
-  }{}%
-  \crefname{enumi}{}{}
-  \Crefname{enumi}{}{}
-  \crefname{lemma}{Lemma}{Lemmas}
-  \Crefname{lemma}{Lemma}{Lemmas}
-  \crefname{definition}{Definition}{Definitions}
-  \Crefname{definition}{Definition}{Definitions}
-}
-\makeatother
+%\graphicspath{{./graphics/}}%helpful if your graphic files are in another directory
+
+\bibliographystyle{plainurl}% the mandatory bibstyle
+
+\title{On Higher-Order Probabilistic Verification\\ via the Weighted Relational Model of Linear Logic} %TODO Please add
+
+%\titlerunning{Dummy short title} %TODO optional, please use if title is longer than one line
+
+\author{{Anonymous Authors}}{Dummy University Computing Laboratory, [optional: Address], Country \and My second affiliation, Country \and \url{http://www.myhomepage.edu} }{johnqpublic@dummyuni.org}{https://orcid.org/0000-0002-1825-0097}{(Optional) author-specific funding acknowledgements}%TODO mandatory, please use full name; only 1 author per \author macro; first two parameters are mandatory, other parameters can be empty. Please provide at least the name of the affiliation and the country. The full address is optional. Use additional curly braces to indicate the correct name splitting when the last name consists of multiple name parts.
+
+%\author{Joan R. Public\footnote{Optional footnote, e.g. to mark corresponding author}}{Department of Informatics, Dummy College, [optional: Address], Country}{joanrpublic@dummycollege.org}{[orcid]}{[funding]}
+
+\authorrunning{Anonymous authors} %TODO mandatory. First: Use abbreviated first/middle names. Second (only in severe cases): Use first author plus 'et al.'
+
+\Copyright{Anonymous authors} %TODO mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
+
+\ccsdesc[100]{\textcolor{red}{Replace ccsdesc macro with valid one}} %TODO mandatory: Please choose ACM 2012 classifications from https://dl.acm.org/ccs/ccs_flat.cfm 
+
+\keywords{Probabilistic $\lambda$-calculus, linear logic, weighted relational model, algebraic power series} %TODO mandatory; please add comma-separated list of keywords
+
+\category{} %optional, e.g. invited paper
+
+\relatedversion{} %optional, e.g. full version hosted on arXiv, HAL, or other respository/website
+%\relatedversiondetails[linktext={opt. text shown instead of the URL}, cite=DBLP:books/mk/GrayR93]{Classification (e.g. Full Version, Extended Version, Previous Version}{URL to related version} %linktext and cite are optional
+
+%\supplement{}%optional, e.g. related research data, source code, ... hosted on a repository like zenodo, figshare, GitHub, ...
+%\supplementdetails[linktext={opt. text shown instead of the URL}, cite=DBLP:books/mk/GrayR93, subcategory={Description, Subcategory}, swhid={Software Heritage Identifier}]{General Classification (e.g. Software, Dataset, Model, ...)}{URL to related version} %linktext, cite, and subcategory are optional
+
+%\funding{(Optional) general funding statement \dots}%optional, to capture a funding statement, which applies to all authors. Please enter author specific funding statements as fifth argument of the \author macro.
+
+\acknowledgements{I want to thank \dots}%optional
+
+%\nolinenumbers %uncomment to disable line numbering
 
 
+
+%Editor-only macros:: begin (do not touch as author)%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\EventEditors{John Q. Open and Joan R. Access}
+\EventNoEds{2}
+\EventLongTitle{42nd Conference on Very Important Topics (CVIT 2016)}
+\EventShortTitle{CVIT 2016}
+\EventAcronym{CVIT}
+\EventYear{2016}
+\EventDate{December 24--27, 2016}
+\EventLocation{Little Whinging, United Kingdom}
+\EventLogo{}
+\SeriesVolume{42}
+\ArticleNo{23}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\usepackage{cite}
 %\usepackage{amsmath,amssymb,amsfonts, amsthm}
 \usepackage{algorithmic}
@@ -49,16 +87,10 @@
 %\usepackage[scr=boondoxo,scrscaled=1.05]{mathalfa}
 
 
-\usepackage{tikz}
-\usetikzlibrary{cd, angles, shapes}
-\tikzcdset{scale cd/.style={every label/.append style={scale=#1},
-    cells={nodes={scale=#1}}}}
-    
-
-\settopmatter{printacmref=false} % Removes citation information below abstract
-\renewcommand\footnotetextcopyrightpermission[1]{} % removes footnote with conference information in first column
-\pagestyle{plain} % removes running headers
-
+%\usepackage{tikz}
+%\usetikzlibrary{cd, angles, shapes}
+%\tikzcdset{scale cd/.style={every label/.append style={scale=#1},
+%		cells={nodes={scale=#1}}}}
 
 \input{macros}
 
@@ -66,30 +98,7 @@
 
 \begin{document}
 
-
-%\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
-%    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
-
-
-
-
-\title{On Higher-Order Probabilistic Verification\\ via the Weighted Relational Model of Linear Logic}
-
-
-\author{{Anonymous Authors}}
-%
-%
-%\author{\IEEEauthorblockN{1\textsuperscript{st} Davide Barbarossa}
-%\IEEEauthorblockA{\textit{University of Bath} }\\
-%Bath, UK \\
-%db2437@bath.ac.uk
-%\and
-%\IEEEauthorblockN{2\textsuperscript{nd} Paolo Pistone}
-%\IEEEauthorblockA{\textit{Universit\'e Claude Bernard Lyon 1} }\\
-%Lyon, France \\
-%paolo.pistone@ens-lyon.fr}
-
-
+\maketitle
 
 \begin{abstract}
 
@@ -100,21 +109,7 @@ Using the weighted relational semantics of linear logic, we translate this probl
 of suitable generating functions associated with the program interpreted. 
 This way, we establish the decidability of almost sure termination for a class of programs that extends Li et al.'s affine PHORS via a type discipline with bounded exponentials.
 To achieve this, we show that the generating functions for such programs are always algebraic, that is, solutions of polynomial equations, yielding an effective method to answer the termination problem.
-
-
 \end{abstract}
-
-\keywords{Probabilistic $\lambda$-calculus, linear logic, weighted relational model, algebraic power series}
-
-\maketitle
-
-
-
-
-
-
-
-
 
 \section{Introduction}
 
