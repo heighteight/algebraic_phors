@@ -100,10 +100,10 @@ compute the $a_n$ effectively.
 		\begin{cases}
 			w_1 = p_1(w_1, \dots w_n, x_\Sigma)\\
 			\dots\\
-			w_n = w_n(s_1, \dots w_n, x_\Sigma)\\
+			w_n = p_n(s_1, \dots w_n, x_\Sigma)\\
 		\end{cases}
 		\end{equation}
-	A family $(s_1, \dots s_n)$ of formal power series $s_i \in \fps{\Rsemiring}{\Sigma}$ that is the minimal solution of a $\Rsemiring'$-FAS is said a $\Rsemiring'$-\emph{fixpoint algebraic family}. 
+	A family $(s_1, \dots s_n)$ of formal power series $s_i \in \fps{\Rsemiring}{\Sigma}$ that is the minimal solution of a $\Rsemiring'$-FAS is called a $\Rsemiring'$-\emph{fixpoint algebraic family}. 
 	If the $p_i$ are such that $p_i(0,0)=0$ and, for each $j$, the coefficient of the monomial $w_j$ in $p_i$ is $0$, we say that the system is \emph{proper}.
 \end{definition}
 	The theory of systems like \eqref{fixpointsystem} has been extensively studied (\cite{DBLP:books/sp/KuichS86}, \cite{DBLP:journals/cpc/BanderierD15}) in the context of combinatorics and formal language theory: in particular, it can be shown that they admit a (unique) minimal solution, that can be obtained by iterating the polynomials $p_1 \dots p_n$. In the following we will be in general be interested in ${\Rinf}$-power series algebraic over $\Q_{\geq 0}$: in this case, the polynomial equations $w_i= p_i, \: p \in \fpp{\Qpos}{\Sigma}$ can be rewritten as $p'_i \bydef p_i- w_i = 0, \: p \in \fpp{\Qpos}{\Sigma}$. Rather than speaking of the minimal solution of \eqref{fixpointsystem} as a system with coefficients in $\Qpos$, we can then speak of the minimal non-negative solution $(s_1, \dots s_n)$  of the system $(p'_i=0)_{1 \leq i \leq n}$ with coefficients over $\mathbb{Q}$.
@@ -114,6 +114,9 @@ compute the $a_n$ effectively.
  		$q_i(s_i(x_\Sigma), x_\Sigma)=0$, for all $1 \leq i \leq n$, 
  		that is, every $s_i$ is a $\Q$-algebraic power series.
  	\end{theorem}
+ 	\begin{remark}
+ 		The definition of fixpoint algebraic family consists of two conditions: the purely algebraic fact of being solution of a FAS and the minimality with respect to the order relation. For \emph{proper} FAS, the minimal solution $(s_1(z), \dots s_n(z)) $ is also the unique solution in a neighbourood of $z=0$ \cite{DBLP:books/sp/KuichS86}. Unfortunately, the algebraic functions $s_1(z), \dots s_n(z)$ might have singularities over the disk $|z| \leq 1$, hence there might be multiple solutions of the FAS for $z=1$; to select amongst them the one corresponding to the fixpoint solution, we need to use the minimality. As an example, take the equation $w= zw$: the only solution on the open disk $|z|<1$ is the identically zero power series $w(z)= 0$, but for $z=1$ we find that any $w \in \R$ is a valid solution.
+ 	\end{remark}
 % 	\begin{proof}
 % 		The complete proof and the related elimination algorithm, based on classical methods from algebraic geometry \cite{Van_der_Waerden2003-rd} can be found in Kuich and Salomaa's book \cite{DBLP:books/sp/KuichS86}, Thms.~16.9, 16.10. Observe that elimination here requires the FAS $F$ to be proper.
 % 	\end{proof}
@@ -168,7 +171,7 @@ When $\gphors$ is order-1, each type $\nonterm(L_i)$ is of the form $o\to\dots \
 Thanks to Lemma \ref{lemma:affine} we have that, if for some $i=1,\dots, n$, $p_i\geq 2$, then $ 
 w_{p_1,\dots, p_n}(z)=0$. We can thus reduce ourselves to a finite polynomial system only involving the finitely many $w_{p_1,\dots, p_n}(z)$, with the $p_i\in \{0,1\}$.
 \end{proof}
-Since, as we'll see, AST and PAST can be decided once a PHORS is interpreted as a FAS, we see that the well-known decidability of order-1 PHORS naturally follows from the simple nature of their generating functions, which are always affine.  
+Since, as we will see in \ref{th:decidability}, AST and PAST can be decided once a PHORS is interpreted as a FAS, we see that the well-known decidability of order-1 PHORS naturally follows from the simple nature of their generating functions, which are always affine.  
 
 %In the result above, we obtain a FAS by observing that the interpretation of an order-1 PHORS  always involves fps with finite support, i.e.~polynomials. 
 Beyond order-1, this argument does not work anymore, as PHORS can be truly non-linear.
@@ -236,7 +239,7 @@ If, moreover, for each $\sigma \in W$ and for each $y \in Y$, $s_\sigma(0)=0$ an
 %	\end{definition}
 	
 
-Take a family $s_X\in \fps{\Rsemiring}{X+Y}^X$ and let $A\subseteq X$ be a stable set. 
+Take a family $s_X\in \fps{\Rsemiring}{X+Y}^X$ and let $A\subseteq X$ be such that $(A,A)$ is a stable pair. 
 By stability, starting from $0$ and repeatedly applying $s_X$ we can never obtain a term of the form $s_\sigma(t)$, with $\sigma\notin A$. Moreover, if $A$ is also polynomial, then all such iterates are obtained by composing polynomials $s_\sigma\vert_{A+Y}$, with $\sigma\in A$; finally, if $A$ is finite, these polynomials are only finitely many. All this leads to the following:
 %
 % computing the iterates
@@ -250,9 +253,9 @@ By stability, starting from $0$ and repeatedly applying $s_X$ we can never obtai
 		 If $s_X\in \fps{\Rsemiring'}{X+Y}^X$ is a finitary family, then $\fix s_X$ has finite support and it is the minimal solution of a fixpoint algebraic system over $\Rsemiring'$ .  
    \end{proposition}
    \begin{proof}
-   Let $A\subseteq Y$ be finite, stable and polynomial as above.
+   Let $A\subseteq X$ be finite, stable and polynomial as above.
  Take the (finite) system of equations: $(r_a = s^*_a(r_a, x_Y))_{a \in A}$, where $s^*_a=(s_a)\vert_{A+Y}$, and let $\bar r_A$ be one of its solutions. Then, define $(t_x)_{x \in X}$ to be $\bar r_x$ if $x \in A$ and $0$ otherwise. 
-Then for all $x\in X$, $s_x(t_x,x_Y)=0$: if $x\in A$, since $t_X=\bar r_{A}+0_{X-A}$, we have
+Then for all $x\in X$, $s_x(t_x,x_Y)=0$: if $x\in A$, since $t_X=\bar r_{A} \sqcup 0_{X-A}$, we have
 $s_x(t_x,x_Y)=s^*_x(\bar r_x,x_Y)=0$; if $x \not \in A$, then $(s_x)\vert_{A+Y}=0$, which again implies
 %		
 %		$s_x$ does not contain any constant neither any variable $x_A, x_Y$: hence it satisfies 

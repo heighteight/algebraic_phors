@@ -1,5 +1,5 @@
 % !TEX root = main.tex
-In this section, we recall the well-studied relational semantics of linear logic weighted over a continuous semiring $\Rsemiring$, in a slightly different flavor than, say, \cite{DBLP:conf/lics/LairdMMP13}: rather than using $\Rsemiring$-valued matrices, we will use formal power series over $\Rsemiring$, as in \cite{DBLP:journals/corr/abs-2501-15637}. We will then illustrate how this semantics associates each PHORS with a generating function capturing its probability of termination.
+In this section, we recall the well-studied relational semantics of linear logic weighted over a continuous semiring $\Rsemiring$, in a slightly different flavor than, say, \cite{DBLP:conf/lics/LairdMMP13}: rather than using $\Rsemiring$-valued matrices, we will use formal power series over $\Rsemiring$, as in \cite{DBLP:journals/corr/abs-2501-15637}. This kind of idea had already been outlined in a more categorical setting in \cite{LAMARCHE199237}. We will then illustrate how this semantics associates each PHORS with a generating function capturing its probability of termination.
 
 % Then, we focus on algebraic power series: this is a concept widely used in algebra and combinatorics (cite Flajolet, Kauers, Eisenbud), in the context of rings or fields. Its treatment in semi-rings is less standard, but extensively studied in the context of formal language theory (cite Kuich, Schlund). We will show that, through the relational semantics, such ideas apply naturally to the semantics of probabilistic $\lambda$-calculi.
 
@@ -53,7 +53,7 @@ r_{\mu }\cdot
  \prod_{i=1}^{k}  s_{\sigma_i, \nu_i } \right)y_\Sigma^\kappa
   \end{align*}
   }
-  Observe that the if there is at least an $s_\sigma$ such that $s_{\sigma, []} \neq 0$, the sum over $!\Sigma$ will be infinite; still, by continuity, we can define its value to be the sup of the partial sums (yet, notice that, over a - non-continuous - ring, this composition would not be well-defined). If the power series $s_\Sigma$ are all constants (i.e. $s_{\sigma, \mu}=0 \: \forall \mu \neq []$), we will say that $r(s_\Sigma) \in \fps{\Rsemiring}{\emptyset}= \Rsemiring$ is the \emph{value of $r$ at the point} $(s_{\sigma, []})_{\sigma \in \Sigma}$.
+  Observe that if there is at least an $s_\sigma$ such that $s_{\sigma, []} \neq 0$, the sum over $!\Sigma$ will be infinite; still, by continuity, we can define its value to be the sup of the partial sums (yet, notice that, over a - non-continuous - ring, this composition would not be well-defined). If the power series $s_\Sigma$ are all constants (i.e. $s_{\sigma, \mu}=0 \: \forall \mu \neq []$), we will say that $r(s_\Sigma) \in \fps{\Rsemiring}{\emptyset}= \Rsemiring$ is the \emph{value of $r$ at the point} $(s_{\sigma, []})_{\sigma \in \Sigma}$.
 With respect to these operations, $\fpp{\Rsemiring}{\Sigma}$ form a (non-continuous) sub-semiring of $\fps{\Rsemiring}{\Sigma}$. 
   
   
@@ -200,7 +200,7 @@ Notice that the evaluation $tx$ of $t$ over some variable $x:o$ is then precisel
 
 
 Beyond exponentials, 
-$\Qrelkleisli{\Rsemiring}$ is endowed with Conway fixpoints \cite{DBLP:journals/mscs/Hasegawa09}: given a morphism $f \in \Qrelkleisli{\Rsemiring}(X + Y, X)$,  we define $\fix f \in \Qrelkleisli{\Rsemiring}(Y, X)$ as follows: take the sequence $f^0 \bydef  0 \times id_Y \in \Qrelkleisli{\Rsemiring}(1 \times Y ,X \times Y), \: f^{n+1} \bydef f \circ (f^n \times id_Y) \circ \langle id_\1, \Delta_Y \rangle  \in \Qrelkleisli{\Rsemiring}(1 \times Y, X)$ and finally let $\fix_{Y,X} f \bydef \sup_n f^n \in \Qrelkleisli{\Rsemiring}( Y, X)$.
+$\Qrelkleisli{\Rsemiring}$ is endowed with Conway fixpoints \cite{DBLP:journals/mscs/Hasegawa09}, \cite{DBLP:conf/mfcs/GrelloisM15}: given a morphism $f \in \Qrelkleisli{\Rsemiring}(X + Y, X)$,  we define $\fix f \in \Qrelkleisli{\Rsemiring}(Y, X)$ as follows: take the sequence $f^0 \bydef  0 \times id_Y \in \Qrelkleisli{\Rsemiring}(1 \times Y ,X \times Y), \: f^{n+1} \bydef f \circ (f^n \times id_Y) \circ \langle id_\1, \Delta_Y \rangle  \in \Qrelkleisli{\Rsemiring}(1 \times Y, X)$ and finally let $\fix_{Y,X} f \bydef \sup_n f^n \in \Qrelkleisli{\Rsemiring}( Y, X)$.
    It is worth to restate this construction in terms of power series: $f$ will be represented by an $X$-indexed family $(s_x(x_X, x_Y))_{x \in X}$. Then we can define its iterates and the fixpoint as follows, for $x \in X$:
    \begin{equation}\label{eq:fixpointeq}
    \begin{aligned}
@@ -275,12 +275,13 @@ Observe that the fps $a_{L_i}(z)(x_\Sigma)$ are the minimal solutions of the equ
 The generating function $a_\gphors(z)$ precisely captures the call-by-name probabilistic execution of closed terms, as stated below:%the interpretation $\model{M}^{\Rinf}$ of a term $M:\1$ of ground type consists in a real number, since $\model{M}^{\Rinf}\in\Qrelkleisli{\Rsemiring}(0,\1)\equiv\fps{\Rsemiring}{0}\equiv\Rsemiring$, which coincides with the probability of termination of $M$, computed as the sum of the weights $w(R)\in \Rinf$ of all call-by-name probabilistic reductions $R:M{\to^*}e$:
 \begin{proposition}\label{prop:proba}
 For any PHORS $\gphors$,
-\begin{align}
+%\begin{align}
 %\model{S}^{\Rinf}&=\mathbb P(\gphors\downarrow),
 %%=\sum_{R:M\to^* e}w(R),
 %\label{eq:prob1} \\
-a_{\gphors}(z)&=\sum_{i=0}^{\infty}\mathbb P(\gphors\downarrow_i)z^i,\label{eq:prob2}
-\end{align}
+$a_{\gphors}(z)=\sum_{i=0}^{\infty}\mathbb P(\gphors\downarrow_i)z^i$
+%,\label{eq:prob2}
+%\end{align}
 where $\mathbb P(\gphors\downarrow_i)=\sum_{R:t\to^i e}w(R)$ is the probability that $S$ terminates after exactly $i$ probabilistic steps. In particular, $a_\gphors(1)=\mathbb P(\gphors\downarrow)$. 
 \end{proposition}
 \begin{proof}
@@ -346,8 +347,9 @@ $s^S(y_{\N +1})\in \fps{\Rinf}{\N +1}$ given by $s^S(y_{\N +1})=\sum_{i\in \N} y
  
 Computing $ \mathsf{fix}\  \langle s^F,s^S \rangle$ means finding a minimal solution $(a_i(z))_{i\in \N+1}\in(\fps{\Rinf}{z})^{\N+1}$ of the fixpoint equations $a_{i}(z)=s^F_i(a_{\N+1}(z))$ ($i\in\N$) and $a_{\gphors}(z)=s^S(a_{\N +1}(z))$.
 One can easily see that this yields $a_{i}(z)=0$, for $i\neq 1,\star$, while $a_\gphors(z):=a_\star(z)=a_1(z)\in \Rinf$ can be found as minimal solution of the polynomial equation
-\begin{equation}\label{eq:alg1}
-a_\gphors(z)=\frac{1}{2} \left (za_\gphors^2(z)+z\right).
+\begin{equation}
+\label{eq:alg1}
+a_\gphors(z)=\frac{1}{2} \left (za_\gphors^2(z)+z\right)
 \end{equation}
 %%It is not difficult to check that the unique solution here is $a_1(y_{\N+1})=1$, which yields
 %%$\model{t_{\gphors}}^{\Rinf}_1=\model{t_{\gphors}}^{\Rinf}_\star=1$ and 
@@ -390,7 +392,7 @@ For all order-1 PHORS $\gphors=(\nonterm, \C R,S)$ and non-terminal symbol $L\in
 %
 %first-order $\PLY$-term $x_1:\1,\dots, x_n:\1\vdash_{\PLY}t:\1$, the fps 
 %$\model{t}^{\Rinf}(x_1,\dots, x_n)\in \fps{\Rinf}{x_1,\dots,x_n}$ is affine:
- there exists $w_0,w_1,\dots, w_n\in\fps{\Rinf}{z}$ such that
+ there exist $w_0,w_1,\dots, w_n\in\fps{\Rinf}{z}$ such that
 \[
 a_{L}(z)(x_1,\dots, x_n)
 =w_0(z)+w_1(z)x_1+\dots+w_n(z)x_n,

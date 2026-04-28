@@ -94,7 +94,7 @@ $a'_{\gphors}(z)=\sum_{n=0}^{\infty}na_n z^{n+1}$ indicates
 the \emph{derivative} of $a_{\gphors}(z)$, precisely captures the expected number of reduction steps to termination. 
 
 
-It is worth observing at this point that, in our setting, the generating function $a_\gphors(z)$, while characterizing the termination problem for the PHORS $\gphors$, is \emph{not} an invariant of the corresponding branch language: for instance, two PHORS respectively inducing the non context-free language $\C L_1=\{0^n1^n0^n\mid n\in \N\}$ and the context-free language 
+It is worth observing at this point that, in our setting, the generating function $a_\gphors(z)$, while characterizing the termination problem for the PHORS $\gphors$,  \emph{does not} characterize the corresponding branch language: for instance, two PHORS respectively inducing the non context-free language $\C L_1=\{0^n1^n0^n\mid n\in \N\}$ and the context-free language 
 $\C L_2=\{0^n1^{2n}\mid n\in \N\}$ would \emph{both} induce a rational generating function of the form $a(z)=\sum_{n=0}^{\infty}\frac{1}{2^{3n}}z^{3n}=\frac{1}{1-\left({z}/{2}\right)^3}$, as the latter only counts the number of reduction steps to termination. 
 
 
@@ -170,7 +170,7 @@ By translating \eqref{eq:phors1} into equations between the corresponding power 
 \begin{equation}\label{eq:poly}
 \begin{aligned}
 H_{2}(z)&=
-\alpha H_{2}(z)z^2  +\beta z, \qquad\qquad  H_{ij}(z)=0 \quad (i\neq 2),
+\alpha H_{2}(z)z^2  +\beta z, \qquad\qquad  H_{i}(z)=0 \quad (i\neq 2),
 %\model{A}x&=bx+(1-b)0\\
 %\model Bx&=cx+(1-c)0\\
 %\model S&=H_2\cdot 1\cdot 1,
@@ -178,7 +178,7 @@ H_{2}(z)&=
 \end{equation}
 where $\alpha=(a^2b^2+a(1-a)c^2)$ and $\beta=1-a$.
 The power series 
-$a_{H}(z,f,x)=H_2(z)f^2x$ can then be computed by solving the \emph{polynomial equation}
+$a_{H}(z,f,x)=H_2(z)f^2x$ can then be computed by finding the minimal non-negative solution of the \emph{polynomial equation}
 \[
 p(z,H_2(z))=0,
 \]
@@ -232,9 +232,9 @@ For instance, it is well-known that the generating functions of order-2 PHORS (w
 In our semantics, the generating function $a_{\gphors}(z)$ of a PHORS $\gphors$ will be determined by a (countably) infinite family of equations, which we might not be able to solve algebraically. 
 %Probability of termination for PHORS is still undecidable, anyway.
  
-The main theme of this work is then to find conditions under which the generating function $a_{\gphors}(z)$ may be found by solving some \emph{finite system of polynomial equations}, 
-and is, as a consequence, algebraic.
-Indeed, by relying on the decidability of the \emph{first order theory of the reals} $\Etor$ (see for example \cite{Marker2002-jm} for an account of this classic result by Tarski), from the algebraicity of $a_{\gphors}(z)$ we will deduce the existence of effective methods to answer both the AST and PAST problem for the corresponding PHORS $\gphors$.
+The main theme of this work is then to find conditions under which the generating function $a_{\gphors}(z)$ may be found as the minimal solution of some \emph{finite system of polynomial equations}. This will have two applications: in the first place, thanks to the characterization in term of algebraicity \textit{and} minimality, we can deduce the existence of effective methods to answer both the AST and PAST problem for the corresponding PHORS $\gphors$, by relying on the decidability of the \emph{first order theory of the reals} $\Etor$ (see for example \cite{Marker2002-jm} for an account of this classic result by Tarski). On the other side, we can obtain for suitable classes of PHORS a result in the spirit of the celebrated Chomsky-Schutzenberger enumeration theorem for context-free languages: the generating power series of such PHORS will be shown to be algebraic. This paves the way to studying the asymptotic rate of convergence of such recursion scheme through the techniques of analytic combinatorics, although this topic is not explicitly treated in this paper.
+%and is, as a consequence, algebraic.
+%Indeed, by relying on the decidability of the \emph{first order theory of the reals} $\Etor$ (see for example \cite{Marker2002-jm} for an account of this classic result by Tarski), from the algebraicity of $a_{\gphors}(z)$ we will deduce the existence of effective methods to answer both the AST and PAST problem for the corresponding PHORS $\gphors$.
 
 
 \paragraph*{Algebraic PHORS via Bounded Exponentials}

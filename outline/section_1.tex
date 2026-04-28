@@ -39,7 +39,7 @@ Estimating the probability of termination of higher-order programs is hard, beca
 In fact, similar counting problems are common in the field of combinatorics, in which they are addressed by studying the algebraic and analytic properties of the corresponding \emph{generating functions}, i.e.~of the formal power series that are naturally associated with the sequence of numbers that one wishes to compute or estimate.   
 A famous example is provided by the well-known \emph{Catalan numbers} $C_n=\frac{1}{n+1}\binom{2n}{n}$, where $C_n$ is the number of labeled binary trees with $n$ nodes. 
 This sequence induces the generating function $c(x)=\sum_{n=0}^{\infty}C_n x^n$, which can be characterized as the solution of a simple algebraic equation, namely $xc(x)^2-c(x)+1=0$. 
-From a polynomial equation like this it is possible to extract informations about the generating function and the corresponding sequence that it would be otherwise very hard to compute directly.
+From a polynomial equation like this it is possible to extract informatios about the generating function and the corresponding sequence that it would be otherwise very hard to compute directly.
 % (and, in some cases, even to effectively reconstruct the terms of sequence \cite{BANDERIER_DRMOTA_2015}). 
 In our example, it allows us to deduce the closed expression $c(x)=\frac{1-\sqrt{1-4x}}{2x}$, hence providing a way to compute the values of $c(x)$ effectively.
 
@@ -62,7 +62,7 @@ When $L$ is context-free, instead, $L(x)$ is \emph{algebraic}, i.e.~, it is the 
 %
 %to providing, in some cases, closed forms for the corresponding generating functions, and thus exact methods for 
 
-Now, suppose $\gphors$ is a PHORS, i.e.~a higher-order recursive probabilistic program, and that $\gphors$ makes, at each of its reduction steps, an unbiased choice between two different alternatives. 
+Now, suppose $\gphors$ is a PHORS, i.e.~an higher-order recursive probabilistic program, and that $\gphors$ makes, at each of its reduction steps, an unbiased choice between two different alternatives. 
 Letting $\gphors_n$ be the number of \emph{distinct} terminating reductions of $\gphors$ with exactly $n$ steps, the power series $a_\gphors(z)=\sum_{n=0}^{\infty}\frac{a_n}{2^n}z^n$ precisely captures the probabilistic behavior of $\gphors$. Notably, $a_\gphors(1)$ computes its probability of termination, and, as we'll see, the derivative $a_{\gphors}'(1)$ captures the \emph{expected} number of reduction steps to termination.
  
 A natural question is thus: can we find a way to relate the complexity of the termination problem for a PHORS $\gphors$ with the algebraic or analytic properties of its generating function $a_\gphors(z)$?
@@ -111,7 +111,7 @@ We show how this model can be used to associate each PHORS with a corresponding 
 As mentioned above, linearity has been recognized as a key factor to ensure the decidability of the AST problem for PHORS \cite{DBLP:conf/lics/LiMO22}.
 The viewpoint of generating functions provides a \emph{novel} way to look at this result:
 using our interpretation via the weighted relational model, we will show that for all affine PHORS, while the corresponding language might \emph{not} be context-free, the corresponding generating function is, in fact, always algebraic.
- Actually, the combinatorial viewpoint allows us to go beyond the linear/affine restriction and consider even \emph{non-linear} PHORS typable via the discipline of \emph{graded} or \emph{bouned exponentials} \cite{GIRARD19921, 10.1007/978-3-642-02273-9_8, 10.1007/978-3-642-54833-8_19, 10.1007/978-3-642-54833-8_18}: this discipline allows one to define types of the form $!_n A \multimap B$, intuitively expressing functions from $A$ to $B$ using their inputs \emph{at most} $n$ times. 
+ Actually, the combinatorial viewpoint allows us to go beyond the linear/affine restriction and consider even \emph{non-linear} PHORS typable via the discipline of \emph{graded} or \emph{bounded exponentials} \cite{GIRARD19921, 10.1007/978-3-642-02273-9_8, 10.1007/978-3-642-54833-8_19, 10.1007/978-3-642-54833-8_18}: this discipline allows one to define types of the form $!_n A \multimap B$, intuitively expressing functions from $A$ to $B$ using their inputs \emph{at most} $n$ times. 
  
  Hence, on the one hand, in this work we capture a \emph{larger} class of programs than \cite{DBLP:conf/lics/LiMO22}, including PHORS admitting both bounded and unbounded forms of duplication, for which the AST and PAST problems remains decidable.
 On the other, our results suggest the \emph{robustness} of the class of PHORS individuated by \cite{DBLP:conf/lics/LiMO22}: all PHORS typable in our discipline are shown 

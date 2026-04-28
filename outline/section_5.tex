@@ -35,7 +35,7 @@ The typing rules will use two kinds of contexts (as in \cite{DBLP:conf/lics/LiMO
 \item non-linear contexts, noted $\nonterm,\nonterm'$ will be used for non-terminal symbols; these are finite sets of type bindings of the form $L:\varphi$; intuitively, we put no restrictions on the number of times a non-terminal is used;
 
 
-\item graded contexts, noted $\Delta,\Delta'$ will be used for the arguments to be passed to the non-terminales; they are finite sets of type bindings of the form $x:_k \varphi$. Intuitively, the binding $x :_k \varphi$ means that we can use $x$ with type $\varphi$ \emph{at most} $k$ times.
+\item graded contexts, noted $\Delta,\Delta'$ will be used for the arguments to be passed to the non-terminals; they are finite sets of type bindings of the form $x:_k \varphi$. Intuitively, the binding $x :_k \varphi$ means that we can use $x$ with type $\varphi$ \emph{at most} $k$ times.
 \end{varitemize}
 \noindent We define by induction the operations $\Delta+\Delta',k\Delta$ on graded contexts:
 {\small
@@ -90,7 +90,7 @@ it is immediate that all PAHORS are $\Gfin$, so all our results translate automa
 
 \begin{figure}
 \fbox{
-\begin{minipage}{.43\textwidth}
+\begin{minipage}{.7\textwidth}
 \resizebox{.99\textwidth}{!}{
 \begin{minipage}{1.1\textwidth}
 \begin{align*}
@@ -106,7 +106,7 @@ it is immediate that all PAHORS are $\Gfin$, so all our results translate automa
 		\infer[@]{\nonterm\mid \Delta + k\Delta' \vdash tu : \psi}
 		{\nonterm\mid\Delta \vdash t :!_k\varphi \multimap \tau \qquad \nonterm\mid \Delta' \vdash u :\varphi }\\[9pt]
 		\infer[\langle \rangle]{\nonterm\mid \Delta \vdash \langle t_1, \dots,t_n \rangle : \1^n}{\nonterm\mid \Delta \vdash t_i : \1 &  i=1,\dots, n}&  &
-		\infer[\pi_i]{\nonterm\mid \Delta \vdash \pi_i t: 1}{\nonterm\mid \Delta \vdash t: 1^n &  i=1,\dots, n}
+		\infer[\pi_i]{\nonterm\mid \Delta \vdash \pi_i t: \1}{\nonterm\mid \Delta \vdash t: \1^n &  i=1,\dots, n}
 %		\\[5pt]
 %		\infer[\lambda \infty]{\Gamma; \Delta \vdash t: \tau \to \sigma}{\Gamma, L: \tau; \Delta \vdash t: \sigma} 
 	\end{array}
@@ -180,7 +180,7 @@ $\C L(\gphors)=\C L(\AFF\gphors)$.
 Define $\AFF{\varphi}$ as $
 \AFF{(o^n)}=o^n$ and 
 $\AFF{(!_k\varphi\multimap \psi)}={\AFF{\varphi}\multimap\dots\multimap\AFF{\varphi}}\multimap\AFF\psi$, with $\AFF{\varphi}$ repeated $k$ times. 
-Then, by induction, any derivation of $\nonterm\mid \Delta\vdash t:\varphi$ yields a derivation of $\AFF{\nonterm}\mid\Delta'\vdash t:\AFF \varphi$ in the affine system of (Ong et al.), where $|\Delta'|\leq \partial\gphors|\Delta|$: an order-$n$ $\Gfin$ yields then an order-$n$ PAHORS in which every equation $Lx_1\dots x_n$ translates into a new equation $Lz_1^1\dots z_{n}^{k_n}$, where, if $\nonterm(L)=!_{k_1}\varphi_1\multimap\dots \multimap !_{k_i}\varphi_i\multimap\dots\multimap o^n$, the variable $x_i$ is replaced by $k_i$ variables $z_i^1,\dots, z_{i}^{k_i}$.
+Then, by induction, any derivation of $\nonterm\mid \Delta\vdash t:\varphi$ yields a derivation of $\AFF{\nonterm}\mid\Delta'\vdash t:\AFF \varphi$ in the affine system of \cite{DBLP:conf/lics/LiMO22}, where $|\Delta'|\leq \partial\gphors|\Delta|$: an order-$n$ $\Gfin$ yields then an order-$n$ PAHORS in which every equation $Lx_1\dots x_n$ translates into a new equation $Lz_1^1\dots z_{n}^{k_n}$, where, if $\nonterm(L)=!_{k_1}\varphi_1\multimap\dots \multimap !_{k_i}\varphi_i\multimap\dots\multimap o^n$, the variable $x_i$ is replaced by $k_i$ variables $z_i^1,\dots, z_{i}^{k_i}$.
 \end{proof}
 
 
@@ -334,7 +334,7 @@ $\model{t_{\gphors}}^{\Rsemiring}\in \fps{\Rsemiring}{\model{\sat\nonterm}}^{\mo
 %$\model{M:\psi\tri T}^{\Rsemiring}\in \fps{\Rsemiring}{\model{T}+\model{\Gamma}}^{\model{T}}$ is finitary.
 \end{proposition}
 
-Thanks to Proposition \ref{prop:fintoalg} and the observation that all coefficients of $\model{t_\gphors}^{\Rinf}$ are rational, we obtain then:
+Thanks to Proposition \ref{prop:fintoalg} and the observation that all coefficients of $\model{t_\gphors}^{\fpp{\Rinf}{z}}$ belong indeed to $\fpp{\Q}{z}$, we obtain then:
 \begin{theorem}
 	\label{Gfin-algebraic-theorem}
 	For all $\Gfin$ $\gphors=(\nonterm, \C D, S)$, $(a_L)_{L \in \nonterm}$ is a $\Q^{+}$ fixpoint algebraic family with parameter $z$
@@ -381,6 +381,7 @@ As a consequence of Remark $\ref{remark:semilinear}$ we also obtain:
 
 We conclude by deducing the decidability of AST and PAST:
 \begin{theorem}
+\label{th:decidability}
 	AST and PAST are decidable for any $\Gfin$.	
 \end{theorem}
 \begin{proof}[Proof sketch]
@@ -388,7 +389,7 @@ The  proof of Theorem \ref{Gfin-algebraic-theorem} is constructive: it gives a w
 % by computing, for each $L \in \nonterm$, the interpretation $\model{\mathcal{R}(L)}^{\Rinf}$. 
 We can then check if $\mathbb P(\gphors\downarrow) = a_\gphors(1)=1$ via the first order Existential Theory of the Reals $\Etor$ \cite{DBLP:journals/jacm/EtessamiY09}: first, we create a first order formula $\phi( \vec x)$ expressing the fact that $\vec x$ satisfies $\vec x = p_i(\vec x)$, then we can express the fact that $x_1=1$ by the formula $\exists \vec{x}(x_1=1 \land \phi(\vec x) \land \forall \vec y ((\vec y < \vec x) \implies \neg \phi(\vec y)  ))$.
 
-As for PAST, remember that PAST implies AST. Then, given a $\gphors=(\nonterm, \C D, S) \in \Gfin$, we can first test if it is AST: if it is not, then it is not PAST. If it AST, notice that, by Corollary \ref{Gfin-algebraic-corollary}, $a_\gphors(z)$ is an algebraic power series. Then, we can, as pointed out in Remark \ref{derivative-rational}, effectively find a rational function $r(z, y)$ such that $a'_\gphors(z)= r(z, a_{\gphors}(z)) $. But then $\mathbb E(\gphors\downarrow) =a'_\gphors(1)= r(1,1)$.
+As for PAST, remember that PAST implies AST. Then, given a $\gphors=(\nonterm, \C D, S) \in \Gfin$, we can first test if it is AST: if it is not, then it is not PAST. If it is AST, notice that, by Corollary \ref{Gfin-algebraic-corollary}, $a_\gphors(z)$ is an algebraic power series. Then, we can, as pointed out in Remark \ref{derivative-rational}, effectively find a rational function $r(z, y)$ such that $a'_\gphors(z)= r(z, a_{\gphors}(z)) $. But then $\mathbb E(\gphors\downarrow) =a'_\gphors(1)= r(1,1)$.
 \end{proof}
 %
 %
@@ -427,8 +428,8 @@ the polynomial $\model{t_L}^{\Q^+}$ involves at most $\exptower{k}{n} \| \gphors
 %
 \begin{remark}
 Beyond AST/PAST, the fact that $a_{\gphors}(z)=\sum^{\infty}_{i=0} \mathbb P(\gphors\downarrow_i)z^i$ is algebraic 
-yields effective methods to compute the sequence of coefficients $\mathbb P(\gphors\downarrow_i)i$ directly 
-(cf.~Remark \ref{coefficients-rational})
+can be used to make asymptotic estimates on the  coefficients $\mathbb P(\gphors\downarrow_i)$ for $i \to + \infty$ 
+(cf.~Remark \ref{coefficients-rational}).
 \end{remark}
 
 
