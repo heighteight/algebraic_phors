@@ -1,0 +1,101 @@
+% easychair.tex,v 3.5 2017/03/15
+
+\documentclass{easychair}
+%\documentclass[EPiC]{easychair}
+%\documentclass[EPiCempty]{easychair}
+%\documentclass[debug]{easychair}
+%\documentclass[verbose]{easychair}
+%\documentclass[notimes]{easychair}
+%\documentclass[withtimes]{easychair}
+%\documentclass[a4paper]{easychair}
+%\documentclass[letterpaper]{easychair}
+
+\usepackage{doc}
+
+% use this if you have a long article and want to create an index
+% \usepackage{makeidx}
+
+% In order to save space or manage large tables or figures in a
+% landcape-like text, you can use the rotating and pdflscape
+% packages. Uncomment the desired from the below.
+%
+% \usepackage{rotating}
+% \usepackage{pdflscape}
+
+% Some of our commands for this guide.
+%
+
+
+%\makeindex
+
+%% Front Matter
+%%
+% Regular title as in the article class.
+%
+\title{Rational and algebraic generating functions for higher order model checking}
+
+% Authors are joined by \and. Their affiliations are given by \inst, which indexes
+% into the list defined using \institute
+%
+\author{
+Author1 \inst{1} \and Author2 \inst{1} \and Author3 \inst{1}
+}
+
+% Institutes for affiliations are also joined by \and,
+\institute{
+  Inst 1 \email{mail}
+\and
+ Inst 2
+ }
+
+%  \authorrunning{} has to be set for the shorter version of the authors' names;
+% otherwise a warning will be rendered in the running heads. When processed by
+% EasyChair, this command is mandatory: a document without \authorrunning
+% will be rejected by EasyChair
+
+\authorrunning{Mokhov, Sutcliffe and Voronkov}
+
+% \titlerunning{} has to be set to either the main title or its shorter
+% version for the running heads. When processed by
+% EasyChair, this command is mandatory: a document without \titlerunning
+% will be rejected by EasyChair
+\titlerunning{The  Class File}
+
+\begin{document}
+
+\maketitle
+\input{macros}
+\begin{abstract}
+ TO BE ADDED
+\end{abstract}
+\section{The problem of higher order probabilistic model checking}
+Model checking is a well established technique for the verification of programs and systems. In the last twenty years, there has been a lot of interest toward the model checking of higher order programs, starting with the seminal result by Ong (cite) who considered Higher Order Recursion Schemes (HORS), a formalism equivalent to simply typed lambda calculus enriched with a fixopoint operator and proved that it is decidable if such a program satisfies a property expressible in Monadic Second Order Logic (MSO).\\
+More recently (cite Kobayashi-Dal Lago), these Higher Order Recursion Schemes have been extended to the probabilistic setting by the formalism of Probabilistic Higher Order Recursion Schemes (PHORS): the most basic problems of model-checking become that of establishing if a program terminates with probability 1 (Almost Sure Termination, AST) and if the expected number of steps before termination is finite (Positive Almost Sure Termination, PAST). AST has been proved to be undecidable already at order 2, which prompted the study of classes of HORS for which the problem of (P)AST is decidable. A notable result in this direction has been obtained by (Li et al), which prove by automata-theoretic techniques that (P)AST is decidable for PHORS subject to an "affine" typing restriction (i.e programs are allowed to use their input only once).\\
+In this abstract, we present a novel technique to face this kind of problems, which consists of two main ingredients: the weighted relational model of linear logic and the concept of generating function, borrowed from combinatorics. In particular, we will show that to each PHORS we can associate a generating function, encoding its termination behaviour and then we will define type discipline that ensure this generating function to be \textit{rational} or \textit{algebraic}. In both cases we will be able to decide the (P)AST problem; in the former case, we will also be able to compute the exact probability of termination, while in the latter we will still get asymptotic estimates on the rate of convergence of the program.
+\section{From programs to generating functions}
+Let $\gphors \bydef (\nonterm, \C D, S)$ be a PHORS, where $\nonterm$ is the set of typed of non-terminal symbols (we remind the types of PHORS are defined as $T \bydef \1 \mid T \to T$ ), $\C D$ is a function associating to each non-terminal a term of type $\1$ being its recursive definition and $S$ is the starting symbol, a nonterminal of type $\1$ from which the rewriting starts. To such a PHORS, we can associate a typed lambda term $t_\gphors$ representing its fixpoint iteration operator. 
+The translations from intuitionistic to linear logic $A \to B \rightarrow ! A \to B$ gives way of interpreting terms like in the weighted relational model of linear logic.
+\end{document}
+% The table of contents below is added for your convenience. Please do not use
+% the table of contents if you are preparing your paper for publication in the
+% EPiC Series or Kalpa Publications series
+%\setcounter{tocdepth}{2}
+%{\small
+%\tableofcontents}
+%\section{To mention}
+%
+%Processing in EasyChair - number of pages.
+%
+%Examples of how EasyChair processes papers. Caveats (replacement of EC
+%class, errors).
+
+%------------------------------------------------------------------------------
+
+
+%------------------------------------------------------------------------------
+% Index
+%\printindex
+
+%------------------------------------------------------------------------------
+
+
