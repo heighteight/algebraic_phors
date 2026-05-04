@@ -11,9 +11,11 @@
 %for enabling thm-restate support, use "thm-restate"
 %for enabling a two-column layout for the author/affilation part (only applicable for > 6 authors), use "authorcolumns"
 %for producing a PDF according the PDF/A standard, add "pdfa"
+\newboolean{arxiv}
+\setboolean{arxiv}{false}
 
 \pdfoutput=1 %uncomment to ensure pdflatex processing (mandatatory e.g. to submit to arXiv)
-\hideLIPIcs  %uncomment to remove references to LIPIcs series (logo, DOI, ...), e.g. when preparing a pre-final version to be uploaded to arXiv or another public repository
+\ifthenelse{\boolean{arxiv}}{\hideLIPIcs}{ }  %uncomment to remove references to LIPIcs series (logo, DOI, ...), e.g. when preparing a pre-final version to be uploaded to arXiv or another public repository
 
 %\graphicspath{{./graphics/}}%helpful if your graphic files are in another directory
 
@@ -164,14 +166,14 @@ To achieve this, we show that the generating functions for such programs are alw
 \input{section_7}
 
 
-\bibliographystyle{plain} % We choose the "plain" reference style
+%\bibliographystyle{plain} % We choose the "plain" reference style
 \bibliography{refs} % Entries are in the refs.bib file
 \newpage 
 
 \appendix
 
-\input{appendix.tex}
-\input{appendix2.tex}
+\ifthenelse{\boolean{arxiv}}{\input{appendix.tex}}{ }
+\ifthenelse{\boolean{arxiv}}{\input{appendix2.tex}}{ }
 
 
 
