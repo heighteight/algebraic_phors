@@ -12,6 +12,7 @@
 
 \usepackage{doc}
 \usepackage{stmaryrd, amssymb, mathtools}
+\usepackage{proof}
 % use this if you have a long article and want to create an index
 % \usepackage{makeidx}
 
@@ -65,6 +66,7 @@ Author1 \inst{1} \and Author2 \inst{1} \and Author3 \inst{1}
 
 \maketitle
 \input{macros}
+\newtheorem{theorem}{Theorem}
 \newtheorem{prop}{Proposition}
 %\begin{abstract}
 % TO BE ADDED
@@ -79,9 +81,20 @@ In combinatorics, interesting results arise when generating functions, which are
 \begin{prop}
 	If $\model F(\vec x, \vec y)$ is a finitary family of power series and $\vec t(\vec y) \bydef \fix_x \model {F}$ , then all but finitely many components of $\vec t( \vec y)$ are equal to 0 and the remaining ones are solution of family of \emph{fixpoint algebraic equations} $(\phi_i = p_i(\phi_1, \dots \phi_n, \vec y))_{i \in \{1 \dots n\}}$
 \end{prop}
-Now, the main point is to specify classes of programs such that the fixpoint operator satisfies the previous algebraic condition. In our LICS paper, we realize that to this aim the logic of graded exponential can be used: we consider types of the form $\tau= \alpha \mid !_k \tau \multimap \tau, \: k \in \N$, the intuitive meaning of $t: !_k \gamma \multimap \delta$ being that $t$ uses its type at most $k$ times.\\
-We then consider judgements:   $$\nonterm\mid\C P\mid\emptyset\vdash \lambda x_1.\dots. x_n.t:\Phi$$.
-
+Now, the main point is to specify classes of programs such that the fixpoint operator satisfies the previous algebraic condition. In our LICS paper, we realize that to this aim the logic of graded exponential can be used. We consider both finitary and infinitary exponentials: 
+\begin{align*}
+	\varphi,\psi&:= o^n\mid !_k\varphi\multimap \varphi\qquad (1\leq n\in \N, k\in \N)\\
+	\Phi,\Psi&:=\varphi\mid !_k\varphi\multimap \Phi\qquad (k\in \N\cup\{\infty\})
+\end{align*}
+the intuitive meaning of $t: !_k\varphi\multimap \psi$ being that $t$ uses its argument at most $k$ times.\\
+We then consider judgements: $\nonterm\mid\C P\mid\emptyset\vdash \lambda x_1.\dots. x_n.t:\Phi$ where $\nonterm$ is an intuitionistic context containing the variables $L_1: \Psi_1, \dots L_k:\Psi_k$ over which we want to perform the fixpoint, $\C P$ is a context of parameters (i.e free variables), made of bindings $p:_\infty \phi$ (i.e paramters must have a finitary type, but can be used an infinite numeber of times) and $\Delta$ is a graded context, made of bindings of finitary type $w:_k \phi \: k < +\infty$. At every fixpoint iteration, the partial definition of the $L_i$ gets updated. To find a condition ensuring that $t_F \bydef \lambda \vec L \lambda \vec x. t$ is intepreted by a finitary family of power series, we the introduce a partial order relation over types $\sqsubseteq$ which mirrors the inclusion relation between the interpretation of type in the relational model. We then get that if the type assigned to $\langle L_1 \dots L_n \rangle$ after the iteration $\Phi$ is smaller or equal than the type $\Psi_1 \& \dots \& \Psi_k$ that was assigned to them before the iteration, then  $\model{\lambda \vec L \lambda \vec x .t}$ is a finitary family. We thus get the following theorems:
+\begin{theorem}
+	If $\Phi \sqsubseteq \Psi_1 \& \dots \& \Psi_k$, then the finitely many nonzero components of $\model{\lambda \vec L \lambda \vec x .t}$ are the least solution of an algebraic system $(\phi_i = p_i(\phi_1, \dots \phi_n, z, \vec y))_{i \in \{1 \dots m\}}$. 
+\end{theorem}
+\begin{enumerate}
+	\item Let $(\bar \phi_i(z, y))_{i \in \{1 \dots m\}}$ be this least solution and assume $L_1$ is a symbol of type $\1$. Let $\phi_1(z, \vec y)$ be the corresponding power series; let $z$
+\end{enumerate}
+From this
 %Model checking is a well established technique for the verification of programs and systems. In the last twenty years, there has been a lot of interest toward the model checking of higher order programs, starting with the seminal result by Ong (cite) who considered Higher Order Recursion Schemes (HORS), a formalism equivalent to simply typed lambda calculus enriched with a fixopoint operator and proved that it is decidable if such a program satisfies a property expressible in Monadic Second Order Logic (MSO).\\
 %More recently (cite Kobayashi-Dal Lago), these Higher Order Recursion Schemes have been extended to the probabilistic setting by the formalism of Probabilistic Higher Order Recursion Schemes (PHORS): the most basic problems of model-checking become that of establishing if a program terminates with probability 1 (Almost Sure Termination, AST) and if the expected number of steps before termination is finite (Positive Almost Sure Termination, PAST). AST has been proved to be undecidable already at order 2, which prompted the study of classes of HORS for which the problem of (P)AST is decidable. A notable result in this direction has been obtained by (Li et al), which prove by automata-theoretic techniques that (P)AST is decidable for PHORS subject to an "affine" typing restriction (i.e programs are allowed to use their input only once).\\
 %In this abstract, we present a novel technique to face this kind of problems, which consists of two main ingredients: the weighted relational model of linear logic and the concept of generating function, borrowed from combinatorics. In particular, we will show that to each PHORS we can associate a generating function, encoding its termination behaviour and then we will define type discipline that ensure this generating function to be \textit{rational} or \textit{algebraic}. In both cases we will be able to decide the (P)AST problem; in the former case, we will also be able to compute the exact probability of termination, while in the latter we will still get asymptotic estimates on the rate of convergence of the program.
