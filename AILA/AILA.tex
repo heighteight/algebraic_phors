@@ -193,10 +193,9 @@ H_{\mathrm{False}}xy&= Hxy\oplus_s O
 \end{tikzpicture}
 }
 \end{minipage}
-\caption{A Boolean PHORS and the corresponding template model: 
-the functions $H, H_{\mathsf{True}},H_{\mathsf{False}}$ describe the propagation of the model depending on the value of the Boolean variables ($F$ and $O$) read in input. 
+\caption{A Boolean PHORS and the corresponding iterated model: 
+the functions $H, H_{\mathsf{True}},H_{\mathsf{False}}$ describe the propagation of the model which, at each iteration, queries the Boolean variable $F$ and, depending on the result, either produces an observable $O$ or queries $F$ again. 
 \phantom{stuff}\\
-%\phantom{stuff}\\
 %\phantom{stuff}
 }
 \label{fig:phors2}
