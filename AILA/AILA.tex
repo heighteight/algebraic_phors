@@ -158,7 +158,7 @@ Fx& =x\oplus_{\frac{1}{2}}F(Fx).
 \begin{minipage}{.45\textwidth}
 \begin{align*}
 S&= Oe\oplus_{p} Fe,\\
-Fx&= Ox \oplus_q Fx,\\
+Fx&= Ox \oplus_p Fx,\\
 Ox&= \mathtt{True} \oplus_r \mathtt{False}.
 \end{align*}
 \end{minipage}
@@ -179,8 +179,8 @@ Ox&= \mathtt{True} \oplus_r \mathtt{False}.
 \draw[->] (s0) to node[above] {\tiny$p$} (s1);
 \draw[->] (s0) to node[below] {\tiny$1-p$} (o);
 
-\draw[->] (s1) to node[above] {\tiny$q$} (2.1,0);
-\draw[->] (s1) to node[below] {\tiny$1-q$} (2.1,-1.2);
+\draw[->] (s1) to node[above] {\tiny$p$} (2.1,0);
+\draw[->] (s1) to node[below] {\tiny$1-p$} (2.1,-1.2);
 \end{tikzpicture}
 }
 \end{minipage}
@@ -401,7 +401,7 @@ As suggested above, given the computational nature of rational and algebraic pow
  \end{theorem}
  \begin{example}
 The PHORS in Fig.~\ref{fig:phors2} is a $\GRat$, with rational generating functions 
-$\model{S}_{\mathrm{True}}(z)=\frac{p(1+qr)z^4-\frac{p}{\overline q}r z^3}{1-\overline qz}$ and $\model{S}_{\mathrm{False}}(z)=\frac{p(1+q\overline r)z^4-\frac{p}{\overline q}\overline r z^3}{1-\overline qz}$, yielding, for e.g.~$p=q=r=\frac{1}{2}$, $\gphors\sim\Bern{\frac{1}{4}}{\frac{1}{4}}$.
+$\model{S}_{\mathrm{True}}(z)=\frac{prz^2}{1-\overline pz}$ and $\model{S}_{\mathrm{False}}(z)=\frac{p\overline rz^2}{1-\overline pz}$, yielding, for e.g.~$p=r=\frac{1}{3}$, $\gphors\sim\Bern{\frac{1}{3}}{\frac{2}{3}}$.
 \end{example}
  
  \paragraph{Asymptotic Estimates}
