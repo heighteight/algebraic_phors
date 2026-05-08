@@ -13,6 +13,10 @@
 \usepackage{doc}
 \usepackage{stmaryrd, amssymb, mathtools}
 \usepackage{proof}
+\usepackage{adjustbox}
+\usepackage{subcaption}
+\usepackage{tikz}
+
 % use this if you have a long article and want to create an index
 % \usepackage{makeidx}
 
@@ -33,7 +37,7 @@
 %%
 % Regular title as in the article class.
 %
-\title{Probabilistic programs through the lens of linear logic}
+\title{Generating Functions for Probabilistic Programs via the Weighted Relational Model of Linear Logic}
 
 % Authors are joined by \and. Their affiliations are given by \inst, which indexes
 % into the list defined using \institute
@@ -75,73 +79,342 @@ Université Claude Bernard Lyon 1, France \email{paolo.pistone@ens-lyon.fr}
 %\begin{abstract}
 % TO BE ADDED
 %\end{abstract}
-Recent years have seen a surge of interest for probabilistic programming. Studying this kind of program poses difficult challenges already if we only consider discrete probabilistic choices (i.e Bernoulli random variables): as opposed to deterministic programs, each execution of a probabilistic program can give a different result both in term of convergence and of output; as opposed to non-deterministic programs, in probabilistic programs it is essential to keep track of quantitative properties: for example, a probabilstic program can have even infinitely many execution paths which are not terminating and still have probability of termination 1.\\
-The need of tracking quantitative information (and, in particular the number of time a probabilistic choice has been duplicated) hints that linear logic, with its resource-wise approach, offers a useful framework in this field. This has been confirmed by the work on the weighted relation model \cite{DBLP:conf/lics/LairdMMP13} and probabilistic coherent spaces (PCOH) \cite{DBLP:journals/jacm/EhrhardPT18}. The starting point of our approach lies in the apparently basic observation that the morphisms in the relational method can be represented as formal power series \cite{DBLP:journals/corr/abs-2501-15637}, \cite{LAMARCHE199237}. In particular, imagine having a program $\gphors$ of finite type $A$, i.e that can reduce only to a finite set of objects $\model{A}=\{a_1, \dots a_k\}$; then we will be able to represent (the intepretation of) $\gphors$ as a family of $n$ power series $A_k(z) = \sum_n \PROB(\gphors \to^n a_k)z^n$, $\PROB(\gphors \to^n a_k)$ being the probability of $\gphors$ reducing to the value $a_k$ in $n$ steps.\\ 
-If we are only interested in termination, considering a unary output ground type $\1$ might suffice: this will lead us to the domain of PHORS (Probabilistic Higher Order Recursion Schemes) \cite{DBLP:journals/lmcs/KobayashiLG20}, a probabilistic equivalent to the HORS which have been studied with regard to the problem of higher order model checking.\\
-A seminal result in this area \cite{10.1109/LICS.2006.38} states that it is decidable if the execution of a certain HORS satisfies any MSO expressible property. On the contrary, in the probabilistic case, it has been shown establishing if a give PHORS terminates with probability one is undecidable already at order 2 \cite{DBLP:journals/lmcs/KobayashiLG20}. It is then interesting to study for which classes of PHORS this fundamental probabilistic verification problem is decidable, as, for example, the 'affine PHORS' \cite{DBLP:conf/lics/LiMO22}\\  
-Going beyond termination, the problem of exact inference asks to find the posterior distribution of the values computed by a program,thus involving output types that have multiple values (for example, booleans). Also in this case, even if the considered domain is finite, in the presence of unbounded iteration (and hence the possibility of non-termination), the problem turns out to be undecidable \cite{torresruiz_et_al:LIPIcs.FSCD.2024.20}. \\
-The striking similarity between the series arising by the (weighted) relational semantics of linear logic and the concept of generating function, that is classical in enumerative combinatorics and probability theory suggests a framework to find classes of programs for which these generally undecidable problems become computable. Our general proposal is then that the techniques developed in analytic combinatorics \cite{DBLP:books/daglib/0023751} to deal with generating functions can be used to establish interesting results about probabilistic programs, in particular with respect to the already cited problems of probabilistic model checking and exact inference. It should be noted that this approach has been adopted in the field of imperative programming \cite{Klinkenberg2024}, but not in functional programming. An essay of this approach is displayed in our recent paper, accepted at LICS \cite{lago2026higherorderprobabilisticverificationweighted}, where we are able to extend a result of \cite{DBLP:conf/lics/LiMO22} about probabilistic model checking by means of these techniques. In section 1 of this abstract, we briefly recap this result; in section 2 and 3 we present some new applications of this approach and in section 4 we outline a possible extension to the problem of estimating the rate of convergence of a program.
-\section{Finiteness and algebraicity}
-In combinatorics, interesting results arise when generating functions, which are objects of infinitary nature, can be specified via some finite specification: this is the case, for example, when the can be expressed as the ratio of two polynomials (we speak the of \emph{rational power series}) or when they are solution of (a system of) algebraic equations ( \emph{rational power series}). In programming fixpoints $\gphors \bydef \fix F$ can be seen both as the least solution of the equation $\gphors = F(\gphors)$. When interpreted in the weighted relational model, unluckily this gives rise to an infinite system $\model \gphors = (\model F)(\model \gphors)$ of equation involving analytic function; if appropriate restrictions are placed on $F$, it although possible to prove that the least solution of the systems affects value 0 to all but finitely many of the variables of $\gphors$. In \cite{lago2026higherorderprobabilisticverificationweighted}, we introduce a semantic restriction to this effect: the notion of \emph{finitary family}:
-\begin{prop}
-	If $\model F(\vec x, \vec y)$ is a finitary family of power series and $\vec t(\vec y) \bydef \fix_x \model {F}$ , then all but finitely many components of $\vec t( \vec y)$ are equal to 0 and the remaining ones are solution of family of \emph{fixpoint algebraic equations} $(\phi_i = p_i(\phi_1, \dots \phi_n, \vec y))_{i \in \{1 \dots n\}}$
-\end{prop}
-Now, the main point is to specify classes of programs such that the fixpoint operator satisfies the previous algebraic condition; we can use to this aim the logic of graded exponential. We will now recap the result of \cite{lago2026higherorderprobabilisticverificationweighted}, which are formulated in the context of PHORS: we consider a unitary ground type $\1$  and we also have just one constant of type $\1$, named $e$. We will show later that these restrictions are not essential and that we can take any finitary ground type $\alpha$, thus examining the problem of exact inference. We introduce a type system $\Ginf$ that involves both finitary and infinitary exponentials: 
+\section{Introduction}
+The recent years have seen a surge of interest towards probabilistic programming. Probabilistic programs pose difficult challenges already when one only considers discrete probabilistic choices (i.e.~Bernoulli random variables): as opposed to deterministic programs, each execution of a probabilistic program can give a different result both in term of convergence and of its output; hence, while for non-deterministic programs one can study \emph{qualitative} properties (does the program terminate or not?), for probabilistic programs one has to consider \emph{quantitative} versions of such properties (what is the probability that the program terminates?). 
+%Studying such properties  essential to keep track of quantitative properties: for example, a probabilstic program can have even infinitely many execution paths which are not terminating and still have probability of termination 1.
+
+However, quantitative properties can be difficult or even intractable in many contexts.
+For instance, the literature on \emph{probabilistic model-checking} has studied the problems to determine the probability of termination or the expected running time for different computational models, leading to several results, both positive and negative, regarding the decidability and tractability of the underlying verification problem.
+Beyond termination, one can consider the problem of \emph{exact inference}, that is, of finding the posterior distribution of the values computed by a program. While efficient methods are known for finitary programs, in the presence of \emph{unbounded} iteration (and hence the possibility of non-termination), inference is undecidable \cite{torresruiz_et_al:LIPIcs.FSCD.2024.20}, but
+a clear picture of the decidable or tractable cases is still missing.
+
+Properties like the probability of termination or the expected running time are often sensitive to how much the program is able to \emph{duplicate} its inputs. This is why ideas and methods from linear logic have been widely applied in this area. 
+%
+%The need of tracking quantitative information (and, in particular the number of time a probabilistic choice has been duplicated) suggests that linear logic, with its resource-wise approach, offers a useful framework in this field. 
+In particular, the recent literature has explored methods based on the weighted relational model \cite{DBLP:conf/lics/LairdMMP13} and probabilistic coherent spaces (PCOH) \cite{DBLP:journals/jacm/EhrhardPT18}. 
+The starting point of our approach lies in the basic observation that the interpretation of programs in both such models can be represented as formal power series \cite{DBLP:journals/corr/abs-2501-15637}, \cite{LAMARCHE199237}. For example, consider a program $\gphors$ that can reduce to a finite set of outputs $\model{A}=\{a_1, \dots a_k\}$; then the interpretation of $\gphors$ yields a family of $n$ \emph{generating functions} $A_k(z) = \sum_n \PROB(\gphors \to^n a_k)z^n$, where $\PROB(\gphors \to^n a_k)$ indicates the probability of $\gphors$ reducing to the value $a_k$ in $n$ steps.
+
+Our goal is to explore the use of the concept of generating function, that is classical in enumerative and analytic combinatorics  \cite{DBLP:books/daglib/0023751}, to identify classes of probabilistic programs whose quantitative properties can be extracted, in a computable way, from their interpretation in the weighted relational model or PCOH. 
+%
+%Our general proposal is then that the techniques developed in analytic combinatorics \cite{DBLP:books/daglib/0023751} to deal with generating functions can be used to establish interesting results about probabilistic programs, in particular with respect to the already cited problems of probabilistic model checking and exact inference.
+While the combinatorial approach has already been explored in the field of imperative programming \cite{Klinkenberg2024}, these linear logic models provide convenient tools to extend it to \emph{higher-order} programming languages.
+
+ In the recent paper \cite{lago2026higherorderprobabilisticverificationweighted} we provided a first demonstration of this method by reproving (and extending) a result of \cite{DBLP:conf/lics/LiMO22} about probabilistic model checking using algebraic power series. In this abstract we first briefly recall this result, and then sketch a few new results and perspectives 
+arising from this method. 
+%  in section 2 and 3 we present some new applications of this approach and in section 4 we outline a potential extension to the problem of estimating the rate of convergence of a program.
+
+
+%
+%In this work we focus on two languages.
+%First, to study probabilistic termination we consider the PHORS (Probabilistic Higher Order Recursion Schemes) of \cite{DBLP:journals/lmcs/KobayashiLG20}, a probabilistic equivalent to the HORS which have been studied with regard to the problem of higher order model checking.
+%A seminal result \cite{10.1109/LICS.2006.38} states that all properties of HORS that are expressible in monadic second order logic (including termination) are decidable.  
+%However, in the probabilistic case, it has been shown establishing if a given PHORS terminates with probability one is undecidable already at order 2 \cite{DBLP:journals/lmcs/KobayashiLG20}. It is then interesting to study for which classes of PHORS this fundamental probabilistic verification problem is decidable.
+%, as, for example, the 'affine PHORS' \cite{DBLP:conf/lics/LiMO22}\\  
+
+
+%
+%If we are only interested in termination, considering a unary output ground type $\1$ might suffice: this will lead us to the domain of 
+%
+%PHORS (Probabilistic Higher Order Recursion Schemes) \cite{DBLP:journals/lmcs/KobayashiLG20}, a probabilistic equivalent to the HORS which have been studied with regard to the problem of higher order model checking.\\
+%A seminal result in this area \cite{10.1109/LICS.2006.38} states that it is decidable if the execution of a certain HORS satisfies any MSO expressible property. On the contrary, in the probabilistic case, it has been shown establishing if a give PHORS terminates with probability one is undecidable already at order 2 \cite{DBLP:journals/lmcs/KobayashiLG20}. It is then interesting to study for which classes of PHORS this fundamental probabilistic verification problem is decidable, as, for example, the 'affine PHORS' \cite{DBLP:conf/lics/LiMO22}\\  
+%Going beyond termination, the problem of exact inference asks to find the posterior distribution of the values computed by a program,thus involving output types that have multiple values (for example, booleans). Also in this case, even if the considered domain is finite, in the presence of unbounded iteration (and hence the possibility of non-termination), the problem turns out to be undecidable \cite{torresruiz_et_al:LIPIcs.FSCD.2024.20}. \\
+%The striking similarity between the series arising by the (weighted) relational semantics of linear logic and the concept of generating function, that is classical in enumerative combinatorics and probability theory suggests a framework to find classes of programs for which these generally undecidable problems become computable. Our general proposal is then that the techniques developed in analytic combinatorics \cite{DBLP:books/daglib/0023751} to deal with generating functions can be used to establish interesting results about probabilistic programs, in particular with respect to the already cited problems of probabilistic model checking and exact inference. It should be noted that this approach has been adopted in the field of imperative programming \cite{Klinkenberg2024}, but not in functional programming. An essay of this approach is displayed in our recent paper, accepted at LICS \cite{lago2026higherorderprobabilisticverificationweighted}, where we are able to extend a result of \cite{DBLP:conf/lics/LiMO22} about probabilistic model checking by means of these techniques. In section 1 of this abstract, we briefly recap this result; in section 2 and 3 we present some new applications of this approach and in section 4 we outline a possible extension to the problem of estimating the rate of convergence of a program.
+%
+
+
+
+
+\section{PHORS, aka. the Probabilistic $\lambda Y$-Calculus}
+
+
+The literature on higher-order model checking has focused on the language of HORS (Higher Order Recursion Schemes), due to a seminal result \cite{10.1109/LICS.2006.38} stating that all properties of HORS expressible in monadic second order logic (including termination) are decidable.  
+HORS are programs defined as fixpoints of a finite system of recursive equations of the form $Fx_1\dots x_n=t$. 
+The functional variables $F$ defined by such equations are called the \emph{non-terminal symbols} of the PHORS. 
+In the probabilistic HORS, or PHORS, introduced in \cite{DBLP:journals/lmcs/KobayashiLG20}, equations are of the form $Fx_1\dots x_n=t_L\oplus_p t_R$, involving a probabilistic choice operator $\oplus_p$.
+The execution of a (P)HORS starts from a \emph{source} non-terminal symbol $S$ and goes on by reading the equations  from left to right as reduction rules. 
+For example, the PHORS in Fig.~\ref{fig:phors1} simulates a simple random walk terminating on a constant $e$.
+The (P)HORS are equivalent to the simply typed $\lambda Y$-calculus, that is, the simply typed $\lambda$-calculus enriched with a fixpoint operation $Y:(\sigma\to\sigma)\to\sigma$ at all types $\sigma$, enriched with probabilistic choice operators $\oplus_p$ in the probabilistic case.
+%
+%A probabilistic variant of the HORS, called PHORS, was introduced in \cite{DBLP:journals/lmcs/KobayashiLG20}: here a program is defined as the fixpoint of equations of the form $Fx_1\dots x_n=t_L\oplus_p t_R$ involving a probabilistic choice operator $\oplus_p$. This language is then equivalent to an extension of the simply typed $\lambda Y$-calculus with probabilistic operators.
+%
+
+While qualitative properties like termination are decidable for the HORS, the corresponding quantitative properties of PHORS are not: establishing if a PHORS terminates with probability 1 (\emph{almost sure termination}, AST) is undecidable already at order 2 \cite{DBLP:journals/lmcs/KobayashiLG20}. It is then interesting to study for which classes of PHORS problems like AST (or the related PAST problem, asking whether the expected running time is finite) are tractable or, at least, decidable.
+
+To study exact inference we also consider an extension of the PHORS language comprising a type $\Bool$ for Booleans. This allows one to encode not only finite graphical models like e.g.~Bayesian networks, but also \emph{unbounded} models CITE based on the iteration of some basic network template, as in the example in Fig.~\ref{fig:phors2}.
+A Boolean PHORS $\gphors$ reduces with probability $p$ to $\False$ and with probability $q$ to $\True$ (with $p+q \leq 1$). We note this $\gphors\sim \Bern{p}{q}$. The (generally undecidable) problem of exact inference is then to find these $p,q$. 
+
+
+\begin{figure}
+\begin{subfigure}{.5\textwidth}
 \begin{align*}
-	\varphi,\psi:= o^n\mid !_k\varphi\multimap \varphi\qquad (1\leq n\in \N, k\in \N) \qquad
-	\Phi,\Psi:=\varphi\mid !_k\varphi\multimap \Phi\qquad (k\in \N\cup\{\infty\})
+S&= Fe,\\
+Fx& =x\oplus_{\frac{1}{2}}F(Fx).
+\end{align*} 
+\caption{PHORS computing a simple random walk: starting from $Fe$ the number of $F$ may either increase or decrease by one at each reduction, and termination occurs when this number reaches zero.}
+\label{fig:phors1}
+\end{subfigure}
+\ \ 
+\begin{subfigure}{.43\textwidth}
+\begin{minipage}{.45\textwidth}
+\begin{align*}
+S&= Oe\oplus_{p} Fe,\\
+Fx&= Ox \oplus_q Fx,\\
+Ox&= \mathtt{True} \oplus_r \mathtt{False}.
 \end{align*}
-the intuitive meaning of $t: !_k\varphi\multimap \psi$ being that $t$ uses its argument at most $k$ times.\\
-We then consider judgements: $\nonterm\mid\C P\mid\emptyset\vdash \lambda x_1.\dots. x_n.t:\Phi$ where $\nonterm$ is an intuitionistic context containing the variables $L_1: \Psi_1, \dots L_k:\Psi_k$ over which we want to perform the fixpoint, $\C P$ is a context of parameters (i.e free variables), made of bindings $p:_\infty \phi$ (i.e paramters must have a finitary type, but can be used an infinite numeber of times) and $\Delta$ is a graded context, made of bindings of finitary type $w:_k \phi \: k < +\infty$. At every fixpoint iteration, the partial definition of the $L_i$ gets updated. To find a condition ensuring that $t_F \bydef \lambda \vec L \lambda \vec x. t$ is intepreted by a finitary family of power series, we the introduce a partial order relation over types $\sqsubseteq$ which mirrors the inclusion relation between the interpretation of type in the relational model. We then get that if the type assigned to $\langle L_1 \dots L_n \rangle$ after the iteration $\Phi$ is smaller or equal than the type $\Psi_1 \& \dots \& \Psi_k$ that was assigned to them before the iteration, then  $\model{\lambda \vec L \lambda \vec x .t}$ is a finitary family. The system $\Ginf$ allows for taking fixpoints of terms $s: \Phi \multimap \Psi$ exactly when $\Psi \sqsubseteq \Phi$; we thus get:
-\begin{theorem}
-	If ${\fix_{\vec L }\lambda \vec L \lambda \vec x .t}$ is typable in $\Ginf$, then the finitely many nonzero components of $\model{\fix_{\vec L }\lambda \vec L \lambda \vec x .t}$ are the least solution $(\bar \phi_i( z, \vec y))_{i \in \{1 \dots m\}}$ of an algebraic system $(\phi_i = p_i(\phi_1, \dots \phi_n, z, \vec y))_{i \in \{1 \dots m\}}$.  the variables $\vec y$ correspond to the free paramters $p_1, \dots p_h$ in $\C P$; if we take terms $u_1 \dots u_h$ of adequate type, we get that $\model{\fix_{\vec L }\lambda \vec L \lambda \vec x .t[u_1/p_1 \dots u_h/p_h]}=\phi_i( z, \vec {\model{u_i}}) $
+\end{minipage}
+\begin{minipage}{.4\textwidth}
+\adjustbox{scale=0.6,center}{
+\begin{tikzpicture}
+
+\node[rectangle, draw, minimum width=1cm, minimum height=3cm, rounded corners, gray, thick](rect1) at (-0.5,-0.75) {};
+\node[rectangle, draw, minimum width=1cm, minimum height=3cm, rounded corners, gray, thick](rect1) at (1,-0.75) {};
+
+\node(w) at (-0.5,1) {\footnotesize time $0$};
+\node(w) at (1,1) {\footnotesize time $t+1$};
+\node[draw, circle, fill=gray!20, minimum width=0.8cm](s0) at (-0.5,0) {$S$};
+\node[draw, circle, fill=gray!20, minimum width=0.8cm](s1) at (1,0) {\footnotesize $F$};
+\node[draw, circle, fill=gray!20, minimum width=0.8cm](o) at (1,-1.5) {$O$};
+
+
+\draw[->] (s0) to node[above] {\tiny$p$} (s1);
+\draw[->] (s0) to node[below] {\tiny$1-p$} (o);
+
+\draw[->] (s1) to node[above] {\tiny$q$} (2.1,0);
+\draw[->] (s1) to node[below] {\tiny$1-q$} (2.1,-1.2);
+\end{tikzpicture}
+}
+\end{minipage}
+\caption{A Boolean PHORS and the corresponding template model.\\
+\phantom{stuff}\\
+%\phantom{stuff}\\
+%\phantom{stuff}\\
+%\phantom{stuff}
+}
+\label{fig:phors2}
+\end{subfigure}
+%\begin{subfigure}{.2\textwidth}
+%\adjustbox{scale=0.7,center}{
+%\begin{tikzpicture}
+%
+%\node[rectangle, draw, minimum width=1cm, minimum height=3cm, rounded corners, gray, thick](rect1) at (-0.5,-0.75) {};
+%\node[rectangle, draw, minimum width=1cm, minimum height=3cm, rounded corners, gray, thick](rect1) at (1,-0.75) {};
+%
+%\node(w) at (-0.5,1) {\footnotesize time $0$};
+%\node(w) at (1,1) {\footnotesize time $t+1$};
+%\node[draw, circle, fill=gray!20, minimum width=0.8cm](s0) at (-0.5,0) {$S$};
+%\node[draw, circle, fill=gray!20, minimum width=0.8cm](s1) at (1,0) {\footnotesize $F$};
+%\node[draw, circle, fill=gray!20, minimum width=0.8cm](o) at (1,-1.5) {$O$};
+%
+%
+%\draw[->] (s0) to node[above] {\tiny$p$} (s1);
+%\draw[->] (s0) to node[below] {\tiny$1-p$} (o);
+%
+%\draw[->] (s1) to node[above] {\tiny$q$} (2.1,0);
+%\draw[->] (s1) to node[below] {\tiny$1-q$} (2.1,-1.2);
+%\end{tikzpicture}
+%}
+%\caption{Template model.
+%%: at time 0 the source node moves to either $F$ or $O$, at time $t+1$, node $F$ either moves to $F$ or $O$, while node $O$ terminates.\\
+%%\phantom{stuff}\\
+%%\phantom{stuff}
+%}
+%\label{fig:graph}
+%\end{subfigure}
+\caption{Examples of PHORS.}
+\label{fig:fig1}
+\end{figure}
+%The results of the two previous paragraph can be easily extended to the case in which we have a finitary ground type $\alpha$ and constant $a_1 : \alpha \dots a_n: \alpha$; for simplicity, we can consider the booleans $\Bool$ and constants $\False: \Bool, \True: \Bool$.
+
+%
+% The language will then contain also an $\IfThenELse$ construct. The system $\Ginf$ can then easily be replaced by a system $\Flipinf$ in which the fixpoint rule is subjected to the same type containment constraint as $\Ginf$; by taking judgements $\nonterm\mid\C P\mid\emptyset\vdash \lambda x_1.\dots. x_n.t:\Phi$ where $\nonterm$ is affine context we can build a system $\FlipRat$ ensuring rationality . We will then get: \begin{theorem}
+% 	If a term is typable in $\Flipinf$, then: 
+
+
+
+%For instance
+%, as, for example, the 'affine PHORS' \cite{DBLP:conf/lics/LiMO22}\\  
+
+
+
+\section{Finiteness and Algebraicity}
+
+
+
+%A PHORS is a program defined as a fixpoint of a system of program equations. 
+%
+%In programming fixpoints $\gphors \bydef \fix F$ can be seen both as the least solution of the equation $\gphors = F(\gphors)$.
+The weighted relational model of linear logic is a well-studied denotational semantics in which a program $M:\sigma\to\tau$ is interpreted as a matrix $\model{M}:!\model{\sigma}\times\model{\tau}\to \Qsemiring$ with coefficients in a continuous semiring $\Qsemiring$, where $\model{\sigma},\model{\tau}$ are countable sets and $!X$ denotes the set of finite multiset on $X$. This matrix can be equivalently seen as a family of formal power series $\model{M}( x)_b= \sum_{\mu\in !\model{\sigma}}\model{M}_{\mu,b}x^{\mu}$, where for all $x\in \Qsemiring^{\model{\sigma}}$, $x^\mu=\prod_{a\in \model{\sigma}}x_a^{\mu(a)}$.
+
+
+Interpreting a PHORS in this model corresponds then to finding the \emph{least fixpoint} of an \emph{infinite} system $\model \gphors = \Phi(\model \gphors)$ of equations between power series.
+In particular, by choosing $\Qsemiring=\fps{\Rinf}{z}$ the semiring of formal power series in $z$ with positive real coefficients, 
+the interpretation of the source symbol $S$ of a PHORS yields a generating function
+$\model{S}(z)= \sum_{i \geq 0} \PROB(\gphors \Downarrow^i)(\vec y)z^n$ characterizing the 
+probability of termination in $i$ reduction steps.
+
+Unfortunately, the infinitary systems produced by the PHORS are not, in general, tractable with algebraic or computational tools. However, what if we could ensure, by some appropriate restrictions on the PHORS $\gphors$, that the resulting equational system is equivalent to some \emph{finite} polynomial system? This is the approach we follow  
+%  it although possible to prove that the least solution of the systems affects value 0 to all but finitely many of the variables of $\gphors$. In
+in  \cite{lago2026higherorderprobabilisticverificationweighted}, where we introduce a semantic condition of \emph{finiteness} to this effect. For the technical notion of \emph{finitary family} see \cite{lago2026higherorderprobabilisticverificationweighted}; we here report its main property:
+% the notion of \emph{finitary family}:
+\begin{prop}
+	Suppose $(\Phi_i(\vec x, \vec y))_{i\in I}$ is a finitary family of power series. If $r_i(\vec y)$ is the least solution of 
+	the system $r_i(\vec x)=\Phi_i(r_i(\vec x),\vec y)$, then all but finitely many of the $r_i( \vec y)$ are equal to 0 and the remaining ones are solution of a finite family of {polynomial equations} $(r_{j_\ell}(\vec x) = p_\ell(r_{j_1}(\vec x), \dots r_{j_n}(\vec x), \vec y))_{\ell \in \{1 \dots n\}}$.
+\end{prop}
+Now, the main point is to identify a class of PHORS whose interpretation satisfies the previous condition.
+We do this by introducing the class of \emph{graded PHORS} (PHORS$^\infty$), which extends the \emph{affine PHORS}from \cite{DBLP:conf/lics/LiMO22}. The graded PHORS are defined using a linear type system involving \emph{graded exponentials} (where a graded type of the form $!_k\varphi\multimap \psi$ describes a program that can use an input of type $\varphi$ \emph{at most $k$ times} to produce an output of type $\psi$).
+More precisely, a type judgement in this system is of the form $\nonterm\mid \Delta\vdash t:\sigma$, where:
+\begin{varitemize}
+\item $\nonterm$ is an \emph{intuitionistic} (i.e.~non-linear) environment for the non-terminal symbols;
+\item $\Delta$ is a \emph{graded} environment all the other variables, comprising \emph{both} finite and infinite grades.
+\end{varitemize}
+The type system is designed so as to do two things: first, restrict the use of variables with an infinite grade (which can thus be duplicated at will), as these may only play the role of the \emph{parameters} $\vec y$ in the power series $r_i(\vec y)$ above; 
+second, enforce a fixpoint condition ensuring that for any equation $Fx_1\dots x_n=t$, 
+the non-terminal function symbol $F$ and the term $\lambda x_1\dots x_n.t$ agree on the grades assigned to $x_1,\dots, x_n$; this condition warrants that the least fixpoint $r_i(\vec y)$ is determined by only a \emph{finite} number of equations. This leads to the following:
+% 
+%%
+%In the theory of PHORS one distinguishes between the \emph{non-terminal} variables, which correspond to the functions that are defined by the equational system, and the standard variables that are used in the construction of a term. A type judgement is thus of the form $\nonterm\mid \Delta\vdash t:\sigma$, where $\nonterm$ is a type assignment for the non-terminal variables and $\Delta$ is an assignment to the standard ones. 
+%In our type system (which extends the affine system from \cite{DBLP:conf/lics/LiMO22})
+%also the discipline for these variable is different: those in $\nonterm$ can be discarded or duplicated freely, as in intuitionistic logic, while those in $\Delta$ follow a \emph{graded} discipline: each variable is assigned a (possibly infinite) grade $k\in $ that bounds the number of duplications admitted.
+
+%The fundamental result is that all the PHORS that are typable in this system satisfy the finiteness conditions:
+
+% system from \cite{DBLP:conf/lics/LiMO22}, in which such variables are used in an \emph{affine} way).
+
+%
+%Our system, the  
+%
+%we can use to this aim the logic of \emph{graded exponentials}.
+%% We will now recap the result of \cite{lago2026higherorderprobabilisticverificationweighted}, which are formulated in the context of PHORS: we consider a unitary ground type $\1$  and we also have just one constant of type $\1$, named $e$. We will show later that these restrictions are not essential and that we can take any finitary ground type $\alpha$, thus examining the problem of exact inference.
+%  We introduce a type system $\Ginf$ that involves both finitary and infinitary exponentials: 
+%\begin{align*}
+%	\varphi,\psi:= o^n\mid !_k\varphi\multimap \varphi\qquad (1\leq n\in \N, k\in \N) \qquad
+%	\Phi,\Psi:=\varphi\mid !_k\varphi\multimap \Phi\qquad (k\in \N\cup\{\infty\})
+%\end{align*}
+%the intuitive meaning of $t: !_k\varphi\multimap \psi$ being that $t$ uses its argument at most $k$ times.
+%
+%
+
+%
+%
+%We then consider judgements: $\nonterm\mid\C P\mid\emptyset\vdash \lambda x_1.\dots. x_n.t:\Phi$ where $\nonterm$ is an intuitionistic context containing the variables $L_1: \Psi_1, \dots L_k:\Psi_k$ over which we want to perform the fixpoint, $\C P$ is a context of parameters (i.e free variables), made of bindings $p:_\infty \phi$ (i.e paramters must have a finitary type, but can be used an infinite numeber of times) and $\Delta$ is a graded context, made of bindings of finitary type $w:_k \phi \: k < +\infty$. At every fixpoint iteration, the partial definition of the $L_i$ gets updated. To find a condition ensuring that $t_F \bydef \lambda \vec L \lambda \vec x. t$ is intepreted by a finitary family of power series, we the introduce a partial order relation over types $\sqsubseteq$ which mirrors the inclusion relation between the interpretation of type in the relational model. We then get that if the type assigned to $\langle L_1 \dots L_n \rangle$ after the iteration $\Phi$ is smaller or equal than the type $\Psi_1 \& \dots \& \Psi_k$ that was assigned to them before the iteration, then  $\model{\lambda \vec L \lambda \vec x .t}$ is a finitary family. The system $\Ginf$ allows for taking fixpoints of terms $s: \Phi \multimap \Psi$ exactly when $\Psi \sqsubseteq \Phi$; we thus get:
+\begin{theorem}\label{thm:alg}
+For all $\Ginf$ $\gphors$, the interpretation $\model{\gphors}$ is the least solution of a finite polynomial system.
+In particular, the  generating function
+$\model{S}(z)= \sum_{i \geq 0} \PROB(\gphors \Downarrow^i)(\vec y)z^n$ is algebraic 
+(i.e there is a polynomial $p(z, w)$ with rational coefficients such that $p(z, g_{L_1})=0$).
+%%	If ${\fix_{\vec L }\lambda \vec L \lambda \vec x .t}$ is typable in $\Ginf$,
+%	 the finitely many nonzero components of $\fix\model{\gphors}$ are the least solution $(\bar \phi_i( z, \vec y))_{i \in \{1 \dots m\}}$ of a polynomial system $(\phi_i = p_i(\phi_1, \dots \phi_n, z, \vec y))_{i \in \{1 \dots m\}}$.  
+%%The variables $\vec y$ correspond to the free paramters $p_1, \dots p_h$ in $\C P$; i
+%If we take terms $u_1 \dots u_h$ of adequate type, we get that $\fix \model{\gphors [u_1/p_1 \dots u_h/p_h]}=\phi_i( z, \vec {\model{u_i}}) $
 \end{theorem}
-While the variables $\vec y$ are used to take into account free parameters that could be substituted afterwards, the (exponent of the) variables $z$ counts the number of probabilistic choices made in the reduction: for example, in the context in which the LICS paper we deal with the case of PHORS: in this case we always assume that $L_1: \1$, so that its interpretation is a single power series (generating function) $g_{L_1}(\vec y, z)= \sum_{i \geq 0} \PROB(L_1 \to^i e)(\vec y)z^n$ (the probability of reducing to $e$ in $n$ steps will obviously depend on the values given to the free variables). We get the following
+%While the variables $\vec y$ are used to take into account free parameters that could be substituted afterwards, the (exponent of the) variables $z$ \emph{counts} the number of probabilistic choices made in a reduction.
+%In particular, one of the components of $\fix\model{\gphors}$ 
+%is a power series $a_{\gphors}(z)= \sum_{i \geq 0} \PROB(\gphors \Downarrow^i)(\vec y)z^n$, 
+%depending on $z$ only, which tracks the execution of $\gphors$.
+%%
+%%
+%%: for example, in the context in which the LICS paper we deal with the case of PHORS: in this case we always assume that $L_1: \1$, so that its interpretation is a single power series (generating function) $g_{L_1}(\vec y, z)= \sum_{i \geq 0} \PROB(L_1 \to^i e)(\vec y)z^n$ (the probability of reducing to $e$ in $n$ steps will obviously depend on the values given to the free variables). 
+%%
+%We then obtain the following:
+%\begin{corollary}
+%	For all $\Ginf$ $\gphors$, the generating function $a_\gphors( z)= \sum_{i \geq 0} \PROB(\gphors \Downarrow^i)z^n$ is algebraic (i.e there is a polynomial $p(z, w)$ with rational coefficients such that $p(z, g_{L_1})=0$).
+%\end{corollary}
+%This result extends to the PHORS typable in our system the famous Chomsky-Schutzenberger enumeration theorem that states that context-free languages (corresponding to order-1 PHORS) have an algebraic generating function.
+%, but, as we will see, paves the way toward asymptotic estimates about the probability of convergence. Moreover, 
+
+Using Tarski's decidability of the first-order existential theory of the reals, we obtain then:
 \begin{theorem}
-	For a PHORS typable in $\Ginf$, the generating function $g_{L_1}(\vec y, z)= \sum_{i \geq 0} \PROB(L_1 \to^i e)(\vec y)z^n$ is part of the least the solution of an algebraic system of equations; in particular it is algebraic (i.e there is a polynomial $p(z, w)$ with rational coefficients such that $p(z, g_{L_1})=0$).
+	For all $\Ginf$, the AST and PAST problems are decidable (in fact, EXPTIME for fixed order PHORS).
+%	
+%	\begin{varitemize}
+%		\item does $\PROB(L_1 \to^* e)=1$? (Almost Sure Termination, AST)
+%		\item is the expected time to termination $\mathbb{E}{(L_1 \to^* e)} = \sum_{i \geq 0} i \PROB(L_1 \to^i e)$ is finite? (Positive Almost Sure Termination, PAST)
+%	\end{varitemize}
 \end{theorem}
-This result not only is interesting, as it extends to the PHORS typable in $\Ginf$ the Chomsky-Schutzenberger enumeration theorem that is known to hold for context-free languages (corresponding to PHORS of the first order), but, as we will see, paves the way toward asymptotic estimates about the probability of convergence. Moreover, by using Tarski's decidability of the first-order existential theory of the reals, from Theorem 1 we can prove:
-\begin{theorem}
-	The two following fundamental problems of probabilistic model checking are decidable for $\Gfin$ :
-	\begin{varitemize}
-		\item Is it true $\PROB(L_1 \to^* e)=1$ (Almost Sure Termination, AST)
-		\item Is it true that the expected time to termination $\mathbb{E}{(L_1 \to^* e)} = \sum_{i \geq 0} i \PROB(L_1 \to^i e)$ is finite? (Positive Almost Sure Termination, PAST)
-	\end{varitemize}
-\end{theorem}
-This results extend the ones of \cite{DBLP:conf/lics/LiMO22}, who consider an affine type system, that, in respect to ours, only allows for finitary types $!_1 \tau \multimap \tau$. For further detail, see (cite arxiv). In the rest of the abstract, we will show how to extend these results along three direction: finding a type system that ensures rationality of the generating functions, applying this framework to inference and lastly obtaining and interpreting asymptotic estimates on $\PROB(L_1 \to^n e)$.  
-\section{Rational PHORS}
-If we change the structure of contexts of the $\Ginf$ system, we are able to find a system $\GRat$ ensuring that the generating function $g_{L_1}$ is rational. To this aim, we consider type judgement $\nonterm\mid\C P\mid\emptyset\vdash \lambda x_1.\dots. x_n.t:\Phi$ where $\nonterm$ is now an affine context: no variable is allowed to appear in it with multiplicity greater than one; in particular, the application rule: 
-\begin{align*}
-\infer[@]{\nonterm \sqcup \nonterm' \mid\C P\mid \Delta + k\Delta' \vdash tu : \Psi}
-{\nonterm\mid\C P\mid\Delta \vdash t :!_k\varphi \multimap \Psi \qquad \nonterm'\mid\C P\mid \Delta' \vdash u :\varphi }
-\end{align*} cannot be used unless $dom(\nonterm) \cap dom(\nonterm')= \emptyset$. This ensures that the algebraic system describing the fixpoint $(\phi_i = p_i(\phi_1, \dots \phi_n, z, \vec y))_{i \in \{1 \dots m\}}$ is a linear system. Hence, not only the (least) solution $(\bar \phi_i( z, \vec y))_{i \in \{1 \dots m\}}$ consists of rational functions of $ z, \vec y$ , but it is also possible to explicitly compute these solutions by means of the Gauss algorithm:
-\begin{theorem}
-	If a PHORS is typable in $\GRat$, then: 
-	\begin{varitemize}
-		\item  The generating function $g_{L_1}(\vec y, z)= \sum_{i \geq 0} \PROB(L_1 \to^i e)(\vec y)z^n$ is rational
-		\item If $L_1$ is closed,  the probability of termination $\PROB(L_1 \to^* e)$ is a rational number and it can be computed effectively from the $\GRat$ typing derivation of the PHORS. Moreover, for PHORS of fixed order, the computation can be performed in polynomial time with respect to the size of the PHORS.
-	\end{varitemize}
+\begin{example}
+The PHORS in Fig.~\ref{fig:phors1} is a $\Ginf$, its generating function $a(z)$ is solution of the equation
+$a(z)=\frac{1}{2}(a(z)+a^2(z))$, which can be used to show that it is AST but not PAST.
+\end{example}
+%This results extend those contained of \cite{DBLP:conf/lics/LiMO22}, that consider an affine type system, that, in respect to ours, only allows for finitary types $!_1 \tau \multimap \tau$. For further detail, see (cite arxiv). In the rest of the abstract, we will show how to extend these results along three direction: finding a type system that ensures rationality of the generating functions, applying this framework to inference and lastly obtaining and interpreting asymptotic estimates on $\PROB(L_1 \to^n e)$.  
+
+\section{New Results and Perspectives}
+We now list a few new applications and perspectives of the results contained in \cite{lago2026higherorderprobabilisticverificationweighted}. 
+
+\paragraph{Rational PHORS}
+
+It is well-known that algebraic numbers are computable, in the sense of being approximable to arbitrary degree. 
+Similarly, algebraic power series come with several well-known exact or approximate computational methods. 
+However, just like rational numbers are computable in an exact way, stronger (i.e.~more tractable) methods exist when considering rational power series, that is power series that can be expressed as a ratio of two polynomials.
+
+Starting from the type system described above, it is not difficult to design a more restricted discipline which enforces rationality. Indeed, it is well-known that rational power series $r(\vec y)=\frac{p(\vec y)}{q(\vec y)}$ can be characterized as the solution of \emph{linear} recursive systems $X_i= a_i(\vec y)X_i+ b_i(\vec y)$ \cite{DBLP:books/sp/KuichS86}. 
+Such systems can be solved effectively (and efficiently) by means of the Gauss algorithm \cite{LEHMANN197759}. 
+
+In our system, this linearity constraint can be ensured by restricting the discipline of non-terminal symbols: 
+in the typing context $\nonterm\mid\Delta\vdash t\sigma$ we now require that the variables in $\nonterm$ be used in an \emph{affine} way, that is, possibly discarded but never duplicated. 
+Call $\GRat$ the class of PHORS typable in this restricted system. We then have the following
+
+%
+% for every PHORS equation $Fx_1\dots x_n=t$, the typing of the term $t$ determines the equations satisfied by the 
+%
+%
+%If we change the structure of contexts of the $\Ginf$ system, we are able to find a system $\GRat$ ensuring that the generating function $g_{L_1}$ is rational. To this aim, we consider type judgement $\nonterm\mid\C P\mid\emptyset\vdash \lambda x_1.\dots. x_n.t:\Phi$ where $\nonterm$ is now an affine context: no variable is allowed to appear in it with multiplicity greater than one; in particular, the application rule: 
+%\begin{align*}
+%\infer[@]{\nonterm \sqcup \nonterm' \mid\C P\mid \Delta + k\Delta' \vdash tu : \Psi}
+%{\nonterm\mid\C P\mid\Delta \vdash t :!_k\varphi \multimap \Psi \qquad \nonterm'\mid\C P\mid \Delta' \vdash u :\varphi }
+%\end{align*} cannot be used unless $dom(\nonterm) \cap dom(\nonterm')= \emptyset$. This ensures that the algebraic system describing the fixpoint $(\phi_i = p_i(\phi_1, \dots \phi_n, z, \vec y))_{i \in \{1 \dots m\}}$ is a linear system. 
+%
+%Hence, not only the (least) solution $(\bar \phi_i( z, \vec y))_{i \in \{1 \dots m\}}$ consists of rational functions of $ z, \vec y$ , but it is also possible to explicitly compute these solutions by means of the Gauss algorithm:
+\begin{theorem}\label{thm:rat}
+	For all $\GRat$ $\gphors$, 
+	the interpretation $\model{\gphors}$ is the least solution of a finite linear system. In particular, the generating function $\model{S}(z)= \sum_{i \geq 0} \PROB(\gphors \Downarrow^i)(\vec y)z^n$ is rational and its closed form can be computed in polynomial time (for fixed order PHORS).
+In particular, the probability of termination of $\gphors$ is a rational number and can be computed effectively.
+
+	 
+%	\begin{varitemize}
+%		\item  The generating function $g_{L_1}(\vec y, z)= \sum_{i \geq 0} \PROB(L_1 \to^i e)(\vec y)z^n$ is rational
+%		\item If $L_1$ is closed,  the probability of termination $\PROB(L_1 \to^* e)$ is a rational number and it can be computed effectively from the $\GRat$ typing derivation of the PHORS. Moreover, for PHORS of fixed order, the computation can be performed in polynomial time with respect to the size of the PHORS.
+%	\end{varitemize}
 \end{theorem}  
-\section{Algebraic functions for inference}
-The results of the two previous paragraph can be easily extended to the case in which we have a finitary ground type $\alpha$ and constant $a_1 : \alpha \dots a_n: \alpha$; for simplicity, we can consider the booleans $\Bool$ and constants $\False: \Bool, \True: \Bool$.
-A closed term $t:\Bool$ in this language will reduce with probability $p$ to $\False$ and with probability $q$ to $\True$ (with $p+q \leq 1$); we will then say that $t \sim \Bern{p}{q}$. The problem of exact inference is then to find these $p,q$. 
- The language will then contain also an $\IfThenELse$ construct. The system $\Ginf$ can then easily be replaced by a system $\Flipinf$ in which the fixpoint rule is subjected to the same type containment constraint as $\Ginf$; by taking judgements $\nonterm\mid\C P\mid\emptyset\vdash \lambda x_1.\dots. x_n.t:\Phi$ where $\nonterm$ is affine context we can build a system $\FlipRat$ ensuring rationality . We will then get: \begin{theorem}
- 	If a term is typable in $\Flipinf$, then: 
+
+\paragraph{Exact Inference}
+As suggested above, given the computational nature of rational and algebraic power series, we can exploit Theorems 
+\ref{thm:alg} and \ref{thm:rat} to devise solutions to the exact inference problem for a Boolean PHORS. 
+%
+%The results of the two previous paragraph can be easily extended to the case in which we have a finitary ground type $\alpha$ and constant $a_1 : \alpha \dots a_n: \alpha$; for simplicity, we can consider the booleans $\Bool$ and constants $\False: \Bool, \True: \Bool$.
+%A closed term $t:\Bool$ in this language will reduce with probability $p$ to $\False$ and with probability $q$ to $\True$ (with $p+q \leq 1$); we will then say that $t \sim \Bern{p}{q}$. The problem of exact inference is then to find these $p,q$. 
+% The language will then contain also an $\IfThenELse$ construct. The system $\Ginf$ can then easily be replaced by a system $\Flipinf$ in which the fixpoint rule is subjected to the same type containment constraint as $\Ginf$; by taking judgements $\nonterm\mid\C P\mid\emptyset\vdash \lambda x_1.\dots. x_n.t:\Phi$ where $\nonterm$ is affine context we can build a system $\FlipRat$ ensuring rationality . We will then get: 
+% 
+ \begin{theorem}
+ 	For all Boolean PHORS $\gphors\sim\Bern{p}{q}$:  
  	\begin{varitemize}
- 		\item  For $b \in \{\False, \True\}$, the generating function $g_{L_1,b}(\vec y, z)= \sum_{i \geq 0} \PROB(L_1 \to^i b)(\vec y)z^n$ is algebraic.
- 		\item If $L_1$ is closed and $L_1 \sim \Bern{p}{q}$, then, for any given $0 < \epsilon \in \Q$ we can compute effectively approximations $p', q'$ such that $|p-p'| < \epsilon, |q-q'| < \epsilon $ 	
- 	\end{varitemize}
- 	 If a term is typable in $\FlipRat$:
- 	  	\begin{varitemize}
- 	 	\item  For $b \in \{\False, \True\}$, the generating function $g_{L_1,b}(\vec y, z)= \sum_{i \geq 0} \PROB(L_1 \to^i b)(\vec y)z^n$ is rational.
- 	 	\item If $L_1$ is closed and $L_1 \sim \Bern{p}{q}$, then $p$ and $q$ are rational and can be computed effectively.
+	\item if $\gphors$ is a $\Ginf$, then for any given $0 < \epsilon \in \Q$ we can compute approximations $p', q'$ such that $|p-p'| < \epsilon, |q-q'| < \epsilon $;
+	\item if $\gphors$ is a $\GRat$, then  $p$ and $q$ are rational and can be computed effectively.
+%
+% 		\item  For $b \in \{\False, \True\}$, the generating function $g_{L_1,b}(\vec y, z)= \sum_{i \geq 0} \PROB(L_1 \to^i b)(\vec y)z^n$ is algebraic.
+% 		\item If $L_1$ is closed and $L_1 \sim \Bern{p}{q}$, then, for any given $0 < \epsilon \in \Q$ we can compute effectively approximations $p', q'$ such that $|p-p'| < \epsilon, |q-q'| < \epsilon $ 	
+% 	\end{varitemize}
+% 	 If a term is typable in $\FlipRat$:
+% 	  	\begin{varitemize}
+% 	 	\item  For $b \in \{\False, \True\}$, the generating function $g_{L_1,b}(\vec y, z)= \sum_{i \geq 0} \PROB(L_1 \to^i b)(\vec y)z^n$ is rational.
+% 	 	\item If $L_1$ is closed and $L_1 \sim \Bern{p}{q}$, then $p$ and $q$ are rational and can be computed effectively.
  	 \end{varitemize}
  \end{theorem}
- \section{Asymptotic estimates}
- The fact that the generating function of a PHORS $g_{L_1}(z)= \sum_{i \geq 0} \PROB(L_1 \to^i e)z^n$ is algebraic let us not just to answer the AST problem, but also establishing how fast the program converges. This analysis, that is an application of the methods of analytic combinatorics \cite{DBLP:books/daglib/0023751},  is yet to be developed, but we will sketch here the basic idea. If the radius of convergence of the power series $g_{L_1}(z)$ is $\rho > 1$, then $\PROB(L_1 \to^i e)= O(1/\rho^n)$. On the other side, if $\rho = 1$ ($\rho <1$ is impossible to the convergence results for PCOH), the asymptotic behaviours is regulated by the nature of the dominant (i.e smallest in modulus) singularities of $g_{L_1}(z)$: for example, if $g_{L_1}(z)$ has a unique dominant singularity of 'square root type' (i.e it has a Puiseaux expansion of the form $g_{L_1}(z) = \sum_{k \geq 1} c_k (z-1)^{k/2}$), one obtains that $\PROB(L_1 \to^i e)= O(n^{3/2})$\\
- While the problem of finding the radius of convergence and the Puiseaux expansions is generally uncomputable, when the function is algebraic (so there exists an irreducible polynomial $p(z,w)$ s.t $p(z,g_{L_1}(z)$) singularities are located at the points $(z,w)$ for which $p(z,w)= \frac{\partial p}{\partial w} = 0$ and there are algorithm to compute the radius of convergence and the Puiseaux expansions \cite{DBLP:books/daglib/0023751}, \cite{CHUDNOVSKY1986271}. We obtain for example that:
+ \begin{example}
+The PHORS in Fig.~\ref{fig:phors2} is a $\GRat$, with rational generating functions 
+$\model{S}_{\mathrm{True}}(z)=\frac{p(1+qr)z^4-\frac{p}{\overline q}r z^3}{1-\overline qz}$ and $\model{S}_{\mathrm{False}}(z)=\frac{p(1+q\overline r)z^4-\frac{p}{\overline q}\overline r z^3}{1-\overline qz}$, yielding, for e.g.~$p=q=r=\frac{1}{2}$, $\gphors\sim\Bern{\frac{1}{4}}{\frac{1}{4}}$.
+\end{example}
+ 
+ \paragraph{Asymptotic Estimates}
+ The algebraicity of the generating function of a PHORS 
+% $g_{L_1}(z)= \sum_{i \geq 0} \PROB(L_1 \to^i e)z^n$
+  is not only useful to answer exact problems like AST, but also to estimate \emph{how fast} the program converges. We provide here a sketch of how, using the methods from analytic combinatorics \cite{DBLP:books/daglib/0023751}, it might be possible to make such estimates. If the radius of convergence of the power series $\model{\gphors}(z)$ is $\rho > 1$, then $\PROB(\gphors\Downarrow_n)= O(1/\rho^n)$. On the other side, if $\rho = 1$,
+  (the case $\rho <1$ can be excluded by standard convergence results), 
+   the asymptotic behaviors is regulated by the nature of the dominant (i.e.~smallest in modulus) singularities of $\model{\gphors}(z)$: for example, if $\model{\gphors}(z)$ has a unique dominant singularity of 'square root type' (i.e.~it has a Puiseaux expansion of the form $\model{\gphors}(z)= \sum_{k \geq 1} c_k (z-1)^{k/2}$), one obtains that $\PROB(\model{\gphors}(z)\Downarrow_n)= O(n^{3/2})$\\
+ While the problem of finding the radius of convergence and the Puiseaux expansions is generally not computable, when the function is algebraic (so there exists an irreducible polynomial $p(z,w)$ s.t $p(z,\model{\gphors}(z))=0$) singularities are located at the points $(z,w)$ for which $\frac{\partial p(z,w)}{\partial w} = 0$ and algorithms exist to compute both \cite{DBLP:books/daglib/0023751}, \cite{CHUDNOVSKY1986271}. We obtain for example that:
  \begin{prop}
-  Let ${\fix_{\vec L }\lambda \vec L \lambda \vec x .t}$ be typable in $\Ginf$ and let $p(z,w)$ be the irreducible annihilating polynomial of $g_{L_1}(z)$ (that can be computed effectively). Let $\PROB(L_1 \to^{\leq n} e)$ be the probability of termination \emph{after $n$ steps}. If for no $|z|<1$ we can find a $w$ s.t $p(z,w)= \frac{\partial p}{\partial w} = 0$, then there exists a $r < 1$ s.t  $\PROB(L_1 \to^{*} e) = \PROB(L_1 \to^{\leq n} e) + O(r^n)$ for $n \to + \infty$.  
+ Let $\gphors$ be a $\Ginf$ and 
+%  Let ${\fix_{\vec L }\lambda \vec L \lambda \vec x .t}$ be typable in $\Ginf$ and
+   let $p(z,w)$ be the irreducible annihilating polynomial of $\model{\gphors}(z)$ (that can be computed effectively). Let $\PROB(\gphors\Downarrow_{> n} )$ be the probability of termination \emph{after $n$ steps}. If for no $|z|<1$ we can find a $w$ s.t $ \frac{\partial p(z,w)}{\partial w} = 0$, then there exists a $r < 1$ s.t  $\PROB(\gphors\Downarrow_n) = \PROB(\gphors\Downarrow_{>n}) + O(r^n)$ for $n \to + \infty$.  
  \end{prop}
 %Model checking is a well established technique for the verification of programs and systems. In the last twenty years, there has been a lot of interest toward the model checking of higher order programs, starting with the seminal result by Ong (cite) who considered Higher Order Recursion Schemes (HORS), a formalism equivalent to simply typed lambda calculus enriched with a fixopoint operator and proved that it is decidable if such a program satisfies a property expressible in Monadic Second Order Logic (MSO).\\
 %More recently (cite Kobayashi-Dal Lago), these Higher Order Recursion Schemes have been extended to the probabilistic setting by the formalism of Probabilistic Higher Order Recursion Schemes (PHORS): the most basic problems of model-checking become that of establishing if a program terminates with probability 1 (Almost Sure Termination, AST) and if the expected number of steps before termination is finite (Positive Almost Sure Termination, PAST). AST has been proved to be undecidable already at order 2, which prompted the study of classes of HORS for which the problem of (P)AST is decidable. A notable result in this direction has been obtained by (Li et al), which prove by automata-theoretic techniques that (P)AST is decidable for PHORS subject to an "affine" typing restriction (i.e programs are allowed to use their input only once).\\
