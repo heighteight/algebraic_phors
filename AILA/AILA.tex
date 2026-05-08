@@ -140,7 +140,7 @@ The (P)HORS are equivalent to the simply typed $\lambda Y$-calculus, that is, th
 
 While qualitative properties like termination are decidable for the HORS, the corresponding quantitative properties of PHORS are not: establishing if a PHORS terminates with probability 1 (\emph{almost sure termination}, AST) is undecidable already at order 2 \cite{DBLP:journals/lmcs/KobayashiLG20}. It is then interesting to study for which classes of PHORS problems like AST (or the related PAST problem, asking whether the expected running time is finite) are tractable or, at least, decidable.
 
-To study exact inference we also consider an extension of the PHORS language comprising a type $\Bool$ for Booleans. This allows one to encode not only finite graphical models like e.g.~Bayesian networks, but also \emph{unbounded} models CITE based on the iteration of some basic network template, as in the example in Fig.~\ref{fig:phors2}.
+To study exact inference we also consider an extension of the PHORS language comprising a type $\Bool$ for Booleans. This allows one to encode not only finite graphical models like e.g.~Bayesian networks, but also \emph{unbounded} models \cite[Ch.~6]{Daphne2009}, based on the iteration of some basic network template, as in the example in Fig.~\ref{fig:phors2}.
 A Boolean PHORS $\gphors$ reduces with probability $p$ to $\False$ and with probability $q$ to $\True$ (with $p+q \leq 1$). We note this $\gphors\sim \Bern{p}{q}$. The (generally undecidable) problem of exact inference is then to find these $p,q$. 
 
 
