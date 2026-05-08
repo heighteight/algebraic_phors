@@ -140,12 +140,13 @@ The (P)HORS are equivalent to the simply typed $\lambda Y$-calculus, that is, th
 
 While qualitative properties like termination are decidable for the HORS, the corresponding quantitative properties of PHORS are not: establishing if a PHORS terminates with probability 1 (\emph{almost sure termination}, AST) is undecidable already at order 2 \cite{DBLP:journals/lmcs/KobayashiLG20}. It is then interesting to study for which classes of PHORS problems like AST (or the related PAST problem, asking whether the expected running time is finite) are tractable or, at least, decidable.
 
-To study exact inference we also consider an extension of the PHORS language comprising a type $\Bool$ for Booleans. This allows one to encode not only finite graphical models like e.g.~Bayesian networks, but also \emph{unbounded} models \cite[Ch.~6]{Daphne2009}, based on the iteration of some basic network template, as in the example in Fig.~\ref{fig:phors2}.
-A Boolean PHORS $\gphors$ reduces with probability $p$ to $\False$ and with probability $q$ to $\True$ (with $p+q \leq 1$). We note this $\gphors\sim \Bern{p}{q}$. The (generally undecidable) problem of exact inference is then to find these $p,q$. 
+To study exact inference we also consider an extension of the PHORS language comprising a type $\Bool$ for Booleans and an if-then-else constructor. This represents not only finite graphical models like e.g.~Bayesian networks, but also \emph{unbounded} models \cite[Ch.~6]{Daphne2009}, obtained by iterating some basic network template, as in the example in Fig.~\ref{fig:phors2}.
+A Boolean PHORS $\gphors$ reduces with probability $p$ to $\False$ and with probability $q$ to $\True$ (with $p+q \leq 1$), noted $\gphors\sim \Bern{p}{q}$. The (generally undecidable) problem of exact inference is then to find these $p,q$. 
 
 
 \begin{figure}
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}{.35\textwidth}
+\small
 \begin{align*}
 S&= Fe,\\
 Fx& =x\oplus_{\frac{1}{2}}F(Fx).
@@ -154,18 +155,24 @@ Fx& =x\oplus_{\frac{1}{2}}F(Fx).
 \label{fig:phors1}
 \end{subfigure}
 \ \ 
-\begin{subfigure}{.43\textwidth}
-\begin{minipage}{.45\textwidth}
+\begin{subfigure}{.58\textwidth}
+\begin{minipage}{.55\textwidth}
 \begin{footnotesize}
 \begin{align*}
-S&= O \mathtt{False}\oplus_{p} F\mathtt{False},\\
-Fx&= O\mathtt{False} \oplus_p F\mathtt{False},\\
-Ox&= \mathtt{True} \oplus_r \mathtt{False}.
+%S&= O \mathtt{False}\oplus_{p} F\mathtt{False},\\
+%Fx&= O\mathtt{False} \oplus_p F\mathtt{False},\\
+%Ox&= \mathtt{True} \oplus_r \mathtt{False}.
+S&= H F O\\
+F&= \mathsf{True}\oplus_q \mathsf{False}\\
+O&= \mathsf{True}\oplus_p \mathsf{False}\\
+Hxy&= \mathrm{if}\ x \ \mathrm{then} \ H_{\mathrm{True}}xy \ \mathrm{else} \ H_{\mathrm{False}}xy\\
+H_{\mathrm{True}}xy&= Hxy\oplus_r O\\
+H_{\mathrm{False}}xy&= Hxy\oplus_s O
 \end{align*}
 \end{footnotesize}
 \end{minipage}
-\begin{minipage}{.4\textwidth}
-\adjustbox{scale=0.6,center}{
+\begin{minipage}{.3\textwidth}
+\adjustbox{scale=0.65,center}{
 \begin{tikzpicture}
 
 \node[rectangle, draw, minimum width=1cm, minimum height=3cm, rounded corners, gray, thick](rect1) at (-0.5,-0.75) {};
@@ -173,22 +180,22 @@ Ox&= \mathtt{True} \oplus_r \mathtt{False}.
 
 \node(w) at (-0.5,1) {\footnotesize time $0$};
 \node(w) at (1,1) {\footnotesize time $t+1$};
-\node[draw, circle, fill=gray!20, minimum width=0.8cm](s0) at (-0.5,0) {$S$};
+\node[draw, circle, fill=gray!20, minimum width=0.8cm](s0) at (-0.5,0) {$F$};
 \node[draw, circle, fill=gray!20, minimum width=0.8cm](s1) at (1,0) {\footnotesize $F$};
 \node[draw, circle, fill=gray!20, minimum width=0.8cm](o) at (1,-1.5) {$O$};
 
 
-\draw[->] (s0) to node[above] {\tiny$p$} (s1);
-\draw[->] (s0) to node[below] {\tiny$1-p$} (o);
+\draw[->] (s0) to  (s1);
+\draw[->] (s0) to  (o);
 
-\draw[->] (s1) to node[above] {\tiny$p$} (2.1,0);
-\draw[->] (s1) to node[below] {\tiny$1-p$} (2.1,-1.2);
+\draw[->] (s1) to  (2.1,0);
+\draw[->] (s1) to  (2.1,-1.2);
 \end{tikzpicture}
 }
 \end{minipage}
-\caption{A Boolean PHORS and the corresponding template model.\\
+\caption{A Boolean PHORS and the corresponding template model: 
+the functions $H, H_{\mathsf{True}},H_{\mathsf{False}}$ describe the propagation of the model depending on the value of the Boolean variables ($F$ and $O$) read in input. 
 \phantom{stuff}\\
-%\phantom{stuff}\\
 %\phantom{stuff}\\
 %\phantom{stuff}
 }
@@ -403,7 +410,8 @@ As suggested above, given the computational nature of rational and algebraic pow
  \end{theorem}
  \begin{example}
 The PHORS in Fig.~\ref{fig:phors2} is a $\GRat$, with rational generating functions 
-$\model{S}_{\mathrm{True}}(z)=\frac{prz^2}{1-\overline pz}$ and $\model{S}_{\mathrm{False}}(z)=\frac{p\overline rz^2}{1-\overline pz}$, yielding, for e.g.~$p=r=\frac{1}{3}$, $\gphors\sim\Bern{\frac{1}{3}}{\frac{2}{3}}$.
+$\model{S}_{\mathrm{True}}(z)=p\frac{\alpha z^3}{1-\beta z^2}$ and $\model{S}_{\mathrm{False}}(z)=\overline p\frac{\alpha z^3}{1-\beta z^2}$, where $\alpha=qr+\overline qs$ and $\beta=q\overline r+\overline q\overline s$, 
+yielding, for e.g.~$p=q=\frac{1}{3}$ and $r=s=\frac{1}{2}$, $\gphors\sim\Bern{\frac{1}{3}}{\frac{2}{3}}$.
 \end{example}
  
  \paragraph{Asymptotic Estimates}
