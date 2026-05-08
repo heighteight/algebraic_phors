@@ -249,8 +249,8 @@ The weighted relational model of linear logic is a well-studied denotational sem
 Interpreting a PHORS in this model corresponds then to finding the \emph{least fixpoint} of an \emph{infinite} system $\model \gphors = \Phi(\model \gphors)$ of equations between power series.
 In particular, by choosing $\Qsemiring=\fps{\Rinf}{z}$ the semiring of formal power series in $z$ with positive real coefficients, 
 the interpretation of the source symbol $S$ of a PHORS yields a generating function
-$\model{S}(z)= \sum_{i \geq 0} \PROB(\gphors \Downarrow^i)(\vec y)z^n$ characterizing the 
-probability of termination in $i$ reduction steps.
+$\model{S}(z)= \sum_{n \geq 0} \PROB(\gphors \Downarrow_n)z^n$ characterizing the 
+probability of termination in $n$ reduction steps.
 
 Unfortunately, the infinitary systems produced by the PHORS are not, in general, tractable with algebraic or computational tools. However, what if we could ensure, by some appropriate restrictions on the PHORS $\gphors$, that the resulting equational system is equivalent to some \emph{finite} polynomial system? This is the approach we follow  
 %  it although possible to prove that the least solution of the systems affects value 0 to all but finitely many of the variables of $\gphors$. In
@@ -300,8 +300,8 @@ the non-terminal function symbol $F$ and the term $\lambda x_1\dots x_n.t$ agree
 \begin{theorem}\label{thm:alg}
 For all $\Ginf$ $\gphors$, the interpretation $\model{\gphors}$ is the least solution of a finite polynomial system.
 In particular, the  generating function
-$\model{S}(z)= \sum_{i \geq 0} \PROB(\gphors \Downarrow^i)(\vec y)z^n$ is algebraic 
-(i.e there is a polynomial $p(z, w)$ with rational coefficients such that $p(z, g_{L_1})=0$).
+$\model{S}(z)= \sum_{i \geq 0} \PROB(\gphors \Downarrow^i)z^n$ is algebraic 
+(i.e there is a polynomial $p(z, w)$ with rational coefficients such that $p(z, \model{S}(z))=0$).
 %%	If ${\fix_{\vec L }\lambda \vec L \lambda \vec x .t}$ is typable in $\Ginf$,
 %	 the finitely many nonzero components of $\fix\model{\gphors}$ are the least solution $(\bar \phi_i( z, \vec y))_{i \in \{1 \dots m\}}$ of a polynomial system $(\phi_i = p_i(\phi_1, \dots \phi_n, z, \vec y))_{i \in \{1 \dots m\}}$.  
 %%The variables $\vec y$ correspond to the free paramters $p_1, \dots p_h$ in $\C P$; i
@@ -366,7 +366,7 @@ Call $\GRat$ the class of PHORS typable in this restricted system. We then have 
 %Hence, not only the (least) solution $(\bar \phi_i( z, \vec y))_{i \in \{1 \dots m\}}$ consists of rational functions of $ z, \vec y$ , but it is also possible to explicitly compute these solutions by means of the Gauss algorithm:
 \begin{theorem}\label{thm:rat}
 	For all $\GRat$ $\gphors$, 
-	the interpretation $\model{\gphors}$ is the least solution of a finite linear system. In particular, the generating function $\model{S}(z)= \sum_{i \geq 0} \PROB(\gphors \Downarrow^i)(\vec y)z^n$ is rational and its closed form can be computed in polynomial time (for fixed order PHORS).
+	the interpretation $\model{\gphors}$ is the least solution of a finite linear system. In particular, the generating function $\model{S}(z)= \sum_{i \geq 0} \PROB(\gphors \Downarrow_n)z^n$ is rational and its closed form can be computed in polynomial time (for fixed order PHORS).
 In particular, the probability of termination of $\gphors$ is a rational number and can be computed effectively.
 
 	 
@@ -409,8 +409,8 @@ $\model{S}_{\mathrm{True}}(z)=\frac{p(1+qr)z^4-\frac{p}{\overline q}r z^3}{1-\ov
 % $g_{L_1}(z)= \sum_{i \geq 0} \PROB(L_1 \to^i e)z^n$
   is not only useful to answer exact problems like AST, but also to estimate \emph{how fast} the program converges. We provide here a sketch of how, using the methods from analytic combinatorics \cite{DBLP:books/daglib/0023751}, it might be possible to make such estimates. If the radius of convergence of the power series $\model{\gphors}(z)$ is $\rho > 1$, then $\PROB(\gphors\Downarrow_n)= O(1/\rho^n)$. On the other side, if $\rho = 1$,
   (the case $\rho <1$ can be excluded by standard convergence results), 
-   the asymptotic behaviors is regulated by the nature of the dominant (i.e.~smallest in modulus) singularities of $\model{\gphors}(z)$: for example, if $\model{\gphors}(z)$ has a unique dominant singularity of 'square root type' (i.e.~it has a Puiseaux expansion of the form $\model{\gphors}(z)= \sum_{k \geq 1} c_k (z-1)^{k/2}$), one obtains that $\PROB(\model{\gphors}(z)\Downarrow_n)= O(n^{3/2})$\\
- While the problem of finding the radius of convergence and the Puiseaux expansions is generally not computable, when the function is algebraic (so there exists an irreducible polynomial $p(z,w)$ s.t $p(z,\model{\gphors}(z))=0$) singularities are located at the points $(z,w)$ for which $\frac{\partial p(z,w)}{\partial w} = 0$ and algorithms exist to compute both \cite{DBLP:books/daglib/0023751}, \cite{CHUDNOVSKY1986271}. We obtain for example that:
+   the asymptotic behaviors is regulated by the nature of the dominant (i.e.~smallest in modulus) singularities of $\model{\gphors}(z)$: for example, if $\model{S}(z)$ has a unique dominant singularity of 'square root type' (i.e.~it has a Puiseaux expansion of the form $\model{S}(z)= \sum_{k \geq 1} c_k (z-1)^{k/2}$), one obtains that $\PROB({\gphors}\Downarrow_n)= O(n^{3/2})$\\
+ While the problem of finding the radius of convergence and the Puiseaux expansions is generally not computable, when the function is algebraic (so there exists an irreducible polynomial $p(z,w)$ s.t $p(z,\model{S}(z))=0$) singularities are located at the points $(z,w)$ for which $\frac{\partial p(z,w)}{\partial w} = 0$ and algorithms exist to compute both \cite{DBLP:books/daglib/0023751}, \cite{CHUDNOVSKY1986271}. We obtain for example that:
  \begin{prop}
  Let $\gphors$ be a $\Ginf$ and 
 %  Let ${\fix_{\vec L }\lambda \vec L \lambda \vec x .t}$ be typable in $\Ginf$ and
