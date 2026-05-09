@@ -48,9 +48,8 @@ Ugo Dal Lago \inst{1} \inst{2} \and Guido Fiorillo \inst{3} \and Paolo Pistone \
 
 % Institutes for affiliations are also joined by \and,
 \institute{
-  University of Bologna, Italy, \email{ugo.dallago@unibo.it}
-\and
-INRIA Sophia Antipolis, France
+  University of Bologna, Italy, \email{ugo.dallago@unibo.it}\\
+  INRIA Sophia Antipolis, France
 \and 
 Université Claude Bernard Lyon 1, France \email{guido.fiorillo@ens-lyon.fr}
 \and 
@@ -62,13 +61,13 @@ Université Claude Bernard Lyon 1, France \email{paolo.pistone@ens-lyon.fr}
 % EasyChair, this command is mandatory: a document without \authorrunning
 % will be rejected by EasyChair
 
-\authorrunning{Mokhov, Sutcliffe and Voronkov}
+\authorrunning{Dal Lago, Fiorillo and Pistone}
 
 % \titlerunning{} has to be set to either the main title or its shorter
 % version for the running heads. When processed by
 % EasyChair, this command is mandatory: a document without \titlerunning
 % will be rejected by EasyChair
-\titlerunning{The  Class File}
+\titlerunning{Generating functions for Probabilistic Programs}
 
 \begin{document}
 
@@ -80,11 +79,11 @@ Université Claude Bernard Lyon 1, France \email{paolo.pistone@ens-lyon.fr}
 % TO BE ADDED
 %\end{abstract}
 \section{Introduction}
-The recent years have seen a surge of interest towards probabilistic programming. Probabilistic programs pose difficult challenges already when one only considers discrete probabilistic choices (i.e.~Bernoulli random variables): as opposed to deterministic programs, each execution of a probabilistic program can give a different result both in term of convergence and of its output; hence, while for non-deterministic programs one can study \emph{qualitative} properties (does the program terminate or not?), for probabilistic programs one has to consider \emph{quantitative} versions of such properties (what is the probability that the program terminates?). 
+The recent years have seen a surge of interest towards probabilistic programming. Probabilistic programs pose difficult challenges already when one only considers discrete probabilistic choices (i.e.~Bernoulli random variables): as opposed to deterministic programs, each execution of a probabilistic program can give a different result both in term of convergence and of its output; hence, while for non-deterministic programs one can study \emph{qualitative} properties (does the program terminate or not?), for probabilistic programs one has to consider \emph{quantitative} generalizations of such properties (what is the probability that the program terminates?). 
 %Studying such properties  essential to keep track of quantitative properties: for example, a probabilstic program can have even infinitely many execution paths which are not terminating and still have probability of termination 1.
 
 However, quantitative properties can be difficult or even intractable in many contexts.
-For instance, the literature on \emph{probabilistic model-checking} has studied the problems to determine the probability of termination or the expected running time for different computational models, leading to several results, both positive and negative, regarding the decidability and tractability of the underlying verification problem.
+For instance, the literature on \emph{probabilistic model-checking} has studied the problems of determining the probability of termination or the expected running time for different computational models, leading to several results, both positive and negative, regarding the decidability and tractability of the underlying verification problem.
 Beyond termination, one can consider the problem of \emph{exact inference}, that is, of finding the posterior distribution of the values computed by a program. While efficient methods are known for finitary programs, in the presence of \emph{unbounded} iteration (and hence the possibility of non-termination), inference is undecidable \cite{torresruiz_et_al:LIPIcs.FSCD.2024.20}, but
 a clear picture of the decidable or tractable cases is still missing.
 
@@ -132,13 +131,13 @@ HORS are programs defined as fixpoints of a finite system of recursive equations
 The functional variables $F$ defined by such equations are called the \emph{non-terminal symbols} of the PHORS. 
 In the probabilistic HORS, or PHORS, introduced in \cite{DBLP:journals/lmcs/KobayashiLG20}, equations are of the form $Fx_1\dots x_n=t_L\oplus_p t_R$, involving a probabilistic choice operator $\oplus_p$.
 The execution of a (P)HORS starts from a \emph{source} non-terminal symbol $S$ and goes on by reading the equations  from left to right as reduction rules. 
-For example, the PHORS in Fig.~\ref{fig:phors1} simulates a simple random walk terminating on a constant $e$.
+For example, the PHORS in Fig.~\ref{fig:phors1} simulates a simple random walk.
 The (P)HORS are equivalent to the simply typed $\lambda Y$-calculus, that is, the simply typed $\lambda$-calculus enriched with a fixpoint operation $Y:(\sigma\to\sigma)\to\sigma$ at all types $\sigma$, enriched with probabilistic choice operators $\oplus_p$ in the probabilistic case.
 %
 %A probabilistic variant of the HORS, called PHORS, was introduced in \cite{DBLP:journals/lmcs/KobayashiLG20}: here a program is defined as the fixpoint of equations of the form $Fx_1\dots x_n=t_L\oplus_p t_R$ involving a probabilistic choice operator $\oplus_p$. This language is then equivalent to an extension of the simply typed $\lambda Y$-calculus with probabilistic operators.
 %
 
-While qualitative properties like termination are decidable for the HORS, the corresponding quantitative properties of PHORS are not: establishing if a PHORS terminates with probability 1 (\emph{almost sure termination}, AST) is undecidable already at order 2 \cite{DBLP:journals/lmcs/KobayashiLG20}. It is then interesting to study for which classes of PHORS problems like AST (or the related PAST problem, asking whether the expected running time is finite) are tractable or, at least, decidable.
+While qualitative properties like termination are decidable for the HORS, the corresponding quantitative properties of PHORS are not: establishing if a PHORS terminates with maximal probability (\emph{almost sure termination}, AST) is undecidable \cite{DBLP:journals/lmcs/KobayashiLG20}. It is then interesting to study for which classes of PHORS problems like AST (or the related PAST problem, asking whether the expected running time is finite) are tractable or, at least, decidable.
 
 To study exact inference we also consider an extension of the PHORS language comprising a type $\Bool$ for Booleans and an if-then-else constructor. This represents not only finite graphical models like e.g.~Bayesian networks, but also \emph{unbounded} models \cite[Ch.~6]{Daphne2009}, obtained by iterating some basic network template, as in the example in Fig.~\ref{fig:phors2}.
 A Boolean PHORS $\gphors$ reduces with probability $p$ to $\False$ and with probability $q$ to $\True$ (with $p+q \leq 1$), noted $\gphors\sim \Bern{p}{q}$. The (generally undecidable) problem of exact inference is then to find these $p,q$. 
@@ -271,7 +270,7 @@ in  \cite{lago2026higherorderprobabilisticverificationweighted}, where we introd
 	the system $r_i(\vec x)=\Phi_i(r_i(\vec x),\vec y)$, then all but finitely many of the $r_i( \vec y)$ are equal to 0 and the remaining ones are solution of a finite family of {polynomial equations} $(r_{j_\ell}(\vec x) = p_\ell(r_{j_1}(\vec x), \dots r_{j_n}(\vec x), \vec y))_{\ell \in \{1 \dots n\}}$.
 \end{prop}
 Now, the main point is to identify a class of PHORS whose interpretation satisfies the previous condition.
-We do this by introducing the class of \emph{graded PHORS} (PHORS$^\infty$), which extends the \emph{affine PHORS}from \cite{DBLP:conf/lics/LiMO22}. The graded PHORS are defined using a linear type system involving \emph{graded exponentials} (where a graded type of the form $!_k\varphi\multimap \psi$ describes a program that can use an input of type $\varphi$ \emph{at most $k$ times} to produce an output of type $\psi$).
+We do this by introducing the class of \emph{graded PHORS} ($\Ginf$), which extends the \emph{affine PHORS} from \cite{DBLP:conf/lics/LiMO22}. The graded PHORS are defined using a linear type system involving \emph{graded exponentials} (where a graded type of the form $!_k\varphi\multimap \psi$ describes a program that can use an input of type $\varphi$ \emph{at most $k$ times} to produce an output of type $\psi$).
 More precisely, a type judgement in this system is of the form $\nonterm\mid \Delta\vdash t:\sigma$, where:
 \begin{varitemize}
 \item $\nonterm$ is an \emph{intuitionistic} (i.e.~non-linear) environment for the non-terminal symbols;
@@ -334,7 +333,7 @@ $\model{S}(z)= \sum_{i \geq 0} \PROB(\gphors \Downarrow_n)z^n$ is algebraic
 
 Using Tarski's decidability of the first-order existential theory of the reals, we obtain then:
 \begin{theorem}
-	For all $\Ginf$, the AST and PAST problems are decidable (in fact, EXPTIME for fixed order PHORS).
+	For all $\Ginf$, the AST and PAST problems are decidable (in fact, EXPTIME for fixed order $\Ginf$).
 %	
 %	\begin{varitemize}
 %		\item does $\PROB(L_1 \to^* e)=1$? (Almost Sure Termination, AST)
@@ -348,7 +347,7 @@ $a(z)=\frac{1}{2}(a(z)+a^2(z))$, which can be used to show that it is AST but no
 %This results extend those contained of \cite{DBLP:conf/lics/LiMO22}, that consider an affine type system, that, in respect to ours, only allows for finitary types $!_1 \tau \multimap \tau$. For further detail, see (cite arxiv). In the rest of the abstract, we will show how to extend these results along three direction: finding a type system that ensures rationality of the generating functions, applying this framework to inference and lastly obtaining and interpreting asymptotic estimates on $\PROB(L_1 \to^n e)$.  
 
 \section{New Results and Perspectives}
-We now list a few new applications and perspectives of the results contained in \cite{lago2026higherorderprobabilisticverificationweighted}. 
+We now list a few new applications and perspectives of the results in \cite{lago2026higherorderprobabilisticverificationweighted}. 
 
 \paragraph{Rational PHORS}
 
@@ -377,7 +376,7 @@ Call $\GRat$ the class of PHORS typable in this restricted system. We then have 
 \begin{theorem}\label{thm:rat}
 	For all $\GRat$ $\gphors$, 
 	the interpretation $\model{\gphors}$ is the least solution of a finite linear system. In particular, the generating function $\model{S}(z)= \sum_{i \geq 0} \PROB(\gphors \Downarrow_n)z^n$ is rational and its closed form can be computed in polynomial time (for fixed order PHORS).
-In particular, the probability of termination of $\gphors$ is a rational number and can be computed effectively.
+In particular, the probability of termination of $\gphors$ is a rational number and can be computed from $\gphors$.
 
 	 
 %	\begin{varitemize}
