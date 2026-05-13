@@ -1,12 +1,23 @@
 % !TEX root = main.tex
 \section{Related Work}
 
+
+
+The connections between the semantics of linear logic and combinatorics/formal power series can be traced back to Girard's
+quantitative semantics \cite{GIRARD1988129} (and Lamarche's infinitary algebras \cite{LAMARCHE199237}) and their connections with Joyal's theory of analytic functors and combinatorial species \cite{JOYAL19811}. 
+As in \cite{DBLP:journals/corr/abs-2501-15637}, we here take at face value the correspondence between morphisms in $\Qrelkleisli{\Rsemiring}$ and formal power series. Similar ideas were already exploited in \cite{DBLP:journals/jacm/EhrhardPT18} to establish the full abstraction of the related semantics of probabilistic coherent spaces.
+
+%
+% in the related semantics of probabilistic coherent spaces (PCOH) \cite{DBLP:journals/jacm/EhrhardPT18} correspond to power series; the idea of interpreting probabilistic programs using parameters, i.e.~as \emph{formal} power series, is used in \cite{DBLP:journals/jacm/EhrhardPT18} for PCOH, and is explicitly developed for $\Qrelkleisli{\Rsemiring}$ in \cite{DBLP:journals/corr/abs-2501-15637}. 
+% 
+
 An extensive literature in analytic combinatorics has explored different kinds of combinatorial structures having an algebraic generating function, in particular with respect to their asymptotic behaviour (for a comprehensive treatment, see \cite{DBLP:books/daglib/0023751}).
 In the setting of imperative programming, the idea of using generating functions to analyse probabilistic programs is developed in \cite{Klinkenberg2021} and \cite{Klinkenberg2024}; 
 of particular interest, with respect to our work is the characterization of while loops giving rise to rational generating functions in \cite{Klinkenberg2021}.
 On the side of formal language theory, there exists a huge amount of work about generating functions; particularly relevant to this work is the paper \cite{DBLP:journals/ita/AdamsFM13},  which studies the generating functions of Aho's indexed languages (corresponding to order-2 safe HORS, thus going beyond the usual framework of context-freeness) and they give an explicit procedure to compute these functions under some restrictions, but do not give a characterization of grammars with an algebraic generating function.
 
 The connection between HORS and the relational semantics of linear logic first appears in  Melliès and Grellois' work \cite{DBLP:conf/csl/GrelloisM15}, \cite{DBLP:conf/mfcs/GrelloisM15}. Subsequently, in \cite{DBLP:journals/pacmpl/ClairambaultGM18} a linear-non linear typing system for HORS was introduced, allowing for a finer complexity analysis of model checking; its affine fragment is studied in \cite{DBLP:conf/mfcs/ClairambaultM19}. None of these works involve probabilistic behavior.
+
 
 In \cite{DBLP:journals/lmcs/KobayashiLG20}, the problem of AST for PHORS is studied by directly translating a PHORS into (possibly higher-order) real functional equations: only in the case of order 1 PHORS, this produces a fixpoint algebraic system analogous the those considered in this work, thus implying a decidability result (while in the same work, undecidability since order-2 is proved). Techniques to approximate from above the probability of termination are also considered. In \cite{DBLP:conf/lics/LiMO22}, the decidability of AST/PAST for affine PHORS is proved. With respect to our approach, the translation from PHORS to real equations is defined via an intermediate automata-theoretic step, based on the equivalence between affine HORS and restricted pushdown automata proved in \cite{DBLP:conf/mfcs/ClairambaultM19}.
 
