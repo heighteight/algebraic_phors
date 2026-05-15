@@ -83,10 +83,10 @@ it is immediate that the affine PHORS of \cite{DBLP:conf/lics/LiMO22} are $\Gfin
 \begin{minipage}{\textwidth}
 \small
 \begin{align*}
-\infer[ax1]{\nonterm\mid \Delta\vdash x:\varphi }{x:_p\varphi\in \Delta,\quad 1 \leq p} \qquad
+\begin{array}{ccc}
+\infer[ax1]{\nonterm\mid \Delta\vdash x:\varphi }{x:_p\varphi\in \Delta,\quad 1 \leq p} \quad
 		\infer[ax2]{\nonterm\mid\Delta \vdash L:\varphi }{ L:\varphi  \in \nonterm}
-		\qquad 		 \infer[\oplus]{\nonterm\mid \Delta \vdash t \oplus t' : \1 }{\nonterm\mid \Delta \vdash t:\1 \quad \nonterm\mid \Delta \vdash t':\1} \\
-	\begin{array}{ccc}
+		& &\infer[\oplus]{\nonterm\mid \Delta \vdash t \oplus t' : \1 }{\nonterm\mid \Delta \vdash t:\1 \quad \nonterm\mid \Delta \vdash t':\1} \\
 %		\infer[ax1]{\nonterm\mid \Delta\vdash x:\varphi }{x:_p\varphi\in \Delta,\quad 1 \leq p} & &
 %		\infer[ax2]{\nonterm\mid\Delta \vdash L:\varphi }{ L:\varphi  \in \nonterm}\\[7pt]
 %%		\infer[!]{\Gamma;k\Delta \vdash t: !_k \varphi}{\Gamma;\Delta \vdash t: \varphi \quad k\in \mathbb N}
