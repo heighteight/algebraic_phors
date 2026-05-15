@@ -1,6 +1,6 @@
 % !TEX root = main.tex
 
-We introduce a second class of PHORS that extends the $\Gfin$ by admitting infinite grades $!_\infty$, corresponding to parameters that may be used an \emph{unbounded} number of times. In this way, thanks to the composability of the underlying algebraic power series, the $\Ginf$ are proved to be closed under \emph{composition}.
+We now introduce a second class of PHORS that extends the $\Gfin$ by admitting infinite grades $!_\infty$, corresponding to parameters that may be used an \emph{unbounded} number of times. In this way, thanks to the composability of the underlying algebraic power series, the $\Ginf$ are proved to be closed under arbitrary {compositions}.
 
 
  
@@ -9,7 +9,7 @@ We introduce a second class of PHORS that extends the $\Gfin$ by admitting infin
 
 
 While the type discipline of $\Gfin$ ensures that all variables are used in a bounded way,
-the variable $z$ in $a_\gphors(z)$, which counts the number of probabilistic choices (e.g.~think again of the HORS \eqref{eq:introphors2}), can be thought of as an input that is used \emph{unboundedly} during reductions, without compromising algebraicity.
+the variable $z$ in $a_\gphors(z)$, which counts the number of probabilistic choices (e.g.~think again of the HORS \eqref{eq:introphors2}), can be thought of as an input that is used \emph{unboundedly} during reductions, yet without compromising algebraicity.
 
 The key insight here is that we are describing PHORS via families of power series with coefficients taken in $\fps{\Rinf}{z}$: in other words, the variable $z$ is treated as a \emph{formal parameter} all along the way.
 Our goal is then to capture those situations in which a variable is used as a parameter and can, thus, be duplicated unrestrictedly.
@@ -47,7 +47,7 @@ We use two different kinds of types:
 \Phi,\Psi&:=\varphi\mid !_k\varphi\multimap \Phi\qquad (k\in \N\cup\{\infty\})
 \end{align*}
 The types $\varphi,\psi$ are called \emph{finitary} and are precisely those of $\Gfin$; the types $\Phi,\Psi$ are called \emph{infinitary}. The order relation on infinitary type $\Phi\sqsubseteq\Psi$ is inherited from the one for infinite types together with the new rule 
-$\varphi\sqsubseteq\varphi',\Psi\sqsubseteq\Psi'\Rightarrow !_k\varphi\multimap \Psi\sqsubseteq !_\infty\varphi'\multimap\Psi'$
+$\varphi\sqsubseteq\varphi',\Psi\sqsubseteq\Psi', k\leq h\Rightarrow !_k\varphi\multimap \Psi\sqsubseteq !_h\varphi'\multimap\Psi'$
 
 The typing rules will use three kinds of contexts:
 \begin{varitemize}
@@ -57,40 +57,40 @@ The typing rules will use three kinds of contexts:
 \end{varitemize}
 The rules are illustrated in Fig.~\ref{fig:typerulesinf}.
 The rules for finitary types are as in the previous section; the new rules are
-ax$_{\C P}$ and, notably, the infinitary abstraction and application rules $\lambda_\infty$ and $@_\infty$, which states that an infinitary function $t:!_\infty\varphi\multimap\Psi$ can only be applied to either a non-terminal or a parameter. 
+ax$_{\C P}$ and, notably, the infinitary abstraction and application rules $\lambda_\infty$ and $@_\infty$, which ensure that an infinitary function $t:!_\infty\varphi\multimap\Psi$ can only be applied to either a non-terminal or a parameter. 
 Recall that in a PHORS each non-terminal $L$ is equated with a corresponding term $t_L$: so, when we apply a function $t:!_\infty \varphi\to \Psi$ to the symbol $L$, we are actually applying $t$ to the corresponding term $t_L$.
 % The validity of this rule relies indeed in the possibility of \emph{composing} algebraic power series.
 
 
 \begin{figure}
 \fbox{
-\begin{minipage}{.7\textwidth}
+\begin{minipage}{\textwidth}
 \resizebox{\linewidth}{!}{
 \begin{minipage}{\linewidth}
+\small
 \begin{align*}
-		\infer[ax_\Delta]{\nonterm\mid\C P\mid \Delta\vdash x:\varphi }{x:_p\varphi\in \Delta,\quad 1 \leq p} \qquad
-		\infer[ax_{\C P}]{\nonterm\mid\C P\mid\Delta \vdash w:\varphi }{ w:_\infty\varphi  \in \C P}
-		 \qquad
+			&\begin{array}{ccc}
+		\infer[ax_\Delta]{\nonterm\mid\C P\mid \Delta\vdash x:\varphi }{x:_p\varphi\in \Delta,\quad 1 \leq p} &
+		\infer[ax_{\C P}]{\nonterm\mid\C P\mid\Delta \vdash w:\varphi }{ w:_\infty\varphi  \in \C P}&
 		\infer[ax_\nonterm]{\nonterm\mid\C P\mid\Delta \vdash L:\Phi }{ L:\Phi  \in \nonterm}
-\end{align*}
-\begin{align*}
+		\end{array}\\[7pt]
+			&\begin{array}{ccc}
 		\infer[\lambda]{\nonterm\mid\C P\mid \Delta \vdash \lambda x. t : !_k \varphi \multimap \Psi }{\nonterm\mid\C P \mid \Delta, x:_k \varphi \vdash t : \Psi}
 		&  &
 		\infer[@]{\nonterm\mid\C P\mid \Delta + k\Delta' \vdash tu : \Psi}
-		{\nonterm\mid\C P\mid\Delta \vdash t :!_k\varphi \multimap \Psi \qquad \nonterm\mid\C P\mid \Delta' \vdash u :\varphi }
-\end{align*}
-\begin{align*}
+		{\nonterm\mid\C P\mid\Delta \vdash t :!_k\varphi \multimap \Psi \qquad \nonterm\mid\C P\mid \Delta' \vdash u :\varphi }\\[7pt]
 		\infer[\lambda_\infty]{\nonterm\mid\C P\mid \emptyset \vdash \lambda w. t : !_\infty \varphi \multimap \Psi }{\nonterm\mid\C P, w:_\infty \varphi \mid \emptyset \vdash t : \Psi}
 		&  &
 		\infer[@_\infty]{\nonterm\cup\nonterm'\mid\C P\mid \Delta \vdash tu : \Psi}
 		{\nonterm\mid\C P\mid\Delta\vdash t :!_\infty\varphi \multimap \Psi \qquad u:\varphi\in \nonterm'\cup\C P}
-\end{align*}
-\begin{align*}
+\\[7pt]
 		\infer[\langle \rangle]{\nonterm\mid\C P\mid \Delta \vdash \langle t_1, \dots,t_n \rangle : \1^n}{\nonterm\mid\C P\mid \Delta \vdash t_i : \1 &  i=1,\dots, n}&  &
 		\infer[\pi_i]{\nonterm\mid\C P\mid \Delta \vdash \pi_i t: \1}{\nonterm\mid\C P\mid \Delta \vdash t: \1^n &  i=1,\dots, n}
-	\end{align*}
-	\begin{align*}
-		 \infer[\oplus]{\nonterm\mid\C P\mid \Delta \vdash t \oplus t' : \1 }{\nonterm\mid\C P\mid \Delta \vdash t:\1 \quad \nonterm\mid\C P\mid \Delta \vdash t':\1} 
+		\end{array}
+\\[7pt]
+&\begin{array}{ccc}
+\phantom{aaaaaaaaaaaaaaaaa}& \infer[\oplus]{\nonterm\mid\C P\mid \Delta \vdash t \oplus t' : \1 }{\nonterm\mid\C P\mid \Delta \vdash t:\1 \quad \nonterm\mid\C P\mid \Delta \vdash t':\1}  &
+\end{array}
 	\end{align*}
 %		\begin{align*}
 %			\infer[ Y_{\mathrm{fin}}]{\nonterm\mid\emptyset \vdash^{\mathrm{fix}}  Y \lambda \langle L_1,\dots, L_n\rangle.t:\psi }{\nonterm,\langle L_1,\dots, L_n\rangle:\varphi\mid \emptyset \vdash t :  \psi \quad \psi \sqsubseteq \varphi  }
@@ -104,18 +104,26 @@ Recall that in a PHORS each non-terminal $L$ is equated with a corresponding ter
 \end{figure}
 
 \begin{definition}[$\Ginf$]
-A \emph{(parametric) bounded PHORS} (noted $\Ginf$) is a tuple $\gphors=(\nonterm, \C P,\C D, S)$, where $\nonterm$ is a finite set of (infinitarily) typed non-terminals $L:\Phi$, $\C P$ is a finite set of (finitarily) typed parameters $w:_\infty\varphi$, $S\in\nonterm$ is the {start symbol} such that $\nonterm(S)=\1$, and $\C D$ is a function that associates each $L\in\nonterm$ with a derivation $\nonterm\mid\C P\mid\emptyset\vdash \lambda x_1.\dots. x_n.t:\Phi$ such that $\Phi\sqsubseteq \nonterm(L)$, $t$ contains no $\lambda$-abstraction and $\nonterm\mid x_1,\dots, x_k\vdash t:\1$. 
+A \emph{(parametric) bounded PHORS} (noted $\Ginf$) is a tuple $\gphors=(\nonterm, \C P,\C D, S)$, where $\nonterm$ is a finite set of typed non-terminals $L:\Phi$, $\C P$ is a finite set of (finitarily) typed parameters $w:_\infty\varphi$, $S\in\nonterm$ is the {start symbol} such that $\nonterm(S)=\1$, and $\C D$ is a function that associates each $L\in\nonterm$ with a derivation $\nonterm\mid\C P\mid\emptyset\vdash \lambda x_1.\dots. x_n.t:\Phi$ such that $\Phi\sqsubseteq \nonterm(L)$ and $\nonterm\mid x_1,\dots, x_k\vdash t:\1$. 
 
 \end{definition} 
 
-Notice that a $\Ginf$ $\gphors$ may contain \emph{open} parameters $w:_\infty\varphi\in \C P$. We call $ \gphors$ \emph{closed} when $\C P=\emptyset$. 
+A $\Ginf$ $\gphors$ may contain \emph{open} parameters $w:_\infty\varphi\in \C P$. We call $ \gphors$ \emph{closed} if $\C P=\emptyset$. 
 
 
 The PHORS from Example \eqref{ex:phorsLfx} is a closed $\Ginf$, with $\nonterm(L)=!_\infty\tau\multimap!_\infty\tau\multimap\tau$. 
 Instead, the non-algebraic PHORS from Example \eqref{ex:nonalg} is not a $\Ginf$:
 while we can give type $\nonterm(L)=!_\infty \tau\to \tau$ to $L$, we cannot be apply it to the function $f\circ f:\tau$, as the latter is neither a parameter nor a non-terminal. 
 
-
+\begin{example}
+One can check that all PHORS in (\cite{DBLP:journals/lmcs/KobayashiLG20}, Examples 2.9-2.11) are $\Ginf$, but not $\Gfin$, e.g.~the (non-AST) tree-generation program below:
+\begin{align*}
+S&= \mathrm{Treegen} \ \mathrm{Boolgen} \ e,\\
+\mathrm{Boolgen}\ x&= x,\\
+\mathrm{Treegen} \ f\  x &= x\oplus_{\frac{1}{2}}f(\mathrm{Treegen}\ f( \mathrm{Treegen} \ f( \mathrm{Treegen}\ f\ x))).
+\end{align*}
+The non-terminal $\mathrm{Treegen}$ uses $f$ unboundedly, but the same parameter $f$ occurs as first argument in all instances of $\mathrm{Treegen}$, which can thus be given type $!_\infty\tau \multimap \tau$.
+ \end{example}
 
 
 As for the $\Gfin$, we interpret each $\Ginf$ $\gphors=(\nonterm,\C P, \C D,S)$ via its
@@ -160,60 +168,72 @@ Composability enables a \emph{modular} analysis of the generating functions of a
 
 
 To show that the $\Ginf$ have algebraic generating functions, we will proceed in two steps.
-First, we will consider finitary PHORS with parameters, which can be shown algebraic with the same approach as in Section 6. Then, we will show that any $\Ginf$ can be reduced to an equivalent parametric $\Gfin$, which will result in the algebraicity of its generating function.
+First, we will consider finitary PHORS with parameters, which can be shown algebraic with the same approach as in Section 6. Then, we show that any $\Ginf$ can be transformed into an equivalent parametric $\Gfin$, which will result in the algebraicity of its generating function: the fundamental intuition behind this procedure is that the variables $\vec w$ of infinite grade can be in the end ``discharged'' onto the coefficient semiring, which is turned from $\fps{\Rinf}{z}$ to $\fps{\Rinf}{z,\vec w}$.
 
 
-\paragraph*{Finitary Parametric PHORS}
+\subparagraph*{Finitary Parametric PHORS}
 Consider a $\gphors=(\nonterm, \C P,\C D,S)$ that is parametric but \emph{finitary}, i.e.~all its non-terminal symbols have a finitary type. In other words, the derivations $\C D(L_i)$ are of the form $\nonterm\mid \C P\mid \emptyset \vdash t_{L_i}:\varphi$, where $\varphi\sqsubseteq \nonterm(L_i)$ and all types in $\nonterm$ and $\C P$ are finitary, but recall that the parameters $w$ in $\C P$ have infinite grade. 
 
-By arguing as in the previous section, but reasoning over the semiring $\fps{\Rsemiring}{\model S}$, we can conclude that the pair of finite variable sets $(\model \nonterm,\model \nonterm)$ is stable and polynomial, yielding:
+By arguing as in the previous section, but reasoning over the semiring $\fps{\Rsemiring}{\model P}$, we can conclude that the pair of finite variable sets $(\model \nonterm,\model \nonterm)$ is stable and polynomial, yielding:
 
 \begin{proposition}
-For all finitary parametric $\Ginf$ $\gphors=(\nonterm, \C P,\C D, S)$, the fps $a_L(z,w_{\model{\C P}})\in \fps{\Rinf}{z,w_{\model{\C P}}}$ are all algebraic. 
+For all finitary parametric $\Gfin$ $\gphors=(\nonterm, \C P,\C D, S)$, the fps $a_L(z,w_{\model{\C P}})\in \fps{\Rinf}{z,w_{\model{\C P}}}$ are all algebraic. 
 \end{proposition}
 
 \begin{example}\label{ex:Lfxpara}
-Consider the finitary $\Ginf$, with two parameters $f,g:_\infty\tau$, obtained from the one in Example \ref{ex:phorsLfx} by introducing two new non-terminals
- $L_{[f,g]}:\tau$ and $S_{[f,g]}$ with the equations 
+Consider the $\Gfin$ with parameters $f,g:_\infty\tau$ obtained from the one in Example \ref{ex:phorsLfx} by adding two new non-terminals
+ $L_{[f,g]}:\tau$ and $S_{[f,g]}$ with equations 
 \begin{align*}
 L_{[f,g]}x&= f(L_{[f,g]}(L_{[f,g]}x))\oplus_a gx\\
 S_{[f,g]}&= L_{[f,g]}e
 \end{align*}
-The interpretation of $L_{[f,g]}:\tau$ is then the fps $a_{F}(z,f,g)(x)\in \fps{(\fps{\Rinf}{z,f,g})}{x}$ given by Equation \eqref{eq:catalan2}.
+The interpretation of $L_{[f,g]}:\tau$ is the fps $a_{F}(z,f,g)(x)\in \fps{(\fps{\Rinf}{z,f,g})}{x}$ given by \eqref{eq:catalan2}.
 \end{example}
 
 
-\paragraph*{Reducing $\Ginf$ to Parametric $\Gfin$}
+\subparagraph*{Reducing $\Ginf$ to Parametric $\Gfin$}
 Following the idea of Example \ref{ex:Lfxpara}, we show how any closed $\Ginf$ can be turned into a parametric $\Gfin$. 
 The idea is to replace each non-terminal $L$ with possibly infinitely graded inputs $w_1,\dots, w_n$ with as many non-terminals $L_{[A_1,\dots,A_n]}$ as all possible ways of \emph{filling in} such inputs with other non-terminals from $\Ginf$. 
 
 Let then $\gphors=(\nonterm,\emptyset, \C D,S)$ be a closed $\Ginf$. 
 For any non-terminal $L$ whose type can be written as $\nonterm(L)=!_\infty \phi_1\multimap\dots\multimap !_\infty\phi_k\multimap \phi_L$,
-let $\C P_L$ be the parameter context formed by all $w_i:_\infty\phi_i$, and let $T(L) \bydef \{[t_1, \dots t_n] \in (\nonterm\cup\C P_L)^* \: \mid \: \forall i \, (\nonterm \cup \mathcal{P}) (t_i) = \phi_i)  \}$ be the sets of \emph{sostituable terms}.
+let $\C P_L$ be formed by all $w_i:_\infty\phi_i$, and let $T(L) \bydef \{[t_1, \dots t_n] \in (\nonterm\cup\C P)^* \: \mid \: \forall i \, (\nonterm \cup \mathcal{P}) (t_i) = \phi_i)  \}$ be the sets of \emph{sostituable terms}.
 Let $\widetilde{\nonterm}$ be a new set of finitely typed non-terminals containing, for each $L\in \nonterm$ as above and $\gamma\in T(L)$, a non-terminal $\tilde{L}_\gamma:\phi_L$.
 Finally, let $\C P$ be the concatenation of all $\C P_L$.
 
-For each $L\in \nonterm$ and $\gamma\in T(L)$, define the following terms:
+For each $L\in \nonterm$, $\gamma\in T(L)$,
+and term $\nonterm\mid \vec v:\C P_L\mid\vec x:\Delta\vdash t_L:o$,
+% let $t_{L,\gamma}:= \lam \vec x.t_L[\gamma/\vec w]: \phi_L$ and 
+ define:
 \begin{varitemize}
 \item an applicative term $\nonterm\mid\C P\mid\emptyset \vdash \alpha_{L,\gamma}:\phi_L$ defined by 
 $\alpha_{L,\gamma}:=L\gamma$;
 
-\item a finitary term $\widetilde{\nonterm}\mid\C P \mid\emptyset\vdash \tilde{t}_{L,\gamma}:= \phi_L$ defined by 
-$\tilde t_{L,\gamma}=( t_L\gamma)\big[ \tilde G_{\delta}/G\delta\big]_{G\in \nonterm, \delta\in T(G)}$.
+\item a finitary term $\widetilde{\nonterm}\mid\vec w:\C P \mid\vec x:\Delta\vdash \tilde{t}_{L,\gamma}:o$ defined by 
+$\tilde t_{L,\gamma}:=  t_{L}[\gamma/\vec v]\big[ \tilde G_{\delta}/G\delta\big]_{G\in \nonterm, \delta\in T(G)}$.
+Notice that $\lambda \vec x.\tilde t_{L,\gamma}:\phi_L$.
 
 
 
 \end{varitemize}
 
-We have obtained in this way a finitary parametric PHORS $\gphors_{\mathrm{fin}}=(\widetilde\nonterm, \C P, \C D',S_{[]})$, and we have the equalities:
+
+We have obtained in this way a finitary parametric PHORS $\gphors_{\mathrm{fin}}=(\widetilde\nonterm, \C P, \widetilde{\C D},S_{[]})$,
+whose interpretation is a FAS with coefficients in $\fps{\Rinf}{z,\vec w}$. 
+By inspecting the connected component formed by all non-terminals $\tilde L_{\gamma}$
+``reachable'' from the source $S_{[]}$, one can check that none of these contains free parameters in $\gamma$. 
+This implies in particular that the generating function $a_{\gphors_{\mathrm{fin}}}(z,\vec w)=a_{S_{[]}}(z,\vec w)$ does not actually depend on the parameters $\vec w$. We will show that $a_{\gphors_{\mathrm{fin}}}(z,\vec w)$ coincides with $a_\gphors(z)$.
+%Now let $\widetilde{\nonterm}_0$ be the restriction of $\widetilde{\nonterm}$ to those non-terminals $\tilde{L}_\gamma$ that are reachable starting from $S_{[]}$. One can easily see that for all such $\tilde{L}_\gamma$, the list $\gamma$ contains no parameters. By restricting to $\widetilde{\nonterm}_0$ we obtain then a \emph{closed} 
+%$\Gfin$ $\gphors_0^{\mathrm{fin}}=(\widetilde\nonterm_0, \C D'_0,S_{[]})$, whose interpretation is now a FAS with coefficients in $\fps{\Rinf}{z}$. 
+Observe that $\gphors$ and $\gphors_{\mathrm{fin}}$ are related by the following:
 \begin{equation}\label{eq:alphaeq}
-\alpha_{L,\gamma}\big[ t_L/  L] = t_L\gamma   =
-\tilde{t}_{L,\gamma}\big[\alpha_{G,\delta}/\tilde{G}_\delta\big]_{G\in \nonterm,\delta\in T(G)}
+\nonterm\mid\C P\mid\emptyset\vdash \ \alpha_{L,\gamma}\big[ \lambda \vec v.\lambda \vec x.t_L/  L] \RED{}{} \lambda \vec x.t_{L}[\gamma/\vec v]   =\lambda \vec x.
+\tilde{t}_{L,\gamma}\big[\alpha_{G,\delta}/\tilde{G}_\delta\big]_{G\in \nonterm,\delta\in T(G)} 
+\ : \ \widetilde{\nonterm}(L).
 \end{equation}
 
 
-
-The following technical lemma relates then the minimal solutions of the systems of $\gphors$ and $\gphors_{\mathrm{fin}}$.
+The lemma below relates the minimal solutions of the systems of $\gphors$ and $\gphors_{\mathrm{fin}}$:
 
 \begin{lemma}\label{lemma:fixpoint}
 Given sets $\nonterm,\widetilde{\nonterm},\C P$ and morphisms
@@ -228,24 +248,56 @@ if we have:
 $,
 \end{varenumerate} 
 then
-$\alpha\circ \langle {\mathsf{fix}}_{0,\nonterm} t,1_{\C P}\rangle={\mathsf{fix}}_{\C P,\widetilde{\nonterm}} \tilde t\in \Qrelkleisli{\Rsemiring}(\C P, \widetilde{\nonterm})
+$\alpha\circ \langle {\mathsf{fix}}_{0,\nonterm} t,1_{\C P}\rangle={\mathsf{fix}}_{\C P,\widetilde{\nonterm}} \tilde t\in \Qrelkleisli{\Rsemiring}(\C P, \widetilde{\nonterm})\equiv \Qrelkleisli{\fps{\Rsemiring}{\C P}}(1,\widetilde{\nonterm})
 $. 
 
 \end{lemma}
+%
+%\begin{proposition}
+%$a_{\gphors}(z)=a_{\gphors^{\mathrm{fin}}}(z)$.
+%\end{proposition}
+%\begin{proof}[Proof sketch]
+%Condition 1.~of Lemma \ref{lemma:fixpoint} clearly holds for the interpretation of $\alpha=\langle \model{\alpha_{L,\gamma}}^{\Rsemiring}\rangle_{L,\gamma}$, and condition 2.~is precisely \eqref{eq:alphaeq}, hence $\fix \model{t_{\gphors^{\mathrm{fin}}}}= \alpha\circ \langle \fix\model{t_{\gphors}},1_{\C P}\rangle$.
+%Since $\pi_{S_{[]}}\circ \alpha= \alpha_{S,[]}$ and 
+%$\alpha_{S,[]}(\langle L_1,\dots, L_n\rangle,\vec w)= S$, i.e.~$\alpha_{S,[]}=\pi_S\circ \pi_2$, we have 
+%$
+%a_{\gphors^{\mathrm{fin}}}(z)=
+%\pi_{S_{[]}}\circ \fix \model{t_{\gphors^{\mathrm{fin}}}}=
+%\pi_{S_{[]}}\circ \alpha\circ \langle \fix\model{t_{\gphors}},1_{\C P}\rangle=
+%\alpha_{S,[]}\circ \langle \fix\model{t_{\gphors}},1_{\C P}\rangle= 
+%\pi_S\circ \fix\model{t_{\gphors}}= a_{\gphors}(z)$.
+%\end{proof}
 
-Notice that condition 1.~of Lemma \ref{lemma:fixpoint} clearly holds for the interpretation of $\alpha=\langle \model{\alpha_{L,\gamma}}^{\Rsemiring}\rangle_{L,\gamma}$, and condition 2.~is precisely \eqref{eq:alphaeq}. 
-%In the above, given $s\in \Qrelkleisli{\Rsemiring}(0, !X\times Y)$ and 
-% $t\in \Qrelkleisli{\Rsemiring}(Z, X)$, we write $s\cdot t\in  \Qrelkleisli{\Rsemiring}(Z,  Y)$ for the evaluation of $s$ on $t$.
-
-
-\begin{theorem}
+\begin{proposition}
 	\label{theorem:infalgebraic}
-For any closed $\Ginf$ $\gphors$ there exists a parametric $\Gfin$ $\gphors_{\mathrm{fin}}$, $\|\gphors_{\mathrm{fin}}\|\leq \|\gphors\|^{|\nonterm|}$, such that $a_{\gphors}(z)=a_{\gphors_{\mathrm{fin}}}(z,1)$ and $\C L(\gphors)=\C L(\gphors_{\mathrm{fin}})$.
-\end{theorem}
+For any non-terminal $L\in \nonterm$, $a_L(z,\vec w_L,\vec x)= a_{\tilde{L}_{\vec w_L}}(z,\vec w,\vec x)$, where 
+the $\vec w_L$ are the variables $w$s belonging to $\model{\C P_L}$, 
+%In particular, 	
+%$a_{\gphors}(z)=a_S(z)=a_{S_{[]}}(z,1)=a_{\gphors_{\mathrm{fin}}}(z,1)$.
+and $a_L(z,\vec w_L,\vec x)$ is thus algebraic.
+
+
+\end{proposition}
 \begin{proof}[Proof sketch]
-By inspecting the connected component formed by all non-terminals $\tilde L_{\gamma}$
-``reachable'' from the source $S_{[]}$, one can check that none of these contains free parameters in $\gamma$. For the closed finitary PHORS $\gphors_{\mathrm{fin}}^*$ obtained by restricting to such non-terminals, Lemma \ref{lemma:fixpoint} yields then  
-$\mathsf{fix}_{\nonterm} \model{\gphors}^{\Rsemiring}=\mathsf{fix}_{\widetilde\nonterm}\model{\gphors_{\mathrm{fin}}^*}^{\Rsemiring}$.
+Condition 1.~of Lemma \ref{lemma:fixpoint} clearly holds for the interpretation of $\alpha=\langle \model{\alpha_{L,\gamma}}^{\Rsemiring}\rangle_{L,\gamma}$, and condition 2.~is precisely \eqref{eq:alphaeq}, hence $\fix \model{t_{\gphors^{\mathrm{fin}}}}= \alpha\circ \langle \fix\model{t_{\gphors}},1_{\C P}\rangle$.
+Since $\pi_{\tilde{L}_{\vec w_L}}\circ \alpha= \alpha_{L,\vec w_L}$ and 
+$\alpha_{L,\vec w_L}(\langle L_1,\dots, L_n\rangle,\vec w)= L(\vec w_L)$, we have 
+$
+a_{\gphors_{\mathrm{fin}}}(z,\vec w,\vec x)=
+\pi_{L,\vec w_L}\circ \fix \model{t_{\gphors_{\mathrm{fin}}}}=
+\pi_{L,\vec w_L}\circ \alpha\circ \langle \fix\model{t_{\gphors}},1_{\C P}\rangle=
+\alpha_{L,\vec w_L}\circ \langle \fix\model{t_{\gphors}},1_{\C P}\rangle= 
+ a_{L}(z,\vec w_L,x)$.
+%
+%
+%Since $\pi_{S_{[]}}\circ \alpha= \alpha_{S,[]}$ and 
+%$\alpha_{S,[]}(\langle L_1,\dots, L_n\rangle,\vec w)= S$, i.e.~$\alpha_{S,[]}=\pi_S\circ \pi_1$, we have 
+%$
+%a_{\gphors^{\mathrm{fin}}}(z,\vec w)=
+%\pi_{S_{[]}}\circ \fix \model{t_{\gphors_{\mathrm{fin}}}}=
+%\pi_{S_{[]}}\circ \alpha\circ \langle \fix\model{t_{\gphors}},1_{\C P}\rangle=
+%\alpha_{S,[]}\circ \langle \fix\model{t_{\gphors}},1_{\C P}\rangle= 
+%\pi_S\circ \fix\model{t_{\gphors}}= a_{\gphors}(z)$.
 \end{proof}
 
 
@@ -253,14 +305,19 @@ $\mathsf{fix}_{\nonterm} \model{\gphors}^{\Rsemiring}=\mathsf{fix}_{\widetilde\n
 %( be transformed into an equivalent order-1 $\Gfin$ defined by replacing $L$ by an order-1 $L_{[A,B]}$ non-terminal with equation
 %$L_{[A,B]}x=A(L_{[A,B]}(L_{[A,B]}x))\oplus_a Bx$. More generally, any closed $\Ginf$ can be turned into an equivalent $\Gfin$:
 %)
-
-
-
+%
+%and $\C L(\gphors)=\C L(\gphors_{\mathrm{fin}})$.
+%
+%	
+%For any closed $\Ginf$ $\gphors$ there exists a parametric $\Gfin$ $\gphors_{\mathrm{fin}}$ of size $\|\gphors_{\mathrm{fin}}\|\leq \|\gphors\|^{|\nonterm|}$ such that $a_{\gphors}(z)=a_{\gphors_{\mathrm{fin}}}(z,1)$ and $\C L(\gphors)=\C L(\gphors_{\mathrm{fin}})$.
+%
 We thus immediately obtain:
 \begin{corollary}
-For all closed $\Ginf=(\nonterm, \emptyset, \C D,S)$, and non-terminal $L\in \nonterm$, the  generating function $a_L(z)$ is algebraic. Moreover, the AST and PAST problems are decidable.
+For any closed $\Ginf$ $\gphors$ there exists a parametric $\Gfin$ $\gphors_{\mathrm{fin}}$ of size $\|\gphors_{\mathrm{fin}}\|\leq \|\gphors\|^{|\nonterm|}$ such that $a_{\gphors}(z)=a_{\gphors_{\mathrm{fin}}}(z,1)$ and $\C L(\gphors)=\C L(\gphors_{\mathrm{fin}})$.
+In particular, the AST and PAST problems for $\gphors$ are decidable.
 \end{corollary}
 \begin{example}
+
 If we apply this technique to the $\Ginf$ from Example \ref{ex:phorsLfx},
 we must introduce all order-1 non-terminals $L_{[\gamma_1,\gamma_2]}$ with equations
 $L_{[\gamma_1,\gamma_2]}x=\gamma_1(L_{[\gamma_1,\gamma_2]}(L_{[\gamma_1,\gamma_2]}x)\oplus_a \gamma_2x$, where $\gamma_1,\gamma_2$ are either non-terminals or parameters. With $\gamma_1,\gamma_2=f,g$, we precisely get the equation in Example \ref{ex:Lfxpara}. By restricting ourselves to the connected component of $S_{[]}$ we obtain then a \emph{closed} order-1 $\Gfin$ with non-terminals $S_{[]},A,B,L_{[A,B]}$.

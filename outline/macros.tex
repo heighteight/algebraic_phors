@@ -1,6 +1,6 @@
 
 
-%\newtheorem{example}{Example}[section]
+%\newtheorem{example}{Example}
 %\newtheorem{definition}{Definition}[section]
 %\newtheorem{problem}{Problem}[section]
 %\newtheorem{notation}{Notation}[section]
@@ -13,7 +13,7 @@
 %\newtheorem{falselemma}{False lemma}[section]
 
 %\newtheorem{proposition}[theorem]{Proposition}
-%\newtheorem{corollary}[theorem]{Corolllary}
+%\newtheorem{corollary}{Corolllary}
 %\newtheorem{result}{Result}
 \newenvironment{varitemize}
 {
@@ -87,11 +87,12 @@
 \newcommand{\pPCF}{$\mathrm{PCF}\langle \vec X\rangle$}
 \newcommand{\pPCFn}{$\mathrm{PCF}\langle X_1,\dots, X_n\rangle$}
 
-
+%\newcommand{\C}[1]{$\mathcal{#1}}
 \newcommand{\choice}[1]{\oplus_{#1}}
-\newcommand{\Bool}{\mathrm{Bool}}
-\newcommand{\True}{\mathrm{True}}
-\newcommand{\False}{\mathrm{False}}
+\newcommand{\Bool}{\mathbb{B}}
+\newcommand{\True}{\mathsf{True}}
+\newcommand{\False}{\mathsf{False}}
+\newcommand{\IfThenELse}{\mathsf{if} \dots \mathsf{then} \dots \mathsf{else}}
 \newcommand{\YY}{\mathrm{Y}}
 \newcommand{\FIN}{\mathbf{F}}
 \newcommand{\NAT}{\mathbf{N}}
@@ -177,13 +178,17 @@
 \newcommand{\mm}[1]{{\color{magenta}#1}}
 \newcommand{\rr}[1]{{\color{red}#1}}
 \newcommand{\Etor}{\mathbf{ETR}}
+\newcommand{\Bern}[2]{\text{Bernoulli}(#1,#2)}
 
 
 \newcommand{\LY}{\lambda Y}
 \newcommand{\PLY}{P\lambda Y}
 \newcommand{\Gfin}{\text{PBHORS}^{<\infty}}
+\newcommand{\Flipinf}{\text{BFLIP}^{\infty}}
 %P\lambda Y^{<\infty}}
 \newcommand{\Ginf}{\text{PBHORS}^{\infty}}
+\newcommand{\GRat}{\text{PRatHORS}^{\infty}}
+\newcommand{\FlipRat}{\text{RatFLIP}^{\infty}}
 %P\lambda Y^{\infty}}
 \newcommand{\AFF}[1]{#1_{\mathrm{aff}}}
 \newcommand{\Aff}{{\mathrm{Aff}}}

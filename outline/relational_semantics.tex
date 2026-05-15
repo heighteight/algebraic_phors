@@ -1,44 +1,37 @@
 % !TEX root = main.tex
-In this section, we recall the well-studied relational semantics of linear logic weighted over a continuous semiring $\Rsemiring$, in a slightly different flavor than, say, \cite{DBLP:conf/lics/LairdMMP13}: rather than using $\Rsemiring$-valued matrices, we will use formal power series over $\Rsemiring$, as in \cite{DBLP:journals/corr/abs-2501-15637}. This kind of idea had already been outlined in a more categorical setting in \cite{LAMARCHE199237}. We will then illustrate how this semantics associates each PHORS with a generating function capturing its probability of termination.
+In this section we recall the relational semantics of linear logic with weights taken over a continuous semiring $\Rsemiring$ \cite{DBLP:conf/lics/LairdMMP13}, 
+whose morphisms 
+can be presented as families of formal power series with coefficients in $\Rsemiring$. We then illustrate how this semantics associates each PHORS with a generating function capturing its probability of termination.
 
-% Then, we focus on algebraic power series: this is a concept widely used in algebra and combinatorics (cite Flajolet, Kauers, Eisenbud), in the context of rings or fields. Its treatment in semi-rings is less standard, but extensively studied in the context of formal language theory (cite Kuich, Schlund). We will show that, through the relational semantics, such ideas apply naturally to the semantics of probabilistic $\lambda$-calculi.
 
 
+\subsection{Formal Power Series over a Semiring}
+Let us first introduce formal power series (fps in short); for more details about them and their applications to combinatorics we refer to \cite{DBLP:books/daglib/0023751}, \cite{DBLP:series/tmsc/KauersP11}.
 
-%but we will not have to worry too much about this, as we will work with a semirings $\Rsemiring$ (usually $\Rinf$) that has a subsemiring embe\\
+In the following we let $\Rsemiring,\Qsemiring$ range over semirings (which we suppose to be commutative and having units $0$ and $1$). 
+A semiring $\Rsemiring$ is \emph{continuous} if it is ordered, has $0$ as its bottom element and all directed joins admit supremum, such supremum commuting with multiplication  (see e.g.~\cite{Droste2009}). In particular, continuous semiring admits infinite sums. Our fundamental example of continuous semiring is given by the non-negative possibly infinite reals $\Rinf$, with standard addition and multiplication.
 
-\subsection{Formal Power Series}
-Let us first introduce formal power series (fps in short); for more details about them and their applications to combinatorics we refer to \cite{DBLP:books/daglib/0023751}, \cite{DBLP:series/tmsc/KauersP11}. Given a set $\Sigma$, 
+ Given a set $\Sigma$, 
 let $!\Sigma$ be the set of finite multisets over it, i.e functions $\mu: \Sigma \to \N$ with finite support. Given a semiring $\Rsemiring$, the set of \emph{formal power series (with commuting variables) over $\Rsemiring$}, denoted $\fps{\Rsemiring}{\Sigma}$, is the set of all functions $!\Sigma \to \Rsemiring$. More concretely, if
  we introduce for each $s \in \Sigma$ a variable $x_s$ (we will denote by $x_\Sigma$ the set of all these variables), then a finite multiset $\mu \in !\Sigma$ can be seen as the monomial $x_\Sigma^\mu \bydef \Pi_{s \in \Sigma}x_s^{\mu(s)}$; then any formal power series $s\in \fps{\Rsemiring}{\Sigma}$ can then be expressed as a formal sum:
  $$s=\sum_{\mu \in !\Sigma} s_\mu x_\Sigma^{\mu}.$$ 
- We will sometimes write $s(x_\Sigma)$ to underline which variables appear in $s$.
- For each $s\in \fps{\Rsemiring}{\Sigma}$, its \emph{support} $\supp~s\subseteq \ !\Sigma$ is the set of multisets $\mu$ such that $s_{\mu}\neq 0$. 
- We denote as $\fpp{\Rsemiring}{\Sigma}\subseteq \fps{\Rsemiring}{\Sigma}$ the set of \emph{polynomials}, i.e.~of fps with finite support, which can written, as usual, as finite sums
+ We will sometimes write $s(x_\Sigma)$ to highlight which variables appear in $s$.
+% For any $s\in \fps{\Rsemiring}{\Sigma}$, 
+ The \emph{support} $\supp(s)\subseteq \ !\Sigma$
+  is the set of multisets $\mu$ such that $s_{\mu}\neq 0$. 
+ We let $\fpp{\Rsemiring}{\Sigma}\subseteq \fps{\Rsemiring}{\Sigma}$ be the set of \emph{polynomials}, i.e.~of fps with finite support, which can written, as usual, as finite sums
   
-
-
-% Given $\Sigma'\subset \Sigma$ and $s\in \fps{\Rsemiring}{\Sigma}$, its \emph{restriction to $\Sigma'$}, noted, 
-%$s\vert_{\Sigma'}\in \fps{\Rsemiring}{\Sigma}$, is the composition of $s$ with the injection $\iota:!\Sigma'\hookrightarrow!\Sigma$, i.e.~$s\vert_{\Sigma'}(x_{\Sigma'})=\sum_{\mu\in !\Sigma'}s_{\iota(\mu)} x_{\Sigma'}^\mu$. 
-%
 
   \begin{example}
   The power series $s(x)=\sum_{n} (1/2)^n x^n$ belongs to $\fps{\mathbb Q}{x}$.
-  The power series $s(x)=\sum_{n=0 }^{\infty}\sum_{i+j=n} (1/3)^{n} x_0^{i}x_1^j$, i.e. \\
-$ \sum_{\mu\in !\{0,1\}}(1/3)^{\mu(0)+\mu(1)}x^{\mu}$, belongs to $\fps{\mathbb Q}{x_0,x_1}$.
+  The power series $s(x)=\sum_{n=0 }^{\infty}\sum_{i+j=n} (1/3)^{n} x_0^{i}x_1^j$, i.e.$ \sum_{\mu\in !\{0,1\}}(1/3)^{\mu(0)+\mu(1)}x^{\mu}$, belongs to $\fps{\mathbb Q}{x_0,x_1}$.
   \end{example}
  
  In $\fps{\Rsemiring}{\Sigma}$ we can define two operations: sum, performed componentwise: $\sum_{\mu \in !\Sigma} r_\mu x_\Sigma^{\mu} + \sum_{\mu \in !\Sigma} s_\mu x_\Sigma^{\mu} \bydef \sum_{\mu \in !\Sigma} (r_\mu + s_\mu)  x_\Sigma^{\mu}$ and the Cauchy product: 
  $
  \sum_{\mu \in !\Sigma} r_\mu x_\Sigma^{\mu} \cdot \sum_{\mu \in !\Sigma} s_\mu x_\Sigma^{\mu} \bydef \sum_{\kappa \in !\Sigma}\left (\sum_{\mu + \nu = \kappa} r_\mu s_\nu\right)  x_\Sigma^{\kappa}$.
- With these operations, $\fps{\Rsemiring}{\Sigma}$ is a semiring; if we take on it the pointwise partial order, it becomes a \emph{continuous} semiring: this means that all directed joins have a supremum, and such suprema commute with multiplication.
-Our typical example here is the continuous semiring of positive extended reals $\Rinf$.   Continuity is essential when we want to define the \textit{composition} of formal power series. Take a power series $r \in \fps{\Rsemiring}{\Sigma}$ and let $s_\Sigma\in \fps{\Rsemiring}{\Sigma'}^{\Sigma}$ be a $\Sigma$-indexed family of power series over the set $\Sigma'$, $s_\sigma = \sum_{\nu \in !\Sigma'}s_{\sigma, \nu} y^\nu$. Then, we can define the power series $r(s_\Sigma) \in \fps{\Rsemiring}{\Sigma'}$ by the formula:
-
-\vskip-3mm
-{\small
-% \begin{align*}
-%\sum_{\kappa \in ! \Sigma'}  \left( \sum_{[\sigma_1^{m_1} \dots \sigma_j^{m_j}] \in !\Sigma} r_{{[\sigma_1^{m_1} \dots \sigma_j^{m_j}] }} \sum_{\nu_1 + \dots + \nu_{m_1 + \dots + m_j}= \kappa} \prod_{i=1}^{m_1 + \dots + m_j} s_{\sigma_i, \nu_i } \right)y_\Sigma^\kappa
-%  \end{align*}
+ With these operations, $\fps{\Rsemiring}{\Sigma}$ is a semiring and, if $\Rsemiring$ is continuous and we take on $\fps{\Rsemiring}{\Sigma}$ the pointwise partial order, it is also continuous.
+ Continuity is essential to define the \textit{composition} of formal power series: let $r \in \fps{\Rsemiring}{\Sigma}$ and let $s_\Sigma\in \fps{\Rsemiring}{\Sigma'}^{\Sigma}$ be a $\Sigma$-indexed family of power series over the set $\Sigma'$, $s_\sigma = \sum_{\nu \in !\Sigma'}s_{\sigma, \nu} y^\nu$. Then, we can define the power series $r(s_\Sigma) \in \fps{\Rsemiring}{\Sigma'}$ by the formula:
    \begin{align*}
    r(s_\Sigma)=
 \sum_{\kappa \in ! \Sigma'}  \left( \sum_{\mu=[\sigma_1, \dots, \sigma_k] \in !\Sigma} \sum_{
@@ -50,14 +43,13 @@ Our typical example here is the continuous semiring of positive extended reals $
 }
 }
 r_{\mu }\cdot 
- \prod_{i=1}^{k}  s_{\sigma_i, \nu_i } \right)y_\Sigma^\kappa
+ \prod_{i=1}^{k}  s_{\sigma_i, \nu_i } \right)y_\Sigma^\kappa.
   \end{align*}
-  }
-  Observe that if there is at least an $s_\sigma$ such that $s_{\sigma, []} \neq 0$, the sum over $!\Sigma$ will be infinite; still, by continuity, we can define its value to be the sup of the partial sums (yet, notice that, over a - non-continuous - ring, this composition would not be well-defined). If the power series $s_\Sigma$ are all constants (i.e. $s_{\sigma, \mu}=0 \: \forall \mu \neq []$), we will say that $r(s_\Sigma) \in \fps{\Rsemiring}{\emptyset}= \Rsemiring$ is the \emph{value of $r$ at the point} $(s_{\sigma, []})_{\sigma \in \Sigma}$.
-With respect to these operations, $\fpp{\Rsemiring}{\Sigma}$ form a (non-continuous) sub-semiring of $\fps{\Rsemiring}{\Sigma}$. 
+  Observe that if there is at least an $s_\sigma$ such that $s_{\sigma, []} \neq 0$, the sum over $!\Sigma$ will be infinite; still, by continuity, we can define its value to be the sup of the partial sums (yet, without continuity, this composition need not be well-defined). If the $s_\Sigma$ are all constants (i.e. $s_{\sigma, \mu}=0 \: \forall \mu \neq []$), we will say that $r(s_\Sigma) \in \fps{\Rsemiring}{\emptyset}= \Rsemiring$ is the \emph{value of $r$ at the point} $(s_{\sigma, []})_{\sigma \in \Sigma}$.
+With respect to these operations, the polynomials $\fpp{\Rsemiring}{\Sigma}$ form a (non-continuous) sub-semiring of $\fps{\Rsemiring}{\Sigma}$. 
   
   
-Since $\Qsemiring:=\fps{\Rsemiring}{\Sigma}$ is a continuous semiring, for any set $\Sigma'$ we can consider the continuous semiring $\fps{\Qsemiring}{\Sigma'}$ of formal power series whose coefficients are themselves power series (on $\Rsemiring$), and we have the isomorphism $\fps{\Qsemiring}{\Sigma'}=\fps{(\fps{\Rsemiring}{\Sigma})}{\Sigma'}\equiv\fps{\Rsemiring}{\Sigma+\Sigma'}$: this generalizes the well-known remark that a fps in two variables $s(x,y)$ can always be written as a fps $s_y(x)=\sum_n s_n(y)x^n$ in $x$ whose coefficients are fps $s_n(y)$ in $y$.
+Since $\Qsemiring:=\fps{\Rsemiring}{\Sigma}$ is a continuous semiring, for any set $\Sigma'$ we can consider the continuous semiring $\fps{\Qsemiring}{\Sigma'}$ of formal power series whose coefficients are \emph{themselves} power series (on $\Rsemiring$), and we have the isomorphism $\fps{\Qsemiring}{\Sigma'}=\fps{(\fps{\Rsemiring}{\Sigma})}{\Sigma'}\equiv\fps{\Rsemiring}{\Sigma+\Sigma'}$: this generalizes the remark that a fps in \emph{two} variables $s(x,y)=\sum_{\mu,\nu}s_{\mu,\nu}x^\mu y^\nu$ can always be written as a fps $s_y(x)=\sum_\mu (s_y)_\mu x^\mu$ in $x$ \emph{only}, whose coefficients are fps $(s_y)_\mu=\sum_\nu s_{\mu,\nu}y^\nu$ in $y$.
   
   
 %   For a finite set $\Sigma$ and a natural number $k$, let $!_k\Sigma$ be the set of multisets $\mu$ of maximal multeplicity $k$ (i.e $\max_{x \in \Sigma} \mu(x)\leq k)$. This is clearly a subset of $!\Sigma$, corresponding to monomials over $x_\Sigma$ having degree at most $n$ in each variable. 
@@ -92,7 +84,7 @@ If we do not start, as we do here, with a continuous semiring $\Rsemiring$, but 
      $\Qrelkleisli{\Rsemiring}$ has sets as objects, and morphisms $\Qrelkleisli{\Rsemiring}(X, Y)$ are $\Rsemiring$-valued matrices indexed by $!X \times Y$. 
      $\Qrelkleisli{\Rsemiring}$ is the coKleisli category, with respect to the $!$ comonad, of the more familiar category  $\Qrel{\Rsemiring}$ of sets and $\Rsemiring$-valued matrices. 
     
-     At the same time, $\Qrelkleisli{\Rsemiring}$ can be seen as a category of formal power series:    a matrix $(t_{\mu, y})_{\mu \in !X, y \in Y}$ can be identified with the $Y$-indexed family of fps $(\sum t_{\mu, y} x_X^\mu)_{y \in Y}$, the morphisms of $\Qrelkleisli{\Rsemiring}$ can be identified with (families of) formal power series, i.e.~$\Qrelkleisli{\Rsemiring}(X,Y)\equiv\fps{\Rsemiring}{X}^Y$.
+     At the same time, $\Qrelkleisli{\Rsemiring}$ can be seen as a category of formal power series: as a matrix $(t_{\mu, y})_{\mu \in !X, y \in Y}$ can be identified with the $Y$-indexed family of fps $(\sum t_{\mu, y} x_X^\mu)_{y \in Y}$, the morphisms of $\Qrelkleisli{\Rsemiring}$ can be identified with (families of) formal power series, i.e.~$\Qrelkleisli{\Rsemiring}(X,Y)\equiv\fps{\Rsemiring}{X}^Y$.
 %%$\Qrel{\Rsemiring}$ is symmetric monoidal closed and is thus a model of the \emph{linear} $\lambda$-calculus, in which both the tensor product and the linear function type are interpreted as $\model{A\otimes B}=\model{A\multimap B}=\model{A}\times\model{B}$.    
 %The category $\Qrelkleisli{\Rsemiring}$ is the coKleisli category $\Qrelkleisli{\Rsemiring}$, with respect to the $!$ comonad: its morphisms $\Qrelkleisli{\Rsemiring} (X, Y)$ are given by $\Rsemiring$-valued matrices indexed by $!X \times Y$; since a matrix $(t_{\mu, y})_{\mu \in !X, y \in Y}$ can be seen as a $Y$-indexed family of power series $(\sum t_{\mu, y} x_X^\mu)_{y \in Y}$, the morphisms of $\Qrelkleisli{\Rsemiring}$ can be identified with (families of) formal power series, i.e.~$\Qrelkleisli{\Rsemiring}(X,Y)\equiv\fps{\Rsemiring}{X}^Y$.
     Indeed, composition in $\Qrelkleisli{\Rsemiring}$ is given by (pointwise) composition of the underlying power series, with identities $\mathrm{id}_X\in  \fps{\Rsemiring}{X}^X$ given by
@@ -104,14 +96,11 @@ If we do not start, as we do here, with a continuous semiring $\Rsemiring$, but 
 $\Qrelkleisli{\Rsemiring}$ is cartesian closed, with cartesian products given by $X+Y$ (with neutral $0:=\emptyset$) and exponentials given by $!X\times Y$. 
 This allows us to interpret simple types as $\model o=1:=\{\star\}$, $\model{T\times U}=\model T+\model U$ and $\model{T\to U}=!\model{T}\times \model{U}$. Intuitively, a type $T$ translates into a set of variables, and a term $\Gamma\vdash t:T$ into a $\model{T}$-indexed family of fps $\model{t}^{\Rsemiring}_i(x_\Gamma)$ in \emph{as many variables as $\model{\Gamma}$}.
 Here we can observe the main challenge appearing with higher-order types, as these are interpreted by \emph{infinitely many} variables: for instance, $\model{o\to o}=!\model o\times \model o\equiv\N\times 1\equiv \N$ translates into a countable sequence of variables, and 
-$\model{(o\to o)\to (o\to o)}\equiv !\N\times\N$ has one distinct variable $x_{\mu,n}$ for each $\mu\in !\N$ and $n\in \N$.
-Higher-order terms correspond thus to fps in \emph{countably many} variables.
+$\model{(o\to o)\to (o\to o)}\equiv !\N\times\N$ has one distinct variable $x_{\mu,n}$ for each $\mu\in \ !\N$ and $n\in \N$.
+Higher-order terms correspond thus to families of fps in \emph{countably many} variables.
 
 
-%
-%The fundamental intuition about the exponential is that giving a $(!X\times Y)$-indexed family of fps $s_{\mu,y}(z_Z)\in \Qrelkleisli{\Rsemiring}(Z,!X\times Y)=\fps{\Rsemiring}{Z}^{!X\times Y}$ is the same as giving a $Y$-indexed family of fps $s(z_Z,x_{X})_y=\sum_{\mu\in !X}s_{\mu,y}(z_Z)x_X^{\mu}\in \Qrelkleisli{\Rsemiring}(Z+X,Y)\equiv \fps{\Rsemiring}{Z+X}^Y$.
-%This generalizes the correspondence between a fps $\sum_{\mu\in !X} s_{\mu}x^\mu$ and its family of coefficients $(s_\mu)_{\mu\in \ !X}$.
-%The interpretation of a program $M:A\to B$ is a $\Rsemiring$-matrix $\model{M}^{\Rsemiring}\in\Rsemiring^{!A\times B}=\fps{\Rsemiring}{0}^{!A\times B}$ whose entries $ (\model{M}^{\Rsemiring})_{\mu,b}$ represent ways of yielding $b$ by using each input $a\in A$ exactly $\mu(a)$ times. 
+
 
 
 \begin{example}\label{ex:churchtwo}
@@ -121,81 +110,15 @@ $(b_i(y_{\N}))_{i\in\N}\in \Qrelkleisli{\Rsemiring}(\N,\N)=\fps{\Rsemiring}{\N}^
 %, corresponding to the fps $\sum_{i=0}^{\infty}s(y_{\N})_i x^i$. 
 Now, think of the variables $y_{\N}$, which interpret the function $y:\1\to\1$, as encoding the fps $a(x)=\sum_n y_n x^n\in\Qrelkleisli{\fps{\Rsemiring}{\N}}(1,1)\equiv  \fps{(\fps{\Rsemiring}{\N})}{1}$;
 the term $t$ should translate then into the composition 
-
-{\small
-\[
+\begin{align*}
 a(a(x))=\sum_n y_n\left(\sum_m y_mx^m\right)^n=
 \sum_{i=0}^{\infty}
 \left(
 \sum_{{\tiny\begin{matrix}(n,m_1,\dots, m_n),\\ m_1+\dots+m_n=i\end{matrix}}}y_ny_{m_1}\dots y_{m_n}\right) x^i,
-%\sum_{i=0}^{\infty}s_i(y_{\N})x^i,
-\] 
-}
-which gives $b_i(y_{\N})= \sum_{{\tiny\begin{matrix}(n,m_1,\dots, m_n),\\ m_1+\dots+m_n=i\end{matrix}}}y_ny_{m_1}\dots y_{m_n}$.
-%x^i=t(y_{\N})_i.
-%\sum_{{\tiny\begin{matrix}(n,m_1,\dots, m_n),\\ m_1+\dots+m_n=i\end{matrix}}}y_n(y_{m_1}x^{m_1})\dots( y_{m_n}x^{m_n})\\
-%&=
-% \sum_{{\tiny\begin{matrix}(n,m_1,\dots, m_n),\\ m_1+\dots+m_n=i\end{matrix}}}y_ny_{m_1}\dots y_{m_n}x^i=t(y_{\N})_ix^i.
-%\end{align*}
-Notice that the evaluation $tx$ of $t$ over some variable $x:o$ is then precisely interpreted by $a(a(x))\in \Qrelkleisli{\Rsemiring}(\N+1,1)=\fps{\Rsemiring}{\N+1}\equiv\fps{(\fps{\Rsemiring}{\N})}{1}$.
-
-%In other words, since $\fps{\Rsemiring}{\N+1}\equiv\fps{\fps{\Rsemiring}{\N}}{\1}$, 
-%we can look at $s(y_{\N},x)$ as a power series in $x$ whose $i$-th coefficient is the fps $t(y_{\N})_i=  \sum_{{\tiny\begin{matrix}(n,m_1,\dots, m_n),\\ m_1+\dots+m_n=i\end{matrix}}}y_ny_{m_1}\dots y_{m_n}\in \fps{\Rsemiring}{y_{\N}}$.
-%
-%
-%
-%The program $y:(\1\to \1),x:\1\vdash Mx:\1$ is then interpreted by a single power series
-%$t(y_{\N},x)\in \Qrelkleisli{\Rsemiring}(\N+1,1)=\fps{\Rsemiring}{\N+1}$ given by
-%\[
-%t(y_{\N},x)_i=s(y_{\N})_ix^i= 
-%\sum_{{\tiny\begin{matrix}(n,m_1,\dots, m_n),\\ m_1+\dots+m_n=i\end{matrix}}}y_n(y_{m_1}x^{m_1})\dots( y_{m_n}x^{m_n}).
-%\]
-%In other words, the fps $s(y_{\N})_{i}$ is the coefficient of the map $\1\to \1$ corresponding to 
+\end{align*}
+from which we can deduce $b_i(y_{\N})= \sum_{{\tiny\begin{matrix}(n,m_1,\dots, m_n),\\ m_1+\dots+m_n=i\end{matrix}}}y_ny_{m_1}\dots y_{m_n}$.
+Notice that $b_1(y_{\N})=y_1$. Moreover, the evaluation $tx$ of $t$ over some variable $x:o$ is then precisely interpreted by $a(a(x))\in \Qrelkleisli{\Rsemiring}(\N+1,1)=\fps{\Rsemiring}{\N+1}\equiv\fps{(\fps{\Rsemiring}{\N})}{1}$.
 \end{example}
-
-%
-%\begin{example}\label{ex:churchtwobis}
-%Consider again the program $M=\lambda x.y(yx)$, but  
-%%
-%% where $y:(\1\to\1)\vdash M:\1\to\1$.
-%%Letting $\model{\1}=1=\{\star\}$, and 
-%%observing that $\model{\1\to\1}=!1\times 1\equiv \N$, 
-%%we have that $M$ is interpreted by a $\N$-indexed family of power series
-%%$(s_i(y_{\N}))_{i\in\N}\in \Qrelkleisli{\Rsemiring}(\N,\N)=\fps{\Rsemiring}{\N}^{\N}$.
-%%To make calculations easier
-%let us assume now that $y$ is given the linear type $y:\1\multimap \1$, so $M$ has type $M:\1\multimap \1$ too.
-%Since $\model{\1\multimap \1}=\model{\1}\times\model{\1}=1\times 1\equiv 1$, $M$ is now interpreted by a fps $s(y)\in \Qrelkleisli{\Rsemiring}(1,1)=\fps{\Rsemiring}{y}$; reasoning as in the case above, think of $y$, interpreting a linear function $\1\multimap \1$, as encoding the linear map $a(x)=yx$; the term $M$ translates then into $a(a(x))=y^2x$, 
-%which gives $s(y)=y^2$ (observe that $s(y)$ coincides with the linear fps $s_1(y_{\N})=y_1^2$ of the family from the previous example). 
-%% 
-%%
-%%%, corresponding to the fps $\sum_{i=0}^{\infty}s(y_{\N})_i x^i$. 
-%%Now, think of the variables $y_{\N}$, which interpret the function $y:\1\to\1$, as encoding the fps $a(x)=\sum_n y_n x^n\in\Qrelkleisli{\fps{\Rsemiring}{\N}}(\1,\1)\equiv  \fps{(\fps{\Rsemiring}{\N})}{1}$;
-%%the term $M$ should translate then into the composition 
-%%\[
-%%a(a(x))=\sum_n y_n\left(\sum_m y_mx^m\right)^n=
-%%\sum_{i=0}^{\infty}
-%%\left(
-%%\sum_{{\tiny\begin{matrix}(n,m_1,\dots, m_n),\\ m_1+\dots+m_n=i\end{matrix}}}y_ny_{m_1}\dots y_{m_n}\right) x^i,
-%%\] 
-%%which gives $s_i(y_{\N})= \sum_{{\tiny\begin{matrix}(n,m_1,\dots, m_n),\\ m_1+\dots+m_n=i\end{matrix}}}y_ny_{m_1}\dots y_{m_n}$.
-%%Notice that the evaluation $y:(\1\to\1),x:\1\vdash Mx:\1$ is precisely interpreted by $a(a(x))\in \Qrelkleisli{\Rsemiring}(\N+1,1)=\fps{\Rsemiring}{\N+1}\equiv\fps{(\fps{\Rsemiring}{\N})}{1}$.
-%%
-%\end{example}
-
-
-%The example above shows that the usual evaluation map $\Qrelkleisli{\Rsemiring}(Z,!X\times Y)\Rightarrow \Qrelkleisli{\Rsemiring}(Z+X, Y)$, i.e.~
-%$\fps{\Rsemiring}{Z}^{!X\times Y}\To\fps{\Rsemiring}{Z+X}^Y$, corresponds to passing from the $!X\times Y$-indexed family of power series 
-%$s(z_Z)_{\mu,y}\in \fps{\Rsemiring}{Z}$ to the $Y$-indexed family
-%$t(z_Z,x_X)_y=\sum_{\mu\in !X}s(z_Z)_{\mu,y}x_X^\mu\in \fps{\Rsemiring}{Z+X}$.
-%When $Z=0$, this precisely corresponds to passing from a $!X\times Y$-indexed family of scalars
-%$s_{\mu,y}$ to the corresponding $Y$-indexed family of power series $\sum_{\mu\in !X}s_{\mu,y}x_X^\mu$. 
-%
-
-%
-%Notice that usual curryfication $\Qrelkleisli{\Rsemiring}(X,Y)\Rightarrow \Qrelkleisli{\Rsemiring}(1,!X\times Y)$ corresponds to passing from 
-%
-%For instance, an arrow $s(x_{\star})\in \Qrelkleisli{\Rsemiring}(\1,\1)\equiv\fps{\Rsemiring}{x_{\star}}\equiv \ !\1\to \Rsemiring\equiv\N\to\Rsemiring$ is a power series
-%$s_{x_{\star}}=\sum_n s_nx_{\star}^n$.
 
 
 
@@ -204,12 +127,12 @@ $\Qrelkleisli{\Rsemiring}$ is endowed with Conway fixpoints \cite{DBLP:journals/
    It is worth to restate this construction in terms of power series: $f$ will be represented by an $X$-indexed family $(s_x(x_X, x_Y))_{x \in X}$. Then we can define its iterates and the fixpoint as follows, for $x \in X$:
    \begin{equation}\label{eq:fixpointeq}
    \begin{aligned}
-   	& r_x^{(0)}(x_Y) = 0 \in \fps{\Rsemiring}{Y}
-   	& r^{(n+1)}_x(x_Y) =  s_x(r_X(x_Y), x_Y)\\
-   	& (\fix s_X)_x(x_Y) = \sup_n r^{(n)}_x(x_Y)
-   \end{aligned}
+    r_x^{(0)}(x_Y) &= 0 \in \fps{\Rsemiring}{Y}, \\
+    r^{(n+1)}_x(x_Y) &=  s_x(r_X(x_Y), x_Y),\\
+    (\fix s_X)_x(x_Y) &= \sup_n r^{(n)}_x(x_Y).
+   	   \end{aligned}
    \end{equation} 
-	From this, it is clear that the power series $r_X= \fix f$ are the minimal solution of the infinite family of equations: $(r_x = s_x(r_x, x_Y))_{x \in X}$. 
+	From this, it is clear that the power series $r_X= \fix f$ are the minimal solution of the infinite family of equations: $(r_x = s_x(r_X, x_Y))_{x \in X}$. 
 	
 	
 Using the cartesian closed structure and the fixpoints, any term 
@@ -265,30 +188,23 @@ For every PHORS $\gphors=(\nonterm, \C R,S)$ and non-terminal $L_i:T_1\to\dots\t
 a_{L_i}(z)(x_{\Sigma}):=\pi_i\left(
 \mathsf{fix}_{\nonterm}\model{{\gphors}}^{\fps{\Rinf}{z}}\right)\in \fps{(\fps{\Rinf}{z})}{\Sigma}.
 \]  
-In particular, the fps $a_{\gphors}(z):=a_S(z)\in \fps{\Rinf}{z}$ is called
+The fps $a_{\gphors}(z):=a_S(z)\in \fps{\Rinf}{z}$ is called
 the
  \emph{probabilistic generating function of $\gphors$}.
 
 \end{definition}
 Observe that the fps $a_{L_i}(z)(x_\Sigma)$ are the minimal solutions of the equational system $(r_x=(\model{\gphors}^{\Rsemiring})_x(r_x,z))_{x\in \model\nonterm}$ induced by $\gphors$. 
 
-The generating function $a_\gphors(z)$ precisely captures the call-by-name probabilistic execution of closed terms, as stated below:%the interpretation $\model{M}^{\Rinf}$ of a term $M:\1$ of ground type consists in a real number, since $\model{M}^{\Rinf}\in\Qrelkleisli{\Rsemiring}(0,\1)\equiv\fps{\Rsemiring}{0}\equiv\Rsemiring$, which coincides with the probability of termination of $M$, computed as the sum of the weights $w(R)\in \Rinf$ of all call-by-name probabilistic reductions $R:M{\to^*}e$:
+The generating function $a_\gphors(z)$ precisely captures the call-by-name probabilistic execution of closed terms, as stated below:
 \begin{proposition}\label{prop:proba}
 For any PHORS $\gphors$,
-%\begin{align}
-%\model{S}^{\Rinf}&=\mathbb P(\gphors\downarrow),
-%%=\sum_{R:M\to^* e}w(R),
-%\label{eq:prob1} \\
 $a_{\gphors}(z)=\sum_{i=0}^{\infty}\mathbb P(\gphors\downarrow_i)z^i$
-%,\label{eq:prob2}
-%\end{align}
-where $\mathbb P(\gphors\downarrow_i)=\sum_{R:t\to^i e}w(R)$ is the probability that $S$ terminates after exactly $i$ probabilistic steps. In particular, $a_\gphors(1)=\mathbb P(\gphors\downarrow)$. 
+where $\mathbb P(\gphors\downarrow_i)=\sum_{R:t\to^i e}w(R)$ is the probability that $S$ terminates after $i$ probabilistic steps. In particular, $a_\gphors(1)=\mathbb P(\gphors\downarrow)$. 
 \end{proposition}
 \begin{proof}
 From \cite{DBLP:conf/lics/LairdMMP13, DBLP:journals/jacm/EhrhardPT18,DBLP:journals/corr/abs-2501-15637} we know that each reduction $S\redbigp{\sigma,p}e$ precisely adds up one monomial $pz^{|\sigma|}$, hence $a_{|\sigma|}z^{|\sigma|}$ in $a_\gphors(z)$ is the sum of the probabilities of all reductions of length $|\sigma|$.
 \end{proof}
-%While \eqref{eq:prob1} indicates that the interpretation in $\Rinf$ precisely captures the probability of termination, \eqref{eq:prob2} provides a \emph{finer} result: 
-%By marking with the variable $z$ each probabilistic reduction step, the coefficients of $a_\gphors(z)$ count the probability of terminating in exactly $i$ steps. 
+
 From Proposition \ref{prop:proba} we also deduce that the \emph{derivative} of $a_\gphors(z)$ captures the expected number of steps to termination:
 
 \begin{corollary}[\cite{Ehrhard19}]\label{cor:expected}
@@ -328,24 +244,26 @@ Consider the PHORS from Example \ref{ex:phors0}, with $t_F=F(Fx)\oplus_{\frac{1}
 % (\Rinf)^{\N +1}\equiv (\Rinf)^{\N}\times \Rinf$ (using $\model{\1\to \1}=\ !1\times 1\equiv\N$) is given by a pair $(f,s)$, where $f:\N \to \Rinf$ and $s\in \Rinf$.%
 The interpretation in $\Qrelkleisli{\fps{\Rinf}{z}}$ 
 %$\model{\lambda \langle F,S\rangle.M'}^{\Rinf}$ 
- of $\lambda \langle F,S\rangle. t_F:((\1\to \1)\times 1)\to (\1\to \1)$ is a $\N$-indexed family of fps 
-$s^F_i(y_{\N+1})\in \fps{(\fps{\Rinf}{z})}{\N +1}$, given, for $i\in \N$, and recalling $b_i(y_{\N})$ from Example \ref{ex:churchtwo}, by
-\[
-s^F_i(y_{\N+1})=
+ of $t_\gphors=\lambda \langle F,S\rangle. \langle t_F,t_S\rangle:((\1\to \1)\times \1)\to (\1\to \1)\times \1$ 
+ is a pair $\langle s^F, s^S\rangle$ formed by a $\N$-indexed family of fps 
+$s^F_i\in \fps{(\fps{\Rinf}{z})}{\N +1}$ and a single fps 
+$s^S\in \fps{(\fps{\Rinf}{z})}{\N +1}$ given, for $i\in \N$, and recalling $b_i(y_{\N})$ from Example \ref{ex:churchtwo}, by
+\begin{align*}
+s^F_i(y_{\N+1},z)&=
 \begin{cases}
 \frac{1}{2}zb_1(y_{\N})+\frac{1}{2}z=\frac{1}{2}(z
 y_1^2+z)
 & \text{ if }i=1,\\
 \frac{1}{2}zb_i(y_{\N})
-&\text{ if }i\in\N, i\neq 1,
+&\text{ if }i\neq 1
 %\\
 %\sum_{n}y_n&\text{ if }i=\star.
 \end{cases}
-\]
-The interpretation of $\lambda \langle F,S\rangle. t_S:((\1\to \1)\times 1)\to \1$ is a unique fps 
-$s^S(y_{\N +1})\in \fps{\Rinf}{\N +1}$ given by $s^S(y_{\N +1})=\sum_{i\in \N} y_i$. 
+&
+s^S(y_{\N +1},z)&=\sum_{i\in \N} y_i.
+\end{align*}
  
-Computing $ \mathsf{fix}\  \langle s^F,s^S \rangle$ means finding a minimal solution $(a_i(z))_{i\in \N+1}\in(\fps{\Rinf}{z})^{\N+1}$ of the fixpoint equations $a_{i}(z)=s^F_i(a_{\N+1}(z))$ ($i\in\N$) and $a_{\gphors}(z)=s^S(a_{\N +1}(z))$.
+Computing $ \mathsf{fix}\  \langle s^F,s^S \rangle$ means finding a minimal solution $(a_i(z))_{i\in \N+1}\in(\fps{\Rinf}{z})^{\N+1}$ of the fixpoint equations $a_{i}(z)=s^F_i(a_{\N+1}(z),z)$ ($i\in\N$) and $a_{\gphors}(z)=s^S(a_{\N +1}(z),z)$.
 One can easily see that this yields $a_{i}(z)=0$, for $i\neq 1,\star$, while $a_\gphors(z):=a_\star(z)=a_1(z)\in \Rinf$ can be found as minimal solution of the polynomial equation
 \begin{equation}
 \label{eq:alg1}

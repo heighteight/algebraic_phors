@@ -1,12 +1,9 @@
 % !TEX root = main.tex
 
 
-In this section we introduce a first class of PHORS, called $\Gfin$, whose corresponding  generating function is algebraic and whose AST and PAST problems are, consequently, decidable.
-% We will show that both the AST and PAST problems are decidable for the PHORS typable in this system.
+In this section we introduce a first class of PHORS whose relational interpretation yields a finitary family of fps. 
+As a consequence, we establish the algebraicity of the corresponding probabilistic generating functions and the decidability of the (P)AST problems.
 
-%
-%$\Gfin$ are an extension of the affine PHORS of (Li et al.) with \emph{finitely graded} exponentials $!_kA$ ($k\in \mathbb N$), allowing for a program to use a given input \emph{no more} than some fixed number of times.
-%% In the next section we will show how to extend this system with \emph{infinite} exponentials $!_\infty A$, enabling programs to use their inputs even an \emph{unbounded} number of times.
 
 \subsection{Syntax of $\Gfin$ }
 
@@ -17,10 +14,10 @@ We use types defined by the grammar below:
 \varphi,\psi&:= \1^n\mid \  !_k\varphi\multimap \varphi
 %\\
 %\xi&:=\ !_k \varphi
- \qquad (1\leq n\in\mathbb N, \: k \in \mathbb N).
+ \qquad (1\leq n\in\mathbb N, \: k \in \mathbb N),
 \end{align*}
-We let $\tau$ be an abbreviation for the affine function type $!_1o\multimap o$. 
-We define an order relation $\varphi\sqsubseteq \psi$ between types by induction by
+where $o^n$ indicates the $n$-fold product $o\times\dots \times o$.
+Let $\tau$ be an abbreviation for the affine function type $!_1o\multimap o$. the order relation $\varphi\sqsubseteq \psi$ between types is defined by induction by
 \begin{align*}
 \infer{\1^n\sqsubseteq\1^n}{}
 % \quad
@@ -30,7 +27,7 @@ We define an order relation $\varphi\sqsubseteq \psi$ between types by induction
 \infer{!_k\varphi\sqsubseteq !_h\psi}{k\leq h \quad\varphi\sqsubseteq\psi}
 \end{align*}
 
-The typing rules will use two kinds of contexts (as in \cite{DBLP:conf/lics/LiMO22}): 
+Type judgements are expressions of the form $\nonterm\mid\Delta\vdash t:\varphi$, involving two kinds of contexts (as in \cite{DBLP:conf/lics/LiMO22}): 
 \begin{varitemize}
 \item non-linear contexts, noted $\nonterm,\nonterm'$ will be used for non-terminal symbols; these are finite sets of type bindings of the form $L:\varphi$; intuitively, we put no restrictions on the number of times a non-terminal is used;
 
@@ -38,33 +35,24 @@ The typing rules will use two kinds of contexts (as in \cite{DBLP:conf/lics/LiMO
 \item graded contexts, noted $\Delta,\Delta'$ will be used for the arguments to be passed to the non-terminals; they are finite sets of type bindings of the form $x:_k \varphi$. Intuitively, the binding $x :_k \varphi$ means that we can use $x$ with type $\varphi$ \emph{at most} $k$ times.
 \end{varitemize}
 \noindent We define by induction the operations $\Delta+\Delta',k\Delta$ on graded contexts:
-{\small
 \begin{align*}
-\Delta +\emptyset &= \Delta, \\
-(\Delta,x:_{k}\varphi) + (\Delta',x:_{h}\varphi) &= (\Delta+\Delta'),x:_{k+h}\varphi;\\
-%\Delta \vee\emptyset &= \Delta, \\
-%(\Delta,x:_{k}\varphi) \vee (\Delta',x:_{h}\varphi) &= (\Delta+\Delta'),x:_{\max\{k,h\}}\varphi;\\
-k\emptyset&=\emptyset,\\
-k(\Delta,x:_{h}\varphi)  &= k\Delta,x:_{kh}\varphi,
+\Delta +\emptyset &= \Delta, & k\emptyset&=\emptyset,\\
+(\Delta,x:_{k}\varphi) + (\Delta',x:_{h}\varphi) &= (\Delta+\Delta'),x:_{k+h}\varphi, & k(\Delta,x:_{h}\varphi)  &= k\Delta,x:_{kh}\varphi,
 \end{align*}
-}
+where, as in e.g.~\cite{10.1145/3009837.3009890}, we are assuming that $\Delta$ and $\Delta'$ agree on each variable (i.e.~they contain the same type bindings but may disagree on the corresponding coefficients). 
 
-\noindent where, as in e.g.~\cite{10.1145/3009837.3009890}, we are assuming that $\Delta$ and $\Delta'$ agree on each variable (i.e.~they contain the same type bindings but may disagree on the corresponding coefficients). 
-
-A type judgement is an expression of the form $\nonterm\mid\Delta\vdash t:\varphi$.
 % or
 %$\emptyset;\emptyset\vdash^{\mathrm{fix}} t:\varphi$. The second form of type judgements are called \emph{PHORS-typings}. Notice that in a PHORS-typing we require the context to be empty.
 The typing rules are in Fig.~\ref{fig:typerules}.
 \begin{definition}[$\Gfin$]
-A \emph{finitely graded PHORS} (noted $\Gfin$) is a triple $\gphors=(\nonterm, \C D, S)$, where $\nonterm$ is a finite set of typed non-terminals, $S\in\nonterm$ is the {start symbol} such that $\nonterm(S)=\1$, and $\C D$ associates each $L\in\nonterm$ with a derivation $\nonterm\mid\emptyset\vdash \lambda x_1.\dots. x_n.t:\varphi$
+A \emph{finitely bounded PHORS} (noted $\Gfin$) is a triple $\gphors=(\nonterm, \C D, S)$, where $\nonterm$ is a finite set of typed non-terminals, $S\in\nonterm$ is the {start symbol} such that $\nonterm(S)=\1$, and $\C D$ associates each $L\in\nonterm$ with a derivation $\nonterm\mid\emptyset\vdash \lambda x_1.\dots. x_n.t:\varphi$
 %(t_L \oplus_p t_R):\varphi$ 
-such that $\varphi\sqsubseteq \nonterm(L)$, $t$ contains no $\lambda$-abstraction and $\nonterm\mid x_1,\dots, x_k\vdash t:\1$.
+such that $\varphi\sqsubseteq \nonterm(L)$ and $\nonterm\mid x_1,\dots, x_k\vdash t:\1$.
 %t_L \oplus t_R:\1$. 
 \end{definition} 
 
 Since affine implication is expressed by $!_1\varphi\multimap \psi$, 
-%and every derivation $\nonterm\mid x_1,\dots, x_k\vdash t :\1$ yields a semantically equivalent derivation  $\nonterm\mid x_1,\dots, x_k\vdash t \oplus_1 t :\1$, 
-it is immediate that all PAHORS are $\Gfin$, so all our results translate automatically to them. In particular, as the PHORS from Example \ref{ex:phors0} is affine, it is also a $\Gfin$.
+it is immediate that the affine PHORS of \cite{DBLP:conf/lics/LiMO22} are $\Gfin$, so all our results translate automatically to them. In particular, as the PHORS from Example \ref{ex:phors0} is affine, it is also a $\Gfin$.
 
 
 
@@ -90,17 +78,21 @@ it is immediate that all PAHORS are $\Gfin$, so all our results translate automa
 
 \begin{figure}
 \fbox{
-\begin{minipage}{.7\textwidth}
+\begin{minipage}{.99\textwidth}
 \resizebox{.99\textwidth}{!}{
-\begin{minipage}{1.1\textwidth}
+\begin{minipage}{\textwidth}
+\small
 \begin{align*}
+\infer[ax1]{\nonterm\mid \Delta\vdash x:\varphi }{x:_p\varphi\in \Delta,\quad 1 \leq p} \qquad
+		\infer[ax2]{\nonterm\mid\Delta \vdash L:\varphi }{ L:\varphi  \in \nonterm}
+		\qquad 		 \infer[\oplus]{\nonterm\mid \Delta \vdash t \oplus t' : \1 }{\nonterm\mid \Delta \vdash t:\1 \quad \nonterm\mid \Delta \vdash t':\1} \\
 	\begin{array}{ccc}
-		\infer[ax1]{\nonterm\mid \Delta\vdash x:\varphi }{x:_p\varphi\in \Delta,\quad 1 \leq p} & &
-		\infer[ax2]{\nonterm\mid\Delta \vdash L:\varphi }{ L:\varphi  \in \nonterm}\\[7pt]
-%		\infer[!]{\Gamma;k\Delta \vdash t: !_k \varphi}{\Gamma;\Delta \vdash t: \varphi \quad k\in \mathbb N}
-%		 & \qquad &
-%		 \infer[\oplus]{\Gamma, \Delta \vdash t \oplus t' : \1 }{\Gamma; \Delta \vdash t:\1 \quad \Gamma; \Delta \vdash t':\1} \\[5pt]
-%		 
+%		\infer[ax1]{\nonterm\mid \Delta\vdash x:\varphi }{x:_p\varphi\in \Delta,\quad 1 \leq p} & &
+%		\infer[ax2]{\nonterm\mid\Delta \vdash L:\varphi }{ L:\varphi  \in \nonterm}\\[7pt]
+%%		\infer[!]{\Gamma;k\Delta \vdash t: !_k \varphi}{\Gamma;\Delta \vdash t: \varphi \quad k\in \mathbb N}
+%%		 & \qquad &
+%%		 \infer[\oplus]{\Gamma, \Delta \vdash t \oplus t' : \1 }{\Gamma; \Delta \vdash t:\1 \quad \Gamma; \Delta \vdash t':\1} \\[5pt]
+%%		 
 		\infer[\lambda]{\nonterm\mid \Delta \vdash \lambda x. t : !_k \varphi \multimap \psi }{\nonterm \mid \Delta, x:_k \varphi \vdash t : \psi}
 		&  &
 		\infer[@]{\nonterm\mid \Delta + k\Delta' \vdash tu : \psi}
@@ -111,9 +103,9 @@ it is immediate that all PAHORS are $\Gfin$, so all our results translate automa
 %		\infer[\lambda \infty]{\Gamma; \Delta \vdash t: \tau \to \sigma}{\Gamma, L: \tau; \Delta \vdash t: \sigma} 
 	\end{array}
 	\end{align*}
-	\begin{align*}
-		 \infer[\oplus]{\nonterm\mid \Delta \vdash t \oplus t' : \1 }{\nonterm\mid \Delta \vdash t:\1 \quad \nonterm\mid \Delta \vdash t':\1} 
-	\end{align*}
+%	\begin{align*}
+%		 \infer[\oplus]{\nonterm\mid \Delta \vdash t \oplus t' : \1 }{\nonterm\mid \Delta \vdash t:\1 \quad \nonterm\mid \Delta \vdash t':\1} 
+%	\end{align*}
 %		\begin{align*}
 %			\infer[ Y_{\mathrm{fin}}]{\nonterm\mid\emptyset \vdash^{\mathrm{fix}}  Y \lambda \langle L_1,\dots, L_n\rangle.t:\psi }{\nonterm,\langle L_1,\dots, L_n\rangle:\varphi\mid \emptyset \vdash t :  \psi \quad \psi \sqsubseteq \varphi  }
 %	\end{align*}
@@ -121,7 +113,7 @@ it is immediate that all PAHORS are $\Gfin$, so all our results translate automa
 	}
 \end{minipage}
 }
-\caption{Typing rules of $\Gfin$.}
+\caption{Typing rules of the $\Gfin$.}
 \label{fig:typerules}
 \end{figure}
 
@@ -164,10 +156,9 @@ y_1x+s^L( y^2_\N,x)
 %\end{proposition}
 
 
-While the $\Gfin$ are not linear, they can be \emph{linearized}:
+While the $\Gfin$ need not be linear, they can be \emph{linearized}:
 we can turn them into PAHORS having the same semantics and branch language. Notice, however, that the resulting affine PHORS might have size exponential in the original one.
-More precisely, define the \emph{size} of a $\gphors$ as the number of its non-terminals times the maximum size of any of its terms, i.e.~
-$\|\gphors\|=|\nonterm|\times\max\{|\C D(L)|\mid L\in\nonterm\}$, and let $\partial\gphors$ be the maximum grade occurring in $\gphors$. Then we have:
+More precisely, define the \emph{size} of a $\gphors$ as the number of its non-terminals times the maximum size of any of its terms, i.e.~$\|\gphors\|=|\nonterm|\times\max\{|\C D(L)|\mid L\in\nonterm\}$, and let $\partial\gphors$ be the maximum grade occurring in $\gphors$. Then we have:
 
 \begin{theorem}[Linearization]
 	\label{theorem:linearisation}
@@ -180,7 +171,7 @@ $\C L(\gphors)=\C L(\AFF\gphors)$.
 Define $\AFF{\varphi}$ as $
 \AFF{(o^n)}=o^n$ and 
 $\AFF{(!_k\varphi\multimap \psi)}={\AFF{\varphi}\multimap\dots\multimap\AFF{\varphi}}\multimap\AFF\psi$, with $\AFF{\varphi}$ repeated $k$ times. 
-Then, by induction, any derivation of $\nonterm\mid \Delta\vdash t:\varphi$ yields a derivation of $\AFF{\nonterm}\mid\Delta'\vdash t:\AFF \varphi$ in the affine system of \cite{DBLP:conf/lics/LiMO22}, where $|\Delta'|\leq \partial\gphors|\Delta|$: an order-$n$ $\Gfin$ yields then an order-$n$ PAHORS in which every equation $Lx_1\dots x_n$ translates into a new equation $Lz_1^1\dots z_{n}^{k_n}$, where, if $\nonterm(L)=!_{k_1}\varphi_1\multimap\dots \multimap !_{k_i}\varphi_i\multimap\dots\multimap o^n$, the variable $x_i$ is replaced by $k_i$ variables $z_i^1,\dots, z_{i}^{k_i}$.
+Then, by induction, any derivation of $\nonterm\mid \Delta\vdash t:\varphi$ yields a derivation of $\AFF{\nonterm}\mid\Delta'\vdash t:\AFF \varphi$ in the affine system of \cite{DBLP:conf/lics/LiMO22}, where $|\Delta'|\leq \partial\gphors|\Delta|$: an order-$n$ $\Gfin$ yields then an order-$n$ PAHORS in which every equation $Lx_1\dots x_n$ translates into a new equation $Lz_1^1\dots z_{n}^{k_n}$, where, if $\nonterm(L)=!_{k_1}\varphi_1\multimap\dots \multimap !_{k_i}\varphi_i\multimap\dots\multimap o^n$, each variable $x_i$ is replaced by $k_i$ variables $z_i^1,\dots, z_{i}^{k_i}$.
 \end{proof}
 
 
@@ -240,7 +231,7 @@ by replacing each $\psi$ by $\sat\psi$, we obtain, by induction, a simply typed 
       
    Our general idea is the following: given a $\Gfin$ $\gphors=(\nonterm, \C D, S)$, from the derivations $\C D(L)$ of $\nonterm\mid\emptyset \vdash t_L:\nonterm(L)$, we deduce a corresponding simply typed derivation of $ t_{\gphors}:\sat\nonterm\to \sat\nonterm$ yielding a family
    $\model{t}^{\Rsemiring}\in \fps{\Rsemiring}{\model{\sat\nonterm}}^{\model{\sat\nonterm}}$.  
-  At the same time, we will show that the finite set $\model{\nonterm}\subset\model{\sat\nonterm}$ yields a stable and polynomial pair, and we will conclude that $\model{t_{\gphors}}$ is finitary, hence, by Corollary \ref{cor:propertoalg}, algebraic.    
+  At the same time, we will show that the finite pair $(\model{\nonterm},\model{\nonterm})$ is stable and polynomial, and we will conclude that $\model{t_{\gphors}}$ is finitary, whence, by Corollary \ref{cor:propertoalg}, algebraic.    
    
    The fundamental ingredient is the following lemma:
    
@@ -253,7 +244,7 @@ For every derivation $\nonterm\mid\Delta\vdash t:\varphi$, the pair $(\model{\no
   \end{lemma}
   \begin{proof}[Proof sketch]
   Let a \emph{finitary} variable be any $\sigma\in\model{\nonterm},\model{\Delta},\model{\varphi}$, and a \emph{non-finitary} one be any $\sigma\in\model{\sat\nonterm}-\model{\nonterm},\model{\sat\Delta}-\model{\Delta},\model{\sat\varphi}-\model{\varphi}$.
-By induction, one shows the following two claims:
+By induction, one shows the following:
    \begin{varenumerate} 
    \item for all non-finitary $\sigma$, $(\model{t}^\Rsemiring)_\sigma\big\vert_{\model{\nonterm}+\model{\Delta}}=0$;
    \item for all finitary $\sigma$, 
@@ -329,7 +320,7 @@ An immediate consequence of Lemma \ref{lemma:stability} is the following:
 \begin{proposition}
 	\label{prop:finitefamily}
 For every $\Gfin$ $\gphors=(\nonterm,\C D,S)$, the fps
-$\model{t_{\gphors}}^{\Rsemiring}\in \fps{\Rsemiring}{\model{\sat\nonterm}}^{\model{\sat\nonterm}}$ is finitary (via $\model\nonterm$).
+$\model{t_{\gphors}}^{\Rsemiring}\in \fps{\Rsemiring}{\model{\sat\nonterm}}^{\model{\sat\nonterm}}$ is finitary (via the pair $(\model\nonterm,\model\nonterm)$).
 % derivations of $\nonterm\mid\emptyset\vdash t_L:\varphi$, with $\varphi\sqsubseteq \nonterm{L}\tri T$, the fps
 %$\model{M:\psi\tri T}^{\Rsemiring}\in \fps{\Rsemiring}{\model{T}+\model{\Gamma}}^{\model{T}}$ is finitary.
 \end{proposition}
@@ -337,7 +328,7 @@ $\model{t_{\gphors}}^{\Rsemiring}\in \fps{\Rsemiring}{\model{\sat\nonterm}}^{\mo
 Thanks to Proposition \ref{prop:fintoalg} and the observation that all coefficients of $\model{t_\gphors}^{\fpp{\Rinf}{z}}$ belong indeed to $\fpp{\Q}{z}$, we obtain then:
 \begin{theorem}
 	\label{Gfin-algebraic-theorem}
-	For all $\Gfin$ $\gphors=(\nonterm, \C D, S)$, $(a_L)_{L \in \nonterm}$ is a $\Q^{+}$ fixpoint algebraic family with parameter $z$
+	For all $\Gfin$ $\gphors=(\nonterm, \C D, S)$, $(a_L)_{L \in \nonterm}$ is a proper $\Q^{+}$-fixpoint algebraic family with parameter $z$.
 \end{theorem}
 %Now observe that the term $t_\gphors$ is in the form $\langle t_{1, L} \oplus_{p_n}  t_{1, R} \dots  t_{n, L} \oplus_{p_n} t_{n_R} \rangle$. We thus have that every fps $s(x_{\model{\nonterm},} z)$ belonging to $\model{t_\gphors}^{\fpp{\Rinf}{z}}$ is divisible by $z$. In particular $s(0_{\model{\nonterm}} 0)=0$ and for every variable $x \in x_{\model{\nonterm}}$ the monomial $x$ does not appear in $s$: hence, $\model{t_\gphors}^{\fpp{\Rinf}{z}}$ is a proper algebraic family. Then, by \ref{cor:propertoalg}, each $\model{L}^{\fps{\Rinf}{z}}$ is an algebraic power series:
 \begin{corollary}
@@ -345,7 +336,7 @@ Thanks to Proposition \ref{prop:fintoalg} and the observation that all coefficie
 	 For all $\Gfin$ $\gphors=(\nonterm, \C D, S)$,
 	\begin{varenumerate}
 \item for each $L \in \nonterm$, $a_L(z)$ is an algebraic power series.  
-\item $\mathbb P(\gphors\downarrow)$ is a $\mathbb Q^{+}$ algebraic number and 
+\item $\mathbb P(\gphors\downarrow)$ is a $\mathbb Q^{+}$-algebraic real and 
  $\sum_i\mathbb P(\gphors\downarrow_i)z^i$ is a ${\mathbb Q^{+}}$-algebraic power series.
 \end{varenumerate}
 \end{corollary}
@@ -380,7 +371,7 @@ As a consequence of Remark $\ref{remark:semilinear}$ we also obtain:
 %\end{remark}
 
 We conclude by deducing the decidability of AST and PAST:
-\begin{theorem}
+\begin{theorem}\label{thm:astpast}
 \label{th:decidability}
 	AST and PAST are decidable for any $\Gfin$.	
 \end{theorem}
@@ -415,11 +406,11 @@ As for PAST, remember that PAST implies AST. Then, given a $\gphors=(\nonterm, \
 \begin{remark}
 The complexity of our decision procedure for AST and PAST can be reconstructed 
 as follows:
-for an order $n$ PHORS with non-terminals of maximal grade $k$ and maximal arity $r$, the set $\model{\nonterm}$ has at most $\exptower{k}{n} \cdot r^n $ elements, with $\exptower{a}{b}$ the tower of exponential of base $a$ and height $b$. As $r\leq\|\gphors\|$, 
+for an order $n$ PHORS with non-terminals of maximal grade $k$ and maximal arity $r$, the set $\model{\nonterm}$ has at most $\exptower{k}{n} \cdot r^n $ elements, with $\exptower{a}{b}$ the tower of exponential of base $a$ and height $b$. As $r\leq\|\gphors\|$, for each non-terminal $L$, 
 %
 %
 %. If every nonterminal occurs at least in the definition in another nonterminal (if this is not the case it could be anyway discarded), then $r^n \leq \| \gphors\|$. 
-the polynomial $\model{t_L}^{\Q^+}$ involves at most $\exptower{k}{n} \| \gphors\|^n$ variables and they can be computed by at most $|t_L|$ products or sum of polynomials: the total cost of these operations will be $O(\exptower{k}{n}^2 \| \gphors \|^{2n+1})$ and we have to perform them for each non terminal: the total time complexity of computing the FAS system is then $O(\exptower{k}{n}^2 \| \gphors \|^{2n+2})$. Using a polynomial space algorithm to decide $\Etor$ \cite{DBLP:journals/jacm/EtessamiY09}, we can then see that the space complexity of deciding AST with our method \emph{for fixed order PHORS} is polynomial  in their size $\|\gphors \|$, but \emph{grows superexponentially} when the order is not fixed. Since the algorithm to compute the rational function of Remark \ref{derivative-rational} is polynomial \cite{CHUDNOVSKY1986271}, we can conclude the same for PAST.
+the polynomials $\model{t_L}^{\fps{\Rinf}{z}}$ involves at most $\exptower{k}{n} \| \gphors\|^n$ variables and they can be computed by at most $|t_L|$ products or sum of polynomials: the total cost of these operations will be $O(\exptower{k}{n}^2 \| \gphors \|^{2n+1})$ and we have to perform them for each non terminal: the total time complexity of computing the FAS system is then $O(\exptower{k}{n}^2 \| \gphors \|^{2n+2})$. Using a polynomial space algorithm to decide $\Etor$ \cite{DBLP:journals/jacm/EtessamiY09}, we can then see that the space complexity of deciding AST with our method \emph{for fixed order PHORS} is polynomial  in their size $\|\gphors \|$, but \emph{grows superexponentially} when the order is not fixed. Since the algorithm to compute the rational function of Remark \ref{derivative-rational} is polynomial \cite{CHUDNOVSKY1986271}, we can conclude the same for PAST.
 %
 %
 %
@@ -430,6 +421,11 @@ the polynomial $\model{t_L}^{\Q^+}$ involves at most $\exptower{k}{n} \| \gphors
 Beyond AST/PAST, the fact that $a_{\gphors}(z)=\sum^{\infty}_{i=0} \mathbb P(\gphors\downarrow_i)z^i$ is algebraic 
 can be used to make asymptotic estimates on the  coefficients $\mathbb P(\gphors\downarrow_i)$ for $i \to + \infty$ 
 (cf.~Remark \ref{coefficients-rational}).
+\end{remark}
+
+\begin{remark}
+Let $X$ be a random variable representing the number of steps to termination of a $\Gfin$ $\gphors$.
+When $\gphors$ is AST, the method in the proof of Theorem \ref{thm:astpast} can be used to compute, beyond the first moment $\BB E[X]=\BB E[\gphors\downarrow]$, also the second moment $\BB E[X^2]$ (via the second derivative $a''(1)$). This can be used to estimate several probabilistic properties of the reduction of $\gphors$, e.g.~how likely is the running time to be far from its mean value.
 \end{remark}
 
 
