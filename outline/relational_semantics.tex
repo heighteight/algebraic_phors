@@ -127,7 +127,7 @@ $\Qrelkleisli{\Rsemiring}$ is endowed with Conway fixpoints \cite{DBLP:journals/
    It is worth to restate this construction in terms of power series: $f$ will be represented by an $X$-indexed family $(s_x(x_X, x_Y))_{x \in X}$. Then we can define its iterates and the fixpoint as follows, for $x \in X$:
    \begin{equation}\label{eq:fixpointeq}
    \begin{aligned}
-    r_x^{(0)}(x_Y) &= 0 \in \fps{\Rsemiring}{Y}, \\
+    r_x^{(0)}(x_Y) &= 0 \in \fps{\Rsemiring}{Y},\\ 
     r^{(n+1)}_x(x_Y) &=  s_x(r_X(x_Y), x_Y),\\
     (\fix s_X)_x(x_Y) &= \sup_n r^{(n)}_x(x_Y).
    	   \end{aligned}
@@ -143,9 +143,7 @@ a family of fps $\model{t}^{\Rsemiring}\in \fps{\Rsemiring}{\model{\Gamma}}^{\mo
 %$\model{t}^{\Rsemiring}\in \Qrelkleisli{\Rsemiring}{\model\Gamma,\model T}\equiv
 %\fps{\Rsemiring}{\model\Gamma}^{\model T}$.
 To interpret $\PLY$, we restrict our attention to semirings of the form $\Rsemiring=\fps{\Rinf}{\{z\}+\Sigma}$, where $z$ denotes a distinguished variable. This allows us to interpret probabilistic choice (with bias $p$) as 
-\[
-\model{M\oplus_p N}^{\Rsemiring}=p z\cdot\model{M}^{\Rsemiring}+(1-p) z\cdot\model{N}^{\Rsemiring}.
-\]
+$$\model{M\oplus_p N}^{\Rsemiring}=p z\cdot\model{M}^{\Rsemiring}+(1-p) z\cdot\model{N}^{\Rsemiring}$$.
 As shown by Proposition \ref{prop:proba} below, the variable $z$ plays the role of a \emph{counter} for each probabilistic choice: each reduction $t\redbigp{\sigma, p}e$ will produce a monomial $pz^{|\sigma|}$ in the semantics.
 %
 %	

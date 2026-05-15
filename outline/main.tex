@@ -12,7 +12,7 @@
 %for enabling a two-column layout for the author/affilation part (only applicable for > 6 authors), use "authorcolumns"
 %for producing a PDF according the PDF/A standard, add "pdfa"
 \newboolean{arxiv}
-\setboolean{arxiv}{true}
+\setboolean{arxiv}{false}
 
 \pdfoutput=1 %uncomment to ensure pdflatex processing (mandatatory e.g. to submit to arXiv)
 \ifthenelse{\boolean{arxiv}}{\hideLIPIcs}{ }  %uncomment to remove references to LIPIcs series (logo, DOI, ...), e.g. when preparing a pre-final version to be uploaded to arXiv or another public repository
